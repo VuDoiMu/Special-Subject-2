@@ -1,0 +1,13 @@
+[{
+  "_id": {
+    "$oid": "6402cabd6da4cb2a4e738216"
+  },
+  "cart": [
+    "6402bff86da4cb2a4e73820b",
+    "6402c4196da4cb2a4e73820c",
+    "6402c44e6da4cb2a4e73820d",
+    "6402c8546da4cb2a4e73820f"
+  ],
+  "customerID": "63f9fc0b2bd0d2dd3139a7c3",
+  "isPaid": true
+}]

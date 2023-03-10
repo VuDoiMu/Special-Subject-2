@@ -1,0 +1,13 @@
+[{
+  "_id": {
+    "$oid": "6402c94c6da4cb2a4e738214"
+  },
+  "name": "Summer discount",
+  "discountRate": "15%",
+  "discountItem": [
+    "6402bff86da4cb2a4e73820b",
+    "6402c4196da4cb2a4e73820c",
+    "6402c44e6da4cb2a4e73820d",
+    "6402c8546da4cb2a4e73820f"
+  ]
+}]

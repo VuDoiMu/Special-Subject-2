@@ -1,0 +1,103 @@
+[{
+  "_id": {
+    "$oid": "6402bff86da4cb2a4e73820b"
+  },
+  "name": "Mushoku Tensei: Jobless Reincarnation (Light Novels)",
+  "category": "Light Novel",
+  "images": "https://rimg.bookwalker.jp/9713595/OWWPXNVne2Og5o9nA6tp3Q__.jpg",
+  "tag": [
+    "Action",
+    "Adventure",
+    "Comedy",
+    "Drama",
+    "Fantasy"
+  ],
+  "author": "Rifujin na Magonote",
+  "volume": 21,
+  "description": "WHERE IS ZENITH? Zenith--Rudeus's mother--has been kidnapped. Rudeus runs himself ragged searching for her in every corner of Millishion, following his late father Paul's orders to protect her at all costs. Ever on the back foot and outmaneuvered at every turn, Rudeus struggles to break through adversity and bring his mother back, safe and sound.",
+  "pageCount": 398,
+  "illus": {
+    "1": "https://static.wikia.nocookie.net/mushokutensei/images/6/60/Mushoku21_04.jpg/revision/latest?cb=20190325205526",
+    "2": "https://static.wikia.nocookie.net/mushokutensei/images/3/37/Mushoku21_05.jpg/revision/latest?cb=20190325205545"
+  },
+  "content": {
+    "1": "Content page 1 goes here!",
+    "2": "Content page 2 goes here!"
+  },
+  "artist": "Shirotaka",
+  "publisher": "Seven Seas Enterainment"
+},{
+  "_id": {
+    "$oid": "6402c4196da4cb2a4e73820c"
+  },
+  "name": "Mushoku Tensei: Jobless Reincarnation (Light Novels)",
+  "category": "Light Novel",
+  "images": "https://rimg.bookwalker.jp/9713595/OWWPXNVne2Og5o9nA6tp3Q__.jpg",
+  "tag": [
+    "Action",
+    "Adventure",
+    "Comedy",
+    "Drama",
+    "Fantasy"
+  ],
+  "author": "Rifujin na Magonote",
+  "volume": 21,
+  "description": "WHERE IS ZENITH? Zenith--Rudeus's mother--has been kidnapped. Rudeus runs himself ragged searching for her in every corner of Millishion, following his late father Paul's orders to protect her at all costs. Ever on the back foot and outmaneuvered at every turn, Rudeus struggles to break through adversity and bring his mother back, safe and sound.",
+  "pageCount": 398,
+  "illus": {
+    "1": "https://static.wikia.nocookie.net/mushokutensei/images/6/60/Mushoku21_04.jpg/revision/latest?cb=20190325205526",
+    "2": "https://static.wikia.nocookie.net/mushokutensei/images/3/37/Mushoku21_05.jpg/revision/latest?cb=20190325205545"
+  },
+  "content": {
+    "1": "Content page 1 goes here!",
+    "2": "Content page 2 goes here!"
+  },
+  "artist": "Shirotaka",
+  "publisher": "Seven Seas Enterainment"
+},{
+  "_id": {
+    "$oid": "6402c44e6da4cb2a4e73820d"
+  },
+  "name": "The Saint's Magic Power is Omnipotent",
+  "category": "Manga",
+  "images": "https://rimg.bookwalker.jp/1854004/OWWPXNVne2Og5o9nA6tp3Q__.jpg",
+  "tag": [
+    "Fantasy",
+    "Isekai",
+    "Slice of life",
+    "Romance"
+  ],
+  "author": "Yuka Tachibana",
+  "artist": "Fujiazuki",
+  "publisher": "Seven Seas Entertainment",
+  "volume": 1,
+  "description": "Unlimited Power and Infinite Mercy Living the workaholic life in her mid-20s, Sei never expected she'd be summoned to another world, let alone obtain the power of a living Saint. And she especially didn't expect to be totally ignored by the locals! While the kingdom desperately needs a hero, it turns out Sei was just the backup option. Left alone, she explores her newfound powers at the royal Research Institute, unraveling the mysteries of magic potions. As she helps the sick and the dying, her talents reveal themselves: might Sei be the Saint this world needs after all?",
+  "pageCount": 176,
+  "content": {
+    "1": "content",
+    "2": "content"
+  }
+},{
+  "_id": {
+    "$oid": "6402c8546da4cb2a4e73820f"
+  },
+  "name": "The Saint's Magic Power is Omnipotent",
+  "category": "Manga",
+  "images": "https://rimg.bookwalker.jp/1854004/OWWPXNVne2Og5o9nA6tp3Q__.jpg",
+  "tag": [
+    "Fantasy",
+    "Isekai",
+    "Slice of life",
+    "Romance"
+  ],
+  "author": "Yuka Tachibana",
+  "artist": "Fujiazuki",
+  "publisher": "Seven Seas Entertainment",
+  "volume": 1,
+  "description": "Unlimited Power and Infinite Mercy Living the workaholic life in her mid-20s, Sei never expected she'd be summoned to another world, let alone obtain the power of a living Saint. And she especially didn't expect to be totally ignored by the locals! While the kingdom desperately needs a hero, it turns out Sei was just the backup option. Left alone, she explores her newfound powers at the royal Research Institute, unraveling the mysteries of magic potions. As she helps the sick and the dying, her talents reveal themselves: might Sei be the Saint this world needs after all?",
+  "pageCount": 176,
+  "content": {
+    "1": "content",
+    "2": "content"
+  }
+}]

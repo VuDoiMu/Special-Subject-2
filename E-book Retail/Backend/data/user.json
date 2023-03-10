@@ -1,0 +1,19 @@
+[{
+  "_id": {
+    "$oid": "63f9fc0b2bd0d2dd3139a7c3"
+  },
+  "name": "Joe Dohn",
+  "email": "joedohn@gmail.com",
+  "username": "joedohn",
+  "password": "123456",
+  "phone": "0123456789",
+  "address": "somewere, address, city",
+  "inventory": [],
+  "cart": [
+    "6402bff86da4cb2a4e73820b",
+    "6402c4196da4cb2a4e73820c",
+    "6402c44e6da4cb2a4e73820d",
+    "6402c8546da4cb2a4e73820f"
+  ],
+  "purchaseHistory": []
+}]
