@@ -17,7 +17,8 @@ app.use(express.json());
 app.use(express.static('./public'));
 
 //routes
-app.use('/management/', require('./routes/books'))
+app.use('/management/', require('./routes/books'));
+app.use('/order', require('./routes/order'));
 
 mongoose.connection.once('open', () => {
     console.log('connected to MongoDb');
