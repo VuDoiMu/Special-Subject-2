@@ -2,11 +2,11 @@ const mongoose = require("mongoose");
 
 const orderSchema = new mongoose.Schema({
     cart: {
-        type: [ObjectID],
+        type: [String],
         required: true,
     },
     custormerID: {
-        type: ObjectID,
+        type: String,
         required: true,
     },
     isPaid: {
