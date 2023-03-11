@@ -1,0 +1,67 @@
+extends base
+
+block append head
+    script(src="/js/slider.js" type="text/javascript" defer)   
+block content 
+    div.slider-container
+        div.wrapper
+            i(id='left' class="fa-solid fa-angle-left")
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                </svg>
+
+            div.carousel
+                img(src='/img/img1.webp' class='first-img' alt='img' draggable='false') 
+                img(src='/img/img2.webp' alt='img' draggable='false') 
+                img(src='/img/img3.webp' alt='img' draggable='false') 
+                img(src='/img/img3.webp' alt='img' draggable='false') 
+                img(src='/img/img3.webp' alt='img' draggable='false') 
+                img(src='/img/img3.webp' alt='img' draggable='false') 
+                img(src='/img/img3.webp' alt='img' draggable='false') 
+                img(src='/img/img3.webp' alt='img' draggable='false') 
+                img(src='/img/img3.webp' alt='img' draggable='false') 
+            i(id='right' class="fa-solid fa-angle-right")
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                </svg>
+    div.titles-container
+        div.card-row
+            div.title
+                h3 FEATURED TITLES
+                    span 
+                        a VIEW ALL
+            
+            div.feature-titles.grid-1-row
+                div.item-card
+                    div.overlay 
+                        button View
+                    p Physical only
+                    img(src='/img/card-img.webp')
+                    h3.name Alabaster vol1 
+                    p.author Osamu Tezeka
+                div.item-card
+                    div.overlay 
+                        button View
+                    p Physical only
+                    img(src='/img/card-img2.webp')
+                    h3.name Alabaster vol1 
+                    p.author Osamu Tezeka
+                div.item-card
+                    div.overlay 
+                        button View
+                    p Physical only
+                    img(src='/img/card-img3.webp')
+                    h3.name Alabaster vol1 
+                    p.author Osamu Tezeka
+                div.item-card
+                    div.overlay 
+                        button View
+                    p Physical only
+                    img(src='/img/card-img2.webp')
+                    h3.name Alabaster vol1 
+                    p.author Osamu Tezeka
+
+        div.card-row
+            div.physical-book
+        div.card-row
+            div.digital-book
