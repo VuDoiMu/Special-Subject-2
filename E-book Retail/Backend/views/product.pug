@@ -1,0 +1,1548 @@
+doctype html
+html(lang="li")
+  head
+    meta(charset="UTF-8")
+    meta(
+      content="width=device-width, initial-scale=1.0" 
+      name="viewport"
+      )
+    link(
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
+      rel="stylesheet"
+      )
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js")
+    script(src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js")
+    link(
+      href="css/product-item.css" 
+      rel="stylesheet"
+      )
+    script(
+      src="js/main.js" 
+      type="text/javascript"
+      )
+    link(
+      href="fontawesome_free_5.13.0/css/all.css" 
+      rel="stylesheet"
+      )
+    link(
+      rel="stylesheet" 
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
+      )
+    link(
+      href="slick/slick.css" 
+      type="text/css" 
+      rel="stylesheet"
+      )
+    link(
+      href="slick/slick-theme.css" 
+      type="text/css" 
+      rel="stylesheet"
+      )
+    script(
+      src="slick/slick.min.js" 
+      type="text/javascript"
+      )
+    link(
+      href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" 
+      rel="stylesheet"
+      )
+    script(src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js")
+    script(
+      src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js" 
+      type="text/javascript"
+      )
+    link(
+      href="favicon_io/apple-touch-icon.png" 
+      sizes="180x180" 
+      rel="apple-touch-icon"
+      )
+    link(
+      href="favicon_io/favicon-32x32.png" 
+      sizes="32x32" 
+      type="image/png" 
+      rel="icon"
+      )
+    link(
+      href="favicon_io/favicon-16x16.png" 
+      sizes="16x16" 
+      type="image/png" 
+      rel="icon"
+      )
+    link(
+      href="favicon_io/site.webmanifest" 
+      rel="manifest"
+      )
+  body
+    // code cho nut like share facebook
+    #fb-root
+    script(
+      src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v6.0" 
+      crossorigin="anonymous" 
+      defer="" 
+      async=""
+      )
+    // header
+    nav.navbar.navbar-expand-md.bg-white.navbar-light
+      .container
+        // logo
+        a.navbar-brand(
+          style="color: #CF111A;" 
+          href="index.html"
+          )
+          b DealBook
+          | .xyz
+        // navbar-toggler
+        button.navbar-toggler.d-lg-none(
+          aria-label="Toggle navigation" 
+          aria-expanded="false" 
+          aria-controls="collapsibleNavId" 
+          data-target="#collapsibleNavId" 
+          data-toggle="collapse" 
+          type="button"
+          )
+          span.navbar-toggler-icon
+        #collapsibleNavId.collapse.navbar-collapse
+          // form tìm kiếm
+          form.form-inline.ml-auto.my-2.my-lg-0.mr-3
+            .input-group(style="width: 520px;")
+              input.form-control(
+                placeholder="Nhập sách cần tìm kiếm..." 
+                aria-label="Small" 
+                type="text"
+                )
+              .input-group-append
+                button.btn(
+                  style="background-color: #CF111A; color: white;" 
+                  type="button"
+                  )
+                  i.fa.fa-search
+          // ô đăng nhập đăng ký giỏ hàng trên header
+          ul.navbar-nav.mb-1.ml-auto
+            .dropdown
+              li.nav-item.account(
+                data-toggle="dropdown" 
+                type="button"
+                )
+                a.btn.btn-secondary.rounded-circle(href="#")
+                  i.fa.fa-user
+                a.nav-link.text-dark.text-uppercase(
+                  style="display:inline-block" 
+                  href="#"
+                  )
+                  | Tài
+                  |   khoản
+              .dropdown-menu(aria-labelledby="dropdownMenuButton")
+                a.dropdown-item.nutdangky.text-center.mb-2(
+                  data-target="#formdangky" 
+                  data-toggle="modal" 
+                  href="#"
+                  ) Đăng ký
+                a.dropdown-item.nutdangnhap.text-center(
+                  data-target="#formdangnhap" 
+                  data-toggle="modal" 
+                  href="#"
+                  ) Đăng nhập
+            li.nav-item.giohang
+              a.btn.btn-secondary.rounded-circle(href="gio-hang.html")
+                i.fa.fa-shopping-cart
+                .cart-amount 0
+              a.nav-link.text-dark.giohang.text-uppercase(
+                style="display:inline-block" 
+                href="gio-hang.html"
+                )
+                | Giỏ
+                |   Hàng
+    // form dang ky khi click vao button tren header
+    #formdangky.modal.fade.mt-5(
+      aria-hidden="true" 
+      aria-labelledby="dangky_tieude" 
+      tabindex="-1" 
+      data-backdrop="static"
+      )
+      .modal-dialog
+        .modal-content
+          .modal-header
+            ul.tabs.d-flex.justify-content-around.list-unstyled.mb-0
+              li.tab.tab-dangnhap.text-center
+                a.text-decoration-none Đăng nhập
+                hr
+              li.tab.tab-dangky.text-center
+                a.text-decoration-none Đăng ký
+                hr
+            button.close(
+              aria-label="Close" 
+              data-dismiss="modal" 
+              type="button"
+              )
+              span(aria-hidden="true") ×
+          .modal-body
+            form#form-signup.form-signin.mt-2
+              .form-label-group
+                input.form-control(
+                  autofocus="" 
+                  required="" 
+                  name="name" 
+                  placeholder="Nhập họ và tên" 
+                  type="text"
+                  )
+              .form-label-group
+                input.form-control(
+                  required="" 
+                  name="phone" 
+                  placeholder="Nhập số điện thoại" 
+                  type="text"
+                  )
+              .form-label-group
+                input.form-control(
+                  required="" 
+                  name="email" 
+                  placeholder="Nhập địa chỉ email" 
+                  type="email"
+                  )
+              .form-label-group
+                input.form-control(
+                  required="" 
+                  name="password" 
+                  placeholder="Nhập mật khẩu" 
+                  type="password"
+                  )
+              .form-label-group.mb-4
+                input.form-control(
+                  required="" 
+                  placeholder="Nhập lại mật khẩu" 
+                  name="confirm_password" 
+                  type="password"
+                  )
+              button.btn.btn-lg.btn-block.btn-signin.text-uppercase.text-white.mt-3(
+                style="background: #F5A623" 
+                type="submit"
+                ) Đăng ký
+              hr.mt-3.mb-2
+              .custom-control.custom-checkbox
+                p.text-center Bằng việc đăng ký, bạn đã đồng ý với DealBook về
+                a.text-decoration-none.text-center(
+                  style="color: #F5A623" 
+                  href="#"
+                  )
+                  | Điều khoản dịch
+                  |   vụ & Chính sách bảo mật
+    // form dang nhap khi click vao button tren header
+    #formdangnhap.modal.fade.mt-5(
+      aria-hidden="true" 
+      aria-labelledby="dangnhap_tieude" 
+      tabindex="-1" 
+      data-backdrop="static"
+      )
+      .modal-dialog
+        .modal-content
+          .modal-header
+            ul.tabs.d-flex.justify-content-around.list-unstyled.mb-0
+              li.tab.tab-dangnhap.text-center
+                a.text-decoration-none Đăng nhập
+                hr
+              li.tab.tab-dangky.text-center
+                a.text-decoration-none Đăng ký
+                hr
+            button.close(
+              aria-label="Close" 
+              data-dismiss="modal" 
+              type="button"
+              )
+              span(aria-hidden="true") ×
+          .modal-body
+            form#form-signin.form-signin.mt-2
+              .form-label-group
+                input.form-control(
+                  autofocus="" 
+                  required="" 
+                  name="email" 
+                  placeholder="Nhập địa chỉ email" 
+                  type="email"
+                  )
+              .form-label-group
+                input.form-control(
+                  required="" 
+                  name="password" 
+                  placeholder="Mật khẩu" 
+                  type="password"
+                  )
+              .custom-control.custom-checkbox.mb-3
+                input#customCheck1.custom-control-input(type="checkbox")
+                label.custom-control-label(for="customCheck1") Nhớ mật khẩu
+                a.float-right.text-decoration-none(
+                  style="color: #F5A623" 
+                  href="#"
+                  )
+                  | Quên mật
+                  |   khẩu
+              button.btn.btn-lg.btn-block.btn-signin.text-uppercase.text-white(
+                style="background: #F5A623" 
+                type="submit"
+                ) Đăng nhập
+              hr.my-4
+              button.btn.btn-lg.btn-google.btn-block.text-uppercase(type="submit")
+                i.fab.fa-google.mr-2
+                | Đăng nhập bằng Google
+              button.btn.btn-lg.btn-facebook.btn-block.text-uppercase(type="submit")
+                i.fab.fa-facebook-f.mr-2
+                | Đăng nhập bằng Facebook
+    // thanh "danh muc sach" đã được ẩn bên trong + hotline + ho tro truc tuyen
+    section.duoinavbar
+      .container.text-white
+        .row.justify
+          .col-lg-3.col-md-5
+            .categoryheader
+              .noidungheader.text-white
+                i.fa.fa-bars
+                span.text-uppercase.font-weight-bold.ml-1 Danh mục sách
+              // CATEGORIES
+              .categorycontent
+                ul
+                  li
+                    a(href="#") Sách Kinh Tế - Kỹ Năng
+                    i.fa.fa-chevron-right.float-right
+                    ul
+                      li.liheader
+                        a.header.text-uppercase(href="#")
+                          | Sách Kinh Tế - Kỹ
+                          |   Năng
+                      .content.trai
+                        li
+                          a(href="#") Kinh Tế - Chính Trị
+                        li
+                          a(href="#") Sách Khởi Nghiệp
+                        li
+                          a(href="#") Sách Tài Chính, Kế Toán
+                        li
+                          a(href="#") Sách Quản Trị Nhân Sự
+                        li
+                          a(href="#") Sách Kỹ Năng Làm Việc
+                      .content.phai
+                        li
+                          a(href="#") Nhân Vật - Bài Học Kinh Doanh
+                        li
+                          a(href="#") Sách Quản Trị - Lãnh Đạo
+                        li
+                          a(href="#") Sách Kinh Tế Học
+                        li
+                          a(href="#") Sách Chứng Khoán - Bất Động Sản - Đầu Tư
+                        li
+                          a(href="#") Sách Marketing - Bán Hàng
+                  li
+                    a(href="") Nghệ Thuật Sống - Tâm Lý
+                    i.fa.fa-chevron-right.float-right
+                    ul
+                      li.liheader
+                        a.header.text-uppercase(href="#")
+                          | Nghệ Thuật Sống -
+                          |   Tâm
+                          |   Lý
+                      .content.trai
+                        li
+                          a(href="#") Sách Nghệ Thuật Sống
+                        li
+                          a(href="#") Sách Tâm Lý
+                        li
+                          a(href="#") Sách Hướng Nghiệp
+                      .content.phai
+                        li
+                          a(href="#") Sách Nghệ Thuật Sống Đẹp
+                        li
+                          a(href="#") Sách Tư Duy
+                  li
+                    a(href="#") Sách Văn Học Việt Nam
+                    i.fa.fa-chevron-right.float-right
+                    ul
+                      li.liheader
+                        a.header.text-uppercase(href="#")
+                          | Sách Văn Học Việt
+                          |   Nam
+                      .content.trai
+                        li
+                          a(href="#") Truyện Ngắn - Tản Văn
+                        li
+                          a(href="#") Tiểu Thuyết lịch Sử
+                        li
+                          a(href="#") Phóng Sự - Ký Sự - Du ký - Tùy Bút
+                        li
+                          a(href="#") Thơ
+                      .content.phai
+                        li
+                          a(href="#") Tiểu thuyết
+                        li
+                          a(href="#") Tiểu sử - Hồi ký
+                        li
+                          a(href="#") Phê Bình Văn Học
+                  li
+                    a(href="#") Sách Văn Học Nước Ngoài
+                    i.fa.fa-chevron-right.float-right
+                    ul
+                      li.liheader
+                        a.header.text-uppercase(href="#")
+                          | Sách Văn Học Nước
+                          |   Ngoài
+                      .content.trai
+                        li
+                          a(href="#") Văn Học Hiện Đại
+                        li
+                          a(href="#") Tiểu Thuyết
+                        li
+                          a(href="#") Truyện Trinh Thám
+                        li
+                          a(href="#") Thần Thoại - Cổ Tích
+                      .content.phai
+                        li
+                          a(href="#") Văn Học Kinh Điển
+                        li
+                          a(href="#") Sách Giả Tưởng - Kinh Dị
+                        li
+                          a(href="#") Truyện Kiếm Hiệp
+                  li
+                    a(href="#") Sách Thiếu Nhi
+                    i.fa.fa-chevron-right.float-right
+                    ul
+                      li.liheader
+                        a.header.text-uppercase(href="#")
+                          | Sách Thiếu
+                          |   Nhi
+                      .content.trai
+                        li
+                          a(href="#") Mẫu Giáo
+                        li
+                          a(href="#") Thiếu Niên
+                        li
+                          a(href="#") Kiến Thức - Bách Khoa
+                        li
+                          a(href="#") Truyện Cổ Tích
+                      .content.phai
+                        li
+                          a(href="#") Nhi Đồng
+                        li
+                          a(href="#") Văn Học Thiếu Nhi
+                        li
+                          a(href="#") Kỹ Năng Sống
+                        li
+                          a(href="#") Truyện Tranh
+                  li
+                    a(href="#") Sách Giáo Dục - Gia Đình
+                    i.fa.fa-chevron-right.float-right
+                    ul
+                      li.liheader
+                        a.header.text-uppercase(href="#")
+                          | Sách Giáo Dục -
+                          |   Gia
+                          |   Đình
+                      .content.trai
+                        li
+                          a(href="#") Giáo dục
+                        li
+                          a(href="#") Thai Giáo
+                        li
+                          a(href="#") Sách Dinh Dưỡng - Chăm Sóc Trẻ
+                        li
+                          a(href="#") Ẩm Thực - Nấu Ăn
+                        li
+                          a(href="#") Sách Tham Khảo
+                      .content.phai
+                        li
+                          a(href="#") Giới Tính
+                        li
+                          a(href="#") Sách Làm Cha Mẹ
+                        li
+                          a(href="#") Kiến Thức - Kỹ Năng Cho Trẻ
+                        li
+                          a(href="#") Ngoại Ngữ - Từ Điển
+                  li
+                    a(href="#") Sách Lịch Sử
+                    i.fa.fa-chevron-right.float-right
+                    ul
+                      li.liheader
+                        a.header.text-uppercase(href="#") Sách Lịch Sử
+                      .content.trai
+                        li
+                          a(href="#") Lịch Sử Việt Nam
+                      .content.phai
+                        li
+                          a(href="#") Lịch Sử Thế Giới
+                  li
+                    a(href="#") Sách Văn Hóa - Nghệ Thuật
+                    i.fa.fa-chevron-right.float-right
+                    ul
+                      li.liheader
+                        a.header.text-uppercase(href="#")
+                          | Sách Văn Hóa -
+                          |   Nghệ
+                          |   Thuật
+                      .content.trai
+                        li
+                          a(href="#") Văn Hóa
+                        li
+                          a(href="#") Phong Tục Tập Quán
+                        li
+                          a(href="#") Phong Thủy
+                      .content.phai
+                        li
+                          a(href="#") Nghệ Thuật
+                        li
+                          a(href="#") Kiến Trúc
+                        li
+                          a(href="#") Du Lịch
+                  li
+                    a(href="#") Sách Khoa Học - Triết Học
+                    i.fa.fa-chevron-right.float-right
+                    ul
+                      li.liheader
+                        a.header.text-uppercase(href="#")
+                          | Sách Khoa Học -
+                          |   Triết
+                          |   Học
+                      .content.trai
+                        li
+                          a(href="#") Triết Học Phương Tây
+                        li
+                          a(href="#") Khoa Học Cơ Bản
+                      .content.phai
+                        li
+                          a(href="#") Minh Tiết Phương Đông
+                  li
+                    a(href="#") Sách Tâm Linh - Tôn Giáo
+                    i.fa.fa-chevron-right.float-right
+                  li
+                    a(href="#") Sách Y Học - Thực Dưỡng
+                    i.fa.fa-chevron-right.float-right
+                    ul
+                      li.liheader
+                        a.header.text-uppercase(href="#")
+                          | Sách Y Học - Thực
+                          |   Dưỡng
+                      .content.trai
+                        li
+                          a(href="#") Chăm Sóc Sức Khỏe
+                        li
+                          a(href="#") Y Học
+                        li
+                          a(href="#") Thiền - Yoga
+                      .content.phai
+                        li
+                          a(href="#") Thực Dưỡng
+                        li
+                          a(href="#") Đông Y - Cổ Truyền
+          .col-md-5.ml-auto.contact.d-none.d-md-block
+            .benphai.float-right
+              .hotline
+                i.fa.fa-phone
+                span
+                  | Hotline:
+                  b 1900 1999
+              i.fas.fa-comments-dollar
+              a(href="#") Hỗ trợ trực tuyến
+    // breadcrumb
+    section.breadcrumbbar
+      .container
+        ol.breadcrumb.mb-0.p-0.bg-transparent
+          li.breadcrumb-item
+            a(href="index.html") Trang chủ
+          li.breadcrumb-item
+            a(href="#") Sách kinh tế
+          li.breadcrumb-item.active
+            a(href="#") Sách kỹ năng làm việc
+    // nội dung của trang
+    section.product-page.mb-4
+      .container
+        // chi tiết 1 sản phẩm
+        .product-detail.bg-white.p-4
+          .row
+            // ảnh
+            .col-md-5.khoianh
+              .anhto.mb-4
+                a.active(
+                  data-fancybox="thumb-img" 
+                  href="images/lap-ke-hoach-kinh-doanh-hieu-qua-mt.jpg"
+                  )
+                  img.product-image(
+                    style="width: 100%;" 
+                    alt="lap-ke-hoach-kinh-doanh-hieu-qua-mt" 
+                    src="images/lap-ke-hoach-kinh-doanh-hieu-qua-mt.jpg"
+                    )
+                a(
+                  data-fancybox="thumb-img" 
+                  href="images/lap-ke-hoach-kinh-doanh-hieu-qua-ms.jpg"
+                  )
+              .list-anhchitiet.d-flex.mb-4(style="margin-left: 2rem;")
+                img.thumb-img.thumb1.mr-3(
+                  alt="lap-ke-hoach-kinh-doanh-hieu-qua-mt" 
+                  src="images/lap-ke-hoach-kinh-doanh-hieu-qua-mt.jpg"
+                  )
+                img.thumb-img.thumb2(
+                  alt="lap-ke-hoach-kinh-doanh-hieu-qua-ms" 
+                  src="images/lap-ke-hoach-kinh-doanh-hieu-qua-ms.jpg"
+                  )
+            // thông tin sản phẩm: tên, giá bìa giá bán tiết kiệm, các khuyến mãi, nút chọn mua....
+            .col-md-7.khoithongtin
+              .row
+                .col-md-12.header
+                  h4.ten Lập Kế Hoạch Kinh Doanh Hiệu Quả
+                  .rate
+                    i.fa.fa-star.active
+                    i.fa.fa-star.active
+                    i.fa.fa-star.active
+                    i.fa.fa-star.active
+                    i.fa.fa-star
+                  hr
+                .col-md-7
+                  .gia
+                    .giabia
+                      | Giá bìa:
+                      span.giacu.ml-2 139.000 ₫
+                    .giaban
+                      | Giá bán tại DealBooks:
+                      span.giamoi.font-weight-bold 111.200
+                      span.donvitien ₫
+                    .tietkiem
+                      | Tiết kiệm:
+                      b 27.800 ₫
+                      span.sale -20%
+                  .uudai.my-3
+                    h6.header.font-weight-bold Khuyến mãi & Ưu đãi tại DealBook:
+                    ul
+                      li
+                        b Miễn phí giao hàng
+                        | cho đơn hàng từ 150.000đ ở TP.HCM và 300.000đ ở
+                        |   Tỉnh/Thành khác
+                        a(href="#") >> Chi tiết
+                      li
+                        b Combo sách HOT - GIẢM 25%
+                        a(href="#") >>Xem ngay
+                      li Tặng Bookmark cho mỗi đơn hàng
+                      li Bao sách miễn phí (theo yêu cầu)
+                  .soluong.d-flex
+                    label.font-weight-bold Số lượng:
+                    .input-number.input-group.mb-3
+                      .input-group-prepend
+                        span.input-group-text.btn-spin.btn-dec -
+                      input.soluongsp.text-center(
+                        value="1" 
+                        type="text"
+                        )
+                      .input-group-append
+                        span.input-group-text.btn-spin.btn-inc +
+                  .nutmua.btn.w-100.text-uppercase Chọn mua
+                  a.huongdanmuahang.text-decoration-none(href="#")
+                    | (Vui lòng xem hướng dẫn mua
+                    |   hàng)
+                  small.share Share:
+                  .fb-like(
+                    data-share="true" 
+                    data-size="small" 
+                    data-action="like" 
+                    data-layout="button" 
+                    data-width="300px" 
+                    data-href="https://www.facebook.com/DealBook-110745443947730/"
+                    )
+                // thông tin khác của sản phẩm:  tác giả, ngày xuất bản, kích thước ....
+                .col-md-5
+                  .thongtinsach
+                    ul
+                      li
+                        | Tác giả:
+                        a.tacgia(href="#") Brian Finch
+                      li
+                        | Ngày xuất bản:
+                        b 04-2020
+                      li
+                        | Kích thước:
+                        b 20.5 x 13.5 cm
+                      li Dịch giả: Skye Phan;
+                      li Nhà xuất bản: Nhà Xuất Bản Thanh Niên
+                      li
+                        | Hình thức bìa:
+                        b Bìa mềm
+                      li
+                        | Số trang:
+                        b 336
+                      li
+                        | Cân nặng:
+                        b 0
+            // decripstion của 1 sản phẩm: giới thiệu , đánh giá độc giả
+            .product-description.col-md-9
+              // 2 tab ở trên
+              nav
+                #nav-tab.nav.nav-tabs(role="tablist")
+                  a#nav-gioithieu-tab.nav-item.nav-link.active.text-uppercase(
+                    aria-selected="true" 
+                    aria-controls="nav-gioithieu" 
+                    role="tab" 
+                    href="#nav-gioithieu" 
+                    data-toggle="tab"
+                    ) Giới thiệu
+                  a#nav-danhgia-tab.nav-item.nav-link.text-uppercase(
+                    aria-selected="false" 
+                    aria-controls="nav-danhgia" 
+                    role="tab" 
+                    href="#nav-danhgia" 
+                    data-toggle="tab"
+                    )
+                    | Đánh
+                    |   giá của độc giả
+              // nội dung của từng tab
+              #nav-tabContent.tab-content
+                #nav-gioithieu.tab-pane.fade.show.active.ml-3(
+                  aria-labelledby="nav-gioithieu-tab" 
+                  role="tabpanel"
+                  )
+                  h6.tieude.font-weight-bold Lập Kế Hoạch Kinh Doanh Hiệu Quả
+                  p
+                    span
+                      | Khi bắt đầu thành lập doanh nghiệp hay mở rộng quy mô hoạt động, lập ra một
+                      |   bản kế hoạch kinh doanh là bước đi đầu tiên không thể thiếu. Bản kế hoạch kinh
+                      |   doanh càng được chuẩn bị kỹ lưỡng và lôi cuốn bao nhiêu, cơ hội ghi điểm trước
+                      |   các nhà đầu tư càng lớn bấy nhiêu. Phải chăng, thông qua bản kế hoạch kinh
+                      |   doanh, bạn muốn người đọc:
+                  p
+                    span
+                      | - Đầu tư vào một ý tưởng kinh doanh mới hay một doanh nghiệp đang hoạt
+                      |   động?
+                  p
+                    span - Mua lại doanh nghiệp của bạn?
+                  p
+                    span - Tham gia liên doanh với bạn?
+                  p
+                    span - Chấp nhận đề nghị của bạn để thực hiện hợp đồng?
+                  p
+                    span - Cấp cho bạn một khoản hỗ trợ hoặc phê duyệt theo quy định?
+                  p
+                    span
+                      | - Thuyết phục hội đồng quản trị thay đổi phương hướng hoạt động doanh nghiệp
+                      |   của bạn?
+                  p
+                    span
+                      | Cuốn sách “Lập kế hoạch kinh doanh hiệu quả” sẽ hướng dẫn bạn cách để tạo ra
+                      |   bản kế hoạch kinh doanh thu hút mọi tổ chức tài chính, khiến họ phải đáp ứng
+                      |   mong muốn của bạn và hỗ trợ bạn tới cùng trong công việc kinh doanh. Thông qua
+                      |   cuốn sách, bạn sẽ biết cách:
+                  p
+                    span
+                      | Tạo ra bản kế hoạch kinh doanh hoàn chỉnh Xây dựng chiến lược hoạt động cho
+                      |   doanh nghiệp.
+                  p
+                    span Đưa ra dự báo kinh doanh sát với thực tế.
+                  p
+                    span Nắm rõ các thông tin tài chính ảnh hưởng lớn tới doanh nghiệp.
+                  p
+                    span
+                      | Trong quá trình xây dựng kế hoạch, việc tham khảo ý kiến chuyên gia là điều
+                      |   cần thiết nhưng bạn phải là người đóng góp chính và hiểu tường tận mỗi chi tiết
+                      |   có trong đó. Hãy xem việc lập kế hoạch giống như việc truyền đạt câu chuyện của
+                      |   mình nhằm thuyết phục người đọc đồng hành cùng bạn trên con đường chinh phục mục
+                      |   tiêu kinh doanh.
+                  p
+                    span
+                      | Bạn chỉ có một cơ hội duy nhất để tạo ấn tượng đầu tiên tốt đẹp. Đừng để nó
+                      |   vụt mất. Hãy trình bày một văn bản có tính thuyết phục cao, bố cục đẹp mắt,
+                      |   không mắc lỗi chính tả, ngữ pháp, bao gồm các vấn đề trọng tâm và cuối cùng là
+                      |   chứa các thông tin bổ trợ cần thiết.
+                  p
+                    span
+                      | Bằng kiến thức, kinh nghiệm của mình, Brian Finch - một chuyên gia trong lĩnh
+                      |   vực tư vấn lập kế hoạch kinh doanh và quản lý tài chính - chắc chắn sẽ giúp bạn
+                      |   xây dựng thành công kế hoạch kinh doanh của riêng mình.
+                #nav-danhgia.tab-pane.fade(
+                  aria-labelledby="nav-danhgia-tab" 
+                  role="tabpanel"
+                  )
+                  .row
+                    .col-md-3.text-center
+                      p.tieude Đánh giá trung bình
+                      .diem 0/5
+                      .sao
+                        i.fa.fa-star
+                        i.fa.fa-star
+                        i.fa.fa-star
+                        i.fa.fa-star
+                        i.fa.fa-star
+                      p.sonhanxet.text-muted (0 nhận xét)
+                    .col-md-5
+                      .tiledanhgia.text-center
+                        .motthanh.d-flex.align-items-center
+                          | 5
+                          i.fa.fa-star
+                          .progress.mx-2
+                            .progress-bar(
+                              aria-valuemax="100" 
+                              aria-valuemin="0" 
+                              aria-valuenow="0" 
+                              role="progressbar"
+                              )
+                          | 0%
+                        .motthanh.d-flex.align-items-center
+                          | 4
+                          i.fa.fa-star
+                          .progress.mx-2
+                            .progress-bar(
+                              aria-valuemax="100" 
+                              aria-valuemin="0" 
+                              aria-valuenow="0" 
+                              role="progressbar"
+                              )
+                          | 0%
+                        .motthanh.d-flex.align-items-center
+                          | 3
+                          i.fa.fa-star
+                          .progress.mx-2
+                            .progress-bar(
+                              aria-valuemax="100" 
+                              aria-valuemin="0" 
+                              aria-valuenow="0" 
+                              role="progressbar"
+                              )
+                          | 0%
+                        .motthanh.d-flex.align-items-center
+                          | 2
+                          i.fa.fa-star
+                          .progress.mx-2
+                            .progress-bar(
+                              aria-valuemax="100" 
+                              aria-valuemin="0" 
+                              aria-valuenow="0" 
+                              role="progressbar"
+                              )
+                          | 0%
+                        .motthanh.d-flex.align-items-center
+                          | 1
+                          i.fa.fa-star
+                          .progress.mx-2
+                            .progress-bar(
+                              aria-valuemax="100" 
+                              aria-valuemin="0" 
+                              aria-valuenow="0" 
+                              role="progressbar"
+                              )
+                          | 0%
+                        .btn.vietdanhgia.mt-3 Viết đánh giá của bạn
+                      // nội dung của form đánh giá
+                      .formdanhgia
+                        h6.tieude.text-uppercase GỬI ĐÁNH GIÁ CỦA BẠN
+                        span.danhgiacuaban Đánh giá của bạn về sản phẩm này:
+                        .rating.d-flex.flex-row-reverse.align-items-center.justify-content-end
+                          input#star1(
+                            name="star" 
+                            type="radio"
+                            )
+                          label(for="star1")
+                          input#star2(
+                            name="star" 
+                            type="radio"
+                            )
+                          label(for="star2")
+                          input#star3(
+                            name="star" 
+                            type="radio"
+                            )
+                          label(for="star3")
+                          input#star4(
+                            name="star" 
+                            type="radio"
+                            )
+                          label(for="star4")
+                          input#star5(
+                            name="star" 
+                            type="radio"
+                            )
+                          label(for="star5")
+                        .form-group
+                          input.txtFullname.w-100(
+                            placeholder="Mời bạn nhập tên(Bắt buộc)" 
+                            type="text"
+                            )
+                        .form-group
+                          input.txtEmail.w-100(
+                            placeholder="Mời bạn nhập email(Bắt buộc)" 
+                            type="text"
+                            )
+                        .form-group
+                          input.txtComment.w-100(
+                            placeholder="Đánh giá của bạn về sản phẩm này" 
+                            type="text"
+                            )
+                        .btn.nutguibl Gửi bình luận
+                hr
+                // het tab nav-danhgia
+              // het tab-content
+            // het product-description
+          // het row
+        // het product-detail
+      // het container
+    // het product-page
+    // khối sản phẩm tương tự
+    section.sachmoi(class="_1khoi")
+      .container
+        .noidung.bg-white(style=" width: 100%;")
+          .row
+            // header
+            .col-12.d-flex.justify-content-between.align-items-center.pb-2.bg-light.pt-4
+              h5.header.text-uppercase(style="font-weight: 400;") Sản phẩm tương tự
+              a.btn.btn-warning.btn-sm.text-white(href="sach-moi-tuyen-chon.html") Xem tất cả
+          .khoisanpham(style="padding-bottom: 2rem;")
+            // 1 sản phẩm
+            .card
+              a.motsanpham(
+                title="Lập Kế Hoạch Kinh Doanh Hiệu Quả" 
+                data-placement="bottom" 
+                data-toggle="tooltip" 
+                style="text-decoration: none; color: black;" 
+                href="Lap-trinh-ke-hoach-kinh-doanh-hieu-qua.html"
+                )
+                img.card-img-top.anh(
+                  alt="lap-ke-hoach-kinh-doanh-hieu-qua" 
+                  src="images/lap-ke-hoach-kinh-doanh-hieu-qua.jpg"
+                  )
+                .card-body.noidungsp.mt-3
+                  h6.card-title.ten Lập Kế Hoạch Kinh Doanh Hiệu Quả
+                  small.tacgia.text-muted Brian Finch
+                  .gia.d-flex.align-items-baseline
+                    .giamoi 111.200 ₫
+                    .giacu.text-muted 139.000 ₫
+                    .sale -20%
+                  .danhgia
+                    ul.d-flex(style="list-style: none;")
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li
+                        i.fa.fa-star
+                      li
+                        span.text-muted 0 nhận xét
+            .card
+              a.motsanpham(
+                title="Ma Bùn Lưu Manh Và Những Câu Chuyện Khác Của Nguyễn Trí" 
+                data-placement="bottom" 
+                data-toggle="tooltip" 
+                style="text-decoration: none; color: black;" 
+                href="Ma-bun-luu-manh-va-nhung-cau-chuyen-khac-cua-nguyen-tri.html"
+                )
+                img.card-img-top.anh(
+                  alt="ma-bun-luu-manh" 
+                  src="images/ma-bun-luu-manh.jpg"
+                  )
+                .card-body.noidungsp.mt-3
+                  h6.card-title.ten
+                    | Ma Bùn Lưu Manh Và Những Câu Chuyện Khác Của Nguyễn
+                    |   Trí
+                  small.tacgia.text-muted Nguyễn Trí
+                  .gia.d-flex.align-items-baseline
+                    .giamoi 68.000 ₫
+                    .giacu.text-muted 85.000 ₫
+                    .sale -20%
+                  .danhgia
+                    ul.d-flex(style="list-style: none;")
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li
+                        i.fa.fa-star
+                      li
+                        span.text-muted 0 nhận xét
+            .card
+              a.motsanpham(
+                title="Bank 4.0 - Giao dịch mọi nơi, không chỉ là ngân hàng" 
+                data-placement="bottom" 
+                data-toggle="tooltip" 
+                style="text-decoration: none; color: black;" 
+                href="#"
+                )
+                img.card-img-top.anh(
+                  alt="bank-4.0" 
+                  src="images/bank-4.0.jpg"
+                  )
+                .card-body.noidungsp.mt-3
+                  h6.card-title.ten Bank 4.0 - Giao dịch mọi nơi, không chỉ là ngân hàng
+                  small.tacgia.text-muted Brett King
+                  .gia.d-flex.align-items-baseline
+                    .giamoi 111.200 ₫
+                    .giacu.text-muted 139.000 ₫
+                    .sale -20%
+                  .danhgia
+                    ul.d-flex(style="list-style: none;")
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li
+                        i.fa.fa-star
+                      li
+                        span.text-muted 0 nhận xét
+            .card
+              a.motsanpham(
+                title="Bộ Sách 500 Câu Chuyện Đạo Đức - Những Câu Chuyện Tình Thân (Bộ 8 Cuốn)" 
+                data-placement="bottom" 
+                data-toggle="tooltip" 
+                style="text-decoration: none; color: black;" 
+                href="#"
+                )
+                img.card-img-top.anh(
+                  alt="bo-sach-500-cau-chuyen-dao-duc" 
+                  src="images/bo-sach-500-cau-chuyen-dao-duc.jpg"
+                  )
+                .card-body.noidungsp.mt-3
+                  h6.card-title.ten
+                    | Bộ Sách 500 Câu Chuyện Đạo Đức - Những Câu Chuyện
+                    |   Tình Thân (Bộ 8 Cuốn)
+                  small.tacgia.text-muted Nguyễn Hạnh - Trần Thị Thanh Nguyên
+                  .gia.d-flex.align-items-baseline
+                    .giamoi 111.200 ₫
+                    .giacu.text-muted 139.000 ₫
+                    .sale -20%
+                  .danhgia
+                    ul.d-flex(style="list-style: none;")
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li
+                        i.fa.fa-star
+                      li
+                        span.text-muted 0 nhận xét
+            .card
+              a.motsanpham(
+                title="Lịch Sử Ung Thư - Hoàng Đế Của Bách Bệnh" 
+                data-placement="bottom" 
+                data-toggle="tooltip" 
+                style="text-decoration: none; color: black;" 
+                href="#"
+                )
+                img.card-img-top.anh(
+                  alt="ung-thu-hoang-de-cua-bach-benh" 
+                  src="images/ung-thu-hoang-de-cua-bach-benh.jpg"
+                  )
+                .card-body.noidungsp.mt-3
+                  h6.card-title.ten Lịch Sử Ung Thư - Hoàng Đế Của Bách Bệnh
+                  small.tacgia.text-muted Siddhartha Mukherjee
+                  .gia.d-flex.align-items-baseline
+                    .giamoi 111.200 ₫
+                    .giacu.text-muted 139.000 ₫
+                    .sale -20%
+                  .danhgia
+                    ul.d-flex(style="list-style: none;")
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li
+                        i.fa.fa-star
+                      li
+                        span.text-muted 0 nhận xét
+            .card
+              a.motsanpham(
+                title="Cuốn Sách Khám Phá: Trời Đêm Huyền Diệu" 
+                data-placement="bottom" 
+                data-toggle="tooltip" 
+                style="text-decoration: none; color: black;" 
+                href="#"
+                )
+                img.card-img-top.anh(
+                  alt="troi-dem-huyen-dieu" 
+                  src="images/troi-dem-huyen-dieu.jpg"
+                  )
+                .card-body.noidungsp.mt-3
+                  h6.card-title.ten Cuốn Sách Khám Phá: Trời Đêm Huyền Diệu
+                  small.tacgia.text-muted Disney Learning
+                  .gia.d-flex.align-items-baseline
+                    .giamoi 111.200 ₫
+                    .giacu.text-muted 139.000 ₫
+                    .sale -20%
+                  .danhgia
+                    ul.d-flex(style="list-style: none;")
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li
+                        i.fa.fa-star
+                      li
+                        span.text-muted 0 nhận xét
+            .card
+              a.motsanpham(
+                title="Bộ Sách Những Câu Chuyện Cho Con Thành Người Tử Tế (Bộ 5 Cuốn)" 
+                data-placement="bottom" 
+                data-toggle="tooltip" 
+                style="text-decoration: none; color: black;" 
+                href="#"
+                )
+                img.card-img-top.anh(
+                  alt="bo-sach-nhung-cau-chuyen-cho-con-thanh-nguoi-tu-te" 
+                  src="images/bo-sach-nhung-cau-chuyen-cho-con-thanh-nguoi-tu-te.jpg"
+                  )
+                .card-body.noidungsp.mt-3
+                  h6.card-title.ten
+                    | Bộ Sách Những Câu Chuyện Cho Con Thành Người Tử Tế (Bộ 5
+                    |   Cuốn)
+                  small.tacgia.text-muted Nhiều Tác Giả
+                  .gia.d-flex.align-items-baseline
+                    .giamoi 111.200 ₫
+                    .giacu.text-muted 139.000 ₫
+                    .sale -20%
+                  .danhgia
+                    ul.d-flex(style="list-style: none;")
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li
+                        i.fa.fa-star
+                      li
+                        span.text-muted 0 nhận xét
+            .card
+              a.motsanpham(
+                title="Lịch Sử Thế Giới" 
+                data-placement="bottom" 
+                data-toggle="tooltip" 
+                style="text-decoration: none; color: black;" 
+                href="#"
+                )
+                img.card-img-top.anh(
+                  alt="lich-su-the-gioi" 
+                  src="images/lich-su-the-gioi.jpg"
+                  )
+                .card-body.noidungsp.mt-3
+                  h6.card-title.ten Lịch Sử Thế Giới
+                  small.tacgia.text-muted Nam Phong tùng thư - Phạm Quỳnh chủ nhiệm
+                  .gia.d-flex.align-items-baseline
+                    .giamoi 111.200 ₫
+                    .giacu.text-muted 139.000 ₫
+                    .sale -20%
+                  .danhgia
+                    ul.d-flex(style="list-style: none;")
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li
+                        i.fa.fa-star
+                      li
+                        span.text-muted 0 nhận xét
+    // khối sản phẩm đã xem
+    section.combohot.mt-4(class="_1khoi")
+      .container
+        .noidung.bg-white(style=" width: 100%;")
+          .row
+            // header
+            .col-12.d-flex.justify-content-between.align-items-center.pb-2.bg-light
+              h5.header.text-uppercase(style="font-weight: 400;") Sản phẩm bạn đã xem
+              a.btn.btn-warning.btn-sm.text-white(href="#") Xem tất cả
+          .khoisanpham
+            // 1 sản phẩm
+            .card
+              a.motsanpham(
+                title="Chuyện Nghề Và Chuyện Đời - Bộ 4 Cuốn" 
+                data-placement="bottom" 
+                data-toggle="tooltip" 
+                style="text-decoration: none; color: black;" 
+                href="#"
+                )
+                img.card-img-top.anh(
+                  alt="combo-chuyen-nghe-chuyen-doi" 
+                  src="images/combo-chuyen-nghe-chuyen-doi.jpg"
+                  )
+                .card-body.noidungsp.mt-3
+                  h6.card-title.ten Chuyện Nghề Và Chuyện Đời - Bộ 4 Cuốn
+                  small.tacgia.text-muted Nguyễn Hữu Long
+                  .gia.d-flex.align-items-baseline
+                    .giamoi 111.200 ₫
+                    .giacu.text-muted 139.000 ₫
+                    .sale -20%
+                  .danhgia
+                    ul.d-flex(style="list-style: none;")
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li
+                        i.fa.fa-star
+                      li
+                        span.text-muted 0 nhận xét
+            .card
+              a.motsanpham(
+                title="Combo Mẹ Con Sư Tử - Bồ Tát Ngàn Tay Ngàn Mắt" 
+                data-placement="bottom" 
+                data-toggle="tooltip" 
+                style="text-decoration: none; color: black;" 
+                href="#"
+                )
+                img.card-img-top.anh(
+                  alt="combo-me-con-su-tu-bo-tat-ngan-tay-ngan-mat" 
+                  src="images/combo-me-con-su-tu-bo-tat-ngan-tay-ngan-mat.jpg"
+                  )
+                .card-body.noidungsp.mt-3
+                  h6.card-title.ten Combo Mẹ Con Sư Tử - Bồ Tát Ngàn Tay Ngàn Mắt
+                  small.tacgia.text-muted Thích Nhất Hạnh
+                  .gia.d-flex.align-items-baseline
+                    .giamoi 111.200 ₫
+                    .giacu.text-muted 139.000 ₫
+                    .sale -20%
+                  .danhgia
+                    ul.d-flex(style="list-style: none;")
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li
+                        i.fa.fa-star
+                      li
+                        span.text-muted 0 nhận xét
+            .card
+              a.motsanpham(
+                title="Combo Osho: Hạnh Phúc Tại Tâm, Can Đảm Biến Thách Thức Thành Sức Mạnh & Sáng Tạo Bừng Cháy Sức Mạnh Bên Trong" 
+                data-placement="bottom" 
+                data-toggle="tooltip" 
+                style="text-decoration: none; color: black;" 
+                href="#"
+                )
+                img.card-img-top.anh(
+                  alt="combo-hanh-phuc-sang-tao" 
+                  src="images/combo-hanh-phuc-sang-tao.jpg"
+                  )
+                .card-body.noidungsp.mt-3
+                  h6.card-title.ten
+                    | Combo Osho: Hạnh Phúc Tại Tâm, Can Đảm Biến Thách Thức Thành
+                    |   Sức Mạnh & Sáng Tạo Bừng Cháy Sức Mạnh Bên Trong
+                  small.tacgia.text-muted Gosho Aoyama, Mutsuki Watanabe, Takahisa Taira
+                  .gia.d-flex.align-items-baseline
+                    .giamoi 111.200 ₫
+                    .giacu.text-muted 139.000 ₫
+                    .sale -20%
+                  .danhgia
+                    ul.d-flex(style="list-style: none;")
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li
+                        i.fa.fa-star
+                      li
+                        span.text-muted 0 nhận xét
+            .card
+              a.motsanpham(
+                title="Combo Giáo Dục Và Ý Nghĩa Cuộc Sống Và Bạn Đang Nghịch Gì Với Đời Mình?" 
+                data-placement="bottom" 
+                data-toggle="tooltip" 
+                style="text-decoration: none; color: black;" 
+                href="#"
+                )
+                img.card-img-top.anh(
+                  alt="combo-giao-duc-va-y-nghia-cuoc-song" 
+                  src="images/combo-giao-duc-va-y-nghia-cuoc-song.jpg"
+                  )
+                .card-body.noidungsp.mt-3
+                  h6.card-title.ten
+                    | Combo Giáo Dục Và Ý Nghĩa Cuộc Sống Và Bạn Đang Nghịch Gì Với
+                    |   Đời Mình?
+                  small.tacgia.text-muted J.Krishnamurti
+                  .gia.d-flex.align-items-baseline
+                    .giamoi 111.200 ₫
+                    .giacu.text-muted 139.000 ₫
+                    .sale -20%
+                  .danhgia
+                    ul.d-flex(style="list-style: none;")
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li
+                        i.fa.fa-star
+                      li
+                        span.text-muted 0 nhận xét
+            .card
+              a.motsanpham(
+                title="Combo Dinh Dưỡng Xanh - Thần dược xanh" 
+                data-placement="bottom" 
+                data-toggle="tooltip" 
+                style="text-decoration: none; color: black;" 
+                href="#"
+                )
+                img.card-img-top.anh(
+                  alt="combo-dinh-duong-than-duoc-xanh" 
+                  src="images/combo-dinh-duong-than-duoc-xanh.jpg"
+                  )
+                .card-body.noidungsp.mt-3
+                  h6.card-title.ten Combo Dinh Dưỡng Xanh - Thần dược xanh
+                  small.tacgia.text-muted Ryu Seung-SunVictoria Boutenko
+                  .gia.d-flex.align-items-baseline
+                    .giamoi 111.200 ₫
+                    .giacu.text-muted 139.000 ₫
+                    .sale -20%
+                  .danhgia
+                    ul.d-flex(style="list-style: none;")
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li
+                        i.fa.fa-star
+                      li
+                        span.text-muted 0 nhận xét
+            .card
+              a.motsanpham(
+                title="Combo Ăn Xanh Để Khỏe - Sống Lành Để Trẻ" 
+                data-placement="bottom" 
+                data-toggle="tooltip" 
+                style="text-decoration: none; color: black;" 
+                href="#"
+                )
+                img.card-img-top.anh(
+                  alt="combo-an-xanh-song-lanh" 
+                  src="images/combo-an-xanh-song-lanh.jpg"
+                  )
+                .card-body.noidungsp.mt-3
+                  h6.card-title.ten Combo Ăn Xanh Để Khỏe - Sống Lành Để Trẻ
+                  small.tacgia.text-muted Norman W. Walker
+                  .gia.d-flex.align-items-baseline
+                    .giamoi 111.200 ₫
+                    .giacu.text-muted 139.000 ₫
+                    .sale -20%
+                  .danhgia
+                    ul.d-flex(style="list-style: none;")
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li
+                        i.fa.fa-star
+                      li
+                        span.text-muted 0 nhận xét
+            .card
+              a.motsanpham(
+                title="Combo Lược Sử Loài Người - Lược Sử Tương Lai - 21 Bài Học Cho Thế Kỷ 21" 
+                data-placement="bottom" 
+                data-toggle="tooltip" 
+                style="text-decoration: none; color: black;" 
+                href="#"
+                )
+                img.card-img-top.anh(
+                  alt="combo-luoc-su-loai-nguoi" 
+                  src="images/combo-luoc-su-loai-nguoi.jpg"
+                  )
+                .card-body.noidungsp.mt-3
+                  h6.card-title.ten
+                    | Combo Lược Sử Loài Người - Lược Sử Tương Lai - 21 Bài Học Cho
+                    |   Thế Kỷ 21
+                  small.tacgia.text-muted Yuval Noah Harari
+                  .gia.d-flex.align-items-baseline
+                    .giamoi 111.200 ₫
+                    .giacu.text-muted 139.000 ₫
+                    .sale -20%
+                  .danhgia
+                    ul.d-flex(style="list-style: none;")
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li
+                        i.fa.fa-star
+                      li
+                        span.text-muted 0 nhận xét
+            .card
+              a.motsanpham(
+                title="Bộ Sách Phong Cách Sống (Bộ 5 Cuốn)" 
+                data-placement="bottom" 
+                data-toggle="tooltip" 
+                style="text-decoration: none; color: black;" 
+                href="#"
+                )
+                img.card-img-top.anh(
+                  alt="combo-phong-cach-song" 
+                  src="images/combo-phong-cach-song.jpg"
+                  )
+                .card-body.noidungsp.mt-3
+                  h6.card-title.ten Bộ Sách Phong Cách Sống (Bộ 5 Cuốn)
+                  small.tacgia.text-muted
+                    | Marie Tourell Soderberg, Joanna Nylund, Yukari
+                    |   Mitsuhashi, Margareta Magnusson, Linnea Dunne
+                  .gia.d-flex.align-items-baseline
+                    .giamoi 111.200 ₫
+                    .giacu.text-muted 139.000 ₫
+                    .sale -20%
+                  .danhgia
+                    ul.d-flex(style="list-style: none;")
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li.active
+                        i.fa.fa-star
+                      li
+                        i.fa.fa-star
+                      li
+                        span.text-muted 0 nhận xét
+    // thanh cac dich vu :mien phi giao hang, qua tang mien phi ........
+    section.abovefooter.text-white(style="background-color: #CF111A;")
+      .container
+        .row
+          .col-lg-3.col-sm-6
+            .dichvu.d-flex.align-items-center
+              img(
+                alt="icon-books" 
+                src="images/icon-books.png"
+                )
+              .noidung
+                h6.tieude.font-weight-bold HƠN 14.000 TỰA SÁCH HAY
+                p.detail Tuyển chọn bởi DealBooks
+          .col-lg-3.col-sm-6
+            .dichvu.d-flex.align-items-center
+              img(
+                alt="icon-ship" 
+                src="images/icon-ship.png"
+                )
+              .noidung
+                h6.tieude.font-weight-bold MIỄN PHÍ GIAO HÀNG
+                p.detail Từ 150.000đ ở TP.HCM
+                p.detail Từ 300.000đ ở tỉnh thành khác
+          .col-lg-3.col-sm-6
+            .dichvu.d-flex.align-items-center
+              img(
+                alt="icon-gift" 
+                src="images/icon-gift.png"
+                )
+              .noidung
+                h6.tieude.font-weight-bold QUÀ TẶNG MIỄN PHÍ
+                p.detail Tặng Bookmark
+                p.detail Bao sách miễn phí
+          .col-lg-3.col-sm-6
+            .dichvu.d-flex.align-items-center
+              img(
+                alt="icon-return" 
+                src="images/icon-return.png"
+                )
+              .noidung
+                h6.tieude.font-weight-bold ĐỔI TRẢ NHANH CHÓNG
+                p.detail Hàng bị lỗi được đổi trả nhanh chóng
+    // het .abovefooter
+    // footer
+    footer
+      .container.py-4
+        .row
+          .col-md-3.col-xs-6
+            .gioithieu
+              h6.header.text-uppercase.font-weight-bold Về DealBook
+              a(href="#") Giới thiệu về DealBook
+              a(href="#") Tuyển dụng
+              .fb-like(
+                data-share="true" 
+                data-size="small" 
+                data-action="like" 
+                data-layout="button" 
+                data-width="300px" 
+                data-href="https://www.facebook.com/DealBook-110745443947730/"
+                )
+          .col-md-3.col-xs-6
+            .hotrokh
+              h6.header.text-uppercase.font-weight-bold HỖ TRỢ KHÁCH HÀNG
+              a(href="#") Hướng dẫn đặt hàng
+              a(href="#") Phương thức thanh toán
+              a(href="#") Phương thức vận chuyển
+              a(href="#") Chính sách đổi trả
+          .col-md-3.col-xs-6
+            .lienket
+              h6.header.text-uppercase.font-weight-bold HỢP TÁC VÀ LIÊN KẾT
+              img(
+                alt="dang-ky-bo-cong-thuong" 
+                src="images/dang-ky-bo-cong-thuong.png"
+                )
+          .col-md-3.col-xs-6
+            .ptthanhtoan
+              h6.header.text-uppercase.font-weight-bold Phương thức thanh toán
+              img(
+                alt="visa-payment" 
+                src="images/visa-payment.jpg"
+                )
+              img(
+                alt="master-card-payment" 
+                src="images/master-card-payment.jpg"
+                )
+              img(
+                alt="jcb-payment" 
+                src="images/jcb-payment.jpg"
+                )
+              img(
+                alt="atm-payment" 
+                src="images/atm-payment.jpg"
+                )
+              img(
+                alt="cod-payment" 
+                src="images/cod-payment.jpg"
+                )
+              img(
+                alt="payoo-payment" 
+                src="images/payoo-payment.jpg"
+                )
+    // nut cuon len dau trang
+    .fixed-bottom
+      #backtotop.btn.btn-warning.float-right.rounded-circle.nutcuonlen(
+        style="background:#CF111A;" 
+        href="#"
+        )
+        i.fa.fa-chevron-up.text-white

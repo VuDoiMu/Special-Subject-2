@@ -1,0 +1,729 @@
+doctype html
+html(lang="vi")
+  head
+    meta(charset="UTF-8")
+    meta(
+      content="width=device-width, initial-scale=1.0" 
+      name="viewport"
+      )
+    link(
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
+      rel="stylesheet"
+      )
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js")
+    script(src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js")
+    link(
+      href="css/tai-khoan.css" 
+      rel="stylesheet"
+      )
+    script(
+      src="js/main.js" 
+      type="text/javascript"
+      )
+    link(
+      href="fontawesome_free_5.13.0/css/all.css" 
+      rel="stylesheet"
+      )
+    link(
+      rel="stylesheet" 
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
+      )
+    link(
+      href="slick/slick.css" 
+      type="text/css" 
+      rel="stylesheet"
+      )
+    link(
+      href="slick/slick-theme.css" 
+      type="text/css" 
+      rel="stylesheet"
+      )
+    script(
+      src="slick/slick.min.js" 
+      type="text/javascript"
+      )
+    link(
+      href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" 
+      rel="stylesheet"
+      )
+    script(src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js")
+    script(
+      src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js" 
+      type="text/javascript"
+      )
+    script(src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js")
+    link(
+      href="favicon_io/apple-touch-icon.png" 
+      sizes="180x180" 
+      rel="apple-touch-icon"
+      )
+    link(
+      href="favicon_io/favicon-32x32.png" 
+      sizes="32x32" 
+      type="image/png" 
+      rel="icon"
+      )
+    link(
+      href="favicon_io/favicon-16x16.png" 
+      sizes="16x16" 
+      type="image/png" 
+      rel="icon"
+      )
+    link(
+      href="favicon_io/site.webmanifest" 
+      rel="manifest"
+      )
+  body
+    // code cho nut like share facebook
+    #fb-root
+    script(
+      src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v6.0" 
+      crossorigin="anonymous" 
+      defer="" 
+      async=""
+      )
+    // header
+    nav.navbar.navbar-expand-md.bg-white.navbar-light
+      .container
+        // logo
+        a.navbar-brand(
+          style="color: #CF111A;" 
+          href="index.html"
+          )
+          b DealBook
+          | .xyz
+        // navbar-toggler
+        button.navbar-toggler.d-lg-none(
+          aria-label="Toggle navigation" 
+          aria-expanded="false" 
+          aria-controls="collapsibleNavId" 
+          data-target="#collapsibleNavId" 
+          data-toggle="collapse" 
+          type="button"
+          )
+          span.navbar-toggler-icon
+        #collapsibleNavId.collapse.navbar-collapse
+          // form tìm kiếm
+          form.form-inline.ml-auto.my-2.my-lg-0.mr-3
+            .input-group(style="width: 520px;")
+              input.form-control(
+                placeholder="Nhập sách cần tìm kiếm..." 
+                aria-label="Small" 
+                type="text"
+                )
+              .input-group-append
+                button.btn(
+                  style="background-color: #CF111A; color: white;" 
+                  type="button"
+                  )
+                  i.fa.fa-search
+          // ô thông tin tài khoản nút đăng xuất và giỏ hàng trên header
+          ul.navbar-nav.mb-1.ml-auto
+            .dropdown
+              li.nav-item.account.d-flex(
+                data-toggle="dropdown" 
+                type="button"
+                )
+                a.btn.btn-secondary.rounded-circle(href="#")
+                  i.fa.fa-user
+                .info-logout
+                  a.nav-link.text-dark.text-uppercase.username(href="tai-khoan.html") Khánh Nguyễn
+                  a.nav-link.text-dark.logout(href="#")
+                    | Thoát
+                    i.fas.fa-sign-out-alt
+            li.nav-item.giohang
+              a.btn.btn-secondary.rounded-circle(href="gio-hang.html")
+                i.fa.fa-shopping-cart
+                .cart-amount 0
+              a.nav-link.text-dark.giohang.text-uppercase(
+                style="display:inline-block" 
+                href="gio-hang.html"
+                )
+                | Giỏ
+                |   Hàng
+    // form dang ky khi click vao button tren header
+    #formdangky.modal.fade.mt-5(
+      aria-hidden="true" 
+      aria-labelledby="dangky_tieude" 
+      tabindex="-1" 
+      data-backdrop="static"
+      )
+      .modal-dialog
+        .modal-content
+          .modal-header
+            ul.tabs.d-flex.justify-content-around.list-unstyled.mb-0
+              li.tab.tab-dangnhap.text-center
+                a.text-decoration-none Đăng nhập
+                hr
+              li.tab.tab-dangky.text-center
+                a.text-decoration-none Đăng ký
+                hr
+            button.close(
+              aria-label="Close" 
+              data-dismiss="modal" 
+              type="button"
+              )
+              span(aria-hidden="true") ×
+          .modal-body
+            form#form-signup.form-signin.mt-2
+              .form-label-group
+                input.form-control(
+                  autofocus="" 
+                  required="" 
+                  name="name" 
+                  placeholder="Nhập họ và tên" 
+                  type="text"
+                  )
+              .form-label-group
+                input.form-control(
+                  required="" 
+                  name="phone" 
+                  placeholder="Nhập số điện thoại" 
+                  type="text"
+                  )
+              .form-label-group
+                input.form-control(
+                  required="" 
+                  name="email" 
+                  placeholder="Nhập địa chỉ email" 
+                  type="email"
+                  )
+              .form-label-group
+                input.form-control(
+                  required="" 
+                  name="password" 
+                  placeholder="Nhập mật khẩu" 
+                  type="password"
+                  )
+              .form-label-group.mb-4
+                input.form-control(
+                  required="" 
+                  placeholder="Nhập lại mật khẩu" 
+                  name="confirm_password" 
+                  type="password"
+                  )
+              button.btn.btn-lg.btn-block.btn-signin.text-uppercase.text-white.mt-3(
+                style="background: #F5A623" 
+                type="submit"
+                ) Đăng ký
+              hr.mt-3.mb-2
+              .custom-control.custom-checkbox
+                p.text-center Bằng việc đăng ký, bạn đã đồng ý với DealBook về
+                a.text-decoration-none.text-center(
+                  style="color: #F5A623" 
+                  href="#"
+                  )
+                  | Điều khoản dịch
+                  |   vụ & Chính sách bảo mật
+    // form dang nhap khi click vao button tren header
+    #formdangnhap.modal.fade.mt-5(
+      aria-hidden="true" 
+      aria-labelledby="dangnhap_tieude" 
+      tabindex="-1" 
+      data-backdrop="static"
+      )
+      .modal-dialog
+        .modal-content
+          .modal-header
+            ul.tabs.d-flex.justify-content-around.list-unstyled.mb-0
+              li.tab.tab-dangnhap.text-center
+                a.text-decoration-none Đăng nhập
+                hr
+              li.tab.tab-dangky.text-center
+                a.text-decoration-none Đăng ký
+                hr
+            button.close(
+              aria-label="Close" 
+              data-dismiss="modal" 
+              type="button"
+              )
+              span(aria-hidden="true") ×
+          .modal-body
+            form#form-signin.form-signin.mt-2
+              .form-label-group
+                input.form-control(
+                  autofocus="" 
+                  required="" 
+                  name="email" 
+                  placeholder="Nhập địa chỉ email" 
+                  type="email"
+                  )
+              .form-label-group
+                input.form-control(
+                  required="" 
+                  name="password" 
+                  placeholder="Mật khẩu" 
+                  type="password"
+                  )
+              .custom-control.custom-checkbox.mb-3
+                input#customCheck1.custom-control-input(type="checkbox")
+                label.custom-control-label(for="customCheck1") Nhớ mật khẩu
+                a.float-right.text-decoration-none(
+                  style="color: #F5A623" 
+                  href="#"
+                  )
+                  | Quên mật
+                  |   khẩu
+              button.btn.btn-lg.btn-block.btn-signin.text-uppercase.text-white(
+                style="background: #F5A623" 
+                type="submit"
+                ) Đăng nhập
+              hr.my-4
+              button.btn.btn-lg.btn-google.btn-block.text-uppercase(type="submit")
+                i.fab.fa-google.mr-2
+                | Đăng nhập bằng Google
+              button.btn.btn-lg.btn-facebook.btn-block.text-uppercase(type="submit")
+                i.fab.fa-facebook-f.mr-2
+                | Đăng nhập bằng Facebook
+    // thanh "danh muc sach" đã được ẩn bên trong + hotline + ho tro truc tuyen
+    section.duoinavbar
+      .container.text-white
+        .row.justify
+          .col-lg-3.col-md-5
+            .categoryheader
+              .noidungheader.text-white
+                i.fa.fa-bars
+                span.text-uppercase.font-weight-bold.ml-1 Danh mục sách
+              // CATEGORIES
+              .categorycontent
+                ul
+                  li
+                    a(href="#") Sách Kinh Tế - Kỹ Năng
+                    i.fa.fa-chevron-right.float-right
+                    ul
+                      li.liheader
+                        a.header.text-uppercase(href="#")
+                          | Sách Kinh Tế - Kỹ
+                          |   Năng
+                      .content.trai
+                        li
+                          a(href="#") Kinh Tế - Chính Trị
+                        li
+                          a(href="#") Sách Khởi Nghiệp
+                        li
+                          a(href="#") Sách Tài Chính, Kế Toán
+                        li
+                          a(href="#") Sách Quản Trị Nhân Sự
+                        li
+                          a(href="#") Sách Kỹ Năng Làm Việc
+                      .content.phai
+                        li
+                          a(href="#") Nhân Vật - Bài Học Kinh Doanh
+                        li
+                          a(href="#") Sách Quản Trị - Lãnh Đạo
+                        li
+                          a(href="#") Sách Kinh Tế Học
+                        li
+                          a(href="#") Sách Chứng Khoán - Bất Động Sản - Đầu Tư
+                        li
+                          a(href="#") Sách Marketing - Bán Hàng
+                  li
+                    a(href="") Nghệ Thuật Sống - Tâm Lý
+                    i.fa.fa-chevron-right.float-right
+                    ul
+                      li.liheader
+                        a.header.text-uppercase(href="#")
+                          | Nghệ Thuật Sống -
+                          |   Tâm
+                          |   Lý
+                      .content.trai
+                        li
+                          a(href="#") Sách Nghệ Thuật Sống
+                        li
+                          a(href="#") Sách Tâm Lý
+                        li
+                          a(href="#") Sách Hướng Nghiệp
+                      .content.phai
+                        li
+                          a(href="#") Sách Nghệ Thuật Sống Đẹp
+                        li
+                          a(href="#") Sách Tư Duy
+                  li
+                    a(href="#") Sách Văn Học Việt Nam
+                    i.fa.fa-chevron-right.float-right
+                    ul
+                      li.liheader
+                        a.header.text-uppercase(href="#")
+                          | Sách Văn Học Việt
+                          |   Nam
+                      .content.trai
+                        li
+                          a(href="#") Truyện Ngắn - Tản Văn
+                        li
+                          a(href="#") Tiểu Thuyết lịch Sử
+                        li
+                          a(href="#") Phóng Sự - Ký Sự - Du ký - Tùy Bút
+                        li
+                          a(href="#") Thơ
+                      .content.phai
+                        li
+                          a(href="#") Tiểu thuyết
+                        li
+                          a(href="#") Tiểu sử - Hồi ký
+                        li
+                          a(href="#") Phê Bình Văn Học
+                  li
+                    a(href="#") Sách Văn Học Nước Ngoài
+                    i.fa.fa-chevron-right.float-right
+                    ul
+                      li.liheader
+                        a.header.text-uppercase(href="#")
+                          | Sách Văn Học Nước
+                          |   Ngoài
+                      .content.trai
+                        li
+                          a(href="#") Văn Học Hiện Đại
+                        li
+                          a(href="#") Tiểu Thuyết
+                        li
+                          a(href="#") Truyện Trinh Thám
+                        li
+                          a(href="#") Thần Thoại - Cổ Tích
+                      .content.phai
+                        li
+                          a(href="#") Văn Học Kinh Điển
+                        li
+                          a(href="#") Sách Giả Tưởng - Kinh Dị
+                        li
+                          a(href="#") Truyện Kiếm Hiệp
+                  li
+                    a(href="#") Sách Thiếu Nhi
+                    i.fa.fa-chevron-right.float-right
+                    ul
+                      li.liheader
+                        a.header.text-uppercase(href="#")
+                          | Sách Thiếu
+                          |   Nhi
+                      .content.trai
+                        li
+                          a(href="#") Mẫu Giáo
+                        li
+                          a(href="#") Thiếu Niên
+                        li
+                          a(href="#") Kiến Thức - Bách Khoa
+                        li
+                          a(href="#") Truyện Cổ Tích
+                      .content.phai
+                        li
+                          a(href="#") Nhi Đồng
+                        li
+                          a(href="#") Văn Học Thiếu Nhi
+                        li
+                          a(href="#") Kỹ Năng Sống
+                        li
+                          a(href="#") Truyện Tranh
+                  li
+                    a(href="#") Sách Giáo Dục - Gia Đình
+                    i.fa.fa-chevron-right.float-right
+                    ul
+                      li.liheader
+                        a.header.text-uppercase(href="#")
+                          | Sách Giáo Dục -
+                          |   Gia
+                          |   Đình
+                      .content.trai
+                        li
+                          a(href="#") Giáo dục
+                        li
+                          a(href="#") Thai Giáo
+                        li
+                          a(href="#") Sách Dinh Dưỡng - Chăm Sóc Trẻ
+                        li
+                          a(href="#") Ẩm Thực - Nấu Ăn
+                        li
+                          a(href="#") Sách Tham Khảo
+                      .content.phai
+                        li
+                          a(href="#") Giới Tính
+                        li
+                          a(href="#") Sách Làm Cha Mẹ
+                        li
+                          a(href="#") Kiến Thức - Kỹ Năng Cho Trẻ
+                        li
+                          a(href="#") Ngoại Ngữ - Từ Điển
+                  li
+                    a(href="#") Sách Lịch Sử
+                    i.fa.fa-chevron-right.float-right
+                    ul
+                      li.liheader
+                        a.header.text-uppercase(href="#") Sách Lịch Sử
+                      .content.trai
+                        li
+                          a(href="#") Lịch Sử Việt Nam
+                      .content.phai
+                        li
+                          a(href="#") Lịch Sử Thế Giới
+                  li
+                    a(href="#") Sách Văn Hóa - Nghệ Thuật
+                    i.fa.fa-chevron-right.float-right
+                    ul
+                      li.liheader
+                        a.header.text-uppercase(href="#")
+                          | Sách Văn Hóa -
+                          |   Nghệ
+                          |   Thuật
+                      .content.trai
+                        li
+                          a(href="#") Văn Hóa
+                        li
+                          a(href="#") Phong Tục Tập Quán
+                        li
+                          a(href="#") Phong Thủy
+                      .content.phai
+                        li
+                          a(href="#") Nghệ Thuật
+                        li
+                          a(href="#") Kiến Trúc
+                        li
+                          a(href="#") Du Lịch
+                  li
+                    a(href="#") Sách Khoa Học - Triết Học
+                    i.fa.fa-chevron-right.float-right
+                    ul
+                      li.liheader
+                        a.header.text-uppercase(href="#")
+                          | Sách Khoa Học -
+                          |   Triết
+                          |   Học
+                      .content.trai
+                        li
+                          a(href="#") Triết Học Phương Tây
+                        li
+                          a(href="#") Khoa Học Cơ Bản
+                      .content.phai
+                        li
+                          a(href="#") Minh Tiết Phương Đông
+                  li
+                    a(href="#") Sách Tâm Linh - Tôn Giáo
+                    i.fa.fa-chevron-right.float-right
+                  li
+                    a(href="#") Sách Y Học - Thực Dưỡng
+                    i.fa.fa-chevron-right.float-right
+                    ul
+                      li.liheader
+                        a.header.text-uppercase(href="#")
+                          | Sách Y Học - Thực
+                          |   Dưỡng
+                      .content.trai
+                        li
+                          a(href="#") Chăm Sóc Sức Khỏe
+                        li
+                          a(href="#") Y Học
+                        li
+                          a(href="#") Thiền - Yoga
+                      .content.phai
+                        li
+                          a(href="#") Thực Dưỡng
+                        li
+                          a(href="#") Đông Y - Cổ Truyền
+          .col-md-5.ml-auto.contact.d-none.d-md-block
+            .benphai.float-right
+              .hotline
+                i.fa.fa-phone
+                span
+                  | Hotline:
+                  b 1900 1999
+              i.fas.fa-comments-dollar
+              a(href="#") Hỗ trợ trực tuyến
+    // nội dung của trang
+    section.account-page.my-3
+      .container
+        .page-content.bg-white
+          .account-page-tab-content.m-4
+            // 2 tab: thông tin tài khoản, danh sách đơn hàng
+            nav
+              #nav-tab.nav.nav-tabs(role="tablist")
+                a#nav-taikhoan-tab.nav-item.nav-link.active(
+                  aria-selected="true" 
+                  aria-controls="nav-home" 
+                  role="tab" 
+                  href="#nav-taikhoan" 
+                  data-toggle="tab"
+                  ) Thông tin tài khoản
+                a#nav-donhang-tab.nav-item.nav-link(
+                  aria-selected="false" 
+                  aria-controls="nav-profile" 
+                  role="tab" 
+                  href="#nav-donhang" 
+                  data-toggle="tab"
+                  ) Danh sách đơn hàng
+            // nội dung 2 tab
+            .tab-content
+              // nội dung tab 1: thông tin tài khoản
+              #nav-taikhoan.tab-pane.fade.show.active.pl-4(
+                aria-labelledby="nav-taikhoan-tab" 
+                role="tabpanel"
+                )
+                .offset-md-4.mt-3
+                  h3.account-header Thông tin tài khoản
+                .hoten.my-3
+                  .row
+                    label.col-md-2.offset-md-2(for="account-hoten") Họ tên
+                    input.col-md-4(
+                      name="account-hoten" 
+                      type="text"
+                      )
+                .email.my-3
+                  .row
+                    label.col-md-2.offset-md-2(for="account-email") Địa chỉ email
+                    input.col-md-4(
+                      value="abc@gmail.com" 
+                      disabled="disabled" 
+                      name="account-email" 
+                      type="text"
+                      )
+                .checkbox-change-pass.my-3
+                  .row
+                    input#changepass.offset-md-4(
+                      style="margin-top: 6px;margin-right: 5px; " 
+                      name="changepass" 
+                      type="checkbox"
+                      )
+                    label(for="changepass") Thay đổi mật khẩu
+                .thay-doi-mk
+                  .mkcu.my-3
+                    .row
+                      label.col-md-2.offset-md-2(for="account-mkcu") Mật khẩu cũ
+                      input.col-md-4(
+                        name="account-mkcu" 
+                        type="text"
+                        )
+                  .mkmoi.my-3
+                    .row
+                      label.col-md-2.offset-md-2(for="account-mkmoi") Mật khẩu mới
+                      input.col-md-4(
+                        name="account-mkmoi" 
+                        type="text"
+                        )
+                  .xacnhan-mkmoi.my-3
+                    .row
+                      label.col-md-2.offset-md-2(for="account-xacnhan-mkmoi") Xác nhận mật khẩu
+                      input.col-md-4(
+                        name="account-xacnhan-mkmoi" 
+                        type="text"
+                        )
+                  .capnhat.my-3
+                    .row
+                      button.button-capnhat.text-uppercase.offset-md-4.btn.btn-warning.mb-4(type="button") Cập nhật
+              // nội dung tab 2: danh sách đơn hàng
+              #nav-donhang.tab-pane.fade.py-3(
+                aria-labelledby="nav-donhang-tab" 
+                role="tabpanel"
+                )
+                .donhang-table
+                  table.m-auto
+                    tbody
+                      tr
+                        th Mã đơn hàng
+                        th Ngày mua
+                        th Sản phẩm
+                        th Tổng tiền
+                        th Trạng thái đơn hàng
+    // thanh cac dich vu :mien phi giao hang, qua tang mien phi ........
+    section.abovefooter.text-white(style="background-color: #CF111A;")
+      .container
+        .row
+          .col-lg-3.col-sm-6
+            .dichvu.d-flex.align-items-center
+              img(
+                alt="icon-books" 
+                src="images/icon-books.png"
+                )
+              .noidung
+                h6.tieude.font-weight-bold HƠN 14.000 TỰA SÁCH HAY
+                p.detail Tuyển chọn bởi DealBooks
+          .col-lg-3.col-sm-6
+            .dichvu.d-flex.align-items-center
+              img(
+                alt="icon-ship" 
+                src="images/icon-ship.png"
+                )
+              .noidung
+                h6.tieude.font-weight-bold MIỄN PHÍ GIAO HÀNG
+                p.detail Từ 150.000đ ở TP.HCM
+                p.detail Từ 300.000đ ở tỉnh thành khác
+          .col-lg-3.col-sm-6
+            .dichvu.d-flex.align-items-center
+              img(
+                alt="icon-gift" 
+                src="images/icon-gift.png"
+                )
+              .noidung
+                h6.tieude.font-weight-bold QUÀ TẶNG MIỄN PHÍ
+                p.detail Tặng Bookmark
+                p.detail Bao sách miễn phí
+          .col-lg-3.col-sm-6
+            .dichvu.d-flex.align-items-center
+              img(
+                alt="icon-return" 
+                src="images/icon-return.png"
+                )
+              .noidung
+                h6.tieude.font-weight-bold ĐỔI TRẢ NHANH CHÓNG
+                p.detail Hàng bị lỗi được đổi trả nhanh chóng
+    // footer
+    footer
+      .container.py-4
+        .row
+          .col-md-3.col-xs-6
+            .gioithieu
+              h6.header.text-uppercase.font-weight-bold Về DealBook
+              a(href="#") Giới thiệu về DealBook
+              a(href="#") Tuyển dụng
+              .fb-like(
+                data-share="true" 
+                data-size="small" 
+                data-action="like" 
+                data-layout="button" 
+                data-width="300px" 
+                data-href="https://www.facebook.com/DealBook-110745443947730/"
+                )
+          .col-md-3.col-xs-6
+            .hotrokh
+              h6.header.text-uppercase.font-weight-bold HỖ TRỢ KHÁCH HÀNG
+              a(href="#") Hướng dẫn đặt hàng
+              a(href="#") Phương thức thanh toán
+              a(href="#") Phương thức vận chuyển
+              a(href="#") Chính sách đổi trả
+          .col-md-3.col-xs-6
+            .lienket
+              h6.header.text-uppercase.font-weight-bold HỢP TÁC VÀ LIÊN KẾT
+              img(
+                alt="dang-ky-bo-cong-thuong" 
+                src="images/dang-ky-bo-cong-thuong.png"
+                )
+          .col-md-3.col-xs-6
+            .ptthanhtoan
+              h6.header.text-uppercase.font-weight-bold Phương thức thanh toán
+              img(
+                alt="visa-payment" 
+                src="images/visa-payment.jpg"
+                )
+              img(
+                alt="master-card-payment" 
+                src="images/master-card-payment.jpg"
+                )
+              img(
+                alt="jcb-payment" 
+                src="images/jcb-payment.jpg"
+                )
+              img(
+                alt="atm-payment" 
+                src="images/atm-payment.jpg"
+                )
+              img(
+                alt="cod-payment" 
+                src="images/cod-payment.jpg"
+                )
+              img(
+                alt="payoo-payment" 
+                src="images/payoo-payment.jpg"
+                )
+    // nut cuon len dau trang
+    .fixed-bottom
+      #backtotop.btn.btn-warning.float-right.rounded-circle.nutcuonlen(
+        style="background:#CF111A;" 
+        href="#"
+        )
+        i.fa.fa-chevron-up.text-white
