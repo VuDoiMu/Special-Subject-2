@@ -8,18 +8,11 @@ const bookSchema = new mongoose.Schema({
         lowercase: true,
         minLength: 1
     },
-    category: {
-        type: String,
-        maxLength: 60,
-        required: true,
-        lowercase: true,
-        minLength: 1
-    },
     price: {
         type: Number,
         required: true
     },
-    discountedPrice: {
+    saleRate: {
         type: Number
     },
     description: {
