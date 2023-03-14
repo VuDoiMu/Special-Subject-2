@@ -4,7 +4,7 @@ const app = express();
 const mongoose = require('mongoose');
 const connectDB = require('./configs/dbCon');
 const path = require('path');
-
+const data = require('./data/book.json');
 //connect to MongoDb
 connectDB();
 
@@ -23,7 +23,7 @@ app.set("views", path.join(__dirname, "views"));
 
 // routes for render pug files
 app.get("/", (req, res) => {
-    let data = "hello";
+    console.log(data);
     res.render("home.pug", {
       data,
     });
@@ -38,8 +38,10 @@ app.get("/", (req, res) => {
       title: "hello world",
     });
   });
-  app.get("/product", (req, res) => {
-    res.render("product.pug", {
+  
+   app.get("/product/:id", (req, res) => {
+    const id = req.params.id;
+    res.render("product-list.pug", {
       title: "hello world",
     });
   });

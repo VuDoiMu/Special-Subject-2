@@ -1,7 +1,7 @@
 doctype html
 html(lang="vi")
   head
-    title #{data}
+    title Home Page
     meta(
       content="Mua sách online hay, giá tốt nhất, combo sách hot bán chạy, giảm giá cực khủng cùng với những ưu đãi như miễn phí giao hàng, quà tặng miễn phí, đổi trả nhanh chóng. Đa dạng sản phẩm, đáp ứng mọi nhu cầu." 
       name="description"
@@ -106,9 +106,7 @@ html(lang="vi")
           style="color: #CF111A;" 
           href="index.html"
           )
-          b #{ data }
-
-          | .xyz
+          b EManga
         // navbar-toggler
         button.navbar-toggler.d-lg-none(
           aria-label="Toggle navigation" 
@@ -609,276 +607,279 @@ html(lang="vi")
               a.btn.btn-warning.btn-sm.text-white(href="sach-moi-tuyen-chon.html") Xem tất cả
           .khoisanpham(style="padding-bottom: 2rem;")
             // 1 san pham
-            .card
-              a.motsanpham(
-                title="Lập Kế Hoạch Kinh Doanh Hiệu Quả" 
-                data-placement="bottom" 
-                data-toggle="tooltip" 
-                style="text-decoration: none; color: black;" 
-                href="Lap-trinh-ke-hoach-kinh-doanh-hieu-qua.html"
-                )
-                img.card-img-top.anh(
-                  alt="lap-ke-hoach-kinh-doanh-hieu-qua" 
-                  src="images/lap-ke-hoach-kinh-doanh-hieu-qua.jpg"
+
+            each book in data 
+              .card
+                a.motsanpham(
+                  title=book.name 
+                  data-placement="bottom" 
+                  data-toggle="tooltip" 
+                  style="text-decoration: none; color: black;" 
+                  href=('/product/' + book._id.$oid)
+                
                   )
-                .card-body.noidungsp.mt-3
-                  h3.card-title.ten Lập Kế Hoạch Kinh Doanh Hiệu Quả
-                  small.tacgia.text-muted Brian Finch
-                  .gia.d-flex.align-items-baseline
-                    .giamoi 111.200 ₫
-                    .giacu.text-muted 139.000 ₫
-                    .sale -20%
-                  .danhgia
-                    ul.d-flex(style="list-style: none;")
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li
-                        i.fa.fa-star
-                      li
-                        span.text-muted 0 nhận xét
-            .card
-              a.motsanpham(
-                title="Ma Bùn Lưu Manh Và Những Câu Chuyện Khác Của Nguyễn Trí" 
-                data-placement="bottom" 
-                data-toggle="tooltip" 
-                style="text-decoration: none; color: black;" 
-                href="Ma-bun-luu-manh-va-nhung-cau-chuyen-khac-cua-nguyen-tri.html"
-                )
-                img.card-img-top.anh(
-                  alt="ma-bun-luu-manh" 
-                  src="images/ma-bun-luu-manh.jpg"
-                  )
-                .card-body.noidungsp.mt-3
-                  h3.card-title.ten
-                    | Ma Bùn Lưu Manh Và Những Câu Chuyện Khác Của Nguyễn
-                    |   Trí
-                  small.tacgia.text-muted Nguyễn Trí
-                  .gia.d-flex.align-items-baseline
-                    .giamoi 68.000 ₫
-                    .giacu.text-muted 85.000 ₫
-                    .sale -20%
-                  .danhgia
-                    ul.d-flex(style="list-style: none;")
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li
-                        i.fa.fa-star
-                      li
-                        span.text-muted 0 nhận xét
-            .card
-              a.motsanpham(
-                title="Bank 4.0 - Giao dịch mọi nơi, không chỉ là ngân hàng" 
-                data-placement="bottom" 
-                data-toggle="tooltip" 
-                style="text-decoration: none; color: black;" 
-                href="#"
-                )
-                img.card-img-top.anh(
-                  alt="bank-4.0" 
-                  src="images/bank-4.0.jpg"
-                  )
-                .card-body.noidungsp.mt-3
-                  h3.card-title.ten Bank 4.0 - Giao dịch mọi nơi, không chỉ là ngân hàng
-                  small.tacgia.text-muted Brett King
-                  .gia.d-flex.align-items-baseline
-                    .giamoi 111.200 ₫
-                    .giacu.text-muted 139.000 ₫
-                    .sale -20%
-                  .danhgia
-                    ul.d-flex(style="list-style: none;")
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li
-                        i.fa.fa-star
-                      li
-                        span.text-muted 0 nhận xét
-            .card
-              a.motsanpham(
-                title="Bộ Sách 500 Câu Chuyện Đạo Đức - Những Câu Chuyện Tình Thân (Bộ 8 Cuốn)" 
-                data-placement="bottom" 
-                data-toggle="tooltip" 
-                style="text-decoration: none; color: black;" 
-                href="#"
-                )
-                img.card-img-top.anh(
-                  alt="bo-sach-500-cau-chuyen-dao-duc" 
-                  src="images/bo-sach-500-cau-chuyen-dao-duc.jpg"
-                  )
-                .card-body.noidungsp.mt-3
-                  h3.card-title.ten
-                    | Bộ Sách 500 Câu Chuyện Đạo Đức - Những Câu Chuyện
-                    |   Tình Thân (Bộ 8 Cuốn)
-                  small.tacgia.text-muted Nguyễn Hạnh - Trần Thị Thanh Nguyên
-                  .gia.d-flex.align-items-baseline
-                    .giamoi 111.200 ₫
-                    .giacu.text-muted 139.000 ₫
-                    .sale -20%
-                  .danhgia
-                    ul.d-flex(style="list-style: none;")
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li
-                        i.fa.fa-star
-                      li
-                        span.text-muted 0 nhận xét
-            .card
-              a.motsanpham(
-                title="Lịch Sử Ung Thư - Hoàng Đế Của Bách Bệnh" 
-                data-placement="bottom" 
-                data-toggle="tooltip" 
-                style="text-decoration: none; color: black;" 
-                href="#"
-                )
-                img.card-img-top.anh(
-                  alt="ung-thu-hoang-de-cua-bach-benh" 
-                  src="images/ung-thu-hoang-de-cua-bach-benh.jpg"
-                  )
-                .card-body.noidungsp.mt-3
-                  h3.card-title.ten Lịch Sử Ung Thư - Hoàng Đế Của Bách Bệnh
-                  small.tacgia.text-muted Siddhartha Mukherjee
-                  .gia.d-flex.align-items-baseline
-                    .giamoi 111.200 ₫
-                    .giacu.text-muted 139.000 ₫
-                    .sale -20%
-                  .danhgia
-                    ul.d-flex(style="list-style: none;")
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li
-                        i.fa.fa-star
-                      li
-                        span.text-muted 0 nhận xét
-            .card
-              a.motsanpham(
-                title="Cuốn Sách Khám Phá: Trời Đêm Huyền Diệu" 
-                data-placement="bottom" 
-                data-toggle="tooltip" 
-                style="text-decoration: none; color: black;" 
-                href="#"
-                )
-                img.card-img-top.anh(
-                  alt="troi-dem-huyen-dieu" 
-                  src="images/troi-dem-huyen-dieu.jpg"
-                  )
-                .card-body.noidungsp.mt-3
-                  h3.card-title.ten Cuốn Sách Khám Phá: Trời Đêm Huyền Diệu
-                  small.tacgia.text-muted Disney Learning
-                  .gia.d-flex.align-items-baseline
-                    .giamoi 111.200 ₫
-                    .giacu.text-muted 139.000 ₫
-                    .sale -20%
-                  .danhgia
-                    ul.d-flex(style="list-style: none;")
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li
-                        i.fa.fa-star
-                      li
-                        span.text-muted 0 nhận xét
-            .card
-              a.motsanpham(
-                title="Bộ Sách Những Câu Chuyện Cho Con Thành Người Tử Tế (Bộ 5 Cuốn)" 
-                data-placement="bottom" 
-                data-toggle="tooltip" 
-                style="text-decoration: none; color: black;" 
-                href="#"
-                )
-                img.card-img-top.anh(
-                  alt="bo-sach-nhung-cau-chuyen-cho-con-thanh-nguoi-tu-te" 
-                  src="images/bo-sach-nhung-cau-chuyen-cho-con-thanh-nguoi-tu-te.jpg"
-                  )
-                .card-body.noidungsp.mt-3
-                  h3.card-title.ten
-                    | Bộ Sách Những Câu Chuyện Cho Con Thành Người Tử Tế (Bộ 5
-                    |   Cuốn)
-                  small.tacgia.text-muted Nhiều Tác Giả
-                  .gia.d-flex.align-items-baseline
-                    .giamoi 111.200 ₫
-                    .giacu.text-muted 139.000 ₫
-                    .sale -20%
-                  .danhgia
-                    ul.d-flex(style="list-style: none;")
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li
-                        i.fa.fa-star
-                      li
-                        span.text-muted 0 nhận xét
-            .card
-              a.motsanpham(
-                title="Lịch Sử Thế Giới" 
-                data-placement="bottom" 
-                data-toggle="tooltip" 
-                style="text-decoration: none; color: black;" 
-                href="#"
-                )
-                img.card-img-top.anh(
-                  alt="lich-su-the-gioi" 
-                  src="images/lich-su-the-gioi.jpg"
-                  )
-                .card-body.noidungsp.mt-3
-                  h3.card-title.ten Lịch Sử Thế Giới
-                  small.tacgia.text-muted Nam Phong tùng thư - Phạm Quỳnh chủ nhiệm
-                  .gia.d-flex.align-items-baseline
-                    .giamoi 111.200 ₫
-                    .giacu.text-muted 139.000 ₫
-                    .sale -20%
-                  .danhgia
-                    ul.d-flex(style="list-style: none;")
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li
-                        i.fa.fa-star
-                      li
-                        span.text-muted 0 nhận xét
+                  img.card-img-top.anh(
+                    alt="lap-ke-hoach-kinh-doanh-hieu-qua" 
+                    src= book.images
+                    )
+                  .card-body.noidungsp.mt-3
+                    h3.card-title.ten=book.name
+                    small.tacgia.text-muted=book.author
+                    .gia.d-flex.align-items-baseline
+                      .giamoi 111.200 ₫
+                      .giacu.text-muted 139.000 ₫
+                      .sale -20%
+                    .danhgia
+                      ul.d-flex(style="list-style: none;")
+                        li.active
+                          i.fa.fa-star
+                        li.active
+                          i.fa.fa-star
+                        li.active
+                          i.fa.fa-star
+                        li.active
+                          i.fa.fa-star
+                        li
+                          i.fa.fa-star
+                        li
+                          span.text-muted 0 nhận xét
+            //- .card
+            //-   a.motsanpham(
+            //-     title="Ma Bùn Lưu Manh Và Những Câu Chuyện Khác Của Nguyễn Trí" 
+            //-     data-placement="bottom" 
+            //-     data-toggle="tooltip" 
+            //-     style="text-decoration: none; color: black;" 
+            //-     href="Ma-bun-luu-manh-va-nhung-cau-chuyen-khac-cua-nguyen-tri.html"
+            //-     )
+            //-     img.card-img-top.anh(
+            //-       alt="ma-bun-luu-manh" 
+            //-       src="images/ma-bun-luu-manh.jpg"
+            //-       )
+            //-     .card-body.noidungsp.mt-3
+            //-       h3.card-title.ten
+            //-         | Ma Bùn Lưu Manh Và Những Câu Chuyện Khác Của Nguyễn
+            //-         |   Trí
+            //-       small.tacgia.text-muted Nguyễn Trí
+            //-       .gia.d-flex.align-items-baseline
+            //-         .giamoi 68.000 ₫
+            //-         .giacu.text-muted 85.000 ₫
+            //-         .sale -20%
+            //-       .danhgia
+            //-         ul.d-flex(style="list-style: none;")
+            //-           li.active
+            //-             i.fa.fa-star
+            //-           li.active
+            //-             i.fa.fa-star
+            //-           li.active
+            //-             i.fa.fa-star
+            //-           li.active
+            //-             i.fa.fa-star
+            //-           li
+            //-             i.fa.fa-star
+            //-           li
+            //-             span.text-muted 0 nhận xét
+            //- .card
+            //-   a.motsanpham(
+            //-     title="Bank 4.0 - Giao dịch mọi nơi, không chỉ là ngân hàng" 
+            //-     data-placement="bottom" 
+            //-     data-toggle="tooltip" 
+            //-     style="text-decoration: none; color: black;" 
+            //-     href="#"
+            //-     )
+            //-     img.card-img-top.anh(
+            //-       alt="bank-4.0" 
+            //-       src="images/bank-4.0.jpg"
+            //-       )
+            //-     .card-body.noidungsp.mt-3
+            //-       h3.card-title.ten Bank 4.0 - Giao dịch mọi nơi, không chỉ là ngân hàng
+            //-       small.tacgia.text-muted Brett King
+            //-       .gia.d-flex.align-items-baseline
+            //-         .giamoi 111.200 ₫
+            //-         .giacu.text-muted 139.000 ₫
+            //-         .sale -20%
+            //-       .danhgia
+            //-         ul.d-flex(style="list-style: none;")
+            //-           li.active
+            //-             i.fa.fa-star
+            //-           li.active
+            //-             i.fa.fa-star
+            //-           li.active
+            //-             i.fa.fa-star
+            //-           li.active
+            //-             i.fa.fa-star
+            //-           li
+            //-             i.fa.fa-star
+            //-           li
+            //-             span.text-muted 0 nhận xét
+            //- .card
+            //-   a.motsanpham(
+            //-     title="Bộ Sách 500 Câu Chuyện Đạo Đức - Những Câu Chuyện Tình Thân (Bộ 8 Cuốn)" 
+            //-     data-placement="bottom" 
+            //-     data-toggle="tooltip" 
+            //-     style="text-decoration: none; color: black;" 
+            //-     href="#"
+            //-     )
+            //-     img.card-img-top.anh(
+            //-       alt="bo-sach-500-cau-chuyen-dao-duc" 
+            //-       src="images/bo-sach-500-cau-chuyen-dao-duc.jpg"
+            //-       )
+            //-     .card-body.noidungsp.mt-3
+            //-       h3.card-title.ten
+            //-         | Bộ Sách 500 Câu Chuyện Đạo Đức - Những Câu Chuyện
+            //-         |   Tình Thân (Bộ 8 Cuốn)
+            //-       small.tacgia.text-muted Nguyễn Hạnh - Trần Thị Thanh Nguyên
+            //-       .gia.d-flex.align-items-baseline
+            //-         .giamoi 111.200 ₫
+            //-         .giacu.text-muted 139.000 ₫
+            //-         .sale -20%
+            //-       .danhgia
+            //-         ul.d-flex(style="list-style: none;")
+            //-           li.active
+            //-             i.fa.fa-star
+            //-           li.active
+            //-             i.fa.fa-star
+            //-           li.active
+            //-             i.fa.fa-star
+            //-           li.active
+            //-             i.fa.fa-star
+            //-           li
+            //-             i.fa.fa-star
+            //-           li
+            //-             span.text-muted 0 nhận xét
+            //- .card
+            //-   a.motsanpham(
+            //-     title="Lịch Sử Ung Thư - Hoàng Đế Của Bách Bệnh" 
+            //-     data-placement="bottom" 
+            //-     data-toggle="tooltip" 
+            //-     style="text-decoration: none; color: black;" 
+            //-     href="#"
+            //-     )
+            //-     img.card-img-top.anh(
+            //-       alt="ung-thu-hoang-de-cua-bach-benh" 
+            //-       src="images/ung-thu-hoang-de-cua-bach-benh.jpg"
+            //-       )
+            //-     .card-body.noidungsp.mt-3
+            //-       h3.card-title.ten Lịch Sử Ung Thư - Hoàng Đế Của Bách Bệnh
+            //-       small.tacgia.text-muted Siddhartha Mukherjee
+            //-       .gia.d-flex.align-items-baseline
+            //-         .giamoi 111.200 ₫
+            //-         .giacu.text-muted 139.000 ₫
+            //-         .sale -20%
+            //-       .danhgia
+            //-         ul.d-flex(style="list-style: none;")
+            //-           li.active
+            //-             i.fa.fa-star
+            //-           li.active
+            //-             i.fa.fa-star
+            //-           li.active
+            //-             i.fa.fa-star
+            //-           li.active
+            //-             i.fa.fa-star
+            //-           li
+            //-             i.fa.fa-star
+            //-           li
+            //-             span.text-muted 0 nhận xét
+            //- .card
+            //-   a.motsanpham(
+            //-     title="Cuốn Sách Khám Phá: Trời Đêm Huyền Diệu" 
+            //-     data-placement="bottom" 
+            //-     data-toggle="tooltip" 
+            //-     style="text-decoration: none; color: black;" 
+            //-     href="#"
+            //-     )
+            //-     img.card-img-top.anh(
+            //-       alt="troi-dem-huyen-dieu" 
+            //-       src="images/troi-dem-huyen-dieu.jpg"
+            //-       )
+            //-     .card-body.noidungsp.mt-3
+            //-       h3.card-title.ten Cuốn Sách Khám Phá: Trời Đêm Huyền Diệu
+            //-       small.tacgia.text-muted Disney Learning
+            //-       .gia.d-flex.align-items-baseline
+            //-         .giamoi 111.200 ₫
+            //-         .giacu.text-muted 139.000 ₫
+            //-         .sale -20%
+            //-       .danhgia
+            //-         ul.d-flex(style="list-style: none;")
+            //-           li.active
+            //-             i.fa.fa-star
+            //-           li.active
+            //-             i.fa.fa-star
+            //-           li.active
+            //-             i.fa.fa-star
+            //-           li.active
+            //-             i.fa.fa-star
+            //-           li
+            //-             i.fa.fa-star
+            //-           li
+            //-             span.text-muted 0 nhận xét
+            //- .card
+            //-   a.motsanpham(
+            //-     title="Bộ Sách Những Câu Chuyện Cho Con Thành Người Tử Tế (Bộ 5 Cuốn)" 
+            //-     data-placement="bottom" 
+            //-     data-toggle="tooltip" 
+            //-     style="text-decoration: none; color: black;" 
+            //-     href="#"
+            //-     )
+            //-     img.card-img-top.anh(
+            //-       alt="bo-sach-nhung-cau-chuyen-cho-con-thanh-nguoi-tu-te" 
+            //-       src="images/bo-sach-nhung-cau-chuyen-cho-con-thanh-nguoi-tu-te.jpg"
+            //-       )
+            //-     .card-body.noidungsp.mt-3
+            //-       h3.card-title.ten
+            //-         | Bộ Sách Những Câu Chuyện Cho Con Thành Người Tử Tế (Bộ 5
+            //-         |   Cuốn)
+            //-       small.tacgia.text-muted Nhiều Tác Giả
+            //-       .gia.d-flex.align-items-baseline
+            //-         .giamoi 111.200 ₫
+            //-         .giacu.text-muted 139.000 ₫
+            //-         .sale -20%
+            //-       .danhgia
+            //-         ul.d-flex(style="list-style: none;")
+            //-           li.active
+            //-             i.fa.fa-star
+            //-           li.active
+            //-             i.fa.fa-star
+            //-           li.active
+            //-             i.fa.fa-star
+            //-           li.active
+            //-             i.fa.fa-star
+            //-           li
+            //-             i.fa.fa-star
+            //-           li
+            //-             span.text-muted 0 nhận xét
+            //- .card
+            //-   a.motsanpham(
+            //-     title="Lịch Sử Thế Giới" 
+            //-     data-placement="bottom" 
+            //-     data-toggle="tooltip" 
+            //-     style="text-decoration: none; color: black;" 
+            //-     href="#"
+            //-     )
+            //-     img.card-img-top.anh(
+            //-       alt="lich-su-the-gioi" 
+            //-       src="images/lich-su-the-gioi.jpg"
+            //-       )
+            //-     .card-body.noidungsp.mt-3
+            //-       h3.card-title.ten Lịch Sử Thế Giới
+            //-       small.tacgia.text-muted Nam Phong tùng thư - Phạm Quỳnh chủ nhiệm
+            //-       .gia.d-flex.align-items-baseline
+            //-         .giamoi 111.200 ₫
+            //-         .giacu.text-muted 139.000 ₫
+            //-         .sale -20%
+            //-       .danhgia
+            //-         ul.d-flex(style="list-style: none;")
+            //-           li.active
+            //-             i.fa.fa-star
+            //-           li.active
+            //-             i.fa.fa-star
+            //-           li.active
+            //-             i.fa.fa-star
+            //-           li.active
+            //-             i.fa.fa-star
+            //-           li
+            //-             i.fa.fa-star
+            //-           li
+            //-             span.text-muted 0 nhận xét
     // khoi sach combo hot
     section.combohot.mt-4(class="_1khoi")
       .container

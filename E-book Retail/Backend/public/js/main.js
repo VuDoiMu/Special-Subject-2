@@ -561,3 +561,15 @@ document.querySelector("#form-signup").addEventListener("submit", async (e) => {
     }, 1000);
   }
 });
+
+function fetchProduct(url) {
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      // Handle the product data here
+      console.log(data);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+}
