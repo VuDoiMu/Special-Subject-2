@@ -5,12 +5,27 @@ const bookSchema = new mongoose.Schema({
         type: String,
         maxLength: 255,
         required: true,
-        lowercase: true,
         minLength: 1
+    },
+    cover: {
+        type: String
     },
     price: {
         type: Number,
         required: true
+    },
+    author: {
+        type: String,
+        required: true,
+    },
+    artist: {
+        type: String,
+    },
+    publisher: {
+        type: String
+    },
+    pageCount: {
+        type: Number,
     },
     saleRate: {
         type: Number
@@ -21,10 +36,6 @@ const bookSchema = new mongoose.Schema({
     },
     tag: {
         type: [String],
-        required: true,
-    },
-    isComic: {
-        type: Boolean,
         required: true,
     },
     content: {
