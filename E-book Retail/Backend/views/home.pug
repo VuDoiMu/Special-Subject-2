@@ -1,7 +1,7 @@
 doctype html
 html(lang="vi")
   head
-    title Dealbook-Mua sách trực tuyến giá rẻ nhất
+    title #{data}
     meta(
       content="Mua sách online hay, giá tốt nhất, combo sách hot bán chạy, giảm giá cực khủng cùng với những ưu đãi như miễn phí giao hàng, quà tặng miễn phí, đổi trả nhanh chóng. Đa dạng sản phẩm, đáp ứng mọi nhu cầu." 
       name="description"
@@ -29,6 +29,7 @@ html(lang="vi")
     script(
       src="js/main.js" 
       type="text/javascript"
+      defer
       )
     link(
       href="fontawesome_free_5.13.0/css/all.css" 
@@ -56,6 +57,7 @@ html(lang="vi")
       src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js" 
       type="text/javascript"
       )
+
     link(
       href="http://dealbook.xyz/" 
       rel="canonical"
@@ -104,7 +106,8 @@ html(lang="vi")
           style="color: #CF111A;" 
           href="index.html"
           )
-          b DealBook
+          b #{ data }
+
           | .xyz
         // navbar-toggler
         button.navbar-toggler.d-lg-none(
@@ -163,7 +166,7 @@ html(lang="vi")
                 .cart-amount 0
               a.nav-link.text-dark.giohang.text-uppercase(
                 style="display:inline-block" 
-                href="gio-hang.html"
+                href="gio-hang"
                 )
                 | Giỏ
                 |   Hàng
@@ -192,27 +195,15 @@ html(lang="vi")
               span(aria-hidden="true") ×
           .modal-body
             form#form-signup.form-signin.mt-2
-              .form-label-group
-                input.form-control(
-                  autofocus="" 
-                  required="" 
-                  name="name" 
-                  placeholder="Nhập họ và tên" 
-                  type="text"
-                  )
-              .form-label-group
-                input.form-control(
-                  required="" 
-                  name="phone" 
-                  placeholder="Nhập số điện thoại" 
-                  type="text"
-                  )
+
+
               .form-label-group
                 input.form-control(
                   required="" 
                   name="email" 
                   placeholder="Nhập địa chỉ email" 
                   type="email"
+                  id="signup-email"
                   )
               .form-label-group
                 input.form-control(
@@ -220,6 +211,7 @@ html(lang="vi")
                   name="password" 
                   placeholder="Nhập mật khẩu" 
                   type="password"
+                  id="signup-password"
                   )
               .form-label-group.mb-4
                 input.form-control(
@@ -227,6 +219,7 @@ html(lang="vi")
                   placeholder="Nhập lại mật khẩu" 
                   name="confirm_password" 
                   type="password"
+                  id='confirm_password'
                   )
               button.btn.btn-lg.btn-block.btn-signin.text-uppercase.text-white.mt-3(
                 style="background: #F5A623" 
@@ -268,6 +261,7 @@ html(lang="vi")
             form#form-signin.form-signin.mt-2
               .form-label-group
                 input.form-control(
+                  id="email"
                   autofocus="" 
                   required="" 
                   name="email" 
@@ -276,6 +270,8 @@ html(lang="vi")
                   )
               .form-label-group
                 input.form-control(
+
+                  id="password"
                   required="" 
                   name="password" 
                   placeholder="Mật khẩu" 
@@ -330,33 +326,33 @@ html(lang="vi")
                 li
                   a(href="sach-kinh-te.html") Sách Kinh Tế - Kỹ Năng
                   i.fa.fa-chevron-right.float-right
-                  ul
-                    li.liheader
-                      a.header.text-uppercase(href="#")
-                        | Sách Kinh Tế - Kỹ
-                        |   Năng
-                    .content.trai
-                      li
-                        a(href="#") Kinh Tế - Chính Trị
-                      li
-                        a(href="#") Sách Khởi Nghiệp
-                      li
-                        a(href="#") Sách Tài Chính, Kế Toán
-                      li
-                        a(href="#") Sách Quản Trị Nhân Sự
-                      li
-                        a(href="#") Sách Kỹ Năng Làm Việc
-                    .content.phai
-                      li
-                        a(href="#") Nhân Vật - Bài Học Kinh Doanh
-                      li
-                        a(href="#") Sách Quản Trị - Lãnh Đạo
-                      li
-                        a(href="#") Sách Kinh Tế Học
-                      li
-                        a(href="#") Sách Chứng Khoán - Bất Động Sản - Đầu Tư
-                      li
-                        a(href="#") Sách Marketing - Bán Hàng
+                  //- ul
+                  //-   li.liheader
+                  //-     a.header.text-uppercase(href="#")
+                  //-       | Sách Kinh Tế - Kỹ
+                  //-       |   Năng
+                  //-   .content.trai
+                  //-     li
+                  //-       a(href="#") Kinh Tế - Chính Trị
+                  //-     li
+                  //-       a(href="#") Sách Khởi Nghiệp
+                  //-     li
+                  //-       a(href="#") Sách Tài Chính, Kế Toán
+                  //-     li
+                  //-       a(href="#") Sách Quản Trị Nhân Sự
+                  //-     li
+                  //-       a(href="#") Sách Kỹ Năng Làm Việc
+                  //-   .content.phai
+                  //-     li
+                  //-       a(href="#") Nhân Vật - Bài Học Kinh Doanh
+                  //-     li
+                  //-       a(href="#") Sách Quản Trị - Lãnh Đạo
+                  //-     li
+                  //-       a(href="#") Sách Kinh Tế Học
+                  //-     li
+                  //-       a(href="#") Sách Chứng Khoán - Bất Động Sản - Đầu Tư
+                  //-     li
+                  //-       a(href="#") Sách Marketing - Bán Hàng
                 li
                   a(href="#") Nghệ Thuật Sống - Tâm Lý
                   i.fa.fa-chevron-right.float-right
