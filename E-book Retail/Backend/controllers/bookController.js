@@ -19,7 +19,7 @@ const getByID = async (req, res) => {
     const book = await Book.findOne({ _id: req.params.id }).exec();
 
     if (!book){ 
-        return res.status(204).json({ 'message': `User does not exist with ${req.body.id}!`});
+        return res.status(204).json({ 'message': `Book does not exist with ${req.body.id}!`});
         }       
     
     res.json(book);   
@@ -62,20 +62,24 @@ const updateBook = async (req, res) => {
 
 const addBook = async (req, res) => {
     const newBook = req.body;
-    const book = Book.findOne({ name: newBook.name}).exec();
+    const book = await  Book.findOne({ name: newBook.name}).exec();
 
-    if (book) {
+    if (book != null) {
         return res.status(409).json({ 'message': 'A book with this name is already exist!'});
     }
 
     try {
         const result = await Book.create({
             name: newBook.name,
-            category: newBook.category,
+            cover: newBook.cover,
             price: newBook.price,
             description: newBook.description,
             tag: newBook.tag,
-            isComic: newBook.isComic,
+            author: newBook.author,
+            artist: newBook.artist,
+            publisher: newBook.publisher,
+            pageCount: newBook.pageCount,
+            saleRate: newBook.saleRate,
             content: newBook.content
         });
 

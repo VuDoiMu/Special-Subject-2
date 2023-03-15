@@ -1,0 +1,23 @@
+{
+  "name": "Solo Leveling, Vol. 1 ",
+  "cover": "https://rimg.bookwalker.jp/7967714/OWWPXNVne2Og5o9nA6tp3Q__.jpg",
+  "tag": [
+    "Shounen",
+    "Fantasy",
+    "Aventure",
+    "Action",
+    "Video Games",
+    "Dungeon"
+  ],
+  "author": "Chugong",
+  "description": "BASED ON THE HIT FANTASY NOVEL, EXPERIENCE THE WEBCOMIC THATS CAPTURED THE ATTENTION OF MILLIONS IN ALL OF ITS FULL-COLOR GLORY! Known as the the Weakest Hunter of All Mankind, E-rank hunter Jinwoo Sungs contribution to raids amounts to trying not to get killed. Unfortunately, between his mothers hospital bills, his sisters tuition, and his own lack of job prospects, he has no choice but to continue to put his life on the line. So when an opportunity arises for a bigger payout, he takes itonly to come face-to-face with a being whose power outranks anything hes ever seen! With the party leader missing an arm and the only healer a quivering mess, can Jinwoo somehow find them a way out?!",
+  "content": {
+    "1": "Content page 1 goes here!",
+    "2": "Content page 2 goes here!"
+  },
+  "artist": "DUBU(REDICE STUDIO)",
+  "publisher": "Yen Press",
+  "price":9.23,
+  "discountRate": 0,
+  "pageCount":322
+}
