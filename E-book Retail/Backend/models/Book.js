@@ -7,7 +7,7 @@ const bookSchema = new mongoose.Schema({
         required: true,
         minLength: 1
     },
-    cover: {
+    image: {
         type: String
     },
     price: {
