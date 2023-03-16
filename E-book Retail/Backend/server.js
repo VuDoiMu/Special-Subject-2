@@ -21,6 +21,21 @@ app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
 
 // routes for render pug files
+
+// Frontend se gui email + password
+// Backend kiem tra gui thong tin user + token neu hop le
+
+app.post("/login", (req, res) => {});
+
+// Frontend se gui email + password + username
+// Backend kiem tra gui thong tin user + token neu hop le
+
+app.post("/sign-up", (req, res) => {});
+
+// The loai truyen
+// sach duoc add vao moi nhat
+// sach ban chay nhat
+// sach danh gia nhieu nhat
 app.get("/", (req, res) => {
   res.render("home.pug", {
     data,
@@ -31,17 +46,22 @@ app.get("/gio-hang", (req, res) => {
     title: "hello world",
   });
 });
-app.get("/product-list", (req, res) => {
+
+// tim truyen theo the loai
+
+app.get("/product-list/category/:category", (req, res) => {
+  const id = req.params.category;
   res.render("product-list.pug", {
     title: "hello world",
   });
 });
 
+// lay book theo id
+
 app.get("/product/:id", (req, res) => {
   const id = req.params.id;
-  console.log(id);
-  let book = null;
 
+  let book = null;
   for (let i = 0; i < data.length; i++) {
     if (data[i]._id.$oid === id) {
       book = data[i];
