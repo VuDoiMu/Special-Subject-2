@@ -50,16 +50,23 @@ app.get("/product/:id", (req, res) => {
       book,
     });
   }
-
-  res.render("product.pug", {
-    title: "hello world",
-  });
 });
 
 app.get("/tai-khoan", (req, res) => {
   res.render("tai-khoan.pug", {
     title: "hello world",
   });
+});
+
+app.get("/admin", (req, res) => {
+  res.render("admin-home.pug");
+});
+app.get("/admin-management", (req, res) => {
+  res.render("admin-management.pug", { data });
+});
+
+app.get("/admin-sale", (req, res) => {
+  res.render("admin-sale.pug", { data });
 });
 
 //routes

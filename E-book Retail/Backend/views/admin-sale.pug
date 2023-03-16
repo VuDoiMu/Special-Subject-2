@@ -1,0 +1,121 @@
+doctype html
+// Designined by CodingLab | www.youtube.com/codinglabyt
+html(lang='en', dir='ltr')
+  head
+    meta(charset='UTF-8')
+    // <title> Responsiive Admin Dashboard | CodingLab </title>
+    link(rel='stylesheet', href='/css/admin-home.css')
+    // Boxicons CDN Link
+    link(href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css', rel='stylesheet')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T', crossorigin='anonymous')
+    link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.8.1/css/all.css', integrity='sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf', crossorigin='anonymous')
+    link(rel='stylesheet', href='/css/admin-management.css')
+  body
+    .sidebar
+      .logo-details
+        i.E
+        span.logo_name EManga
+      ul.nav-links
+        li
+          a.active(href='/admin')
+            i.bx.bx-grid-alt
+            span.links_name Dashboard
+        li
+          a(href='/admin-management')
+            i.bx.bx-box
+            span.links_name Book managment
+        li
+          a(href='#')
+            i.bx.bx-list-ul
+            span.links_name Sale list
+        li.log_out
+          a(href='#')
+            i.bx.bx-log-out
+            span.links_name Log out
+    section.home-section
+      nav
+        .sidebar-button
+          i.bx.bx-menu.sidebarBtn
+          span.dashboard Dashboard
+        //- .search-box
+        //-   input(type='text', placeholder='Search...')
+        //-   i.bx.bx-search
+        .profile-details
+          // <img src="images/profile.jpg" alt="">
+          span.admin_name Prem Shahi
+          i.bx.bx-chevron-down
+      .home-content
+        .overview-boxes
+          .box
+            .right-side
+              .box-topic Total Order
+              .number 40,876
+              //
+                <div class="indicator">
+                <i class='bx bx-up-arrow-alt'></i>
+                <span class="text">Up from yesterday</span>
+                </div>
+            i.bx.bx-cart-alt.cart
+          .box
+            .right-side
+              .box-topic Total Sales
+              .number 38,876
+
+            i.bx.bxs-cart-add.cart.two
+          .box
+            .right-side
+              .box-topic Total Profit
+              .number $12,876
+            
+            i.bx.bx-cart.cart.three
+          .box
+            .right-side
+              .box-topic Total Return
+              .number 11,086
+            
+            i.bx.bxs-cart-download.cart.four
+              main
+
+
+        // Table
+        .table-data
+          table.table
+            thead
+              tr
+                th(scope='col') Book name
+                th(scope='col') Author
+                th(scope='col') Price
+                th(scope='col') Purchased at
+
+
+
+
+            tbody#tbody
+                each book in data 
+                    tr
+                    th( scope="row") #{book.name}
+                    th( scope="row") #{book.author}
+                    th( scope="row") 125000
+                    th( scope="row") 49
+                    //- th( scope="row")
+                                            
+                    //-         button#btn-update.btn.btn-warning 
+                    //-             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                    //-             <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                    //-             </svg>
+
+                    //-         button#btn-delete.btn.btn-danger X
+
+               
+    // Labels
+    //- .w-100.btn.btn-success.insertmsg Data Inserted Successfully...!
+    //- .w-100.btn.btn-warning.updatemsg Data Updated..! Refresh Database To See Result
+    //- .w-100.btn.btn-danger.deletemsg Data Deleted..!
+    //- script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js', integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo', crossorigin='anonymous')
+    //- script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js', integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1', crossorigin='anonymous')
+    //- script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM', crossorigin='anonymous')
+    //- // Include Dexie
+    //- script(src='https://unpkg.com/dexie@latest/dist/dexie.js')
+    //- // Custom main file
+    script(src='/js/admin.js')

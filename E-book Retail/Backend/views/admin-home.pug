@@ -1,0 +1,200 @@
+doctype html
+// Designined by CodingLab | www.youtube.com/codinglabyt
+html(lang='en', dir='ltr')
+  head
+    meta(charset='UTF-8')
+    // <title> Responsiive Admin Dashboard | CodingLab </title>
+    link(rel='stylesheet', href='/css/admin-home.css')
+    // Boxicons CDN Link
+    link(href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css', rel='stylesheet')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+  body
+    .sidebar
+      .logo-details
+        i.E
+        span.logo_name EManga
+      ul.nav-links
+        li
+          a(href='/admin')
+            i.bx.bx-grid-alt
+            span.links_name Dashboard
+        li
+          a(href='/admin-management')
+            i.bx.bx-box
+            span.links_name Book management
+        li
+          a(href='')
+            i.bx.bx-list-ul
+            span.links_name Order list
+        li.log_out
+          a(href='')
+            i.bx.bx-log-out
+            span.links_name Log out
+    section.home-section
+      nav
+        .sidebar-button
+          i.bx.bx-menu.sidebarBtn
+          span.dashboard Dashboard
+        //- .search-box
+        //-   input(type='text', placeholder='Search...')
+        //-   i.bx.bx-search
+        .profile-details
+          // <img src="images/profile.jpg" alt="">
+          span.admin_name Admin : Lam
+  
+      .home-content
+        .overview-boxes
+          .box
+            .right-side
+              .box-topic Book sold
+              .number 40,876
+
+            i.bx.bx-cart-alt.cart
+          .box
+            .right-side
+              .box-topic Books
+              .number 38,876
+              
+            i.bx.bxs-cart-add.cart.two
+          .box
+            .right-side
+              .box-topic Total income
+              .number $12,876
+              
+            i.bx.bx-cart.cart.three
+          .box
+            .right-side
+              .box-topic Users
+              .number 11,086
+             
+            i.bx.fa-solid.fa-user.cart.four
+        .sales-boxes
+          .recent-sales.box
+            .title Recent Sales
+            .sales-details
+              ul.details
+                li.topic Date
+                li
+                  a(href='#') 02 Jan 2021
+                li
+                  a(href='#') 02 Jan 2021
+                li
+                  a(href='#') 02 Jan 2021
+                li
+                  a(href='#') 02 Jan 2021
+                li
+                  a(href='#') 02 Jan 2021
+                li
+                  a(href='#') 02 Jan 2021
+                li
+                  a(href='#') 02 Jan 2021
+                li
+                  a(href='#') 02 Jan 2021
+                li
+                  a(href='#') 02 Jan 2021
+              ul.details
+                li.topic Customer
+                li
+                  a(href='#') Alex Doe
+                li
+                  a(href='#') David Mart
+                li
+                  a(href='#') Roe Parter
+                li
+                  a(href='#') Diana Penty
+                li
+                  a(href='#') Martin Paw
+                li
+                  a(href='#') Doe Alex
+                li
+                  a(href='#') Aiana Lexa
+                li
+                  a(href='#') Rexel Mags
+                li
+                  a(href='#') Tiana Loths
+              ul.details
+                li.topic Sales
+                li
+                  a(href='#') Delivered
+                li
+                  a(href='#') Pending
+                li
+                  a(href='#') Returned
+                li
+                  a(href='#') Delivered
+                li
+                  a(href='#') Pending
+                li
+                  a(href='#') Returned
+                li
+                  a(href='#') Delivered
+                li
+                  a(href='#') Pending
+                li
+                  a(href='#') Delivered
+              ul.details
+                li.topic Total
+                li
+                  a(href='#') $204.98
+                li
+                  a(href='#') $24.55
+                li
+                  a(href='#') $25.88
+                li
+                  a(href='#') $170.66
+                li
+                  a(href='#') $56.56
+                li
+                  a(href='#') $44.95
+                li
+                  a(href='#') $67.33
+                li
+                  a(href='#') $23.53
+                li
+                  a(href='#') $46.52
+            .button
+              a(href='/admin-sale') See All
+          .top-sales.box
+            .title Top Seling Product
+            ul.top-sales-details
+              li
+                a(href='#')
+                  // <img src="images/sunglasses.jpg" alt="">
+                  span.product Vuitton Sunglasses
+                span.price $1107
+              li
+                a(href='#')
+                  // <img src="images/jeans.jpg" alt="">
+                  span.product Hourglass Jeans 
+                span.price $1567
+              li
+                a(href='#')
+                  // <img src="images/nike.jpg" alt="">
+                  span.product Nike Sport Shoe
+                span.price $1234
+              li
+                a(href='#')
+                  // <img src="images/scarves.jpg" alt="">
+                  span.product Hermes Silk Scarves.
+                span.price $2312
+              li
+                a(href='#')
+                  // <img src="images/blueBag.jpg" alt="">
+                  span.product Succi Ladies Bag
+                span.price $1456
+              li
+                a(href='#')
+                  // <img src="images/bag.jpg" alt="">
+                  span.product Gucci Womens&apos;s Bags
+                span.price $2345
+              li
+                a(href='#')
+                  // <img src="images/addidas.jpg" alt="">
+                  span.product Addidas Running Shoe
+                span.price $2345
+              li
+                a(href='#')
+                  // <img src="images/shirt.jpg" alt="">
+                  span.product Bilack Wear&apos;s Shirt
+                span.price $1245
+    script(src='/js/admin.js')
