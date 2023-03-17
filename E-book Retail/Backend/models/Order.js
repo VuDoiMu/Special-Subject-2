@@ -9,10 +9,6 @@ const orderSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    isPaid: {
-        type: Boolean,
-        required: true,
-    },
     createdDate: {
         type: Date,
         immutable: true,
