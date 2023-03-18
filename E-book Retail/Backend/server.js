@@ -4,6 +4,9 @@ const mongoose = require("mongoose");
 const connectDB = require("./configs/dbCon");
 const path = require("path");
 const data = require("./data/book.json");
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
 //connect to MongoDb
 connectDB();
 
@@ -92,6 +95,8 @@ app.get("/admin-sale", (req, res) => {
 //routes
 app.use("/management/", require("./routes/books"));
 app.use("/order", require("./routes/order"));
+app.use("/auth", require("./routes/user"));
+app.use("/cart", require("./routes/cart"))
 
 mongoose.connection.once("open", () => {
   console.log("connected to MongoDb");

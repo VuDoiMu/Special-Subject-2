@@ -4,14 +4,14 @@ const mongoose  = require("mongoose");
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true,
+        required: false,
         lowercase: true,
         minLength: 3,
         maxLength: 100
     },
     dateOfBirth: {
         type: Date,
-        required: true
+        required: false
     },
     email: {
         type: String,
@@ -23,26 +23,24 @@ const userSchema = new mongoose.Schema({
     userName: {
         type: String,
         immutable: true,
-        required: true,
+        required: false,
         lowercase: true,
         minLength: 3,
         maxLength: 25
     },
-    userPassword: {
+    password: {
         type: String,
-        required: true,
-        minLength: 3,
-        maxLength: 25
+        required: true
         //add more password validator
     },
     userPhone: {
         type: Number,
-        required: true,
+        required: false,
         length: 10
     },
     address: {
         type: String,
-        required: true,
+        required: false,
         length: 255,
     },
     inventory: {

@@ -1,21 +1,31 @@
 const mongoose = require("mongoose");
 
 const orderSchema = new mongoose.Schema({
-    cart: {
-        type: [String],
-        required: true,
-    },
-    custormerID: {
+    
+    userId: {
         type: String,
         required: true,
+    },
+    items: [
+        {
+          product: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'book' 
+        },
+          quantity: {
+            type: Number
+          },
+          price: {
+            type: Number
+          }
+        }
+      ],
+    total: {
+        type :  Number
     },
     createdDate: {
         type: Date,
         immutable: true,
-        default: () => Date.now(),
-    },
-    updatedDate: {
-        type: Date,
         default: () => Date.now(),
     }
 
