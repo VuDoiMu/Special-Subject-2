@@ -17,12 +17,15 @@ const orderSchema = new mongoose.Schema({
           },
           price: {
             type: Number
+          },
+          total: {
+              type :  Number
           }
         }
       ],
-    total: {
-        type :  Number
-    },
+      finalTotal:{ 
+        type : Number
+      },
     createdDate: {
         type: Date,
         immutable: true,

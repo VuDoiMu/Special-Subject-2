@@ -42,7 +42,7 @@ const login = async (req, res) => {
     return res.status.json(`${email} is not a valid email address`)
     try {
         const user = await User.findOne({email})
-        
+        const userId = user._id;
         if (!user){
             return res.status(400).json({success: false, message:"Wrong email "})
         }
@@ -50,10 +50,11 @@ const login = async (req, res) => {
         const passwordValid = await argon2.verify(user.password, password )
         
         if (!passwordValid)
-        return res.status(400).json({success: false, message:" Wrong password"})
-        const cartValid = await Cart.findOne({userId: user._id})
+        return res.status(400).json({success: false, message:" Wrong password"});
+        const cartValid = await Cart.findOne({userId})
+        console.log(cartValid)
         if(!cartValid){
-        const cart = new Cart({userId : user._id})
+        const cart = new Cart({userId})
         await cart.save();
         }
         const accesstoken = jwt.sign({userId: user._id, role: user.role},"thisisourwebsite!")
