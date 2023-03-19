@@ -52,9 +52,9 @@ const login = async (req, res) => {
         if (!passwordValid)
         return res.status(400).json({success: false, message:" Wrong password"});
         const cartValid = await Cart.findOne({userId})
-        console.log(cartValid)
+        
         if(!cartValid){
-        const cart = new Cart({userId})
+        const cart = new Cart({userId, finalTotal: 0})
         await cart.save();
         }
         const accesstoken = jwt.sign({userId: user._id, role: user.role},"thisisourwebsite!")
