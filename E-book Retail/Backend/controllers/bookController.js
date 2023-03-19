@@ -71,7 +71,7 @@ const addBook = async (req, res) => {
     try {
         const result = await Book.create({
             name: newBook.name,
-            cover: newBook.cover,
+            image: newBook.image,
             price: newBook.price,
             description: newBook.description,
             tag: newBook.tag,
