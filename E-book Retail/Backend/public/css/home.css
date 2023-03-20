@@ -480,6 +480,10 @@ small.tacgia.text-muted {
     padding: 3px 0px;
 }
 
+.like i.active {
+    color: red;
+}
+
 h3.card-title.ten {
     font-weight: 400;
     margin-bottom: 4px;

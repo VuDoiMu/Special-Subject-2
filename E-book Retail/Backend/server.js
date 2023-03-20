@@ -5,6 +5,7 @@ const connectDB = require("./configs/dbCon");
 const path = require("path");
 const data = require("./data/book.json");
 const cookieParser = require('cookie-parser');
+const axios = require("axios");
 app.use(cookieParser());
 
 //connect to MongoDb
@@ -39,11 +40,14 @@ app.post("/sign-up", (req, res) => {});
 // sach duoc add vao moi nhat
 // sach ban chay nhat
 // sach danh gia nhieu nhat
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
+  const response = await axios.get("http://localhost:3500/management");
+  const data = response.data; 
   res.render("home.pug", {
     data,
   });
 });
+
 app.get("/gio-hang", (req, res) => {
   res.render("gio-hang.pug", {
     title: "hello world",
@@ -52,7 +56,7 @@ app.get("/gio-hang", (req, res) => {
 
 // tim truyen theo the loai
 
-app.get("/product-list/category/:category", (req, res) => {
+app.get("/product-list", (req, res) => {
   const id = req.params.category;
   res.render("product-list.pug", {
     title: "hello world",
@@ -61,18 +65,13 @@ app.get("/product-list/category/:category", (req, res) => {
 
 // lay book theo id
 
-app.get("/product/:id", (req, res) => {
+app.get("/product/:id", async (req, res) => {
   const id = req.params.id;
-
-  let book = null;
-  for (let i = 0; i < data.length; i++) {
-    if (data[i]._id.$oid === id) {
-      book = data[i];
-    }
-    res.render("product.pug", {
-      book,
-    });
-  }
+  const response = await axios.get("http://localhost:3500/management/" + id);
+  const book = response.data;
+  res.render("product.pug", {
+    book,
+  });
 });
 
 app.get("/tai-khoan", (req, res) => {
@@ -93,7 +92,7 @@ app.get("/admin-sale", (req, res) => {
 });
 
 //routes
-app.use("/management/", require("./routes/books"));
+app.use("/management", require("./routes/books"));
 app.use("/order", require("./routes/order"));
 app.use("/auth", require("./routes/user"));
 app.use("/cart", require("./routes/cart"))

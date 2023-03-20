@@ -615,12 +615,11 @@ html(lang="vi")
                   data-placement="bottom" 
                   data-toggle="tooltip" 
                   style="text-decoration: none; color: black;" 
-                  href=('/product/' + book._id.$oid)
-                
+                  href=('/product/' + book._id)
                   )
                   img.card-img-top.anh(
                     alt="lap-ke-hoach-kinh-doanh-hieu-qua" 
-                    src= book.images
+                    src= book.image
                     )
                   .card-body.noidungsp.mt-3
                     h3.card-title.ten=book.name
@@ -629,20 +628,23 @@ html(lang="vi")
                       .giamoi 111.200 ₫
                       .giacu.text-muted 139.000 ₫
                       .sale -20%
-                    .danhgia
-                      ul.d-flex(style="list-style: none;")
-                        li.active
-                          i.fa.fa-star
-                        li.active
-                          i.fa.fa-star
-                        li.active
-                          i.fa.fa-star
-                        li.active
-                          i.fa.fa-star
-                        li
-                          i.fa.fa-star
-                        li
-                          span.text-muted 0 nhận xét
+                    .like 
+                      i.fa.fa-heart.active
+                      //- i.far.fa-heart
+                    //- .danhgia
+                    //-   ul.d-flex(style="list-style: none;")
+                    //-     li.active
+                    //-       i.fa.fa-star
+                    //-     li.active
+                    //-       i.fa.fa-star
+                    //-     li.active
+                    //-       i.fa.fa-star
+                    //-     li.active
+                    //-       i.fa.fa-star
+                    //-     li
+                    //-       i.fa.fa-star
+                    //-     li
+                    //-       span.text-muted 0 nhận xét
             //- .card
             //-   a.motsanpham(
             //-     title="Ma Bùn Lưu Manh Và Những Câu Chuyện Khác Của Nguyễn Trí" 
