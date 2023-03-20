@@ -29,12 +29,15 @@ app.set("views", path.join(__dirname, "views"));
 // Frontend se gui email + password
 // Backend kiem tra gui thong tin user + token neu hop le
 
-app.post("/login", (req, res) => {});
+// app.post("/login", (req, res) => {
+  
+  
+// });
 
 // Frontend se gui email + password + username
 // Backend kiem tra gui thong tin user + token neu hop le
 
-app.post("/sign-up", (req, res) => {});
+// app.post("/sign-up", (req, res) => {});
 
 // The loai truyen
 // sach duoc add vao moi nhat
