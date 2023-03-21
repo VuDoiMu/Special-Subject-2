@@ -5,6 +5,9 @@ const Cart = require( "../models/Cart")
 const argon2 = require('argon2')
 const jwt = require('jsonwebtoken')
 const cookieParser = require('cookie-parser');
+
+const mailer = require('../utils/mailer')
+
 app.use(cookieParser());
 
 const register = async (req, res) => {
@@ -83,4 +86,28 @@ const access = async (req, res) => {
         res.status(403).send('Forbidden');
 } 
 }
-module.exports = {register, login, logout, access, deleteUser};
+
+let sendMail = async (req, res) => {
+  try {
+
+    const token = req.cookies.token;
+    const decoded = jwt.verify(token, "thisisourwebsite!");
+    const userId = decoded.userId;
+    const newPassword = "newpassword"
+    const newUser = await User.findOneAndUpdate({_id : userId}, {password: newPassword},{new: true})
+    const text = "You requested for reset password, kindly use this "+ newUser.password + " to reset your password"
+    // Lấy data truyền lên từ form phía client
+    const { to, subject } = req.body
+
+    // Thực hiện gửi email
+    await mailer.sendMail(to, subject, text)
+   
+    // Quá trình gửi email thành công thì gửi về thông báo success cho người dùng
+    res.json({success : true, message:"sent it"})
+  } catch (error) {
+    // Nếu có lỗi thì log ra để kiểm tra và cũng gửi về client
+    res.json({success : false, message:"wrogn"})
+  }
+}
+
+module.exports = {register, login, logout, access, deleteUser, sendMail};

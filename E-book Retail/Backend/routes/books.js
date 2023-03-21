@@ -11,4 +11,7 @@ router.route('/')
 router.route('/:id')
     .get(bookController.getByID);
 
+router.route('/tag/:id')
+    .get(bookController.getByCate);
+    
 module.exports = router;
