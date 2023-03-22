@@ -1,5 +1,5 @@
 const mongoose  = require("mongoose");
-
+var aggregatePaginate = require("mongoose-aggregate-paginate-v2");
 const bookSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -52,4 +52,6 @@ const bookSchema = new mongoose.Schema({
         default: () => Date.now(),
     }
 })
+1
+bookSchema.plugin(aggregatePaginate);
 module.exports = mongoose.model("Book", bookSchema);

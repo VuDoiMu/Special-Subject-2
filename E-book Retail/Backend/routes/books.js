@@ -13,5 +13,8 @@ router.route('/:id')
 
 router.route('/tag/:id')
     .get(bookController.getByCate);
-    
+
+router.route('/pages/:page')
+.get(bookController.bookPage);
+
 module.exports = router;
