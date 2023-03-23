@@ -14,6 +14,10 @@ const bookSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    numLike: {
+        type : Number,
+        default: 0
+    },
     author: {
         type: String,
         required: true,

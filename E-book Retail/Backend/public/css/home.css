@@ -427,6 +427,7 @@ img.card-img-top.anh {
 }
 
 ul span.text-muted {
+    
     font-size: 11px;
     padding-top: 6px;
     padding-left: 12px;
@@ -448,12 +449,12 @@ li.active .fa-star {
     font-size: 11px;color: white;
     padding: 1px 4px;
     position: absolute;
-    right: 0
-    ;
+    right: 0;
     top: 2px;
 }
 
 .giacu.text-muted {
+    text-decoration: line-through;
     font-size: 13px;
     color: #919191!important;
 }
@@ -480,7 +481,12 @@ small.tacgia.text-muted {
     padding: 3px 0px;
 }
 
+.like i {
+    display: none;
+}
+
 .like i.active {
+    display: inline-block;
     color: red;
 }
 

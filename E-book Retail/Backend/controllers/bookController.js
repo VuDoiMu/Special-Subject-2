@@ -104,6 +104,11 @@ const addBook = async (req, res) => {
         console.error(err);
     }
 }
+
+const addLike = async (req,res)=> {
+    const book = await Book.updateMany({numLike : 0}, {new: true} )
+}
+
 //pagination
 const bookPage = async (req, res) => {
     var aggregateQuery =Book.aggregate();
@@ -151,5 +156,6 @@ module.exports = {
     deleteBook,
     updateBook,
     addBook,
-    bookPage
+    bookPage,
+    addLike
 };
