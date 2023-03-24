@@ -90,7 +90,6 @@ const addBook = async (req, res) => {
         console.error(err);
     }
 }
-
 //pagination
 const bookPage = async (req, res) => {
     var aggregateQuery =Book.aggregate();
@@ -137,5 +136,6 @@ module.exports = {
     deleteBook,
     updateBook,
     addBook,
-    bookPage
+    bookPage,
+    addLike
 };

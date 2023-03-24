@@ -546,7 +546,7 @@ document.querySelector("#form-signup").addEventListener("submit", async (e) => {
   const confirm_password = document.getElementById("confirm_password").value;
 
   if (confirm_password === password) {
-    const sendData = await fetch("http://localhost:3000/login", {
+    const sendData = await fetch("http://localhost:3500/login", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -573,3 +573,15 @@ function fetchProduct(url) {
       console.error(error);
     });
 }
+
+// toggle like
+const likeButtons = document.querySelectorAll('.like');
+likeButtons.forEach(button => {
+  button.addEventListener('click', (e) => {
+    e.preventDefault();
+    const heartIcon = button.querySelector('i.fa.fa-heart');
+    const emptyHeartIcon = button.querySelector('i.far.fa-heart');
+    heartIcon.classList.toggle('active');
+    emptyHeartIcon.classList.toggle('active');
+  });
+});
