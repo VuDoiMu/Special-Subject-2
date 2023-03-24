@@ -42,6 +42,7 @@ const bookSchema = new mongoose.Schema({
         type: Object,
         required: true,
     },
+    
     createdDate: {
         type: Date,
         immutable: true,
