@@ -1,4 +1,5 @@
 const Book = require('../models/Book.js');
+const Tag = require('../models/Tag');
 
 
 const getAllBook = async (req, res) => {
@@ -23,22 +24,6 @@ const getByID = async (req, res) => {
         }       
     
     res.json(book);   
-}
-
-const getByCate = async (req, res)=> {
-    
-    try{
-        
-    const cate = req.params.id.split(",");
-        
-    const books = await Book.find({ tag: { $in: cate } });
-    
-    res.json({success : true, books })
-
-    }catch(error){
-
-    res.json({success : false, message:"wrogn"})
-    }
 }
 
 const deleteBook = async(req, res) => {
@@ -98,12 +83,14 @@ const addBook = async (req, res) => {
             saleRate: newBook.saleRate,
             content: newBook.content
         });
-
+        const updateResult = await Tag.updateMany({ name: { $in: newBook.tag } }, { $push: { books: result._id } });
+  
         res.status(201).json(result);
     } catch (err) {
         console.error(err);
     }
 }
+
 //pagination
 const bookPage = async (req, res) => {
     var aggregateQuery =Book.aggregate();
@@ -147,7 +134,6 @@ const bookPage = async (req, res) => {
 module.exports = {
     getAllBook,
     getByID,
-    getByCate,
     deleteBook,
     updateBook,
     addBook,
