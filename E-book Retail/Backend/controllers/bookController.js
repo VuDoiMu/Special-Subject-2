@@ -1,5 +1,11 @@
+const express = require("express");
+const app = express();
 const Book = require('../models/Book.js');
+const User = require('../models/User')
 const Tag = require('../models/Tag');
+const jwt = require("jsonwebtoken")
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
 
 
 const getAllBook = async (req, res) => {
@@ -39,6 +45,7 @@ const deleteBook = async(req, res) => {
    
     const result  = await User.deleteOne({ _id: req.params.id});
     res.status(200).json(result);
+// const delte = await Book.deleteMany()
 }
 
 const updateBook = async (req, res) => {
@@ -90,6 +97,42 @@ const addBook = async (req, res) => {
         console.error(err);
     }
 }
+const addLike = async (req, res) => {
+    const token = req.cookies.token;
+    const decoded = jwt.verify(token, "thisisourwebsite!");
+    const userId = decoded.userId;
+    const bookId = req.params.id;
+    
+    try{
+    
+    const updateBook = await Book.findOneAndUpdate({ _id: bookId }, { $inc: { countLike: 1 } });
+    
+    const updateUser = await User.findOneAndUpdate({ _id: userId }, { $push: { favorbooks: bookId } },{new: "true"});
+   
+    res.json({success : true, updateBook})
+}catch(error){
+    res.json(error)
+}
+}
+
+
+const topSell = async ( req, res) => {
+    try{
+        const books = await Book.find().sort({ countSale: 1 }).limit(5);
+        res.json({success : true, books})
+    }catch(error){
+        res.json({success : false, message:"false"})
+    }
+}
+
+const topLike = async (req, res) => {
+    
+    console.log("dxfghjk")
+    const books = await Book.find().sort({ countLike: 1 }).limit(5).exec();
+      res.json({ success: true, books: books });
+   
+  }
+
 //pagination
 const bookPage = async (req, res) => {
     var aggregateQuery =Book.aggregate();
@@ -137,5 +180,8 @@ module.exports = {
     updateBook,
     addBook,
     bookPage,
-    addLike
+    addLike,
+    topLike,
+    topSell
+
 };

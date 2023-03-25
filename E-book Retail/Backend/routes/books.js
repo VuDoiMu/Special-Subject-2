@@ -6,12 +6,20 @@ router.route('/')
     .get(bookController.getAllBook)
     .put(bookController.updateBook)
     .post(bookController.addBook)
-    .delete(bookController.deleteBook);
-router.route('/add')
-    .put(bookController.addLike);
 
 router.route('/:id')
-    .get(bookController.getByID);
+    .get(bookController.getByID)
+    .delete(bookController.deleteBook);
+
+
+router.route('/like/:id')
+    .put(bookController.addLike);
+
+router.route('/topsell')
+    .get(bookController.topSell);
+
+router.route('/toplike')
+    .get(bookController.topLike);
 
 router.route('/pages/:page')
 .get(bookController.bookPage);

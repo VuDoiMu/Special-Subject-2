@@ -57,7 +57,25 @@ const saveToOrder = async (req, res) => {
     })
     await order.save();
     
+    Cart.findById(cart._id)
+    .populate('items.product', 'id')
+    .then((cart) => {
+      const bookSales = cart.items.map((item) => ({
+        productId: item.product.id,
+        quantity: item.quantity,
+      }));
+  
+      bookSales.forEach((item) => {
+        Book.updateOne({ _id: item.productId }, { $inc: { countSale : item.quantity }  })
+          .then(() => {
+            console.log(`Updated quantity for product ${item.productId}`);
+          })
+          .catch((error) => console.log(error));
+      });
+    })
+    .catch((error) => console.log(error));
 
+    
     const deleteCart = await Cart.deleteOne({userId: userId})
     const newcart = new Cart({userId : userId, finalTotal: 0})
     await newcart.save();
