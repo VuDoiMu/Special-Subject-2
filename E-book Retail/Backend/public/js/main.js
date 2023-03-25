@@ -542,17 +542,20 @@ document
 document.querySelector("#form-signup").addEventListener("submit", async (e) => {
   e.preventDefault();
   const email = document.getElementById("signup-email").value;
-  const password = document.getElementById("signup-password").value;
+  const password = document.getElementById("inputPassword").value;
   const confirm_password = document.getElementById("confirm_password").value;
-
+  const name = document.getElementById("signup-username").value;
+  console.log(name);
+  console.log("Hi");
+  
   if (confirm_password === password) {
-    const sendData = await fetch("http://localhost:3500/login", {
+    const sendData = await fetch("http://localhost:3500/auth/register", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ email, password, name }),
     });
     const content = await sendData.json();
     console.log(email, password);

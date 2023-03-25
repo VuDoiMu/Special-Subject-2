@@ -139,7 +139,11 @@ module.exports = {
     deleteBook,
     updateBook,
     addBook,
+<<<<<<< HEAD
+    bookPage
+=======
     bookPage,
     addLike
 
+>>>>>>> d40f8db43b8ff9067503db21e68d5c8d2af8d806
 };
