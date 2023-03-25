@@ -1,5 +1,5 @@
 const mongoose  = require("mongoose");
-
+var aggregatePaginate = require("mongoose-aggregate-paginate-v2");
 const bookSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -42,6 +42,14 @@ const bookSchema = new mongoose.Schema({
         type: Object,
         required: true,
     },
+    countLike: {
+        type: Number,
+        default : 0
+    },
+    countSale : {
+        type : Number,
+        default: 0
+    },
     createdDate: {
         type: Date,
         immutable: true,
@@ -52,4 +60,6 @@ const bookSchema = new mongoose.Schema({
         default: () => Date.now(),
     }
 })
+
+bookSchema.plugin(aggregatePaginate);
 module.exports = mongoose.model("Book", bookSchema);

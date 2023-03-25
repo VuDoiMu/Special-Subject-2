@@ -209,7 +209,7 @@ html(lang="vi")
                   name="password" 
                   placeholder="Nhập mật khẩu" 
                   type="password"
-                  id="signup-password"
+                  id="inputPassword"
                   )
               .form-label-group.mb-4
                 input.form-control(
@@ -567,7 +567,7 @@ html(lang="vi")
                       alt="First slide" 
                       width="900px" 
                       style="height: 386px;" 
-                      src="images/banner-sach-moi.jpg"
+                      src="https://c.bookwalker.jp/ex/img/f/global_feature_banner/6407f1d636c743.21938002.jpeg"
                       )
                 .carousel-item
                   a(href="#")
@@ -575,14 +575,14 @@ html(lang="vi")
                       alt="Second slide" 
                       width="900px" 
                       style="height: 386px;" 
-                      src="images/banner-beethoven.jpg"
+                      src="https://c.bookwalker.jp/ex/img/f/global_feature_banner/63e5e4efea6d77.22400198.jpeg"
                       )
                 .carousel-item
                   a(href="#")
                     img.img-fluid(
                       alt="Third slide" 
                       style="height: 386px;" 
-                      src="images/neu-toi-biet-duoc-khi-20-full-banner.jpg"
+                      src="https://c.bookwalker.jp/ex/img/f/global_feature_banner/63db23b587d013.77130851.jpeg"
                       )
               a.carousel-control-prev(
                 data-slide="prev" 
@@ -615,34 +615,39 @@ html(lang="vi")
                   data-placement="bottom" 
                   data-toggle="tooltip" 
                   style="text-decoration: none; color: black;" 
-                  href=('/product/' + book._id.$oid)
-                
+                  href=('/product/' + book._id)
                   )
                   img.card-img-top.anh(
                     alt="lap-ke-hoach-kinh-doanh-hieu-qua" 
-                    src= book.images
+                    src= book.image
                     )
                   .card-body.noidungsp.mt-3
                     h3.card-title.ten=book.name
                     small.tacgia.text-muted=book.author
                     .gia.d-flex.align-items-baseline
-                      .giamoi 111.200 ₫
-                      .giacu.text-muted 139.000 ₫
-                      .sale -20%
-                    .danhgia
-                      ul.d-flex(style="list-style: none;")
-                        li.active
-                          i.fa.fa-star
-                        li.active
-                          i.fa.fa-star
-                        li.active
-                          i.fa.fa-star
-                        li.active
-                          i.fa.fa-star
-                        li
-                          i.fa.fa-star
-                        li
-                          span.text-muted 0 nhận xét
+                      .giamoi
+                        | #{(book.price - book.price*book.saleRate/100).toFixed(2)} $
+                      .giacu.text-muted 
+                        |#{book.price} $
+                      .sale
+                        |-#{book.saleRate}%
+                    .like 
+                      i.fa.fa-heart.active
+                      i.far.fa-heart
+                    //- .danhgia
+                    //-   ul.d-flex(style="list-style: none;")
+                    //-     li.active
+                    //-       i.fa.fa-star
+                    //-     li.active
+                    //-       i.fa.fa-star
+                    //-     li.active
+                    //-       i.fa.fa-star
+                    //-     li.active
+                    //-       i.fa.fa-star
+                    //-     li
+                    //-       i.fa.fa-star
+                    //-     li
+                    //-       span.text-muted 0 nhận xét
             //- .card
             //-   a.motsanpham(
             //-     title="Ma Bùn Lưu Manh Và Những Câu Chuyện Khác Của Nguyễn Trí" 

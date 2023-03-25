@@ -88,10 +88,9 @@ html(lang="li")
         // logo
         a.navbar-brand(
           style="color: #CF111A;" 
-          href="index.html"
+          href="/"
           )
-          b DealBook
-          | .xyz
+          b EManga
         // navbar-toggler
         button.navbar-toggler.d-lg-none(
           aria-label="Toggle navigation" 
@@ -563,57 +562,58 @@ html(lang="li")
                   img.product-image(
                     style="width: 100%;" 
                     alt="lap-ke-hoach-kinh-doanh-hieu-qua-mt" 
-                    src= book.images
+                    src= book.image
                     )
                 a(
                   data-fancybox="thumb-img" 
                   href="/images/lap-ke-hoach-kinh-doanh-hieu-qua-ms.jpg"
                   )
-              .list-anhchitiet.d-flex.mb-4(style="margin-left: 2rem;")
-                img.thumb-img.thumb1.mr-3(
-                  alt="lap-ke-hoach-kinh-doanh-hieu-qua-mt" 
-                  src="/images/lap-ke-hoach-kinh-doanh-hieu-qua-mt.jpg"
-                  )
-                img.thumb-img.thumb2(
-                  alt="lap-ke-hoach-kinh-doanh-hieu-qua-ms" 
-                  src="/images/lap-ke-hoach-kinh-doanh-hieu-qua-ms.jpg"
-                  )
+              //- .list-anhchitiet.d-flex.mb-4(style="margin-left: 2rem;")
+              //-   img.thumb-img.thumb1.mr-3(
+              //-     alt="lap-ke-hoach-kinh-doanh-hieu-qua-mt" 
+              //-     src="/images/lap-ke-hoach-kinh-doanh-hieu-qua-mt.jpg"
+              //-     )
+              //-   img.thumb-img.thumb2(
+              //-     alt="lap-ke-hoach-kinh-doanh-hieu-qua-ms" 
+              //-     src="/images/lap-ke-hoach-kinh-doanh-hieu-qua-ms.jpg"
+              //-     )
             // thông tin sản phẩm: tên, giá bìa giá bán tiết kiệm, các khuyến mãi, nút chọn mua....
             .col-md-7.khoithongtin
               .row
                 .col-md-12.header
-                  h4.ten Lập Kế Hoạch Kinh Doanh Hiệu Quả
-                  .rate
-                    i.fa.fa-star.active
-                    i.fa.fa-star.active
-                    i.fa.fa-star.active
-                    i.fa.fa-star.active
-                    i.fa.fa-star
+                  h4.ten= book.name
+                  //- .rate
+                  //-   i.fa.fa-star.active
+                  //-   i.fa.fa-star.active
+                  //-   i.fa.fa-star.active
+                  //-   i.fa.fa-star.active
+                  //-   i.fa.fa-star
                   hr
                 .col-md-7
                   .gia
                     .giabia
-                      | Giá bìa:
-                      span.giacu.ml-2 139.000 ₫
+                      | Giá cũ:
+                      span.giacu.ml-2
+                        |#{book.price} $
                     .giaban
-                      | Giá bán tại DealBooks:
-                      span.giamoi.font-weight-bold 111.200
-                      span.donvitien ₫
+                      | Giá mới:
+                      span.giamoi.font-weight-bold 
+                        | #{(book.price - book.price*book.saleRate/100).toFixed(2)} $
                     .tietkiem
                       | Tiết kiệm:
-                      b 27.800 ₫
-                      span.sale -20%
+                      b
+                      | #{(book.price*book.saleRate/100).toFixed(2)} $
+                      span.sale 
+                        |-#{book.saleRate}%
                   .uudai.my-3
-                    h6.header.font-weight-bold Khuyến mãi & Ưu đãi tại DealBook:
+                    h6.header.font-weight-bold Khuyến mãi & Ưu đãi tại EManga:
                     ul
                       li
                         b Miễn phí giao hàng
                         | cho đơn hàng từ 150.000đ ở TP.HCM và 300.000đ ở
                         |   Tỉnh/Thành khác
-                        a(href="#") >> Chi tiết
                       li
                         b Combo sách HOT - GIẢM 25%
-                        a(href="#") >>Xem ngay
                       li Tặng Bookmark cho mỗi đơn hàng
                       li Bao sách miễn phí (theo yêu cầu)
                   .soluong.d-flex
@@ -628,10 +628,6 @@ html(lang="li")
                       .input-group-append
                         span.input-group-text.btn-spin.btn-inc +
                   .nutmua.btn.w-100.text-uppercase Chọn mua
-                  a.huongdanmuahang.text-decoration-none(href="#")
-                    | (Vui lòng xem hướng dẫn mua
-                    |   hàng)
-                  small.share Share:
                   .fb-like(
                     data-share="true" 
                     data-size="small" 
@@ -646,24 +642,13 @@ html(lang="li")
                     ul
                       li
                         | Tác giả:
-                        a.tacgia(href="#") Brian Finch
-                      li
-                        | Ngày xuất bản:
-                        b 04-2020
-                      li
-                        | Kích thước:
-                        b 20.5 x 13.5 cm
-                      li Dịch giả: Skye Phan;
-                      li Nhà xuất bản: Nhà Xuất Bản Thanh Niên
-                      li
-                        | Hình thức bìa:
-                        b Bìa mềm
+                        a.tacgia(href="#")=book.author
+                      li 
+                        |Nhà xuất bản: #{book.publisher}
                       li
                         | Số trang:
-                        b 336
-                      li
-                        | Cân nặng:
-                        b 0
+                        b 
+                          |#{book.pageCount}
             // decripstion của 1 sản phẩm: giới thiệu , đánh giá độc giả
             .product-description.col-md-9
               // 2 tab ở trên
@@ -675,7 +660,7 @@ html(lang="li")
                     role="tab" 
                     href="#nav-gioithieu" 
                     data-toggle="tab"
-                    ) Giới thiệu
+                    ) Introduction
                   a#nav-danhgia-tab.nav-item.nav-link.text-uppercase(
                     aria-selected="false" 
                     aria-controls="nav-danhgia" 
@@ -691,62 +676,9 @@ html(lang="li")
                   aria-labelledby="nav-gioithieu-tab" 
                   role="tabpanel"
                   )
-                  h6.tieude.font-weight-bold Lập Kế Hoạch Kinh Doanh Hiệu Quả
-                  p
-                    span
-                      | Khi bắt đầu thành lập doanh nghiệp hay mở rộng quy mô hoạt động, lập ra một
-                      |   bản kế hoạch kinh doanh là bước đi đầu tiên không thể thiếu. Bản kế hoạch kinh
-                      |   doanh càng được chuẩn bị kỹ lưỡng và lôi cuốn bao nhiêu, cơ hội ghi điểm trước
-                      |   các nhà đầu tư càng lớn bấy nhiêu. Phải chăng, thông qua bản kế hoạch kinh
-                      |   doanh, bạn muốn người đọc:
-                  p
-                    span
-                      | - Đầu tư vào một ý tưởng kinh doanh mới hay một doanh nghiệp đang hoạt
-                      |   động?
-                  p
-                    span - Mua lại doanh nghiệp của bạn?
-                  p
-                    span - Tham gia liên doanh với bạn?
-                  p
-                    span - Chấp nhận đề nghị của bạn để thực hiện hợp đồng?
-                  p
-                    span - Cấp cho bạn một khoản hỗ trợ hoặc phê duyệt theo quy định?
-                  p
-                    span
-                      | - Thuyết phục hội đồng quản trị thay đổi phương hướng hoạt động doanh nghiệp
-                      |   của bạn?
-                  p
-                    span
-                      | Cuốn sách “Lập kế hoạch kinh doanh hiệu quả” sẽ hướng dẫn bạn cách để tạo ra
-                      |   bản kế hoạch kinh doanh thu hút mọi tổ chức tài chính, khiến họ phải đáp ứng
-                      |   mong muốn của bạn và hỗ trợ bạn tới cùng trong công việc kinh doanh. Thông qua
-                      |   cuốn sách, bạn sẽ biết cách:
-                  p
-                    span
-                      | Tạo ra bản kế hoạch kinh doanh hoàn chỉnh Xây dựng chiến lược hoạt động cho
-                      |   doanh nghiệp.
-                  p
-                    span Đưa ra dự báo kinh doanh sát với thực tế.
-                  p
-                    span Nắm rõ các thông tin tài chính ảnh hưởng lớn tới doanh nghiệp.
-                  p
-                    span
-                      | Trong quá trình xây dựng kế hoạch, việc tham khảo ý kiến chuyên gia là điều
-                      |   cần thiết nhưng bạn phải là người đóng góp chính và hiểu tường tận mỗi chi tiết
-                      |   có trong đó. Hãy xem việc lập kế hoạch giống như việc truyền đạt câu chuyện của
-                      |   mình nhằm thuyết phục người đọc đồng hành cùng bạn trên con đường chinh phục mục
-                      |   tiêu kinh doanh.
-                  p
-                    span
-                      | Bạn chỉ có một cơ hội duy nhất để tạo ấn tượng đầu tiên tốt đẹp. Đừng để nó
-                      |   vụt mất. Hãy trình bày một văn bản có tính thuyết phục cao, bố cục đẹp mắt,
-                      |   không mắc lỗi chính tả, ngữ pháp, bao gồm các vấn đề trọng tâm và cuối cùng là
-                      |   chứa các thông tin bổ trợ cần thiết.
-                  p
-                    span
-                      | Bằng kiến thức, kinh nghiệm của mình, Brian Finch - một chuyên gia trong lĩnh
-                      |   vực tư vấn lập kế hoạch kinh doanh và quản lý tài chính - chắc chắn sẽ giúp bạn
-                      |   xây dựng thành công kế hoạch kinh doanh của riêng mình.
+                  h6.tieude.font-weight-bold=book.name
+                  p=book.description
+
                 #nav-danhgia.tab-pane.fade(
                   aria-labelledby="nav-danhgia-tab" 
                   role="tabpanel"
@@ -1439,6 +1371,88 @@ html(lang="li")
                       li
                         span.text-muted 0 nhận xét
     // thanh cac dich vu :mien phi giao hang, qua tang mien phi ........
+    .container.mb-5.mt-5.comment-section
+      .card
+        .row
+          .col-md-12
+            h3.text-center.mb-5
+              | Nested comment section
+            .row
+              .col-md-12
+                .media
+                  img.mr-3.rounded-circle(alt='Bootstrap Media Preview' src='https://i.imgur.com/stD0Q19.jpg')
+                  .media-body
+                    .row
+                      .col-8.d-flex
+                        h5 Maria Smantha
+                        span - 2 hours ago
+                      .col-4
+                        .pull-right.reply
+                          a(href='#')
+                            span
+                              i.fa.fa-reply
+                              |  reply
+                    | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;It is a long established fact that a reader will be distracted by the readable content of a page.
+                    .media.mt-4
+                      a.pr-3(href='#')
+                        img.rounded-circle(alt='Bootstrap Media Another Preview' src='https://i.imgur.com/xELPaag.jpg')
+                      .media-body
+                        .row
+                          .col-12.d-flex
+                            h5 Simona Disa
+                            span - 3 hours ago
+                        | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;letters, as opposed to using &apos;Content here, content here&apos;, making it look like readable English.
+                    .media.mt-3
+                      a.pr-3(href='#')
+                        img.rounded-circle(alt='Bootstrap Media Another Preview' src='https://i.imgur.com/nAcoHRf.jpg')
+                      .media-body
+                        .row
+                          .col-12.d-flex
+                            h5 John Smith
+                            span - 4 hours ago
+                        | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;the majority have suffered alteration in some form, by injected humour, or randomised words.
+                .media.mt-4
+                  img.mr-3.rounded-circle(alt='Bootstrap Media Preview' src='https://i.imgur.com/xELPaag.jpg')
+                  .media-body
+                    .row
+                      .col-8.d-flex
+                        h5 Shad f
+                        span - 2 hours ago
+                      .col-4
+                        .pull-right.reply
+                          a(href='#')
+                            span
+                              i.fa.fa-reply
+                              |  reply
+                    | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33.
+                    .media.mt-4
+                      a.pr-3(href='#')
+                        img.rounded-circle(alt='Bootstrap Media Another Preview' src='https://i.imgur.com/nUNhspp.jpg')
+                      .media-body
+                        .row
+                          .col-12.d-flex
+                            h5 Andy flowe
+                            span - 5 hours ago
+                        | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
+                    .media.mt-3
+                      a.pr-3(href='#')
+                        img.rounded-circle(alt='Bootstrap Media Another Preview' src='https://i.imgur.com/HjKTNkG.jpg')
+                      .media-body
+                        .row
+                          .col-12.d-flex
+                            h5 Simp f
+                            span - 5 hours ago
+                        | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur
+                    .media.mt-3
+                      a.pr-3(href='#')
+                        img.rounded-circle(alt='Bootstrap Media Another Preview' src='https://i.imgur.com/nAcoHRf.jpg')
+                      .media-body
+                        .row
+                          .col-12.d-flex
+                            h5 John Smith
+                            span - 4 hours ago
+                        | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;the majority have suffered alteration in some form, by injected humour, or randomised words.
+
     section.abovefooter.text-white(style="background-color: #CF111A;")
       .container
         .row
