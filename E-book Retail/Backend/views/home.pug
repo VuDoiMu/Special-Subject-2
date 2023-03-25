@@ -1,3 +1,9 @@
+-function shuffle(array) {
+-        for (let i = array.length - 1; i > 0; i--) {
+-          const j = Math.floor(Math.random() * (i + 1));
+-          [array[i], array[j]] = [array[j], array[i]];
+-        }
+-      }
 doctype html
 html(lang="vi")
   head
@@ -193,8 +199,6 @@ html(lang="vi")
               span(aria-hidden="true") ×
           .modal-body
             form#form-signup.form-signin.mt-2
-
-
               .form-label-group
                 input.form-control(
                   required="" 
@@ -202,6 +206,14 @@ html(lang="vi")
                   placeholder="Nhập địa chỉ email" 
                   type="email"
                   id="signup-email"
+                  )
+              .form-label-group
+                input.form-control(
+                  required="" 
+                  name="text" 
+                  placeholder="Nhập họ tên" 
+                  type="text"
+                  id="signup-username"
                   )
               .form-label-group
                 input.form-control(
@@ -607,7 +619,7 @@ html(lang="vi")
               a.btn.btn-warning.btn-sm.text-white(href="sach-moi-tuyen-chon.html") Xem tất cả
           .khoisanpham(style="padding-bottom: 2rem;")
             // 1 san pham
-
+            -shuffle(data)
             each book in data 
               .card
                 a.motsanpham(
@@ -895,278 +907,34 @@ html(lang="vi")
               h2.header.text-uppercase(style="font-weight: 400;") COMBO SÁCH HOT - GIẢM ĐẾN 25%
               a.btn.btn-warning.btn-sm.text-white(href="#") Xem tất cả
           .khoisanpham
-            .card
-              a.motsanpham(
-                title="Chuyện Nghề Và Chuyện Đời - Bộ 4 Cuốn" 
-                data-placement="bottom" 
-                data-toggle="tooltip" 
-                style="text-decoration: none; color: black;" 
-                href="#"
-                )
-                img.card-img-top.anh(
-                  alt="combo-chuyen-nghe-chuyen-doi" 
-                  src="images/combo-chuyen-nghe-chuyen-doi.jpg"
+            -shuffle(data)
+            each book in data
+              .card
+                a.motsanpham(
+                  title="Chuyện Nghề Và Chuyện Đời - Bộ 4 Cuốn" 
+                  data-placement="bottom" 
+                  data-toggle="tooltip" 
+                  style="text-decoration: none; color: black;" 
+                  href="#"
                   )
-                .card-body.noidungsp.mt-3
-                  h3.card-title.ten Chuyện Nghề Và Chuyện Đời - Bộ 4 Cuốn
-                  small.tacgia.text-muted Nguyễn Hữu Long
-                  .gia.d-flex.align-items-baseline
-                    .giamoi 111.200 ₫
-                    .giacu.text-muted 139.000 ₫
-                    .sale -20%
-                  .danhgia
-                    ul.d-flex(style="list-style: none;")
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li
-                        i.fa.fa-star
-                      li
-                        span.text-muted 0 nhận xét
-            .card
-              a.motsanpham(
-                title="Combo Mẹ Con Sư Tử - Bồ Tát Ngàn Tay Ngàn Mắt" 
-                data-placement="bottom" 
-                data-toggle="tooltip" 
-                style="text-decoration: none; color: black;" 
-                href="#"
-                )
-                img.card-img-top.anh(
-                  alt="combo-me-con-su-tu-bo-tat-ngan-tay-ngan-mat" 
-                  src="images/combo-me-con-su-tu-bo-tat-ngan-tay-ngan-mat.jpg"
-                  )
-                .card-body.noidungsp.mt-3
-                  h3.card-title.ten Combo Mẹ Con Sư Tử - Bồ Tát Ngàn Tay Ngàn Mắt
-                  small.tacgia.text-muted Thích Nhất Hạnh
-                  .gia.d-flex.align-items-baseline
-                    .giamoi 111.200 ₫
-                    .giacu.text-muted 139.000 ₫
-                    .sale -20%
-                  .danhgia
-                    ul.d-flex(style="list-style: none;")
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li
-                        i.fa.fa-star
-                      li
-                        span.text-muted 0 nhận xét
-            .card
-              a.motsanpham(
-                title="Combo Osho: Hạnh Phúc Tại Tâm, Can Đảm Biến Thách Thức Thành Sức Mạnh & Sáng Tạo Bừng Cháy Sức Mạnh Bên Trong" 
-                data-placement="bottom" 
-                data-toggle="tooltip" 
-                style="text-decoration: none; color: black;" 
-                href="#"
-                )
-                img.card-img-top.anh(
-                  alt="combo-hanh-phuc-sang-tao" 
-                  src="images/combo-hanh-phuc-sang-tao.jpg"
-                  )
-                .card-body.noidungsp.mt-3
-                  h3.card-title.ten
-                    | Combo Osho: Hạnh Phúc Tại Tâm, Can Đảm Biến Thách Thức Thành
-                    |   Sức Mạnh & Sáng Tạo Bừng Cháy Sức Mạnh Bên Trong
-                  small.tacgia.text-muted Gosho Aoyama, Mutsuki Watanabe, Takahisa Taira
-                  .gia.d-flex.align-items-baseline
-                    .giamoi 111.200 ₫
-                    .giacu.text-muted 139.000 ₫
-                    .sale -20%
-                  .danhgia
-                    ul.d-flex(style="list-style: none;")
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li
-                        i.fa.fa-star
-                      li
-                        span.text-muted 0 nhận xét
-            .card
-              a.motsanpham(
-                title="Combo Giáo Dục Và Ý Nghĩa Cuộc Sống Và Bạn Đang Nghịch Gì Với Đời Mình?" 
-                data-placement="bottom" 
-                data-toggle="tooltip" 
-                style="text-decoration: none; color: black;" 
-                href="#"
-                )
-                img.card-img-top.anh(
-                  alt="combo-giao-duc-va-y-nghia-cuoc-song" 
-                  src="images/combo-giao-duc-va-y-nghia-cuoc-song.jpg"
-                  )
-                .card-body.noidungsp.mt-3
-                  h3.card-title.ten
-                    | Combo Giáo Dục Và Ý Nghĩa Cuộc Sống Và Bạn Đang Nghịch Gì Với
-                    |   Đời Mình?
-                  small.tacgia.text-muted J.Krishnamurti
-                  .gia.d-flex.align-items-baseline
-                    .giamoi 111.200 ₫
-                    .giacu.text-muted 139.000 ₫
-                    .sale -20%
-                  .danhgia
-                    ul.d-flex(style="list-style: none;")
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li
-                        i.fa.fa-star
-                      li
-                        span.text-muted 0 nhận xét
-            .card
-              a.motsanpham(
-                title="Combo Dinh Dưỡng Xanh - Thần dược xanh" 
-                data-placement="bottom" 
-                data-toggle="tooltip" 
-                style="text-decoration: none; color: black;" 
-                href="#"
-                )
-                img.card-img-top.anh(
-                  alt="combo-dinh-duong-than-duoc-xanh" 
-                  src="images/combo-dinh-duong-than-duoc-xanh.jpg"
-                  )
-                .card-body.noidungsp.mt-3
-                  h3.card-title.ten Combo Dinh Dưỡng Xanh - Thần dược xanh
-                  small.tacgia.text-muted Ryu Seung-SunVictoria Boutenko
-                  .gia.d-flex.align-items-baseline
-                    .giamoi 111.200 ₫
-                    .giacu.text-muted 139.000 ₫
-                    .sale -20%
-                  .danhgia
-                    ul.d-flex(style="list-style: none;")
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li
-                        i.fa.fa-star
-                      li
-                        span.text-muted 0 nhận xét
-            .card
-              a.motsanpham(
-                title="Combo Ăn Xanh Để Khỏe - Sống Lành Để Trẻ" 
-                data-placement="bottom" 
-                data-toggle="tooltip" 
-                style="text-decoration: none; color: black;" 
-                href="#"
-                )
-                img.card-img-top.anh(
-                  alt="combo-an-xanh-song-lanh" 
-                  src="images/combo-an-xanh-song-lanh.jpg"
-                  )
-                .card-body.noidungsp.mt-3
-                  h3.card-title.ten Combo Ăn Xanh Để Khỏe - Sống Lành Để Trẻ
-                  small.tacgia.text-muted Norman W. Walker
-                  .gia.d-flex.align-items-baseline
-                    .giamoi 111.200 ₫
-                    .giacu.text-muted 139.000 ₫
-                    .sale -20%
-                  .danhgia
-                    ul.d-flex(style="list-style: none;")
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li
-                        i.fa.fa-star
-                      li
-                        span.text-muted 0 nhận xét
-            .card
-              a.motsanpham(
-                title="Combo Lược Sử Loài Người - Lược Sử Tương Lai - 21 Bài Học Cho Thế Kỷ 21" 
-                data-placement="bottom" 
-                data-toggle="tooltip" 
-                style="text-decoration: none; color: black;" 
-                href="#"
-                )
-                img.card-img-top.anh(
-                  alt="combo-luoc-su-loai-nguoi" 
-                  src="images/combo-luoc-su-loai-nguoi.jpg"
-                  )
-                .card-body.noidungsp.mt-3
-                  h3.card-title.ten
-                    | Combo Lược Sử Loài Người - Lược Sử Tương Lai - 21 Bài Học Cho
-                    |   Thế Kỷ 21
-                  small.tacgia.text-muted Yuval Noah Harari
-                  .gia.d-flex.align-items-baseline
-                    .giamoi 111.200 ₫
-                    .giacu.text-muted 139.000 ₫
-                    .sale -20%
-                  .danhgia
-                    ul.d-flex(style="list-style: none;")
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li
-                        i.fa.fa-star
-                      li
-                        span.text-muted 0 nhận xét
-            .card
-              a.motsanpham(
-                title="Bộ Sách Phong Cách Sống (Bộ 5 Cuốn)" 
-                data-placement="bottom" 
-                data-toggle="tooltip" 
-                style="text-decoration: none; color: black;" 
-                href="#"
-                )
-                img.card-img-top.anh(
-                  alt="combo-phong-cach-song" 
-                  src="images/combo-phong-cach-song.jpg"
-                  )
-                .card-body.noidungsp.mt-3
-                  h3.card-title.ten Bộ Sách Phong Cách Sống (Bộ 5 Cuốn)
-                  small.tacgia.text-muted
-                    | Marie Tourell Soderberg, Joanna Nylund, Yukari
-                    |   Mitsuhashi, Margareta Magnusson, Linnea Dunne
-                  .gia.d-flex.align-items-baseline
-                    .giamoi 111.200 ₫
-                    .giacu.text-muted 139.000 ₫
-                    .sale -20%
-                  .danhgia
-                    ul.d-flex(style="list-style: none;")
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li
-                        i.fa.fa-star
-                      li
-                        span.text-muted 0 nhận xét
+                  img.card-img-top.anh(
+                    alt="combo-chuyen-nghe-chuyen-doi" 
+                    src=book.image
+                    )
+                  
+                  .card-body.noidungsp.mt-3
+                    h3.card-title.ten=book.name
+                    small.tacgia.text-muted=book.author
+                    .gia.d-flex.align-items-baseline
+                      .giamoi
+                        | #{(book.price - book.price*book.saleRate/100).toFixed(2)} $
+                      .giacu.text-muted 
+                        |#{book.price} $
+                      .sale
+                        |-#{book.saleRate}%
+                    .like 
+                      i.fa.fa-heart.active
+                      i.far.fa-heart
     // khoi sach sap phathanh
     section.sapphathanh.mt-4(class="_1khoi")
       .container
@@ -1178,296 +946,34 @@ html(lang="vi")
               a.btn.btn-warning.btn-sm.text-white(href="#") Xem tất cả
           .khoisanpham
             // 1 san pham
-            .card
-              a.motsanpham(
-                title="Ngoại Giao Của Chính Quyền Sài Gòn" 
-                data-placement="bottom" 
-                data-toggle="tooltip" 
-                style="text-decoration: none; color: black;" 
-                href="#"
-                )
-                img.card-img-top.anh(
-                  alt="ngoai-giao-cua-chinh-quyen-sai-gon" 
-                  src="images/ngoai-giao-cua-chinh-quyen-sai-gon.jpg"
+            -shuffle(data)
+            each book in data
+              .card
+                a.motsanpham(
+                  title="Ngoại Giao Của Chính Quyền Sài Gòn" 
+                  data-placement="bottom" 
+                  data-toggle="tooltip" 
+                  style="text-decoration: none; color: black;" 
+                  href="#"
                   )
-                .card-body.noidungsp.mt-3
-                  h3.card-title.ten Ngoại Giao Của Chính Quyền Sài Gòn
-                  small.tacgia.text-muted Brian Finch
-                  .gia.d-flex.align-items-baseline
-                  .danhgia
-                    ul.d-flex(style="list-style: none;")
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li
-                        i.fa.fa-star
-                      li
-                        span.text-muted 0 nhận xét
-            .card
-              a.motsanpham(
-                title="Đường Mây Trên Đất Hoa" 
-                data-placement="bottom" 
-                data-toggle="tooltip" 
-                style="text-decoration: none; color: black;" 
-                href="#"
-                )
-                img.card-img-top.anh(
-                  alt="duong-may-tren-dat-hoa" 
-                  src="images/duong-may-tren-dat-hoa.jpg"
-                  )
-                .card-body.noidungsp.mt-3
-                  h3.card-title.ten Đường Mây Trên Đất Hoa
-                  small.tacgia.text-muted Brian Finch
-                  .gia.d-flex.align-items-baseline
-                  .danhgia
-                    ul.d-flex(style="list-style: none;")
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li
-                        i.fa.fa-star
-                      li
-                        span.text-muted 0 nhận xét
-            .card
-              a.motsanpham(
-                title="Muôn Kiếp Nhân Sinh" 
-                data-placement="bottom" 
-                data-toggle="tooltip" 
-                style="text-decoration: none; color: black;" 
-                href="#"
-                )
-                img.card-img-top.anh(
-                  alt="muon-kiep-nhan-sinh" 
-                  src="images/muon-kiep-nhan-sinh.jpg"
-                  )
-                .card-body.noidungsp.mt-3
-                  h3.card-title.ten Muôn Kiếp Nhân Sinh
-                  small.tacgia.text-muted Brian Finch
-                  .gia.d-flex.align-items-baseline
-                  .danhgia
-                    ul.d-flex(style="list-style: none;")
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li
-                        i.fa.fa-star
-                      li
-                        span.text-muted 0 nhận xét
-            .card
-              a.motsanpham(
-                title="Đường Mây Trong Cõi Mộng" 
-                data-placement="bottom" 
-                data-toggle="tooltip" 
-                style="text-decoration: none; color: black;" 
-                href="#"
-                )
-                img.card-img-top.anh(
-                  alt="duong-may-trong-coi-mong.jpg" 
-                  src="images/duong-may-trong-coi-mong.jpg"
-                  )
-                .card-body.noidungsp.mt-3
-                  h3.card-title.ten Đường Mây Trong Cõi Mộng
-                  small.tacgia.text-muted Brian Finch
-                  .gia.d-flex.align-items-baseline
-                  .danhgia
-                    ul.d-flex(style="list-style: none;")
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li
-                        i.fa.fa-star
-                      li
-                        span.text-muted 0 nhận xét
+                  img.card-img-top.anh(
+                    alt="ngoai-giao-cua-chinh-quyen-sai-gon" 
+                    src=book.image
+                    )
+                  .card-body.noidungsp.mt-3
+                    h3.card-title.ten=book.name
+                    small.tacgia.text-muted=book.author
+                    .gia.d-flex.align-items-baseline
+                      .giamoi
+                        | #{(book.price - book.price*book.saleRate/100).toFixed(2)} $
+                      .giacu.text-muted 
+                        |#{book.price} $
+                      .sale
+                        |-#{book.saleRate}%
+                    .like 
+                      i.fa.fa-heart.active
+                      i.far.fa-heart
     // div _1khoi -- khoi sachnendoc
-    section.sachnendoc.bg-white.mt-4(class="_1khoi")
-      .container
-        .noidung(style=" width: 100%;")
-          .row
-            // header
-            .col-12.d-flex.justify-content-between.align-items-center.pb-2.bg-transparent.pt-4
-              h2.header.text-uppercase(style="font-weight: 400;") SÁCH HAY NÊN ĐỌC
-              a.btn.btn-warning.btn-sm.text-white(href="#") Xem tất cả
-            // 1 san pham
-            .col-lg.col-sm-4
-              .card
-                a.motsanpham(
-                  title="Từng bước chân nở hoa: Khi câu kinh bước tới" 
-                  data-placement="bottom" 
-                  data-toggle="tooltip" 
-                  style="text-decoration: none; color: black;" 
-                  href="#"
-                  )
-                  img.card-img-top.anh(
-                    alt="tung-buoc-chan-no-hoa" 
-                    src="images/tung-buoc-chan-no-hoa.jpg"
-                    )
-                .card-body.noidungsp.mt-3
-                  a.motsanpham(
-                    title="Từng bước chân nở hoa: Khi câu kinh bước tới" 
-                    data-placement="bottom" 
-                    data-toggle="tooltip" 
-                    style="text-decoration: none; color: black;" 
-                    href="#"
-                    )
-                    h3.card-title.ten Từng bước chân nở hoa: Khi câu kinh bước tới
-                    small.thoigian.text-muted 03/04/2020
-                  div
-                    a.motsanpham(
-                      title="Từng bước chân nở hoa: Khi câu kinh bước tới" 
-                      data-placement="bottom" 
-                      data-toggle="tooltip" 
-                      style="text-decoration: none; color: black;" 
-                      href="#"
-                      )
-                    a.detail(href="#") Xem chi tiết
-            .col-lg.col-sm-4
-              .card
-                a.motsanpham(
-                  title="Cảm ơn vì đã được thương" 
-                  data-placement="bottom" 
-                  data-toggle="tooltip" 
-                  style="text-decoration: none; color: black;" 
-                  href="#"
-                  )
-                  img.card-img-top.anh(
-                    alt="cam-on-vi-da-duoc-thuong" 
-                    src="images/cam-on-vi-da-duoc-thuong.jpg"
-                    )
-                .card-body.noidungsp.mt-3
-                  a.motsanpham(
-                    title="Cảm ơn vì đã được thương" 
-                    data-placement="bottom" 
-                    data-toggle="tooltip" 
-                    style="text-decoration: none; color: black;" 
-                    href="#"
-                    )
-                    h3.card-title.ten Cảm ơn vì đã được thương
-                    small.thoigian.text-muted 31/03/2020
-                  div
-                    a.motsanpham(
-                      title="Cảm ơn vì đã được thương" 
-                      data-placement="bottom" 
-                      data-toggle="tooltip" 
-                      style="text-decoration: none; color: black;" 
-                      href="#"
-                      )
-                    a.detail(href="#") Xem chi tiết
-            .col-lg.col-sm-4
-              .card
-                a.motsanpham(
-                  title="Hào quang của vua Gia Long trong mắt Michel Gaultier" 
-                  data-placement="bottom" 
-                  data-toggle="tooltip" 
-                  style="text-decoration: none; color: black;" 
-                  href="#"
-                  )
-                  img.card-img-top.anh(
-                    alt="vua-gia-long" 
-                    src="images/vua-gia-long.jpg"
-                    )
-                .card-body.noidungsp.mt-3
-                  a.motsanpham(
-                    title="Hào quang của vua Gia Long trong mắt Michel Gaultier" 
-                    data-placement="bottom" 
-                    data-toggle="tooltip" 
-                    style="text-decoration: none; color: black;" 
-                    href="#"
-                    )
-                    h3.card-title.ten Hào quang của vua Gia Long trong mắt Michel Gaultier
-                    small.thoigian.text-muted 21/03/2020
-                  div
-                    a.motsanpham(
-                      title="Hào quang của vua Gia Long trong mắt Michel Gaultier" 
-                      data-placement="bottom" 
-                      data-toggle="tooltip" 
-                      style="text-decoration: none; color: black;" 
-                      href="#"
-                      )
-                    a.detail(href="#") Xem chi tiết
-            .col-lg.col-sm-4
-              .card
-                a.motsanpham(
-                  title="Suối nguồn” và cái tôi hiện sinh trong từng cá thể" 
-                  data-placement="bottom" 
-                  data-toggle="tooltip" 
-                  style="text-decoration: none; color: black;" 
-                  href="#"
-                  )
-                  img.card-img-top.anh(
-                    alt="suoi-nguon-va-cai-toi-trong-tung-ca-the" 
-                    src="images/suoi-nguon-va-cai-toi-trong-tung-ca-the.jpg"
-                    )
-                .card-body.noidungsp.mt-3
-                  a.motsanpham(
-                    title="Suối nguồn” và cái tôi hiện sinh trong từng cá thể" 
-                    data-placement="bottom" 
-                    data-toggle="tooltip" 
-                    style="text-decoration: none; color: black;" 
-                    href="#"
-                    )
-                    h3.card-title.ten "Suối nguồn” và cái tôi hiện sinh trong từng cá thể
-                    small.thoigian.text-muted 16/03/2020
-                  div
-                    a.motsanpham(
-                      title="Suối nguồn” và cái tôi hiện sinh trong từng cá thể" 
-                      data-placement="bottom" 
-                      data-toggle="tooltip" 
-                      style="text-decoration: none; color: black;" 
-                      href="#"
-                      )
-                    a.detail(href="#") Xem chi tiết
-            .col-lg.col-sm-4
-              .card.cuoicung
-                a.motsanpham(
-                  title="Đại dịch trên những con đường tơ lụa" 
-                  data-placement="bottom" 
-                  data-toggle="tooltip" 
-                  style="text-decoration: none; color: black;" 
-                  href="#"
-                  )
-                  img.card-img-top.anh(
-                    alt="dai-dich-tren-con-duong-to-lua" 
-                    src="images/dai-dich-tren-con-duong-to-lua.jpg"
-                    )
-                .card-body.noidungsp.mt-3
-                  a.motsanpham(
-                    title="Đại dịch trên những con đường tơ lụa" 
-                    data-placement="bottom" 
-                    data-toggle="tooltip" 
-                    style="text-decoration: none; color: black;" 
-                    href="#"
-                    )
-                    h3.card-title.ten Đại dịch trên những con đường tơ lụa
-                    small.thoigian.text-muted 16/03/2020
-                  div
-                    a.motsanpham(
-                      title="Đại dịch trên những con đường tơ lụa" 
-                      data-placement="bottom" 
-                      data-toggle="tooltip" 
-                      style="text-decoration: none; color: black;" 
-                      href="#"
-                      )
-                    a.detail(href="#") Xem chi tiết
         hr
     // thanh cac dich vu :mien phi giao hang, qua tang mien phi ........
     section.abovefooter.text-white(style="background-color: #CF111A;")

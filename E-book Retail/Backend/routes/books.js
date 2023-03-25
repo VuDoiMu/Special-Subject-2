@@ -7,8 +7,6 @@ router.route('/')
     .put(bookController.updateBook)
     .post(bookController.addBook)
     .delete(bookController.deleteBook);
-router.route('/add')
-    .put(bookController.addLike);
 
 router.route('/:id')
     .get(bookController.getByID);

@@ -136,6 +136,5 @@ module.exports = {
     deleteBook,
     updateBook,
     addBook,
-    bookPage,
-    addLike
+    bookPage
 };
