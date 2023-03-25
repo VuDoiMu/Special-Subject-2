@@ -14,10 +14,6 @@ const bookSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    numLike: {
-        type : Number,
-        default: 0
-    },
     author: {
         type: String,
         required: true,
@@ -46,7 +42,14 @@ const bookSchema = new mongoose.Schema({
         type: Object,
         required: true,
     },
-    
+    countLike: {
+        type: Number,
+        default : 0
+    },
+    countSale : {
+        type : Number,
+        default: 0
+    },
     createdDate: {
         type: Date,
         immutable: true,
@@ -57,6 +60,6 @@ const bookSchema = new mongoose.Schema({
         default: () => Date.now(),
     }
 })
-1
+
 bookSchema.plugin(aggregatePaginate);
 module.exports = mongoose.model("Book", bookSchema);

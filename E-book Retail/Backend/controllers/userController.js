@@ -12,7 +12,7 @@ app.use(cookieParser());
 
 const register = async (req, res) => {
     const { email, password} = req.body;
-    
+    const name = "newUser";
     if(!email || !password )
     return res.status(400).json({success: false, message:"Missing data "})
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -24,7 +24,7 @@ const register = async (req, res) => {
     if( emailValid)
     return res.json( { 'message': 'this email is already used!'});
     const hashPassword = await argon2.hash(password)
-    const newUser = new User({email, password: hashPassword});
+    const newUser = new User({email, password: hashPassword, username: name});
     await newUser.save();
 
         // const accesstoken = jwt.sign({userId: newUser._id, role: newUser.role},"thisisourwebsite!")
@@ -44,7 +44,9 @@ const login = async (req, res) => {
     if (!emailRegex.test(email)) 
     return res.status.json(`${email} is not a valid email address`)
     try {
+      console.log(email)
         const user = await User.findOne({email})
+        console.log(user)
         const userId = user._id;
         if (!user){
             return res.status(400).json({success: false, message:"Wrong email "})
@@ -67,6 +69,28 @@ const login = async (req, res) => {
     } catch (error) {
         console.error(error);
     }
+}
+const updateInfo = async (req, res) => {
+  const {username, dateOfBirth, userPhone, address} = req.body;
+  const token = req.cookies.token;
+  const decoded = jwt.verify(token, "thisisourwebsite!");
+  const userId = decoded.userId;
+  try{
+    let updateUser = {
+      username, dateOfBirth, userPhone, address
+    }
+    const userUpdateCondition = {_id : userId}
+    
+    updateUser = await User.findOneAndUpdate(userUpdateCondition, updateUser, {new:  true})
+
+    if(!updateUser)
+    return res.status(401).json({success: false, message:"not know what ưởng"});
+
+    res.json({success : true,message:"new", updateUser})
+}catch(error){
+console.log(error)
+}
+    
 }
 const deleteUser = async(req, res) => {
     const deleteUser = await User.deleteMany();
@@ -94,7 +118,8 @@ let sendMail = async (req, res) => {
     const decoded = jwt.verify(token, "thisisourwebsite!");
     const userId = decoded.userId;
     const newPassword = "newpassword"
-    const newUser = await User.findOneAndUpdate({_id : userId}, {password: newPassword},{new: true})
+    const hashPassword = await argon2.hash(newPassword)
+    const newUser = await User.findOneAndUpdate({_id : userId}, {password: hashPassword},{new: true})
     const text = "You requested for reset password, kindly use this "+ newUser.password + " to reset your password"
     // Lấy data truyền lên từ form phía client
     const { to, subject } = req.body
@@ -110,4 +135,4 @@ let sendMail = async (req, res) => {
   }
 }
 
-module.exports = {register, login, logout, access, deleteUser, sendMail};
+module.exports = {register, login, logout, access, deleteUser, sendMail, updateInfo};

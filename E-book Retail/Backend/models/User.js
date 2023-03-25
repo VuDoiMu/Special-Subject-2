@@ -2,7 +2,7 @@ const { ObjectId } = require("mongodb");
 const mongoose  = require("mongoose");
 
 const userSchema = new mongoose.Schema({
-    name: {
+    username: {
         type: String,
         required: false,
         lowercase: true,
@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
         maxLength: 100
     },
     dateOfBirth: {
-        type: Date,
+        type: String,
         required: false
     },
     email: {
@@ -19,14 +19,6 @@ const userSchema = new mongoose.Schema({
         minLength: 4,
         maxLength: 100,
         lowercase: true
-    },
-    userName: {
-        type: String,
-        immutable: true,
-        required: false,
-        lowercase: true,
-        minLength: 3,
-        maxLength: 25
     },
     password: {
         type: String,
@@ -50,6 +42,11 @@ const userSchema = new mongoose.Schema({
         type: Number,
         default: 0 //0 = customer; 1 = admin
     },
+    favorbooks: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Book' 
+        }],
     cart: {
         type: [ObjectId],
     },
