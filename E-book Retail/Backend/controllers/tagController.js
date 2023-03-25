@@ -24,6 +24,7 @@ const newTag = async(req, res) => {
 }
 
 const getTag = async (req, res) => {
+    
     try{
         const tags = await Tag.find();
         res.json({success: true, message:'new tag', tags})
