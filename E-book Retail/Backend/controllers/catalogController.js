@@ -71,7 +71,25 @@ const Order = require('../models/Order');
 // }
 
   
+const topSell = async ( req, res) => {
+    try{
+        const books = await Book.find().sort({ countSale: -1 }).limit(5);
+        res.json({success : true, books})
+    }catch(error){
+        res.json({success : false, message:"false"})
+    }
+}
+
+const topLike = async (req, res) => {
+    try{
+    const books = await Book.find().sort({ countLike: -1 }).limit(5).exec();
+      res.json({ success: true, books: books });
+    }catch(error){
+        res.json({success : false, message:"false"})
+    }
+  }
+
 module.exports = {
-    // getTopBooksBySell,
-    // getTopBooksByLikes
+    topSell,
+    topLike
 };

@@ -100,6 +100,7 @@ app.use("/order", require("./routes/order"));
 app.use("/auth", require("./routes/user"));
 app.use("/cart", require("./routes/cart"));
 app.use("/tag", require("./routes/tag"));
+app.use("/catalog", require("./routes/catalog"))
 
 mongoose.connection.once("open", () => {
   console.log("connected to MongoDb");

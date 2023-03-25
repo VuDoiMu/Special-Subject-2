@@ -15,12 +15,6 @@ router.route('/:id')
 router.route('/like/:id')
     .put(bookController.addLike);
 
-router.route('/topsell')
-    .get(bookController.topSell);
-
-router.route('/toplike')
-    .get(bookController.topLike);
-
 router.route('/pages/:page')
 .get(bookController.bookPage);
 
