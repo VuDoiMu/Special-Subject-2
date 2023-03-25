@@ -14,15 +14,15 @@ html(lang="vi")
     script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js")
     script(src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js")
     link(
-      href="css/product-item.css" 
+      href="/css/product-item.css" 
       rel="stylesheet"
       )
     script(
-      src="js/main.js" 
+      src="/js/main.js" 
       type="text/javascript"
       )
     link(
-      href="fontawesome_free_5.13.0/css/all.css" 
+      href="/fontawesome_free_5.13.0/css/all.css" 
       rel="stylesheet"
       )
     link(
@@ -30,17 +30,17 @@ html(lang="vi")
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
       )
     link(
-      href="slick/slick.css" 
+      href="/slick/slick.css" 
       type="text/css" 
       rel="stylesheet"
       )
     link(
-      href="slick/slick-theme.css" 
+      href="/slick/slick-theme.css" 
       type="text/css" 
       rel="stylesheet"
       )
     script(
-      src="slick/slick.min.js" 
+      src="/slick/slick.min.js" 
       type="text/javascript"
       )
     link(
@@ -54,24 +54,24 @@ html(lang="vi")
       )
     script(src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js")
     link(
-      href="favicon_io/apple-touch-icon.png" 
+      href="/favicon_io/apple-touch-icon.png" 
       sizes="180x180" 
       rel="apple-touch-icon"
       )
     link(
-      href="favicon_io/favicon-32x32.png" 
+      href="/favicon_io/favicon-32x32.png" 
       sizes="32x32" 
       type="image/png" 
       rel="icon"
       )
     link(
-      href="favicon_io/favicon-16x16.png" 
+      href="/favicon_io/favicon-16x16.png" 
       sizes="16x16" 
       type="image/png" 
       rel="icon"
       )
     link(
-      href="favicon_io/site.webmanifest" 
+      href="/favicon_io/site.webmanifest" 
       rel="manifest"
       )
   body
@@ -89,7 +89,7 @@ html(lang="vi")
         // logo
         a.navbar-brand(
           style="color: #CF111A;" 
-          href="index.html"
+          href="/index.html"
           )
           b DealBook
           | .xyz
@@ -150,7 +150,7 @@ html(lang="vi")
                 .cart-amount 0
               a.nav-link.text-dark.giohang.text-uppercase(
                 style="display:inline-block" 
-                href="gio-hang.html"
+                href="/gio-hang.html"
                 )
                 | Giỏ
                 |   Hàng
@@ -549,7 +549,7 @@ html(lang="vi")
     // ảnh banner
     section.banner
       .container
-        a(href="sach-moi-tuyen-chon.html")
+        a(href="/sach-moi-tuyen-chon.html")
           img.img-fluid(
             alt="banner-sach-ktkn" 
             src="images/banner-sach-ktkn.jpg"
@@ -557,119 +557,14 @@ html(lang="vi")
     // thể loại sách: kinh tế chính trị nhân vật bài học kinh doanh ( từng ô vuông)
     section.page-content.my-3
       .container
-        div
-          h1.header.text-uppercase sách kinh tế - kỹ năng
-        .the-loai-sach
-          ul.list-unstyled.d-flex
-            li
-              a.danh-muc.text-decoration-none(href="#")
-                .img.text-center
-                  img(
-                    alt="tls-kinh-te-chinh-tri" 
-                    src="images/tls-kinh-te-chinh-tri.png"
-                    )
-                .ten Kinh tế - chính trị
-            li
-              a.danh-muc.text-decoration-none(href="#")
-                .img.text-center
-                  img(
-                    alt="tls-kinh-te-chinh-tri" 
-                    src="images/tls-nhan-vat-bai-hoc-kinh-doanh.png"
-                    )
-                .ten Nhân vật - Bài học kinh doanh
-            li
-              a.danh-muc.text-decoration-none(href="#")
-                .img.text-center
-                  img(
-                    alt="tls-kinh-te-chinh-tri" 
-                    src="images/tls-sach-khoi-nghiep.png"
-                    )
-                .ten Sách Khởi Nghiệp
-            li
-              a.danh-muc.text-decoration-none(href="#")
-                .img.text-center
-                  img(
-                    alt="tls-kinh-te-chinh-tri" 
-                    src="images/tls-sach-quan-tri-lanh-dao.png"
-                    )
-                .ten Sách Quản trị - Lãnh đạo
-            li
-              a.danh-muc.text-decoration-none(href="#")
-                .img.text-center
-                  img(
-                    alt="tls-kinh-te-chinh-tri" 
-                    src="images/tls-sach-tai-chinh-ke-toan.png"
-                    )
-                .ten Sách tài chính - kế toán
-            li
-              a.danh-muc.text-decoration-none(href="#")
-                .img.text-center
-                  img(
-                    alt="tls-kinh-te-chinh-tri" 
-                    src="images/tls-sach-kinh-te-hoc.png"
-                    )
-                .ten Sách Kinh tế học
-            li
-              a.danh-muc.text-decoration-none(href="#")
-                .img.text-center
-                  img(
-                    alt="tls-kinh-te-chinh-tri" 
-                    src="images/tls-sach-quan-tri-nhan-su.png"
-                    )
-                .ten Sách quản trị nhân sự
-            li
-              a.danh-muc.text-decoration-none(href="#")
-                .img.text-center
-                  img(
-                    alt="tls-kinh-te-chinh-tri" 
-                    src="images/tls-sach-chung-khoan-bat-dong-san-dau-tu.png"
-                    )
-                .ten Sách chứng khoán - bất động sản
-            li
-              a.danh-muc.text-decoration-none(href="#")
-                .img.text-center
-                  img(
-                    alt="tls-kinh-te-chinh-tri" 
-                    src="images/tls-sach-ky-nang-lam-viec.png"
-                    )
-                .ten Sách kỹ năng làm việc
-            li
-              a.danh-muc.text-decoration-none(href="#")
-                .img.text-center
-                  img(
-                    alt="tls-kinh-te-chinh-tri" 
-                    src="images/tls-sach-marketing-ban-hang.png"
-                    )
-                .ten Sách marketing - bán hàng
+        
     // khối sản phẩm
     section.content.my-4
       .container
         .noidung.bg-white(style=" width: 100%;")
           // header của khối sản phẩm : tag(tác giả), bộ lọc và sắp xếp
           .header-khoi-sp.d-flex
-            .tag
-              label Tác giả nổi bật:
-              a(href="#") Tất cả
-              a(
-                data-tacgia=".MarieForleo" 
-                href="#"
-                ) Marie Forleo
-              a(
-                data-tacgia=".DeanGraziosi" 
-                href="#"
-                ) Dean Graziosi
-              a(
-                data-tacgia=".DavikClark" 
-                href="#"
-                ) Davik Clark
-              a(
-                data-tacgia=".TSLêThẩmDương" 
-                href="#"
-                ) TS Lê Thẩm Dương
-              a(
-                data-tacgia=".SimonSinek" 
-                href="#"
-                ) Simon Sinek
+            
             .sort.d-flex.ml-auto
               .hien-thi
                 label.label-select(for="hienthi-select") Hiển thị
@@ -685,237 +580,41 @@ html(lang="vi")
           // các sản phẩm
           .items
             .row
-              .col-lg-3.col-md-4.col-xs-6.item.DeanGraziosi
-                .card
-                  a.motsanpham(
-                    title="Lập Kế Hoạch Kinh Doanh Hiệu Quả" 
-                    data-placement="bottom" 
-                    data-toggle="tooltip" 
-                    style="text-decoration: none; color: black;" 
-                    href="product-item.html"
-                    )
-                    img.card-img-top.anh(
-                      alt="lap-ke-hoach-kinh-doanh-hieu-qua" 
-                      src="images/lap-ke-hoach-kinh-doanh-hieu-qua.jpg"
+              for book in booksTag
+                .col-lg-3.col-md-4.col-xs-6.item.DeanGraziosi
+                  .card
+                    a.motsanpham(
+                      title=book.name 
+                      data-placement="bottom" 
+                      data-toggle="tooltip" 
+                      style="text-decoration: none; color: black;" 
+                    
                       )
-                    .card-body.noidungsp.mt-3
-                      h6.card-title.ten Lập Kế Hoạch Kinh Doanh Hiệu Quả
-                      small.tacgia.text-muted Brian Finch
-                      .gia.d-flex.align-items-baseline
-                        .giamoi 111.200 ₫
-                        .giacu.text-muted 139.000 ₫
-                        .sale -20%
-                      .danhgia
-                        ul.d-flex(style="list-style: none;")
-                          li.active
-                            i.fa.fa-star
-                          li.active
-                            i.fa.fa-star
-                          li.active
-                            i.fa.fa-star
-                          li.active
-                            i.fa.fa-star
-                          li
-                            i.fa.fa-star
-                          span.text-muted 0 nhận xét
-              .col-lg-3.col-md-4.col-xs-6.item.DeanGraziosi
-                .card
-                  a.motsanpham(
-                    title="Lập Kế Hoạch Kinh Doanh Hiệu Quả" 
-                    data-placement="bottom" 
-                    data-toggle="tooltip" 
-                    style="text-decoration: none; color: black;" 
-                    href="product-item.html"
-                    )
-                    img.card-img-top.anh(
-                      alt="lap-ke-hoach-kinh-doanh-hieu-qua" 
-                      src="images/lap-ke-hoach-kinh-doanh-hieu-qua.jpg"
-                      )
-                    .card-body.noidungsp.mt-3
-                      h6.card-title.ten Lập Kế Hoạch Kinh Doanh Hiệu Quả
-                      small.tacgia.text-muted Brian Finch
-                      .gia.d-flex.align-items-baseline
-                        .giamoi 111.200 ₫
-                        .giacu.text-muted 139.000 ₫
-                        .sale -20%
-                      .danhgia
-                        ul.d-flex(style="list-style: none;")
-                          li.active
-                            i.fa.fa-star
-                          li.active
-                            i.fa.fa-star
-                          li.active
-                            i.fa.fa-star
-                          li.active
-                            i.fa.fa-star
-                          li
-                            i.fa.fa-star
-                          span.text-muted 0 nhận xét
-              .col-lg-3.col-md-4.col-xs-6.item.MarieForleo
-                .card
-                  a.motsanpham(
-                    title="Lập Kế Hoạch Kinh Doanh Hiệu Quả" 
-                    data-placement="bottom" 
-                    data-toggle="tooltip" 
-                    style="text-decoration: none; color: black;" 
-                    href="product-item.html"
-                    )
-                    img.card-img-top.anh(
-                      alt="lap-ke-hoach-kinh-doanh-hieu-qua" 
-                      src="images/lap-ke-hoach-kinh-doanh-hieu-qua.jpg"
-                      )
-                    .card-body.noidungsp.mt-3
-                      h6.card-title.ten Lập Kế Hoạch Kinh Doanh Hiệu Quả
-                      small.tacgia.text-muted Brian Finch
-                      .gia.d-flex.align-items-baseline
-                        .giamoi 111.200 ₫
-                        .giacu.text-muted 139.000 ₫
-                        .sale -20%
-                      .danhgia
-                        ul.d-flex(style="list-style: none;")
-                          li.active
-                            i.fa.fa-star
-                          li.active
-                            i.fa.fa-star
-                          li.active
-                            i.fa.fa-star
-                          li.active
-                            i.fa.fa-star
-                          li
-                            i.fa.fa-star
-                          span.text-muted 0 nhận xét
-              .col-lg-3.col-md-4.col-xs-6.item.MarieForleo
-                .card
-                  a.motsanpham(
-                    title="Lập Kế Hoạch Kinh Doanh Hiệu Quả" 
-                    data-placement="bottom" 
-                    data-toggle="tooltip" 
-                    style="text-decoration: none; color: black;" 
-                    href="product-item.html"
-                    )
-                    img.card-img-top.anh(
-                      alt="lap-ke-hoach-kinh-doanh-hieu-qua" 
-                      src="images/lap-ke-hoach-kinh-doanh-hieu-qua.jpg"
-                      )
-                    .card-body.noidungsp.mt-3
-                      h6.card-title.ten Lập Kế Hoạch Kinh Doanh Hiệu Quả
-                      small.tacgia.text-muted Brian Finch
-                      .gia.d-flex.align-items-baseline
-                        .giamoi 111.200 ₫
-                        .giacu.text-muted 139.000 ₫
-                        .sale -20%
-                      .danhgia
-                        ul.d-flex(style="list-style: none;")
-                          li.active
-                            i.fa.fa-star
-                          li.active
-                            i.fa.fa-star
-                          li.active
-                            i.fa.fa-star
-                          li.active
-                            i.fa.fa-star
-                          li
-                            i.fa.fa-star
-                          span.text-muted 0 nhận xét
-              .col-lg-3.col-md-4.col-xs-6.item.DavikClark
-                .card
-                  a.motsanpham(
-                    title="Lập Kế Hoạch Kinh Doanh Hiệu Quả" 
-                    data-placement="bottom" 
-                    data-toggle="tooltip" 
-                    style="text-decoration: none; color: black;" 
-                    href="product-item.html"
-                    )
-                    img.card-img-top.anh(
-                      alt="lap-ke-hoach-kinh-doanh-hieu-qua" 
-                      src="images/lap-ke-hoach-kinh-doanh-hieu-qua.jpg"
-                      )
-                    .card-body.noidungsp.mt-3
-                      h6.card-title.ten Lập Kế Hoạch Kinh Doanh Hiệu Quả
-                      small.tacgia.text-muted Brian Finch
-                      .gia.d-flex.align-items-baseline
-                        .giamoi 111.200 ₫
-                        .giacu.text-muted 139.000 ₫
-                        .sale -20%
-                      .danhgia
-                        ul.d-flex(style="list-style: none;")
-                          li.active
-                            i.fa.fa-star
-                          li.active
-                            i.fa.fa-star
-                          li.active
-                            i.fa.fa-star
-                          li.active
-                            i.fa.fa-star
-                          li
-                            i.fa.fa-star
-                          span.text-muted 0 nhận xét
-              .col-lg-3.col-md-4.col-xs-6.item(class="TSLêThẩmDương")
-                .card
-                  a.motsanpham(
-                    title="Lập Kế Hoạch Kinh Doanh Hiệu Quả" 
-                    data-placement="bottom" 
-                    data-toggle="tooltip" 
-                    style="text-decoration: none; color: black;" 
-                    href="product-item.html"
-                    )
-                    img.card-img-top.anh(
-                      alt="lap-ke-hoach-kinh-doanh-hieu-qua" 
-                      src="images/lap-ke-hoach-kinh-doanh-hieu-qua.jpg"
-                      )
-                    .card-body.noidungsp.mt-3
-                      h6.card-title.ten Lập Kế Hoạch Kinh Doanh Hiệu Quả
-                      small.tacgia.text-muted Brian Finch
-                      .gia.d-flex.align-items-baseline
-                        .giamoi 111.200 ₫
-                        .giacu.text-muted 139.000 ₫
-                        .sale -20%
-                      .danhgia
-                        ul.d-flex(style="list-style: none;")
-                          li.active
-                            i.fa.fa-star
-                          li.active
-                            i.fa.fa-star
-                          li.active
-                            i.fa.fa-star
-                          li.active
-                            i.fa.fa-star
-                          li
-                            i.fa.fa-star
-                          span.text-muted 0 nhận xét
-              .col-lg-3.col-md-4.col-xs-6.item.SimonSinek
-                .card
-                  a.motsanpham(
-                    title="Lập Kế Hoạch Kinh Doanh Hiệu Quả" 
-                    data-placement="bottom" 
-                    data-toggle="tooltip" 
-                    style="text-decoration: none; color: black;" 
-                    href="product-item.html"
-                    )
-                    img.card-img-top.anh(
-                      alt="lap-ke-hoach-kinh-doanh-hieu-qua" 
-                      src="images/lap-ke-hoach-kinh-doanh-hieu-qua.jpg"
-                      )
-                    .card-body.noidungsp.mt-3
-                      h6.card-title.ten Lập Kế Hoạch Kinh Doanh Hiệu Quả
-                      small.tacgia.text-muted Brian Finch
-                      .gia.d-flex.align-items-baseline
-                        .giamoi 111.200 ₫
-                        .giacu.text-muted 139.000 ₫
-                        .sale -20%
-                      .danhgia
-                        ul.d-flex(style="list-style: none;")
-                          li.active
-                            i.fa.fa-star
-                          li.active
-                            i.fa.fa-star
-                          li.active
-                            i.fa.fa-star
-                          li.active
-                            i.fa.fa-star
-                          li
-                            i.fa.fa-star
-                          span.text-muted 0 nhận xét
+                      img.card-img-top.anh(
+                        alt="lap-ke-hoach-kinh-doanh-hieu-qua" 
+                        src=book.image
+                        )
+                      .card-body.noidungsp.mt-3
+                        h6.card-title.ten=book.name
+                        small.tacgia.text-muted=book.author
+                        .gia.d-flex.align-items-baseline
+                          .giamoi 111.200 ₫
+                          .giacu.text-muted 139.000 ₫
+                          .sale -20%
+                        .danhgia
+                          ul.d-flex(style="list-style: none;")
+                            li.active
+                              i.fa.fa-star
+                            li.active
+                              i.fa.fa-star
+                            li.active
+                              i.fa.fa-star
+                            li.active
+                              i.fa.fa-star
+                            li
+                              i.fa.fa-star
+                            span.text-muted 0 nhận xét
+           
           // pagination bar
           .pagination-bar.my-3
             .row
