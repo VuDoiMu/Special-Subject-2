@@ -46,6 +46,18 @@ app.set("views", path.join(__dirname, "views"));
 // sach danh gia nhieu nhat
 app.get("/", async (req, res) => {
   const response = await axios.get("http://localhost:3500/management");
+  const toplike = await axios.get("http://localhost:3500/catalog/toplike");
+  const topSell = await axios.get("http://localhost:3500/catalog/topsell");
+  const topSale = await axios.get("http://localhost:3500/catalog/topsale");
+  const toplikeBook = toplike.data
+  const topsaleBook = topSale.data
+  const topsellBook = topSell.data
+  console.log(toplikeBook)
+  console.log("toplikeBook")
+  console.log(topsaleBook)
+  console.log("topsellBook")
+  console.log(topsellBook)
+
   const tag = await axios
     .get("http://localhost:3500/tag")
     .then((res) => (tagData = res.data.tags));
@@ -53,6 +65,10 @@ app.get("/", async (req, res) => {
   res.render("home.pug", {
     data,
     tags: tagData.slice(0, 11),
+    toplikeBook,
+    topsaleBook,
+    topsellBook
+  
   });
 });
 

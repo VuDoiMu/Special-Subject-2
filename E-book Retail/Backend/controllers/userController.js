@@ -41,7 +41,7 @@ const login = async (req, res) => {
     return res.status(400).json({success: false, message:"Missing data "})
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) 
-    return res.status.json(`${email} is not a valid email address`)
+    return res.json(`${email} is not a valid email address`)
     try {
       console.log(email)
         const user = await User.findOne({email})
