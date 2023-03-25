@@ -6,6 +6,8 @@ const path = require("path");
 const data = require("./data/book.json");
 const cookieParser = require('cookie-parser');
 const axios = require("axios");
+const jwt = require("jsonwebtoken")
+
 app.use(cookieParser());
 
 //connect to MongoDb
@@ -44,16 +46,24 @@ app.set("views", path.join(__dirname, "views"));
 // sach ban chay nhat
 // sach danh gia nhieu nhat
 app.get("/", async (req, res) => {
-  const response = await axios.get("http://localhost:3500/management");
-  const data = response.data; 
+  const response = await axios.get("http://localhost:3500/management"); /// danh sach
+  
+  const data = response.data;
+  const response2 = await axios.get("http://localhost:3500/catalog/toplike");
+  const topLike = response2.data;
+  console.log(topLike)
   res.render("home.pug", {
     data,
+    topLike
   });
 });
 
-app.get("/gio-hang", (req, res) => {
+app.get("/gio-hang", async (req, res) => {
+  const response = await axios.get("http://localhost:3500/cart");
+  
+const data = response.data;
   res.render("gio-hang.pug", {
-    title: "hello world",
+    data
   });
 });
 
@@ -77,7 +87,9 @@ app.get("/product/:id", async (req, res) => {
   });
 });
 
-app.get("/tai-khoan", (req, res) => {
+app.get("/tai-khoan", async (req, res) => {
+  const response = await axios.get("http://localhost:3500/");
+  console.log(response.data)
   res.render("tai-khoan.pug", {
     title: "hello world",
   });
@@ -93,6 +105,10 @@ app.get("/admin-management", (req, res) => {
 app.get("/admin-sale", (req, res) => {
   res.render("admin-sale.pug", { data });
 });
+
+app.post("/login", async (req, res) => {
+
+})
 
 //routes
 app.use("/management", require("./routes/books"));
