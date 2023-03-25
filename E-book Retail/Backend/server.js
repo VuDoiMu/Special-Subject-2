@@ -112,11 +112,23 @@ app.get("/tai-khoan", async (req, res) => {
   });
 });
 
-app.get("/admin", (req, res) => {
-  res.render("admin-home.pug");
+app.get("/admin", async (req, res) => {
+  const response = await axios.get("http://localhost:3500/management");
+  const data = response.data;
+  const user = await axios.get("http://localhost:3500/auth/getAllUser");
+  const userData = user.data;
+  const discount = await axios.get("http://localhost:3500/discount");
+  const disData = discount.data;
+  res.render("admin-home.pug", {
+    data, userData, disData
+  });
 });
-app.get("/admin-management", (req, res) => {
-  res.render("admin-management.pug", { data });
+app.get("/admin-management", async (req, res) => {
+  const response = await axios.get("http://localhost:3500/management");
+  const data = response.data;
+  const order= await axios.get("http://localhost:3500/order");
+  const orderData = order.data;
+  res.render("admin-management.pug", { data, orderData });
 });
 
 // app.get("/tag/:name", async (req, res) => {
@@ -144,6 +156,7 @@ app.use("/auth", require("./routes/user"));
 app.use("/cart", require("./routes/cart"));
 app.use("/tag", require("./routes/tag"));
 app.use("/catalog", require("./routes/catalog"));
+app.use("/discount", require("./routes/discount"))
 
 mongoose.connection.once("open", () => {
   console.log("connected to MongoDb");

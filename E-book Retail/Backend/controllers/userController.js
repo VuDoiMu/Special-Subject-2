@@ -23,7 +23,7 @@ const register = async (req, res) => {
     if( emailValid)
     return res.json( { 'message': 'this email is already used!'});
     const hashPassword = await argon2.hash(password)
-    const newUser = new User({email, password: hashPassword, username});
+    const newUser = new User({email, password: hashPassword, username: username});
     await newUser.save();
 
         // const accesstoken = jwt.sign({userId: newUser._id, role: newUser.role},"thisisourwebsite!")
@@ -41,7 +41,7 @@ const login = async (req, res) => {
     return res.status(400).json({success: false, message:"Missing data "})
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) 
-    return res.json(`${email} is not a valid email address`)
+    return res.status.json(`${email} is not a valid email address`)
     try {
       console.log(email)
         const user = await User.findOne({email})
@@ -133,5 +133,8 @@ let sendMail = async (req, res) => {
     res.json({success : false, message:"wrogn"})
   }
 }
-
-module.exports = {register, login, logout, access, deleteUser, sendMail, updateInfo};
+const getAllUser = async (req, res) => {
+  const user = await User.find();
+  res.json(user)
+}
+module.exports = {register, login, logout, access, deleteUser, sendMail, updateInfo, getAllUser};
