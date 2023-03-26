@@ -12,6 +12,7 @@ app.use(cookieParser());
 
 const register = async (req, res) => {
     const { email,username, password} = req.body;
+    
     const saltRounds = 10;
     if(!email || !password )
     return res.status(400).json({success: false, message:"Missing data "})
@@ -62,7 +63,7 @@ const login = async (req, res) => {
                 const accesstoken = jwt.sign({userId: user._id, role: user.role},"thisisourwebsite!")
         res.cookie('token', accesstoken);
         res.cookie('userInfor', user)
-        res.json({success: true, message:'user login', accesstoken})
+        res.json({success: true, message:'user login', user})
             } else {
                 // đăng nhập thất bại
                 return res.status(400).json({success: false, message:" Wrong password"});
@@ -121,6 +122,11 @@ const logout = async (req, res) => {
 // } 
 // }
 
+const getUser = async (req, res)=> {
+  const token = req.cookies.userInfor;
+  res.json(token)
+}
+
 let sendMail = async (req, res) => {
   try {
 
@@ -150,4 +156,4 @@ const getAllUser = async (req, res) => {
   const user = await User.find();
   res.json(user)
 }
-module.exports = {register, login, logout, deleteUser, sendMail, updateInfo, getAllUser};
+module.exports = {register, login, logout, deleteUser, sendMail, updateInfo, getAllUser, getUser};

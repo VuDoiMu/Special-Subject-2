@@ -97,8 +97,19 @@ const topLike = async (req, res) => {
             res.json({success : false, message:"false"})
         }
   }
+  const searchByName = async (req, res) => {
+    const name = req.params.name;
+    console.log(req.params)
+    const regex = new RegExp(name.split(" ").join("|"), "i");
+    try{
+      const results = await Book.find({ name: { $regex: regex } });
+    }catch(error){
+
+    }
+  }
 module.exports = {
     topSell,
     topLike,
-    topSale
+    topSale,
+    searchByName
 };
