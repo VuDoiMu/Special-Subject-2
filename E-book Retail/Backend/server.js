@@ -82,7 +82,15 @@ const data = response.data;
 
 // tim truyen theo the loai
 
-// lay book theo id
+// lay book theo idrs
+app.get("/product/:id", async (req, res) => {
+  const id = req.params.id;
+  const response = await axios.get("http://localhost:3500/management/" + id);
+  const book = response.data;
+  res.render("product.pug", {
+    book,
+  });
+});
 
 
 app.get("/tag/:name", async (req, res) => {

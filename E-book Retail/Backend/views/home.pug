@@ -383,15 +383,16 @@ html(lang="vi")
                 span.carousel-control-next-icon(aria-hidden="true")
                 span.sr-only Next
     // khoi sach moi
-    section.sachmoi.bg-white(class="_1khoi")
+    section.combohot.mt-4(class="_1khoi")
       .container
-        .noidung(style=" width: 100%;")
+        .noidung.bg-white(style=" width: 100%;")
           .row
             // header
-            .col-12.d-flex.justify-content-between.align-items-center.pb-2.bg-transparent.pt-4
-              h1.header.text-uppercase(style="font-weight: 400;") SÁCH TỔNG HỢP
-              a.btn.btn-warning.btn-sm.text-white(href="sach-moi-tuyen-chon.html") Xem tất cả
-          .khoisanpham(style="padding-bottom: 2rem;")
+            .col-12.d-flex.justify-content-between.align-items-center.pb-2.bg-light
+              h2.header.text-uppercase(style="font-weight: 400;") SÁCH TỔNG HỢP
+              a.btn.btn-warning.btn-sm.text-white(href="#") Xem tất cả
+          .khoisanpham
+            
             // 1 san pham
             -shuffle(data)
             each book in data 
@@ -803,6 +804,7 @@ html(lang="vi")
                     .sell 
                       span 
                         |Lượt mua: #{book.countSale}
+      section.sapphathanh.mt-4(class="_1khoi")
     // div _1khoi -- khoi sachnendoc
         hr
     // thanh cac dich vu :mien phi giao hang, qua tang mien phi ........

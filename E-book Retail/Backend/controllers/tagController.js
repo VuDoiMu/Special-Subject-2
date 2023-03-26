@@ -39,7 +39,7 @@ const getByTag = async (req, res)=> {
 
     const books = await Tag.find({name: tag}).populate('books');
     
-    res.json({success : true, books })
+    res.json( {success : true,books })
 
     }catch(error){
 
