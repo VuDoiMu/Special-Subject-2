@@ -541,24 +541,51 @@ document
 
 document.querySelector("#form-signup").addEventListener("submit", async (e) => {
   e.preventDefault();
-  const email = document.getElementById("signup-email").value;
-  const password = document.getElementById("inputPassword").value;
-  const confirm_password = document.getElementById("confirm_password").value;
-  const username = document.getElementById("signup-username").value;
-  console.log(name);
-  console.log("Hi");
-  
-  if (confirm_password === password) {
+
+  const emailInput = document.getElementById("signup-email");
+  const passwordInput = document.getElementById("inputPassword");
+  const confirmPasswordInput = document.getElementById("confirm_password");
+  const usernameInput = document.getElementById("signup-username");
+
+  const emailInputValue = document.getElementById("signup-email").value;
+  const passwordInputValue = document.getElementById("inputPassword").value;
+  const confirmPasswordInputValue = document.getElementById("confirm_password").value;
+  const usernameInputValue = document.getElementById("signup-username").value;
+
+  console.log(emailInput);
+  console.log(passwordInput);
+  console.log(confirmPasswordInput);
+  console.log(usernameInput);
+
+  console.log(emailInput.classList);
+  console.log(passwordInput.classList);
+  console.log(confirmPasswordInput.classList);
+  console.log(usernameInput.classList);
+
+  console.log(emailInput.classList.contains("valid"));
+  console.log(passwordInput.classList.contains("valid"));
+  console.log(confirmPasswordInput.classList.contains("valid"));
+  console.log(usernameInput.classList.contains("valid"));
+  if (
+    !emailInput.classList.contains("valid") ||
+    !passwordInput.classList.contains("valid") ||
+    !confirmPasswordInput.classList.contains("valid") ||
+    !usernameInput.classList.contains("valid")
+  ) {
+    console.log("Error");
+    return;
+  }
+  if (confirmPasswordInputValue === passwordInputValue) {
     const sendData = await fetch("http://localhost:3500/auth/register", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email, password, username }),
+      body: JSON.stringify({ email:emailInputValue, password:passwordInputValue, username:usernameInputValue }),
     });
     const content = await sendData.json();
-    console.log(email, password);
+    console.log(content.message);
     window.setTimeout(() => {
       location.assign("/");
     }, 1000);

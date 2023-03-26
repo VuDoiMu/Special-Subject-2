@@ -141,9 +141,4 @@ module.exports = {
     addBook,
     bookPage,
     addLike
-<<<<<<< HEAD
-
 };
-=======
-};
->>>>>>> aee886f3c78034b8315a0eac8c6ea0dbb949e15e
