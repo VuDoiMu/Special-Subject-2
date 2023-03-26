@@ -52,16 +52,16 @@ app.get("/", async (req, res) => {
   const toplikeBook = toplike.data
   const topsaleBook = topSale.data
   const topsellBook = topSell.data
-
+console.log(toplikeBook)
   const tag = await axios
     .get("http://localhost:3500/tag")
     .then((res) => (tagData = res.data.tags));
   const data = response.data;
   res.render("home.pug", {
     data,
-    tags: tagData.slice(0, 11),
     toplikeBook,
     topsaleBook,
+    tags: tagData.slice(0, 11),
     topsellBook
   
   });
