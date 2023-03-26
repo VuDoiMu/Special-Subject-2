@@ -98,16 +98,21 @@ app.get("/product/:id", async (req, res) => {
   });
 });
 
-
 app.get("/tag/:name", async (req, res) => {
   const name = req.params.name;
   const response = await axios.get(`http://localhost:3500/tag/books/${name}`);
-
   const booksTag = response.data.books[0].books;
+  const tag = await axios
+    .get("http://localhost:3500/tag")
+    .then((res) => (tagData = res.data.tags));
   res.render("product-list.pug", {
     booksTag,
+    tags: tagData.slice(0, 11),
+    name
   });
 });
+
+
 
 app.get("/tai-khoan", async (req, res) => {
   const response = await axios.get("http://localhost:3500/");
