@@ -85,10 +85,16 @@ const data = response.data;
 // lay book theo idrs
 app.get("/product/:id", async (req, res) => {
   const id = req.params.id;
+  const tag = await axios
+    .get("http://localhost:3500/tag")
+    .then((res) => (tagData = res.data.tags));
+
   const response = await axios.get("http://localhost:3500/management/" + id);
   const book = response.data;
+  console.log(book)
   res.render("product.pug", {
     book,
+    tags: tagData.slice(0, 11)
   });
 });
 
