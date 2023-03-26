@@ -54,6 +54,19 @@ app.get("/", async (req, res) => {
   });
 });
 
+app.get("/product/:id", async (req, res) => {
+  const id = req.params.id;
+  const response = await axios.get("http://localhost:3500/management/" + id);
+  const book = response.data;
+  const tag = await axios
+    .get("http://localhost:3500/tag")
+    .then((res) => (tagData = res.data.tags));
+  res.render("product.pug", {
+    book,
+    tags: tagData.slice(0, 11)
+  });
+});
+
 app.get("/gio-hang", (req, res) => {
   res.render("gio-hang.pug", {
     title: "hello world",
@@ -64,14 +77,7 @@ app.get("/gio-hang", (req, res) => {
 
 // lay book theo id
 
-app.get("/product/:id", async (req, res) => {
-  const id = req.params.id;
-  const response = await axios.get("http://localhost:3500/management/" + id);
-  const book = response.data;
-  res.render("product.pug", {
-    book,
-  });
-});
+
 app.get("/tag/:name", async (req, res) => {
   const name = req.params.name;
   console.log(name);
