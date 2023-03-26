@@ -6,9 +6,10 @@ const cataController = require('../controllers/catalogController');
 router.route('/topsell')
     .get(cataController.topSell);
 
-    router.route('/toplike')
+router.route('/toplike')
     .get(cataController.topLike);
-    router.route('/topsale')
+
+ router.route('/topsale')
     .get(cataController.topSale);
     
     module.exports = router;

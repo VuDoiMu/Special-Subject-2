@@ -115,7 +115,6 @@ const addLike = async (req, res) => {
 }
 }
 
-
 //pagination
 const bookPage = async (req, res) => {
     var aggregateQuery =Book.aggregate();
