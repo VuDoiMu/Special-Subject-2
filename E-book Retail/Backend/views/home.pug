@@ -314,15 +314,6 @@ html(lang="vi")
               .noidungheader.text-white
                 i.fa.fa-bars
                 span.text-uppercase.font-weight-bold.ml-1 Danh mục sách
-          .col-md-9
-            .benphai.float-right
-              .hotline
-                i.fa.fa-phone
-                span
-                  | Hotline:
-                  b 1900 1999
-              i.fas.fa-comments-dollar
-              a(href="#") Hỗ trợ trực tuyến
     // noi dung danh muc sach(categories) + banner slider
     section.header.bg-light
       .container
@@ -398,7 +389,7 @@ html(lang="vi")
           .row
             // header
             .col-12.d-flex.justify-content-between.align-items-center.pb-2.bg-transparent.pt-4
-              h1.header.text-uppercase(style="font-weight: 400;") SÁCH MỚI TUYỂN CHỌN
+              h1.header.text-uppercase(style="font-weight: 400;") SÁCH TỔNG HỢP
               a.btn.btn-warning.btn-sm.text-white(href="sach-moi-tuyen-chon.html") Xem tất cả
           .khoisanpham(style="padding-bottom: 2rem;")
             // 1 san pham
@@ -426,10 +417,14 @@ html(lang="vi")
                         |#{book.price} $
                       .sale
                         |-#{book.saleRate}%
-                    .like
-              
+                    .like 
+                      span.countLike
+                        |Yêu thích: #{book.countLike}
                       i.fa.fa-heart.active
                       i.far.fa-heart
+                    .sell 
+                      span 
+                        |Lượt mua: #{book.countSale}
                     //- .danhgia
                     //-   ul.d-flex(style="list-style: none;")
                     //-     li.active
@@ -717,8 +712,13 @@ html(lang="vi")
                       .sale
                         |-#{book.saleRate}%
                     .like 
+                      span.countLike
+                        |Yêu thích: #{book.countLike}
                       i.fa.fa-heart.active
                       i.far.fa-heart
+                    .sell 
+                      span 
+                        |Lượt mua: #{book.countSale}
     // khoi sach sap phathanh
     section.sapphathanh.mt-4(class="_1khoi")
       .container
@@ -754,8 +754,13 @@ html(lang="vi")
                       .sale
                         |-#{book.saleRate}%
                     .like 
+                      span.countLike
+                        |Yêu thích: #{book.countLike}
                       i.fa.fa-heart.active
-                      i.far.fa-heart 
+                      i.far.fa-heart
+                    .sell 
+                      span 
+                        |Lượt mua: #{book.countSale} 
           // khoi sach sap phathanh
     section.sapphathanh.mt-4(class="_1khoi")
       .container
@@ -763,7 +768,7 @@ html(lang="vi")
           .row
             // header
             .col-12.d-flex.justify-content-between.align-items-center.pb-2.bg-light
-              h2.header.text-uppercase(style="font-weight: 400;") SÁCH ĐANG GIẢM GIÁ 
+              h2.header.text-uppercase(style="font-weight: 400;") SÁCH GIẢM GIÁ NHIỀU NHẤT
               a.btn.btn-warning.btn-sm.text-white(href="#") Xem tất cả
           .khoisanpham
             // 1 san pham
@@ -791,8 +796,13 @@ html(lang="vi")
                       .sale
                         |-#{book.saleRate}%
                     .like 
+                      span.countLike
+                        |Yêu thích: #{book.countLike}
                       i.fa.fa-heart.active
                       i.far.fa-heart
+                    .sell 
+                      span 
+                        |Lượt mua: #{book.countSale}
     // div _1khoi -- khoi sachnendoc
         hr
     // thanh cac dich vu :mien phi giao hang, qua tang mien phi ........

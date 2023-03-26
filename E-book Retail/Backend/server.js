@@ -52,8 +52,9 @@ app.get("/", async (req, res) => {
   const toplikeBook = toplike.data
   const topsaleBook = topSale.data
   const topsellBook = topSell.data
+  const userInfor = req.cookies.userInfor;
   // console.log("fhbsldfhlsfhnsdfgh")
-// console.log(data)
+  // console.log(data)
   const tag = await axios
     .get("http://localhost:3500/tag")
     .then((res) => (tagData = res.data.tags));
@@ -125,7 +126,7 @@ app.get("/admin-sale", (req, res) => {
 });
 
 app.post("/login", async (req, res) => {
-
+  
 })
 
 //routes

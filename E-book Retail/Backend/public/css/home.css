@@ -425,6 +425,7 @@ img.card-img-top.anh {
     position: relative;
     top: 15px;
     transition: 0.3s;
+    height: 300px;
 }
 
 ul span.text-muted {
@@ -480,6 +481,20 @@ small.tacgia.text-muted {
     -webkit-box-orient: vertical;
     transition: 0.3s;
     padding: 3px 0px;
+}
+
+.like {
+    margin-top: 4px;
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #6c757d;
+}
+
+.sell {
+    color: #6c757d;
+    font-size: 12px;
 }
 
 .like i {
@@ -561,6 +576,7 @@ h3.card-title.ten {
 .sachnendoc img.card-img-top.anh {
     position: static;
     border-radius: 0;
+    height: 300px;
 }
 
 .sachnendoc .card {
