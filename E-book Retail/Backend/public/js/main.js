@@ -531,6 +531,19 @@ document
     });
     const content = await sendData.json();
     console.log(content);
+    //
+    const cookies = document.cookie.split("; ");
+    let user = "";
+    for (let i = 0; i < cookies.length; i++) {
+      const parts = cookies[i].split("=");
+      const name = parts[0];
+      const value = parts[1];
+      if (name === "userInfor") {
+        user = value;
+        break;
+      }
+    }
+    console.log(user)
     window.setTimeout(() => {
       location.assign("/");
     }, 1000);

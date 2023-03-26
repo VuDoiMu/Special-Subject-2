@@ -99,12 +99,13 @@ const topLike = async (req, res) => {
   }
   const searchByName = async (req, res) => {
     const name = req.params.name;
-    console.log(req.params)
+    
     const regex = new RegExp(name.split(" ").join("|"), "i");
     try{
       const results = await Book.find({ name: { $regex: regex } });
+      res.json(results)
     }catch(error){
-
+      res.json({success : false, message:"false"})
     }
   }
 module.exports = {
