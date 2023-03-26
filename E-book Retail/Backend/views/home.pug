@@ -688,10 +688,10 @@ html(lang="vi")
           .row
             // header
             .col-12.d-flex.justify-content-between.align-items-center.pb-2.bg-light
-              h2.header.text-uppercase(style="font-weight: 400;") COMBO SÁCH HOT - GIẢM ĐẾN 25%
+              h2.header.text-uppercase(style="font-weight: 400;") SÁCH ĐƯỢC YÊU THÍCH NHẤT 
               a.btn.btn-warning.btn-sm.text-white(href="#") Xem tất cả
           .khoisanpham
-            -shuffle(data)
+            -shuffle(toplikeBook)
             each book in data
               .card
                 a.motsanpham(

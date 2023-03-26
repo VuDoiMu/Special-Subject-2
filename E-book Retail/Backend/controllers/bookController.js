@@ -37,14 +37,9 @@ const deleteBook = async(req, res) => {
         return res.status(400).json({ 'message': 'Book ID required!'});
        }
 
-   const book = await Book.findOne({ _id: req.params.id }).exec();
+   const book = await Book.findOneAndDelete({ _id: req.params.id }).exec();
 
-   if (!book){ 
-       return res.status(204).json({ 'message': `User does not exist with ${req.params.id}!`});
-       }       
-   
-    const result  = await User.deleteOne({ _id: req.params.id});
-    res.status(200).json(result);
+       res.json({success: true, message:'deleted'})
 // const delte = await Book.deleteMany()
 }
 
