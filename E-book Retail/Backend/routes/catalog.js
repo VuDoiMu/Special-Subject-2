@@ -17,6 +17,6 @@ router.route('/toplike')
 router.route('/search/:name')
     .get(cataController.searchByName);
 
-route.route('/review')
+router.route('/review')
     .get(reviewController.getReview)
-    module.exports = router;
+module.exports = router;
