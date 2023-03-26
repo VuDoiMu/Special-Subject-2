@@ -11,5 +11,8 @@ router.route('/toplike')
 
  router.route('/topsale')
     .get(cataController.topSale);
+
+router.route('/search/:name')
+    .get(cataController.searchByName);
     
     module.exports = router;
