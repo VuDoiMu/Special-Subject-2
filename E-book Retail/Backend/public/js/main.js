@@ -406,23 +406,20 @@ $(function () {
         cartContent.innerHTML += `
                     <div class="cart-item d-flex">
                         <a href="product-item.html" class="img">
-                            <img src="images/${
-                              item.tag
-                            }.jpg" class="img-fluid" alt="${item.tag}">
+                            <img src="images/${item.tag
+          }.jpg" class="img-fluid" alt="${item.tag}">
                         </a>
                         <div class="item-caption d-flex w-100">
                             <div class="item-info ml-3">
-                                <a href="product-item.html" class="ten">${
-                                  item.name
-                                }</a>
+                                <a href="product-item.html" class="ten">${item.name
+          }</a>
                                 <div class="soluong d-flex">
                                     <div class="input-number input-group mb-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text btn-spin btn-dec">-</span>
                                         </div>
-                                        <input type="text" value="${
-                                          item.inCart
-                                        }" class="soluongsp  text-center">
+                                        <input type="text" value="${item.inCart
+          }" class="soluongsp  text-center">
                                         <div class="input-group-append">
                                             <span class="input-group-text btn-spin btn-inc">+</span>
                                         </div>
@@ -431,11 +428,11 @@ $(function () {
                             </div>
                             <div class="item-price ml-auto d-flex flex-column align-items-end">
                                 <div class="giamoi">${parseFloat(
-                                  item.price
-                                ).toFixed(3)} ₫</div>
+            item.price
+          ).toFixed(3)} ₫</div>
                                 <div class="giacu">${parseFloat(
-                                  item.old_price
-                                ).toFixed(3)} ₫</div>
+            item.old_price
+          ).toFixed(3)} ₫</div>
                                 <span class="remove mt-auto"><i class="far fa-trash-alt"></i></span>
                             </div>
                         </div>
@@ -456,8 +453,8 @@ $(function () {
                         <div class="group d-flex justify-content-between">
                             <p class="label">Tạm tính:</p>
                             <p class="tamtinh">${parseFloat(cartCost).toFixed(
-                              3
-                            )} ₫</p>
+        3
+      )} ₫</p>
                         </div>
                         <div class="group d-flex justify-content-between">
                             <p class="label">Giảm giá:</p>
@@ -474,8 +471,8 @@ $(function () {
                         <div class="group d-flex justify-content-between align-items-center">
                             <strong class="text-uppercase">Tổng cộng:</strong>
                             <p class="tongcong">${parseFloat(cartCost).toFixed(
-                              3
-                            )} ₫</p>
+        3
+      )} ₫</p>
                         </div>
                         <small class="note d-flex justify-content-end text-muted">
                             (Giá đã bao gồm VAT)
@@ -524,7 +521,7 @@ document
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
     console.log(email, password);
-    const sendData = await fetch("http://localhost:3000/login", {
+    const sendData = await fetch("http://localhost:3500/auth/login", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -533,7 +530,7 @@ document
       body: JSON.stringify({ email, password }),
     });
     const content = await sendData.json();
-
+    console.log(content);
     window.setTimeout(() => {
       location.assign("/");
     }, 1000);
@@ -541,7 +538,6 @@ document
 
 document.querySelector("#form-signup").addEventListener("submit", async (e) => {
   e.preventDefault();
-
   const emailInput = document.getElementById("signup-email");
   const passwordInput = document.getElementById("inputPassword");
   const confirmPasswordInput = document.getElementById("confirm_password");
@@ -552,20 +548,6 @@ document.querySelector("#form-signup").addEventListener("submit", async (e) => {
   const confirmPasswordInputValue = document.getElementById("confirm_password").value;
   const usernameInputValue = document.getElementById("signup-username").value;
 
-  console.log(emailInput);
-  console.log(passwordInput);
-  console.log(confirmPasswordInput);
-  console.log(usernameInput);
-
-  console.log(emailInput.classList);
-  console.log(passwordInput.classList);
-  console.log(confirmPasswordInput.classList);
-  console.log(usernameInput.classList);
-
-  console.log(emailInput.classList.contains("valid"));
-  console.log(passwordInput.classList.contains("valid"));
-  console.log(confirmPasswordInput.classList.contains("valid"));
-  console.log(usernameInput.classList.contains("valid"));
   if (
     !emailInput.classList.contains("valid") ||
     !passwordInput.classList.contains("valid") ||
@@ -582,10 +564,22 @@ document.querySelector("#form-signup").addEventListener("submit", async (e) => {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email:emailInputValue, password:passwordInputValue, username:usernameInputValue }),
+      body: JSON.stringify({ email: emailInputValue, password: passwordInputValue, username: usernameInputValue }),
     });
     const content = await sendData.json();
     console.log(content.message);
+    if (content.message === "this email is already used!") {
+      emailInput.classList.remove("valid");
+      emailInput.classList.add("error");
+
+      const errorLabel = document.createElement('label');
+      errorLabel.setAttribute('id', 'signup-email-error');
+      errorLabel.setAttribute('class', 'error');
+      errorLabel.setAttribute('for', 'signup-email');
+      errorLabel.innerText = "This email is already used!";
+      emailInput.parentNode.insertBefore(errorLabel, emailInput.nextSibling);
+      return;
+    }
     window.setTimeout(() => {
       location.assign("/");
     }, 1000);
