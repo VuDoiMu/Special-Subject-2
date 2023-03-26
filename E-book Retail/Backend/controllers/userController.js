@@ -51,10 +51,10 @@ const login = async (req, res) => {
     try {
       console.log(email)
         const user = await User.findOne({email})
-        const userId = user._id;
         if (!user){
-            return res.status(400).json({success: false, message:"Wrong email "})
+          return res.status(400).json({success: false, message:"Wrong email "})
         }
+        const userId = user._id;
         const storedHashedPassword = user.password; // mật khẩu đã lưu trữ trong cơ sở dữ liệu
         // so sánh mật khẩu
         bcrypt.compare(password, storedHashedPassword, (err, result) => {

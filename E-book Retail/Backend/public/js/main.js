@@ -518,19 +518,53 @@ document
   .querySelector("#formdangnhap")
   .addEventListener("submit", async (e) => {
     e.preventDefault();
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+    const email = document.getElementById("email");
+    const password = document.getElementById("password");
+
+    const emailValue = document.getElementById("email").value;
+    const passwordValue = document.getElementById("password").value;
     console.log(email, password);
+    
     const sendData = await fetch("http://localhost:3500/auth/login", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ email:emailValue, password:passwordValue }),
     });
     const content = await sendData.json();
     console.log(content);
+    if (content.message === "Wrong email ") {
+      email.classList.remove("valid");
+      email.classList.add("error");
+
+      let errorLabel = document.querySelector('#email-error');
+      if (errorLabel) {
+        // If label already exists, remove it
+        errorLabel.parentNode.removeChild(errorLabel);
+      }
+
+      errorLabel = document.createElement('label');
+      errorLabel.setAttribute('id', 'email-error');
+      errorLabel.setAttribute('class', 'error');
+      errorLabel.setAttribute('for', 'email');
+      errorLabel.innerText = "Wrong email";
+      email.parentNode.insertBefore(errorLabel, email.nextSibling);
+      return;
+    }
+    else if (content.message === " Wrong password") {
+      password.classList.remove("valid");
+      password.classList.add("error");
+
+      const errorLabel = document.createElement('label');
+      errorLabel.setAttribute('id', 'password-error');
+      errorLabel.setAttribute('class', 'error');
+      errorLabel.setAttribute('for', 'password');
+      errorLabel.innerText = "Wrong password";
+      password.parentNode.insertBefore(errorLabel, password.nextSibling);
+      return;
+    }
     //
     const cookies = document.cookie.split("; ");
     let user = "";
@@ -546,7 +580,7 @@ document
     console.log(user)
     window.setTimeout(() => {
       location.assign("/");
-    }, 1000);
+    }, 200);
   });
 
 document.querySelector("#form-signup").addEventListener("submit", async (e) => {
