@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const User = require ("../models/User")
 const Cart = require( "../models/Cart")
-const argon2 = require('argon2')
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
 const cookieParser = require('cookie-parser');
 
@@ -12,6 +12,7 @@ app.use(cookieParser());
 
 const register = async (req, res) => {
     const { email,username, password} = req.body;
+    const saltRounds = 10;
     if(!email || !password )
     return res.status(400).json({success: false, message:"Missing data "})
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -22,10 +23,14 @@ const register = async (req, res) => {
     const emailValid = await User.findOne({email});
     if( emailValid)
     return res.json( { 'message': 'this email is already used!'});
-    const hashPassword = await argon2.hash(password)
-    const newUser = new User({email, password: hashPassword, username: username});
-    await newUser.save();
+    // const hashPassword = await argon2.hash(password)
+    const salt = await bcrypt.genSalt(saltRounds);
+    const hash = await bcrypt.hash(password, salt);
 
+    // Lưu trữ thông tin người dùng vào cơ sở dữ liệu
+    const newUser = new User({ email, password: hash, username });
+    await newUser.save();
+   
         // const accesstoken = jwt.sign({userId: newUser._id, role: newUser.role},"thisisourwebsite!")
 
          res.json({success: true, message:'user created', newUser})
@@ -50,21 +55,28 @@ const login = async (req, res) => {
         if (!user){
             return res.status(400).json({success: false, message:"Wrong email "})
         }
-
-        const passwordValid = await argon2.verify(user.password, password )
+        const storedHashedPassword = user.password; // mật khẩu đã lưu trữ trong cơ sở dữ liệu
+        // so sánh mật khẩu
+        bcrypt.compare(password, storedHashedPassword, (err, result) => {
+            if (result === true) {
+                // đăng nhập thành công
+                const accesstoken = jwt.sign({userId: user._id, role: user.role},"thisisourwebsite!")
+        res.cookie('token', accesstoken);
+        res.json({success: true, message:'user login', accesstoken})
+            } else {
+                // đăng nhập thất bại
+                if (!passwordValid)
+                return res.status(400).json({success: false, message:" Wrong password"});
+            }
+        });
+        // const passwordValid = await argon2.verify(user.password, password )
         
-        if (!passwordValid)
-        return res.status(400).json({success: false, message:" Wrong password"});
         const cartValid = await Cart.findOne({userId})
         
         if(!cartValid){
         const cart = new Cart({userId, finalTotal: 0})
         await cart.save();
         }
-        const accesstoken = jwt.sign({userId: user._id, role: user.role},"thisisourwebsite!")
-        res.cookie('token', accesstoken);
-        res.json({success: true, message:'user login', accesstoken})
-      
     } catch (error) {
         console.error(error);
     }
@@ -117,9 +129,11 @@ let sendMail = async (req, res) => {
     const decoded = jwt.verify(token, "thisisourwebsite!");
     const userId = decoded.userId;
     const newPassword = "newpassword"
-    const hashPassword = await argon2.hash(newPassword)
-    const newUser = await User.findOneAndUpdate({_id : userId}, {password: hashPassword},{new: true})
-    const text = "You requested for reset password, kindly use this "+ newUser.password + " to reset your password"
+    // const hashPassword = await argon2.hash(newPassword)
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(newPassword, salt);
+    const newUser = await User.findOneAndUpdate({_id : userId}, {password: hash},{new: true})
+    const text = "You requested for reset password, kindly use this "+ newPassword + " to reset your password"
     // Lấy data truyền lên từ form phía client
     const { to, subject } = req.body
 
