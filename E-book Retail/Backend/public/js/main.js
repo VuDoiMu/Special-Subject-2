@@ -534,7 +534,7 @@ document
       body: JSON.stringify({ email:emailValue, password:passwordValue }),
     });
     const content = await sendData.json();
-    console.log(content);
+    console.log(content.username);
     if (content.message === "Wrong email ") {
       email.classList.remove("valid");
       email.classList.add("error");
@@ -565,19 +565,7 @@ document
       password.parentNode.insertBefore(errorLabel, password.nextSibling);
       return;
     }
-    //
-    const cookies = document.cookie.split("; ");
-    let user = "";
-    for (let i = 0; i < cookies.length; i++) {
-      const parts = cookies[i].split("=");
-      const name = parts[0];
-      const value = parts[1];
-      if (name === "userInfor") {
-        user = value;
-        break;
-      }
-    }
-    console.log(user)
+    
     window.setTimeout(() => {
       location.assign("/");
     }, 200);

@@ -49,7 +49,6 @@ const login = async (req, res) => {
     if (!emailRegex.test(email)) 
     return res.status.json(`${email} is not a valid email address`)
     try {
-      console.log(email)
         const user = await User.findOne({email})
         if (!user){
           return res.status(400).json({success: false, message:"Wrong email "})
@@ -62,8 +61,7 @@ const login = async (req, res) => {
                 // đăng nhập thành công
                 const accesstoken = jwt.sign({userId: user._id, role: user.role},"thisisourwebsite!")
         res.cookie('token', accesstoken);
-        res.cookie('userInfor', user)
-        res.json({success: true, message:'user login', user})
+        res.json(user)
             } else {
                 // đăng nhập thất bại
                 return res.status(400).json({success: false, message:" Wrong password"});
