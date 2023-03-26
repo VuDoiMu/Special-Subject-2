@@ -10,7 +10,6 @@ app.use(cookieParser());
 
 const newDiscount = async(req, res) => {
     try{
-
     const {name, discountRate} = req.body
     const disValid = await Discount.findOne({name});
     if( disValid)

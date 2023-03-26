@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const cataController = require('../controllers/catalogController');
+const reviewController = require('../controllers/reviewController')
+const { route } = require('./books');
 
 
 router.route('/topsell')
@@ -14,5 +16,7 @@ router.route('/toplike')
 
 router.route('/search/:name')
     .get(cataController.searchByName);
-    
+
+route.route('/review')
+    .get(reviewController.getReview)
     module.exports = router;

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bookController = require('../controllers/bookController');
-
+const reviewController = require('../controllers/reviewController')
 router.route('/')
     .get(bookController.getAllBook)
     .put(bookController.updateBook)
@@ -10,8 +10,8 @@ router.route('/')
 
 router.route('/:id')
     .get(bookController.getByID)
-    .delete(bookController.deleteBook);
-
+    .delete(bookController.deleteBook)
+    .post(reviewController.reviewing);
 
 router.route('/like/:id')
     .put(bookController.addLike);

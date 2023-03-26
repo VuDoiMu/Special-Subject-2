@@ -136,6 +136,7 @@ app.use("/cart", require("./routes/cart"));
 app.use("/tag", require("./routes/tag"));
 app.use("/catalog", require("./routes/catalog"));
 app.use("/discount", require("./routes/discount"))
+app.use("/review", require("./routes/review"))
 
 mongoose.connection.once("open", () => {
   console.log("connected to MongoDb");

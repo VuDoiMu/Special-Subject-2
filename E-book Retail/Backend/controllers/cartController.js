@@ -60,12 +60,12 @@ const saveToOrder = async (req, res) => {
     Cart.findById(cart._id)
     .populate('items.product', 'id')
     .then((cart) => {
-      const bookSales = cart.items.map((item) => ({
+      const bookSells = cart.items.map((item) => ({
         productId: item.product.id,
         quantity: item.quantity,
       }));
   
-      bookSales.forEach((item) => {
+      bookSells.forEach((item) => {
         Book.updateOne({ _id: item.productId }, { $inc: { countSale : item.quantity }  })
           .then(() => {
             console.log(`Updated quantity for product ${item.productId}`);
