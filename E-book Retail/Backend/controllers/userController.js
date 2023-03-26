@@ -65,7 +65,6 @@ const login = async (req, res) => {
         res.json({success: true, message:'user login', accesstoken})
             } else {
                 // đăng nhập thất bại
-                if (!passwordValid)
                 return res.status(400).json({success: false, message:" Wrong password"});
             }
         });
