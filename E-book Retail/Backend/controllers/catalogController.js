@@ -74,7 +74,7 @@ const Order = require('../models/Order');
 const topSell = async ( req, res) => {
     try{
         const books = await Book.find().sort({ countSale: -1 });
-        res.json({success : true, books})
+        res.json(books)
     }catch(error){
         res.json({success : false, message:"false"})
     }
@@ -83,7 +83,7 @@ const topSell = async ( req, res) => {
 const topLike = async (req, res) => {
     try{
     const books = await Book.find().sort({ countLike: -1 });
-      res.json({ success: true, books: books });
+      res.json( books);
     }catch(error){
         res.json({success : false, message:"false"})
     }
@@ -92,7 +92,7 @@ const topLike = async (req, res) => {
   const topSale = async (req, res) => {
     try{
         const books = await Book.find().sort({ saleRate: -1 });
-          res.json({ success: true, books: books });
+          res.json(books );
         }catch(error){
             res.json({success : false, message:"false"})
         }

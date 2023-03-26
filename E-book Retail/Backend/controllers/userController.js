@@ -50,7 +50,6 @@ const login = async (req, res) => {
     try {
       console.log(email)
         const user = await User.findOne({email})
-        console.log(user)
         const userId = user._id;
         if (!user){
             return res.status(400).json({success: false, message:"Wrong email "})
@@ -62,6 +61,7 @@ const login = async (req, res) => {
                 // đăng nhập thành công
                 const accesstoken = jwt.sign({userId: user._id, role: user.role},"thisisourwebsite!")
         res.cookie('token', accesstoken);
+        res.cookie('userInfor', user)
         res.json({success: true, message:'user login', accesstoken})
             } else {
                 // đăng nhập thất bại
@@ -110,16 +110,16 @@ const logout = async (req, res) => {
     res.clearCookie('token');
     res.json({success: true, message:'user logout'})
 }
-const access = async (req, res) => {
+// const access = async (req, res) => {
     
-    if (req.user.role === 'admin') {
-        res.redirect('/admin');
-      } else if (req.user.role === 'customer') {
-        res.redirect('/customer');
-      } else {
-        res.status(403).send('Forbidden');
-} 
-}
+//     if (req.user.role === 'admin') {
+//         res.redirect('/admin');
+//       } else if (req.user.role === 'customer') {
+//         res.redirect('/customer');
+//       } else {
+//         res.status(403).send('Forbidden');
+// } 
+// }
 
 let sendMail = async (req, res) => {
   try {
@@ -150,4 +150,4 @@ const getAllUser = async (req, res) => {
   const user = await User.find();
   res.json(user)
 }
-module.exports = {register, login, logout, access, deleteUser, sendMail, updateInfo, getAllUser};
+module.exports = {register, login, logout, deleteUser, sendMail, updateInfo, getAllUser};

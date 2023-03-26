@@ -398,7 +398,7 @@ html(lang="vi")
           .row
             // header
             .col-12.d-flex.justify-content-between.align-items-center.pb-2.bg-transparent.pt-4
-              h1.header.text-uppercase(style="font-weight: 400;") Truyện tổng hợp
+              h1.header.text-uppercase(style="font-weight: 400;") SÁCH MỚI TUYỂN CHỌN
               a.btn.btn-warning.btn-sm.text-white(href="sach-moi-tuyen-chon.html") Xem tất cả
           .khoisanpham(style="padding-bottom: 2rem;")
             // 1 san pham
@@ -688,11 +688,11 @@ html(lang="vi")
           .row
             // header
             .col-12.d-flex.justify-content-between.align-items-center.pb-2.bg-light
-              h2.header.text-uppercase(style="font-weight: 400;") COMBO SÁCH HOT - GIẢM ĐẾN 25%
+              h2.header.text-uppercase(style="font-weight: 400;") SÁCH ĐƯỢC YÊU THÍCH NHẤT
               a.btn.btn-warning.btn-sm.text-white(href="#") Xem tất cả
           .khoisanpham
-            -shuffle(data)
-            each book in data
+            
+            each book in toplikeBook
               .card
                 a.motsanpham(
                   title="Chuyện Nghề Và Chuyện Đời - Bộ 4 Cuốn" 
@@ -726,12 +726,48 @@ html(lang="vi")
           .row
             // header
             .col-12.d-flex.justify-content-between.align-items-center.pb-2.bg-light
-              h2.header.text-uppercase(style="font-weight: 400;") SÁCH SẮP PHÁT HÀNH / ĐẶT TRƯỚC
+              h2.header.text-uppercase(style="font-weight: 400;") SÁCH BÁN CHẠY NHẤT
               a.btn.btn-warning.btn-sm.text-white(href="#") Xem tất cả
           .khoisanpham
             // 1 san pham
-            -shuffle(data)
-            each book in data
+            each book in topsellBook
+              .card
+                a.motsanpham(
+                  title="Ngoại Giao Của Chính Quyền Sài Gòn" 
+                  data-placement="bottom" 
+                  data-toggle="tooltip" 
+                  style="text-decoration: none; color: black;" 
+                  href="#"
+                  )
+                  img.card-img-top.anh(
+                    alt="ngoai-giao-cua-chinh-quyen-sai-gon" 
+                    src=book.image
+                    )
+                  .card-body.noidungsp.mt-3
+                    h3.card-title.ten=book.name
+                    small.tacgia.text-muted=book.author
+                    .gia.d-flex.align-items-baseline
+                      .giamoi
+                        | #{(book.price - book.price*book.saleRate/100).toFixed(2)} $
+                      .giacu.text-muted 
+                        |#{book.price} $
+                      .sale
+                        |-#{book.saleRate}%
+                    .like 
+                      i.fa.fa-heart.active
+                      i.far.fa-heart 
+          // khoi sach sap phathanh
+    section.sapphathanh.mt-4(class="_1khoi")
+      .container
+        .noidung.bg-white(style=" width: 100%;")
+          .row
+            // header
+            .col-12.d-flex.justify-content-between.align-items-center.pb-2.bg-light
+              h2.header.text-uppercase(style="font-weight: 400;") SÁCH ĐANG GIẢM GIÁ 
+              a.btn.btn-warning.btn-sm.text-white(href="#") Xem tất cả
+          .khoisanpham
+            // 1 san pham
+            each book in topsaleBook
               .card
                 a.motsanpham(
                   title="Ngoại Giao Của Chính Quyền Sài Gòn" 
