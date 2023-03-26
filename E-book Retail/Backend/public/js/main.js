@@ -544,7 +544,7 @@ document.querySelector("#form-signup").addEventListener("submit", async (e) => {
   const email = document.getElementById("signup-email").value;
   const password = document.getElementById("inputPassword").value;
   const confirm_password = document.getElementById("confirm_password").value;
-  const name = document.getElementById("signup-username").value;
+  const username = document.getElementById("signup-username").value;
   console.log(name);
   console.log("Hi");
   
@@ -555,7 +555,7 @@ document.querySelector("#form-signup").addEventListener("submit", async (e) => {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email, password, name }),
+      body: JSON.stringify({ email, password, username }),
     });
     const content = await sendData.json();
     console.log(email, password);

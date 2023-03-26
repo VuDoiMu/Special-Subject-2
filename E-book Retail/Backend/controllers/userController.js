@@ -11,8 +11,7 @@ const mailer = require('../utils/mailer')
 app.use(cookieParser());
 
 const register = async (req, res) => {
-    const { email, password} = req.body;
-    const name = "newUser";
+    const { email,username, password} = req.body;
     if(!email || !password )
     return res.status(400).json({success: false, message:"Missing data "})
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -24,7 +23,7 @@ const register = async (req, res) => {
     if( emailValid)
     return res.json( { 'message': 'this email is already used!'});
     const hashPassword = await argon2.hash(password)
-    const newUser = new User({email, password: hashPassword, username: name});
+    const newUser = new User({email, password: hashPassword, username: username});
     await newUser.save();
 
         // const accesstoken = jwt.sign({userId: newUser._id, role: newUser.role},"thisisourwebsite!")
@@ -134,5 +133,8 @@ let sendMail = async (req, res) => {
     res.json({success : false, message:"wrogn"})
   }
 }
-
-module.exports = {register, login, logout, access, deleteUser, sendMail, updateInfo};
+const getAllUser = async (req, res) => {
+  const user = await User.find();
+  res.json(user)
+}
+module.exports = {register, login, logout, access, deleteUser, sendMail, updateInfo, getAllUser};

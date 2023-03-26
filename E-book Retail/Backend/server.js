@@ -6,6 +6,8 @@ const path = require("path");
 const data = require("./data/book.json");
 const cookieParser = require("cookie-parser");
 const axios = require("axios");
+const jwt = require("jsonwebtoken")
+
 app.use(cookieParser());
 
 //connect to MongoDb
@@ -44,6 +46,18 @@ app.set("views", path.join(__dirname, "views"));
 // sach danh gia nhieu nhat
 app.get("/", async (req, res) => {
   const response = await axios.get("http://localhost:3500/management");
+  const toplike = await axios.get("http://localhost:3500/catalog/toplike");
+  const topSell = await axios.get("http://localhost:3500/catalog/topsell");
+  const topSale = await axios.get("http://localhost:3500/catalog/topsale");
+  const toplikeBook = toplike.data
+  const topsaleBook = topSale.data
+  const topsellBook = topSell.data
+  console.log(toplikeBook)
+  console.log("toplikeBook")
+  console.log(topsaleBook)
+  console.log("topsellBook")
+  console.log(topsellBook)
+
   const tag = await axios
     .get("http://localhost:3500/tag")
     .then((res) => (tagData = res.data.tags));
@@ -51,25 +65,19 @@ app.get("/", async (req, res) => {
   res.render("home.pug", {
     data,
     tags: tagData.slice(0, 11),
+    toplikeBook,
+    topsaleBook,
+    topsellBook
+  
   });
 });
 
-app.get("/product/:id", async (req, res) => {
-  const id = req.params.id;
-  const response = await axios.get("http://localhost:3500/management/" + id);
-  const book = response.data;
-  const tag = await axios
-    .get("http://localhost:3500/tag")
-    .then((res) => (tagData = res.data.tags));
-  res.render("product.pug", {
-    book,
-    tags: tagData.slice(0, 11)
-  });
-});
-
-app.get("/gio-hang", (req, res) => {
+app.get("/gio-hang", async (req, res) => {
+  const response = await axios.get("http://localhost:3500/cart");
+  
+const data = response.data;
   res.render("gio-hang.pug", {
-    title: "hello world",
+    data
   });
 });
 
@@ -89,17 +97,31 @@ app.get("/tag/:name", async (req, res) => {
   });
 });
 
-app.get("/tai-khoan", (req, res) => {
+app.get("/tai-khoan", async (req, res) => {
+  const response = await axios.get("http://localhost:3500/");
+  console.log(response.data)
   res.render("tai-khoan.pug", {
     title: "hello world",
   });
 });
 
-app.get("/admin", (req, res) => {
-  res.render("admin-home.pug");
+app.get("/admin", async (req, res) => {
+  const response = await axios.get("http://localhost:3500/management");
+  const data = response.data;
+  const user = await axios.get("http://localhost:3500/auth/getAllUser");
+  const userData = user.data;
+  const discount = await axios.get("http://localhost:3500/discount");
+  const disData = discount.data;
+  res.render("admin-home.pug", {
+    data, userData, disData
+  });
 });
-app.get("/admin-management", (req, res) => {
-  res.render("admin-management.pug", { data });
+app.get("/admin-management", async (req, res) => {
+  const response = await axios.get("http://localhost:3500/management");
+  const data = response.data;
+  const order= await axios.get("http://localhost:3500/order");
+  const orderData = order.data;
+  res.render("admin-management.pug", { data, orderData });
 });
 
 // app.get("/tag/:name", async (req, res) => {
@@ -116,6 +138,10 @@ app.get("/admin-sale", (req, res) => {
   res.render("admin-sale.pug", { data });
 });
 
+app.post("/login", async (req, res) => {
+
+})
+
 //routes
 app.use("/management", require("./routes/books"));
 app.use("/order", require("./routes/order"));
@@ -123,6 +149,7 @@ app.use("/auth", require("./routes/user"));
 app.use("/cart", require("./routes/cart"));
 app.use("/tag", require("./routes/tag"));
 app.use("/catalog", require("./routes/catalog"));
+app.use("/discount", require("./routes/discount"))
 
 mongoose.connection.once("open", () => {
   console.log("connected to MongoDb");

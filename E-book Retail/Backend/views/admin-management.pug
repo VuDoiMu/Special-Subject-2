@@ -50,31 +50,26 @@ html(lang='en', dir='ltr')
                     .box
                         .right-side
                             .box-topic Total Order
-                            .number 40,876
+                            .number=orderData.length
                             //
                                 <div class="indicator">
                                 <i class='bx bx-up-arrow-alt'></i>
                                 <span class="text">Up from yesterday</span>
                                 </div>
                         i.bx.bx-cart-alt.cart
-                    .box
-                        .right-side
-                            .box-topic Total Sales
-                            .number 38,876
-
-                        i.bx.bxs-cart-add.cart.two
+                    
                     .box
                         .right-side
                             .box-topic Total Profit
-                            .number $12,876
+                            .number $0
 
-                        i.bx.bx-cart.cart.three
+                        i.bx.bx-cart.cart.two
                     .box
                         .right-side
                             .box-topic Total Return
-                            .number 11,086
+                            .number 0
 
-                        i.bx.bxs-cart-download.cart.four
+                        i.bx.bxs-cart-download.cart.three
                             main
 
 
@@ -110,8 +105,8 @@ html(lang='en', dir='ltr')
                                 tr
                                 th( scope="row") #{book.name}
                                 th( scope="row") #{book.author}
-                                th( scope="row") 125000
-                                th( scope="row") 49
+                                th( scope="row") #{book.price}
+                                th( scope="row") #{book.countSale}
                                 th( scope="row")
 
                                     button#btn-update.btn.btn-warning 
