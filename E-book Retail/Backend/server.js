@@ -52,11 +52,6 @@ app.get("/", async (req, res) => {
   const toplikeBook = toplike.data
   const topsaleBook = topSale.data
   const topsellBook = topSell.data
-  console.log(toplikeBook)
-  console.log("toplikeBook")
-  console.log(topsaleBook)
-  console.log("topsellBook")
-  console.log(topsellBook)
 
   const tag = await axios
     .get("http://localhost:3500/tag")
@@ -85,17 +80,9 @@ const data = response.data;
 
 // lay book theo id
 
-app.get("/product/:id", async (req, res) => {
-  const id = req.params.id;
-  const response = await axios.get("http://localhost:3500/management/" + id);
-  const book = response.data;
-  res.render("product.pug", {
-    book,
-  });
-});
+
 app.get("/tag/:name", async (req, res) => {
   const name = req.params.name;
-  console.log(name);
   const response = await axios.get(`http://localhost:3500/tag/books/${name}`);
 
   const booksTag = response.data.books[0].books;
@@ -106,7 +93,6 @@ app.get("/tag/:name", async (req, res) => {
 
 app.get("/tai-khoan", async (req, res) => {
   const response = await axios.get("http://localhost:3500/");
-  console.log(response.data)
   res.render("tai-khoan.pug", {
     title: "hello world",
   });
@@ -131,16 +117,6 @@ app.get("/admin-management", async (req, res) => {
   res.render("admin-management.pug", { data, orderData });
 });
 
-// app.get("/tag/:name", async (req, res) => {
-//   const name = req.params.name;
-//   let booksTag;
-//   console.log(name);
-//   const a = await axios
-//     .get(`http://localhost:3500/tag/books/${name}`)
-//     .then((res) => (booksTag = res.data.books[0].books));
-
-//   res.render("product-list.pug", { booksTag });
-// });
 app.get("/admin-sale", (req, res) => {
   res.render("admin-sale.pug", { data });
 });
