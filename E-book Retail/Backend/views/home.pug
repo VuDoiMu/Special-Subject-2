@@ -128,7 +128,7 @@ html(lang="vi")
           form.form-inline.ml-auto.my-2.my-lg-0.mr-3
             .input-group(style="width: 520px;")
               input.form-control(
-                placeholder="Nhập sách cần tìm kiếm..." 
+                placeholder="Enter the book you want to search..." 
                 aria-label="Small" 
                 type="text"
                 )
@@ -151,19 +151,18 @@ html(lang="vi")
                   style="display:inline-block" 
                   href="#"
                   )
-                  | Tài
-                  |   khoản
+                  | Account
               .dropdown-menu(aria-labelledby="dropdownMenuButton")
                 a.dropdown-item.nutdangky.text-center.mb-2(
                   data-target="#formdangky" 
                   data-toggle="modal" 
                   href="#"
-                  ) Đăng ký
+                  ) Signup
                 a.dropdown-item.nutdangnhap.text-center(
                   data-target="#formdangnhap" 
                   data-toggle="modal" 
                   href="#"
-                  ) Đăng nhập
+                  ) Signin
             li.nav-item.giohang
               a.btn.btn-secondary.rounded-circle(href="/gio-hang")
                 i.fa.fa-shopping-cart
@@ -172,8 +171,7 @@ html(lang="vi")
                 style="display:inline-block" 
                 href="gio-hang"
                 )
-                | Giỏ
-                |   Hàng
+                | My cart
     // form dang ky khi click vao button tren header
     #formdangky.modal.fade.mt-5(
       aria-hidden="true" 
@@ -186,10 +184,10 @@ html(lang="vi")
           .modal-header
             ul.tabs.d-flex.justify-content-around.list-unstyled.mb-0
               li.tab.tab-dangnhap.text-center
-                a.text-decoration-none Đăng nhập
+                a.text-decoration-none Signin
                 hr
               li.tab.tab-dangky.text-center
-                a.text-decoration-none Đăng ký
+                a.text-decoration-none Signup
                 hr
             button.close(
               aria-label="Close" 
@@ -203,7 +201,7 @@ html(lang="vi")
                 input.form-control(
                   required="" 
                   name="email" 
-                  placeholder="Nhập địa chỉ email" 
+                  placeholder="Enter email address" 
                   type="email"
                   id="signup-email"
                   )
@@ -211,7 +209,7 @@ html(lang="vi")
                 input.form-control(
                   required="" 
                   name="text" 
-                  placeholder="Nhập họ tên" 
+                  placeholder="Enter full name" 
                   type="text"
                   id="signup-username"
                   )
@@ -219,14 +217,14 @@ html(lang="vi")
                 input.form-control(
                   required="" 
                   name="password" 
-                  placeholder="Nhập mật khẩu" 
+                  placeholder="Enter password" 
                   type="password"
                   id="inputPassword"
                   )
               .form-label-group.mb-4
                 input.form-control(
                   required="" 
-                  placeholder="Nhập lại mật khẩu" 
+                  placeholder="Confirm the password" 
                   name="confirm_password" 
                   type="password"
                   id='confirm_password'
@@ -234,15 +232,15 @@ html(lang="vi")
               button.btn.btn-lg.btn-block.btn-signin.text-uppercase.text-white.mt-3(
                 style="background: #F5A623" 
                 type="submit"
-                ) Đăng ký
+                ) Signup
               hr.mt-3.mb-2
               .custom-control.custom-checkbox
-                p.text-center Bằng việc đăng ký, bạn đã đồng ý với Emanga về
+                p.text-center By registering, you agree to Emanga about
                 a.text-decoration-none.text-center(
                   style="color: #F5A623" 
                   )
-                  | Điều khoản dịch
-                  |   vụ & Chính sách bảo mật
+                  | Translation Terms
+                  | Service & Privacy Policy
     // form dang nhap khi click vao button tren header
     #formdangnhap.modal.fade.mt-5(
       aria-hidden="true" 
@@ -255,10 +253,10 @@ html(lang="vi")
           .modal-header
             ul.tabs.d-flex.justify-content-around.list-unstyled.mb-0
               li.tab.tab-dangnhap.text-center
-                a.text-decoration-none Đăng nhập
+                a.text-decoration-none Signin
                 hr
               li.tab.tab-dangky.text-center
-                a.text-decoration-none Đăng ký
+                a.text-decoration-none Signup
                 hr
             button.close(
               aria-label="Close" 
@@ -274,7 +272,7 @@ html(lang="vi")
                   autofocus="" 
                   required="" 
                   name="email" 
-                  placeholder="Nhập địa chỉ email" 
+                  placeholder="Enter email address" 
                   type="email"
                   )
               .form-label-group
@@ -282,29 +280,29 @@ html(lang="vi")
                   id="password"
                   required="" 
                   name="password" 
-                  placeholder="Mật khẩu" 
+                  placeholder="Password" 
                   type="password"
                   )
-              .custom-control.custom-checkbox.mb-3
-                input#customCheck1.custom-control-input(type="checkbox")
-                label.custom-control-label(for="customCheck1") Nhớ mật khẩu
-                a.float-right.text-decoration-none(
-                  style="color: #F5A623" 
-                  href="#"
-                  )
-                  | Quên mật
-                  |   khẩu
+              //- .custom-control.custom-checkbox.mb-3
+              //-   input#customCheck1.custom-control-input(type="checkbox")
+              //-   label.custom-control-label(for="customCheck1") Nhớ mật khẩu
+              //-   a.float-right.text-decoration-none(
+              //-     style="color: #F5A623" 
+              //-     href="#"
+              //-     )
+              //-     | Quên mật
+              //-     |   khẩu
               button.btn.btn-lg.btn-block.btn-signin.text-uppercase.text-white(
                 style="background: #F5A623" 
                 type="submit"
-                ) Đăng nhập
+                ) Signin
               hr.my-4
-              button.btn.btn-lg.btn-google.btn-block.text-uppercase(type="submit")
-                i.fab.fa-google.mr-2
-                | Đăng nhập bằng Google
-              button.btn.btn-lg.btn-facebook.btn-block.text-uppercase(type="submit")
-                i.fab.fa-facebook-f.mr-2
-                | Đăng nhập bằng Facebook
+              //- button.btn.btn-lg.btn-google.btn-block.text-uppercase(type="submit")
+              //-   i.fab.fa-google.mr-2
+              //-   | Đăng nhập bằng Google
+              //- button.btn.btn-lg.btn-facebook.btn-block.text-uppercase(type="submit")
+              //-   i.fab.fa-facebook-f.mr-2
+              //-   | Đăng nhập bằng Facebook
     // thanh tieu de "danh muc sach" + hotline + ho tro truc tuyen
     section.duoinavbar
       .container.text-white
@@ -313,7 +311,7 @@ html(lang="vi")
             .categoryheader
               .noidungheader.text-white
                 i.fa.fa-bars
-                span.text-uppercase.font-weight-bold.ml-1 Danh mục sách
+                span.text-uppercase.font-weight-bold.ml-1 Book category
     // noi dung danh muc sach(categories) + banner slider
     section.header.bg-light
       .container
@@ -389,8 +387,8 @@ html(lang="vi")
           .row
             // header
             .col-12.d-flex.justify-content-between.align-items-center.pb-2.bg-light
-              h2.header.text-uppercase(style="font-weight: 400;") SÁCH TỔNG HỢP
-              a.btn.btn-warning.btn-sm.text-white(href="#") Xem tất cả
+              h2.header.text-uppercase(style="font-weight: 400;") GENERAL BOOK
+              a.btn.btn-warning.btn-sm.text-white(href="/product-list") See all
           .khoisanpham
             
             // 1 san pham
@@ -420,12 +418,12 @@ html(lang="vi")
                         |-#{book.saleRate}%
                     .like 
                       span.countLike
-                        |Yêu thích: #{book.countLike}
+                        |Favourite: #{book.countLike}
                       i.fa.fa-heart.active
                       i.far.fa-heart
                     .sell 
                       span 
-                        |Lượt mua: #{book.countSale}
+                        |Purchases: #{book.countSale}
                     //- .danhgia
                     //-   ul.d-flex(style="list-style: none;")
                     //-     li.active
@@ -684,8 +682,8 @@ html(lang="vi")
           .row
             // header
             .col-12.d-flex.justify-content-between.align-items-center.pb-2.bg-light
-              h2.header.text-uppercase(style="font-weight: 400;") SÁCH ĐƯỢC YÊU THÍCH NHẤT
-              a.btn.btn-warning.btn-sm.text-white(href="#") Xem tất cả
+              h2.header.text-uppercase(style="font-weight: 400;") MOST FAVORITE BOOK
+              a.btn.btn-warning.btn-sm.text-white(href="product-list/toplike") See all
           .khoisanpham
             
             each book in toplikeBook
@@ -713,12 +711,12 @@ html(lang="vi")
                         |-#{book.saleRate}%
                     .like 
                       span.countLike
-                        |Yêu thích: #{book.countLike}
+                        |Favourite: #{book.countLike}
                       i.fa.fa-heart.active
                       i.far.fa-heart
                     .sell 
                       span 
-                        |Lượt mua: #{book.countSale}
+                        |Purchases: #{book.countSale}
     // khoi sach sap phathanh
     section.sapphathanh.mt-4(class="_1khoi")
       .container
@@ -726,8 +724,8 @@ html(lang="vi")
           .row
             // header
             .col-12.d-flex.justify-content-between.align-items-center.pb-2.bg-light
-              h2.header.text-uppercase(style="font-weight: 400;") SÁCH BÁN CHẠY NHẤT
-              a.btn.btn-warning.btn-sm.text-white(href="#") Xem tất cả
+              h2.header.text-uppercase(style="font-weight: 400;") BEST SELLING BOOK
+              a.btn.btn-warning.btn-sm.text-white(href="/product-list/topsell") See all
           .khoisanpham
             // 1 san pham
             each book in topsellBook
@@ -755,12 +753,12 @@ html(lang="vi")
                         |-#{book.saleRate}%
                     .like 
                       span.countLike
-                        |Yêu thích: #{book.countLike}
+                        |Favourite: #{book.countLike}
                       i.fa.fa-heart.active
                       i.far.fa-heart
                     .sell 
                       span 
-                        |Lượt mua: #{book.countSale} 
+                        |Purchases: #{book.countSale} 
           // khoi sach sap phathanh
     section.sapphathanh.mt-4(class="_1khoi")
       .container
@@ -768,8 +766,8 @@ html(lang="vi")
           .row
             // header
             .col-12.d-flex.justify-content-between.align-items-center.pb-2.bg-light
-              h2.header.text-uppercase(style="font-weight: 400;") SÁCH GIẢM GIÁ NHIỀU NHẤT
-              a.btn.btn-warning.btn-sm.text-white(href="#") Xem tất cả
+              h2.header.text-uppercase(style="font-weight: 400;") BEST DISCOUNT BOOK
+              a.btn.btn-warning.btn-sm.text-white(href="/product-list/topsale") See all
           .khoisanpham
             // 1 san pham
             each book in topsaleBook
@@ -797,12 +795,12 @@ html(lang="vi")
                         |-#{book.saleRate}%
                     .like 
                       span.countLike
-                        |Yêu thích: #{book.countLike}
+                        |Favourite: #{book.countLike}
                       i.fa.fa-heart.active
                       i.far.fa-heart
                     .sell 
                       span 
-                        |Lượt mua: #{book.countSale}
+                        |Purchases: #{book.countSale}
       section.sapphathanh.mt-4(class="_1khoi")
     // div _1khoi -- khoi sachnendoc
         hr
@@ -818,7 +816,7 @@ html(lang="vi")
                 )
               .noidung
                 h3.tieude.font-weight-bold HƠN 14.000 TỰA SÁCH HAY
-                p.detail Tuyển chọn bởi DealBooks
+                p.detail Tuyển chọn bởi EManga
           .col-lg-3.col-sm-6
             .dichvu.d-flex.align-items-center
               img(
@@ -854,24 +852,24 @@ html(lang="vi")
         .row
           .col-md-3.col-xs-6
             .gioithieu
-              h3.header.text-uppercase.font-weight-bold Về DealBook
-              a(href="#") Giới thiệu về DealBook
-              a(href="#") Tuyển dụng
+              h3.header.text-uppercase.font-weight-bold Về EManga
+              a() Giới thiệu về EManga
+              a() Tuyển dụng
               .fb-like(
                 data-share="true" 
                 data-size="small" 
                 data-action="like" 
                 data-layout="button" 
                 data-width="300px" 
-                data-href="https://www.facebook.com/DealBook-110745443947730/"
+                data-href="https://www.facebook.com/EManga-110745443947730/"
                 )
           .col-md-3.col-xs-6
             .hotrokh
               h3.header.text-uppercase.font-weight-bold HỖ TRỢ KHÁCH HÀNG
-              a(href="#") Hướng dẫn đặt hàng
-              a(href="#") Phương thức thanh toán
-              a(href="#") Phương thức vận chuyển
-              a(href="#") Chính sách đổi trả
+              a() Hướng dẫn đặt hàng
+              a() Phương thức thanh toán
+              a() Phương thức vận chuyển
+              a() Chính sách đổi trả
           .col-md-3.col-xs-6
             .lienket
               h3.header.text-uppercase.font-weight-bold HỢP TÁC VÀ LIÊN KẾT

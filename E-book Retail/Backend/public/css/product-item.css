@@ -385,6 +385,7 @@ label.error {
 .categorycontent ul li a{
     text-decoration: none;
     color: black;
+    display: block;
 }
 
 .categorycontent ul li:hover ul{
@@ -662,7 +663,7 @@ footer .header {
     font-size: 26px;
     position: absolute;
     top: 12px;
-    left: 149px;
+    margin-left: 8px;
 }
 
 /* don vi tien  */
@@ -861,6 +862,7 @@ img.card-img-top.anh {
     position: relative;
     top: 15px;
     transition: 0.3s;
+    height: 300px;
 }
 
 ul span.text-muted {
@@ -1106,4 +1108,10 @@ h3.account-header {
 
 .comment-section .reply a {
     text-decoration: none;
+}
+
+.DeanGraziosi {
+    position: initial !important;
+    left: initial !important;
+    top: initial !important;
 }

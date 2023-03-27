@@ -106,7 +106,7 @@ html(lang="li")
           form.form-inline.ml-auto.my-2.my-lg-0.mr-3
             .input-group(style="width: 520px;")
               input.form-control(
-                placeholder="Nhập sách cần tìm kiếm..." 
+                placeholder="Enter book you want to search" 
                 aria-label="Small" 
                 type="text"
                 )
@@ -129,19 +129,18 @@ html(lang="li")
                   style="display:inline-block" 
                   href="#"
                   )
-                  | Tài
-                  |   khoản
+                  | Account
               .dropdown-menu(aria-labelledby="dropdownMenuButton")
                 a.dropdown-item.nutdangky.text-center.mb-2(
                   data-target="#formdangky" 
                   data-toggle="modal" 
                   href="#"
-                  ) Đăng ký
+                  ) Signup
                 a.dropdown-item.nutdangnhap.text-center(
                   data-target="#formdangnhap" 
                   data-toggle="modal" 
                   href="#"
-                  ) Đăng nhập
+                  ) Signin
             li.nav-item.giohang
               a.btn.btn-secondary.rounded-circle(href="gio-hang.html")
                 i.fa.fa-shopping-cart
@@ -164,10 +163,10 @@ html(lang="li")
           .modal-header
             ul.tabs.d-flex.justify-content-around.list-unstyled.mb-0
               li.tab.tab-dangnhap.text-center
-                a.text-decoration-none Đăng nhập
+                a.text-decoration-none Signin
                 hr
               li.tab.tab-dangky.text-center
-                a.text-decoration-none Đăng ký
+                a.text-decoration-none Signup
                 hr
             button.close(
               aria-label="Close" 
@@ -182,50 +181,42 @@ html(lang="li")
                   autofocus="" 
                   required="" 
                   name="name" 
-                  placeholder="Nhập họ và tên" 
-                  type="text"
-                  )
-              .form-label-group
-                input.form-control(
-                  required="" 
-                  name="phone" 
-                  placeholder="Nhập số điện thoại" 
+                  placeholder="Enter fullname" 
                   type="text"
                   )
               .form-label-group
                 input.form-control(
                   required="" 
                   name="email" 
-                  placeholder="Nhập địa chỉ email" 
+                  placeholder="Enter email address" 
                   type="email"
                   )
               .form-label-group
                 input.form-control(
                   required="" 
                   name="password" 
-                  placeholder="Nhập mật khẩu" 
+                  placeholder="Enter password" 
                   type="password"
                   )
               .form-label-group.mb-4
                 input.form-control(
                   required="" 
-                  placeholder="Nhập lại mật khẩu" 
+                  placeholder="Confirm password" 
                   name="confirm_password" 
                   type="password"
                   )
               button.btn.btn-lg.btn-block.btn-signin.text-uppercase.text-white.mt-3(
                 style="background: #F5A623" 
                 type="submit"
-                ) Đăng ký
+                ) Signup
               hr.mt-3.mb-2
               .custom-control.custom-checkbox
-                p.text-center Bằng việc đăng ký, bạn đã đồng ý với DealBook về
+                p.text-center By registering, you agree to EManga about
                 a.text-decoration-none.text-center(
                   style="color: #F5A623" 
-                  href="#"
                   )
-                  | Điều khoản dịch
-                  |   vụ & Chính sách bảo mật
+                  | Translation Terms
+                  | Service & Privacy Policy
     // form dang nhap khi click vao button tren header
     #formdangnhap.modal.fade.mt-5(
       aria-hidden="true" 
@@ -238,10 +229,10 @@ html(lang="li")
           .modal-header
             ul.tabs.d-flex.justify-content-around.list-unstyled.mb-0
               li.tab.tab-dangnhap.text-center
-                a.text-decoration-none Đăng nhập
+                a.text-decoration-none Signin
                 hr
               li.tab.tab-dangky.text-center
-                a.text-decoration-none Đăng ký
+                a.text-decoration-none Signup
                 hr
             button.close(
               aria-label="Close" 
@@ -256,36 +247,36 @@ html(lang="li")
                   autofocus="" 
                   required="" 
                   name="email" 
-                  placeholder="Nhập địa chỉ email" 
+                  placeholder="Enter email address" 
                   type="email"
                   )
               .form-label-group
                 input.form-control(
                   required="" 
                   name="password" 
-                  placeholder="Mật khẩu" 
+                  placeholder="Password" 
                   type="password"
                   )
-              .custom-control.custom-checkbox.mb-3
-                input#customCheck1.custom-control-input(type="checkbox")
-                label.custom-control-label(for="customCheck1") Nhớ mật khẩu
-                a.float-right.text-decoration-none(
-                  style="color: #F5A623" 
-                  href="#"
-                  )
-                  | Quên mật
-                  |   khẩu
+              //- .custom-control.custom-checkbox.mb-3
+              //-   input#customCheck1.custom-control-input(type="checkbox")
+              //-   label.custom-control-label(for="customCheck1") Nhớ mật khẩu
+              //-   a.float-right.text-decoration-none(
+              //-     style="color: #F5A623" 
+              //-     href="#"
+              //-     )
+              //-     | Quên mật
+              //-     |   khẩu
               button.btn.btn-lg.btn-block.btn-signin.text-uppercase.text-white(
                 style="background: #F5A623" 
                 type="submit"
-                ) Đăng nhập
-              hr.my-4
-              button.btn.btn-lg.btn-google.btn-block.text-uppercase(type="submit")
-                i.fab.fa-google.mr-2
-                | Đăng nhập bằng Google
-              button.btn.btn-lg.btn-facebook.btn-block.text-uppercase(type="submit")
-                i.fab.fa-facebook-f.mr-2
-                | Đăng nhập bằng Facebook
+                ) Signin
+              //- hr.my-4
+              //- button.btn.btn-lg.btn-google.btn-block.text-uppercase(type="submit")
+              //-   i.fab.fa-google.mr-2
+              //-   | Signin bằng Google
+              //- button.btn.btn-lg.btn-facebook.btn-block.text-uppercase(type="submit")
+              //-   i.fab.fa-facebook-f.mr-2
+              //-   | Signin bằng Facebook
     // thanh "danh muc sach" đã được ẩn bên trong + hotline + ho tro truc tuyen
     section.duoinavbar
       .container.text-white
@@ -294,7 +285,7 @@ html(lang="li")
             .categoryheader
               .noidungheader.text-white
                 i.fa.fa-bars
-                span.text-uppercase.font-weight-bold.ml-1 Danh mục sách
+                span.text-uppercase.font-weight-bold.ml-1 Book category
               // CATEGORIES
               .categorycontent
                 ul
@@ -305,17 +296,7 @@ html(lang="li")
                     data-toggle="" 
                     style="" 
                     href=('/tag/' + tag.name))=tag.name 
-                      i.fa.fa-chevron-right.float-right
-    // breadcrumb
-    section.breadcrumbbar
-      .container
-        ol.breadcrumb.mb-0.p-0.bg-transparent
-          li.breadcrumb-item
-            a(href="/") Trang chủ
-          li.breadcrumb-item
-            a(href="#") Sách kinh tế
-          li.breadcrumb-item.active
-            a(href="#") Sách kỹ năng làm việc
+                        i.fa.fa-chevron-right.float-right
     // nội dung của trang
     section.product-page.mb-4
       .container
@@ -362,32 +343,32 @@ html(lang="li")
                 .col-md-7
                   .gia
                     .giabia
-                      | Giá cũ:
+                      | Old price:
                       span.giacu.ml-2
                         |#{book.price} $
                     .giaban
-                      | Giá mới:
+                      | New price:
                       span.giamoi.font-weight-bold 
                         | #{(book.price - book.price*book.saleRate/100).toFixed(2)} $
                     .tietkiem
-                      | Tiết kiệm:
+                      | Saving:
                       b
                       | #{(book.price*book.saleRate/100).toFixed(2)} $
                       span.sale 
                         |-#{book.saleRate}%
                   .uudai.my-3
-                    h6.header.font-weight-bold Khuyến mãi & Ưu đãi tại EManga:
+                    h6.header.font-weight-bold Promotions & Offers at EManga:
                     ul
                       li
-                        b Miễn phí giao hàng
-                        | cho đơn hàng từ 150.000đ ở TP.HCM và 300.000đ ở
-                        |   Tỉnh/Thành khác
+                        b Free ship
+                        | for orders from 150,000 VND in HCMC and 300,000 VND in
+                        | Other Province/City
                       li
-                        b Combo sách HOT - GIẢM 25%
-                      li Tặng Bookmark cho mỗi đơn hàng
-                      li Bao sách miễn phí (theo yêu cầu)
+                        b HOT book combo - 25% OFF
+                      li Free Bookmark for every order
+                      li Free book cover (on request)
                   .soluong.d-flex
-                    label.font-weight-bold Số lượng:
+                    label.font-weight-bold Quantity:
                     .input-number.input-group.mb-3
                       .input-group-prepend
                         span.input-group-text.btn-spin.btn-dec -
@@ -397,7 +378,7 @@ html(lang="li")
                         )
                       .input-group-append
                         span.input-group-text.btn-spin.btn-inc +
-                  .nutmua.btn.w-100.text-uppercase Chọn mua
+                  .nutmua.btn.w-100.text-uppercase Add to cart
                   .fb-like(
                     data-share="true" 
                     data-size="small" 
@@ -411,14 +392,19 @@ html(lang="li")
                   .thongtinsach
                     ul
                       li
-                        | Tác giả:
+                        | Author:
                         a.tacgia(href="#")=book.author
                       li 
-                        |Nhà xuất bản: #{book.publisher}
+                        |Publisher: #{book.publisher}
+                      li 
+                        |Category: 
+                        each tagItem, index in book.tag
+                          | #{tagItem}#{index === book.tag.length - 1 ? '' : ', '}
                       li
-                        | Số trang:
+                        | Number of pages:
                         b 
                           |#{book.pageCount}
+                      
             // decripstion của 1 sản phẩm: giới thiệu , đánh giá độc giả
             .product-description.col-md-9
               // 2 tab ở trên
@@ -430,16 +416,8 @@ html(lang="li")
                     role="tab" 
                     href="#nav-gioithieu" 
                     data-toggle="tab"
-                    ) Introduction
-                  a#nav-danhgia-tab.nav-item.nav-link.text-uppercase(
-                    aria-selected="false" 
-                    aria-controls="nav-danhgia" 
-                    role="tab" 
-                    href="#nav-danhgia" 
-                    data-toggle="tab"
-                    )
-                    | Đánh
-                    |   giá của độc giả
+                    ) Description
+                 
               // nội dung của từng tab
               #nav-tabContent.tab-content
                 #nav-gioithieu.tab-pane.fade.show.active.ml-3(
@@ -448,127 +426,6 @@ html(lang="li")
                   )
                   h6.tieude.font-weight-bold=book.name
                   p=book.description
-
-                #nav-danhgia.tab-pane.fade(
-                  aria-labelledby="nav-danhgia-tab" 
-                  role="tabpanel"
-                  )
-                  .row
-                    .col-md-3.text-center
-                      p.tieude Đánh giá trung bình
-                      .diem 0/5
-                      .sao
-                        i.fa.fa-star
-                        i.fa.fa-star
-                        i.fa.fa-star
-                        i.fa.fa-star
-                        i.fa.fa-star
-                      p.sonhanxet.text-muted (0 nhận xét)
-                    .col-md-5
-                      .tiledanhgia.text-center
-                        .motthanh.d-flex.align-items-center
-                          | 5
-                          i.fa.fa-star
-                          .progress.mx-2
-                            .progress-bar(
-                              aria-valuemax="100" 
-                              aria-valuemin="0" 
-                              aria-valuenow="0" 
-                              role="progressbar"
-                              )
-                          | 0%
-                        .motthanh.d-flex.align-items-center
-                          | 4
-                          i.fa.fa-star
-                          .progress.mx-2
-                            .progress-bar(
-                              aria-valuemax="100" 
-                              aria-valuemin="0" 
-                              aria-valuenow="0" 
-                              role="progressbar"
-                              )
-                          | 0%
-                        .motthanh.d-flex.align-items-center
-                          | 3
-                          i.fa.fa-star
-                          .progress.mx-2
-                            .progress-bar(
-                              aria-valuemax="100" 
-                              aria-valuemin="0" 
-                              aria-valuenow="0" 
-                              role="progressbar"
-                              )
-                          | 0%
-                        .motthanh.d-flex.align-items-center
-                          | 2
-                          i.fa.fa-star
-                          .progress.mx-2
-                            .progress-bar(
-                              aria-valuemax="100" 
-                              aria-valuemin="0" 
-                              aria-valuenow="0" 
-                              role="progressbar"
-                              )
-                          | 0%
-                        .motthanh.d-flex.align-items-center
-                          | 1
-                          i.fa.fa-star
-                          .progress.mx-2
-                            .progress-bar(
-                              aria-valuemax="100" 
-                              aria-valuemin="0" 
-                              aria-valuenow="0" 
-                              role="progressbar"
-                              )
-                          | 0%
-                        .btn.vietdanhgia.mt-3 Viết đánh giá của bạn
-                      // nội dung của form đánh giá
-                      .formdanhgia
-                        h6.tieude.text-uppercase GỬI ĐÁNH GIÁ CỦA BẠN
-                        span.danhgiacuaban Đánh giá của bạn về sản phẩm này:
-                        .rating.d-flex.flex-row-reverse.align-items-center.justify-content-end
-                          input#star1(
-                            name="star" 
-                            type="radio"
-                            )
-                          label(for="star1")
-                          input#star2(
-                            name="star" 
-                            type="radio"
-                            )
-                          label(for="star2")
-                          input#star3(
-                            name="star" 
-                            type="radio"
-                            )
-                          label(for="star3")
-                          input#star4(
-                            name="star" 
-                            type="radio"
-                            )
-                          label(for="star4")
-                          input#star5(
-                            name="star" 
-                            type="radio"
-                            )
-                          label(for="star5")
-                        .form-group
-                          input.txtFullname.w-100(
-                            placeholder="Mời bạn nhập tên(Bắt buộc)" 
-                            type="text"
-                            )
-                        .form-group
-                          input.txtEmail.w-100(
-                            placeholder="Mời bạn nhập email(Bắt buộc)" 
-                            type="text"
-                            )
-                        .form-group
-                          input.txtComment.w-100(
-                            placeholder="Đánh giá của bạn về sản phẩm này" 
-                            type="text"
-                            )
-                        .btn.nutguibl Gửi bình luận
-                hr
                 // het tab nav-danhgia
               // het tab-content
             // het product-description
@@ -583,645 +440,116 @@ html(lang="li")
           .row
             // header
             .col-12.d-flex.justify-content-between.align-items-center.pb-2.bg-light.pt-4
-              h5.header.text-uppercase(style="font-weight: 400;") Sản phẩm tương tự
-              a.btn.btn-warning.btn-sm.text-white(href="sach-moi-tuyen-chon.html") Xem tất cả
+              h5.header.text-uppercase(style="font-weight: 400;") Similar product
+              //- a.btn.btn-warning.btn-sm.text-white(href="sach-moi-tuyen-chon.html") Xem tất cả
           .khoisanpham(style="padding-bottom: 2rem;")
-            // 1 sản phẩm
-            .card
-              a.motsanpham(
-                title="Lập Kế Hoạch Kinh Doanh Hiệu Quả" 
-                data-placement="bottom" 
-                data-toggle="tooltip" 
-                style="text-decoration: none; color: black;" 
-                href="Lap-trinh-ke-hoach-kinh-doanh-hieu-qua.html"
-                )
-                img.card-img-top.anh(
-                  alt="lap-ke-hoach-kinh-doanh-hieu-qua" 
-                  src="images/lap-ke-hoach-kinh-doanh-hieu-qua.jpg"
-                  )
-                .card-body.noidungsp.mt-3
-                  h6.card-title.ten Lập Kế Hoạch Kinh Doanh Hiệu Quả
-                  small.tacgia.text-muted Brian Finch
-                  .gia.d-flex.align-items-baseline
-                    .giamoi 111.200 ₫
-                    .giacu.text-muted 139.000 ₫
-                    .sale -20%
-                  .danhgia
-                    ul.d-flex(style="list-style: none;")
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li
-                        i.fa.fa-star
-                      li
-                        span.text-muted 0 nhận xét
-            .card
-              a.motsanpham(
-                title="Ma Bùn Lưu Manh Và Những Câu Chuyện Khác Của Nguyễn Trí" 
-                data-placement="bottom" 
-                data-toggle="tooltip" 
-                style="text-decoration: none; color: black;" 
-                href="/Ma-bun-luu-manh-va-nhung-cau-chuyen-khac-cua-nguyen-tri.html"
-                )
-                img.card-img-top.anh(
-                  alt="ma-bun-luu-manh" 
-                  src="/images/ma-bun-luu-manh.jpg"
-                  )
-                .card-body.noidungsp.mt-3
-                  h6.card-title.ten
-                    | Ma Bùn Lưu Manh Và Những Câu Chuyện Khác Của Nguyễn
-                    |   Trí
-                  small.tacgia.text-muted Nguyễn Trí
-                  .gia.d-flex.align-items-baseline
-                    .giamoi 68.000 ₫
-                    .giacu.text-muted 85.000 ₫
-                    .sale -20%
-                  .danhgia
-                    ul.d-flex(style="list-style: none;")
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li
-                        i.fa.fa-star
-                      li
-                        span.text-muted 0 nhận xét
-            .card
-              a.motsanpham(
-                title="Bank 4.0 - Giao dịch mọi nơi, không chỉ là ngân hàng" 
-                data-placement="bottom" 
-                data-toggle="tooltip" 
-                style="text-decoration: none; color: black;" 
-                href="#"
-                )
-                img.card-img-top.anh(
-                  alt="bank-4.0" 
-                  src="/images/bank-4.0.jpg"
-                  )
-                .card-body.noidungsp.mt-3
-                  h6.card-title.ten Bank 4.0 - Giao dịch mọi nơi, không chỉ là ngân hàng
-                  small.tacgia.text-muted Brett King
-                  .gia.d-flex.align-items-baseline
-                    .giamoi 111.200 ₫
-                    .giacu.text-muted 139.000 ₫
-                    .sale -20%
-                  .danhgia
-                    ul.d-flex(style="list-style: none;")
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li
-                        i.fa.fa-star
-                      li
-                        span.text-muted 0 nhận xét
-            .card
-              a.motsanpham(
-                title="Bộ Sách 500 Câu Chuyện Đạo Đức - Những Câu Chuyện Tình Thân (Bộ 8 Cuốn)" 
-                data-placement="bottom" 
-                data-toggle="tooltip" 
-                style="text-decoration: none; color: black;" 
-                href="#"
-                )
-                img.card-img-top.anh(
-                  alt="bo-sach-500-cau-chuyen-dao-duc" 
-                  src="/images/bo-sach-500-cau-chuyen-dao-duc.jpg"
-                  )
-                .card-body.noidungsp.mt-3
-                  h6.card-title.ten
-                    | Bộ Sách 500 Câu Chuyện Đạo Đức - Những Câu Chuyện
-                    |   Tình Thân (Bộ 8 Cuốn)
-                  small.tacgia.text-muted Nguyễn Hạnh - Trần Thị Thanh Nguyên
-                  .gia.d-flex.align-items-baseline
-                    .giamoi 111.200 ₫
-                    .giacu.text-muted 139.000 ₫
-                    .sale -20%
-                  .danhgia
-                    ul.d-flex(style="list-style: none;")
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li
-                        i.fa.fa-star
-                      li
-                        span.text-muted 0 nhận xét
-            .card
-              a.motsanpham(
-                title="Lịch Sử Ung Thư - Hoàng Đế Của Bách Bệnh" 
-                data-placement="bottom" 
-                data-toggle="tooltip" 
-                style="text-decoration: none; color: black;" 
-                href="#"
-                )
-                img.card-img-top.anh(
-                  alt="ung-thu-hoang-de-cua-bach-benh" 
-                  src="/images/ung-thu-hoang-de-cua-bach-benh.jpg"
-                  )
-                .card-body.noidungsp.mt-3
-                  h6.card-title.ten Lịch Sử Ung Thư - Hoàng Đế Của Bách Bệnh
-                  small.tacgia.text-muted Siddhartha Mukherjee
-                  .gia.d-flex.align-items-baseline
-                    .giamoi 111.200 ₫
-                    .giacu.text-muted 139.000 ₫
-                    .sale -20%
-                  .danhgia
-                    ul.d-flex(style="list-style: none;")
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li
-                        i.fa.fa-star
-                      li
-                        span.text-muted 0 nhận xét
-            .card
-              a.motsanpham(
-                title="Cuốn Sách Khám Phá: Trời Đêm Huyền Diệu" 
-                data-placement="bottom" 
-                data-toggle="tooltip" 
-                style="text-decoration: none; color: black;" 
-                href="#"
-                )
-                img.card-img-top.anh(
-                  alt="troi-dem-huyen-dieu" 
-                  src="/images/troi-dem-huyen-dieu.jpg"
-                  )
-                .card-body.noidungsp.mt-3
-                  h6.card-title.ten Cuốn Sách Khám Phá: Trời Đêm Huyền Diệu
-                  small.tacgia.text-muted Disney Learning
-                  .gia.d-flex.align-items-baseline
-                    .giamoi 111.200 ₫
-                    .giacu.text-muted 139.000 ₫
-                    .sale -20%
-                  .danhgia
-                    ul.d-flex(style="list-style: none;")
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li
-                        i.fa.fa-star
-                      li
-                        span.text-muted 0 nhận xét
-            .card
-              a.motsanpham(
-                title="Bộ Sách Những Câu Chuyện Cho Con Thành Người Tử Tế (Bộ 5 Cuốn)" 
-                data-placement="bottom" 
-                data-toggle="tooltip" 
-                style="text-decoration: none; color: black;" 
-                href="#"
-                )
-                img.card-img-top.anh(
-                  alt="bo-sach-nhung-cau-chuyen-cho-con-thanh-nguoi-tu-te" 
-                  src="/images/bo-sach-nhung-cau-chuyen-cho-con-thanh-nguoi-tu-te.jpg"
-                  )
-                .card-body.noidungsp.mt-3
-                  h6.card-title.ten
-                    | Bộ Sách Những Câu Chuyện Cho Con Thành Người Tử Tế (Bộ 5
-                    |   Cuốn)
-                  small.tacgia.text-muted Nhiều Tác Giả
-                  .gia.d-flex.align-items-baseline
-                    .giamoi 111.200 ₫
-                    .giacu.text-muted 139.000 ₫
-                    .sale -20%
-                  .danhgia
-                    ul.d-flex(style="list-style: none;")
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li
-                        i.fa.fa-star
-                      li
-                        span.text-muted 0 nhận xét
-            .card
-              a.motsanpham(
-                title="Lịch Sử Thế Giới" 
-                data-placement="bottom" 
-                data-toggle="tooltip" 
-                style="text-decoration: none; color: black;" 
-                href="#"
-                )
-                img.card-img-top.anh(
-                  alt="lich-su-the-gioi" 
-                  src="/images/lich-su-the-gioi.jpg"
-                  )
-                .card-body.noidungsp.mt-3
-                  h6.card-title.ten Lịch Sử Thế Giới
-                  small.tacgia.text-muted Nam Phong tùng thư - Phạm Quỳnh chủ nhiệm
-                  .gia.d-flex.align-items-baseline
-                    .giamoi 111.200 ₫
-                    .giacu.text-muted 139.000 ₫
-                    .sale -20%
-                  .danhgia
-                    ul.d-flex(style="list-style: none;")
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li
-                        i.fa.fa-star
-                      li
-                        span.text-muted 0 nhận xét
-    // khối sản phẩm đã xem
-    section.combohot.mt-4(class="_1khoi")
-      .container
-        .noidung.bg-white(style=" width: 100%;")
-          .row
-            // header
-            .col-12.d-flex.justify-content-between.align-items-center.pb-2.bg-light
-              h5.header.text-uppercase(style="font-weight: 400;") Sản phẩm bạn đã xem
-              a.btn.btn-warning.btn-sm.text-white(href="#") Xem tất cả
-          .khoisanpham
-            // 1 sản phẩm
-            .card
-              a.motsanpham(
-                title="Chuyện Nghề Và Chuyện Đời - Bộ 4 Cuốn" 
-                data-placement="bottom" 
-                data-toggle="tooltip" 
-                style="text-decoration: none; color: black;" 
-                href="#"
-                )
-                img.card-img-top.anh(
-                  alt="combo-chuyen-nghe-chuyen-doi" 
-                  src="/images/combo-chuyen-nghe-chuyen-doi.jpg"
-                  )
-                .card-body.noidungsp.mt-3
-                  h6.card-title.ten Chuyện Nghề Và Chuyện Đời - Bộ 4 Cuốn
-                  small.tacgia.text-muted Nguyễn Hữu Long
-                  .gia.d-flex.align-items-baseline
-                    .giamoi 111.200 ₫
-                    .giacu.text-muted 139.000 ₫
-                    .sale -20%
-                  .danhgia
-                    ul.d-flex(style="list-style: none;")
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li
-                        i.fa.fa-star
-                      li
-                        span.text-muted 0 nhận xét
-            .card
-              a.motsanpham(
-                title="Combo Mẹ Con Sư Tử - Bồ Tát Ngàn Tay Ngàn Mắt" 
-                data-placement="bottom" 
-                data-toggle="tooltip" 
-                style="text-decoration: none; color: black;" 
-                href="#"
-                )
-                img.card-img-top.anh(
-                  alt="combo-me-con-su-tu-bo-tat-ngan-tay-ngan-mat" 
-                  src="/images/combo-me-con-su-tu-bo-tat-ngan-tay-ngan-mat.jpg"
-                  )
-                .card-body.noidungsp.mt-3
-                  h6.card-title.ten Combo Mẹ Con Sư Tử - Bồ Tát Ngàn Tay Ngàn Mắt
-                  small.tacgia.text-muted Thích Nhất Hạnh
-                  .gia.d-flex.align-items-baseline
-                    .giamoi 111.200 ₫
-                    .giacu.text-muted 139.000 ₫
-                    .sale -20%
-                  .danhgia
-                    ul.d-flex(style="list-style: none;")
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li
-                        i.fa.fa-star
-                      li
-                        span.text-muted 0 nhận xét
-            .card
-              a.motsanpham(
-                title="Combo Osho: Hạnh Phúc Tại Tâm, Can Đảm Biến Thách Thức Thành Sức Mạnh & Sáng Tạo Bừng Cháy Sức Mạnh Bên Trong" 
-                data-placement="bottom" 
-                data-toggle="tooltip" 
-                style="text-decoration: none; color: black;" 
-                href="#"
-                )
-                img.card-img-top.anh(
-                  alt="combo-hanh-phuc-sang-tao" 
-                  src="/images/combo-hanh-phuc-sang-tao.jpg"
-                  )
-                .card-body.noidungsp.mt-3
-                  h6.card-title.ten
-                    | Combo Osho: Hạnh Phúc Tại Tâm, Can Đảm Biến Thách Thức Thành
-                    |   Sức Mạnh & Sáng Tạo Bừng Cháy Sức Mạnh Bên Trong
-                  small.tacgia.text-muted Gosho Aoyama, Mutsuki Watanabe, Takahisa Taira
-                  .gia.d-flex.align-items-baseline
-                    .giamoi 111.200 ₫
-                    .giacu.text-muted 139.000 ₫
-                    .sale -20%
-                  .danhgia
-                    ul.d-flex(style="list-style: none;")
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li
-                        i.fa.fa-star
-                      li
-                        span.text-muted 0 nhận xét
-            .card
-              a.motsanpham(
-                title="Combo Giáo Dục Và Ý Nghĩa Cuộc Sống Và Bạn Đang Nghịch Gì Với Đời Mình?" 
-                data-placement="bottom" 
-                data-toggle="tooltip" 
-                style="text-decoration: none; color: black;" 
-                href="#"
-                )
-                img.card-img-top.anh(
-                  alt="combo-giao-duc-va-y-nghia-cuoc-song" 
-                  src="/images/combo-giao-duc-va-y-nghia-cuoc-song.jpg"
-                  )
-                .card-body.noidungsp.mt-3
-                  h6.card-title.ten
-                    | Combo Giáo Dục Và Ý Nghĩa Cuộc Sống Và Bạn Đang Nghịch Gì Với
-                    |   Đời Mình?
-                  small.tacgia.text-muted J.Krishnamurti
-                  .gia.d-flex.align-items-baseline
-                    .giamoi 111.200 ₫
-                    .giacu.text-muted 139.000 ₫
-                    .sale -20%
-                  .danhgia
-                    ul.d-flex(style="list-style: none;")
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li
-                        i.fa.fa-star
-                      li
-                        span.text-muted 0 nhận xét
-            .card
-              a.motsanpham(
-                title="Combo Dinh Dưỡng Xanh - Thần dược xanh" 
-                data-placement="bottom" 
-                data-toggle="tooltip" 
-                style="text-decoration: none; color: black;" 
-                href="#"
-                )
-                img.card-img-top.anh(
-                  alt="combo-dinh-duong-than-duoc-xanh" 
-                  src="/images/combo-dinh-duong-than-duoc-xanh.jpg"
-                  )
-                .card-body.noidungsp.mt-3
-                  h6.card-title.ten Combo Dinh Dưỡng Xanh - Thần dược xanh
-                  small.tacgia.text-muted Ryu Seung-SunVictoria Boutenko
-                  .gia.d-flex.align-items-baseline
-                    .giamoi 111.200 ₫
-                    .giacu.text-muted 139.000 ₫
-                    .sale -20%
-                  .danhgia
-                    ul.d-flex(style="list-style: none;")
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li
-                        i.fa.fa-star
-                      li
-                        span.text-muted 0 nhận xét
-            .card
-              a.motsanpham(
-                title="Combo Ăn Xanh Để Khỏe - Sống Lành Để Trẻ" 
-                data-placement="bottom" 
-                data-toggle="tooltip" 
-                style="text-decoration: none; color: black;" 
-                href="#"
-                )
-                img.card-img-top.anh(
-                  alt="combo-an-xanh-song-lanh" 
-                  src="/images/combo-an-xanh-song-lanh.jpg"
-                  )
-                .card-body.noidungsp.mt-3
-                  h6.card-title.ten Combo Ăn Xanh Để Khỏe - Sống Lành Để Trẻ
-                  small.tacgia.text-muted Norman W. Walker
-                  .gia.d-flex.align-items-baseline
-                    .giamoi 111.200 ₫
-                    .giacu.text-muted 139.000 ₫
-                    .sale -20%
-                  .danhgia
-                    ul.d-flex(style="list-style: none;")
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li
-                        i.fa.fa-star
-                      li
-                        span.text-muted 0 nhận xét
-            .card
-              a.motsanpham(
-                title="Combo Lược Sử Loài Người - Lược Sử Tương Lai - 21 Bài Học Cho Thế Kỷ 21" 
-                data-placement="bottom" 
-                data-toggle="tooltip" 
-                style="text-decoration: none; color: black;" 
-                href="#"
-                )
-                img.card-img-top.anh(
-                  alt="combo-luoc-su-loai-nguoi" 
-                  src="/images/combo-luoc-su-loai-nguoi.jpg"
-                  )
-                .card-body.noidungsp.mt-3
-                  h6.card-title.ten
-                    | Combo Lược Sử Loài Người - Lược Sử Tương Lai - 21 Bài Học Cho
-                    |   Thế Kỷ 21
-                  small.tacgia.text-muted Yuval Noah Harari
-                  .gia.d-flex.align-items-baseline
-                    .giamoi 111.200 ₫
-                    .giacu.text-muted 139.000 ₫
-                    .sale -20%
-                  .danhgia
-                    ul.d-flex(style="list-style: none;")
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li
-                        i.fa.fa-star
-                      li
-                        span.text-muted 0 nhận xét
-            .card
-              a.motsanpham(
-                title="Bộ Sách Phong Cách Sống (Bộ 5 Cuốn)" 
-                data-placement="bottom" 
-                data-toggle="tooltip" 
-                style="text-decoration: none; color: black;" 
-                href="#"
-                )
-                img.card-img-top.anh(
-                  alt="combo-phong-cach-song" 
-                  src="/images/combo-phong-cach-song.jpg"
-                  )
-                .card-body.noidungsp.mt-3
-                  h6.card-title.ten Bộ Sách Phong Cách Sống (Bộ 5 Cuốn)
-                  small.tacgia.text-muted
-                    | Marie Tourell Soderberg, Joanna Nylund, Yukari
-                    |   Mitsuhashi, Margareta Magnusson, Linnea Dunne
-                  .gia.d-flex.align-items-baseline
-                    .giamoi 111.200 ₫
-                    .giacu.text-muted 139.000 ₫
-                    .sale -20%
-                  .danhgia
-                    ul.d-flex(style="list-style: none;")
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li.active
-                        i.fa.fa-star
-                      li
-                        i.fa.fa-star
-                      li
-                        span.text-muted 0 nhận xét
+              each bookTag in booksTag
+                each bookItem in bookTag
+                  if book.name!= bookItem.name
+                    .card
+                      a.motsanpham(
+                        title=bookItem.name
+                        data-placement="bottom" 
+                        data-toggle="tooltip" 
+                        style="text-decoration: none; color: black;" 
+                        href=('/product/' + bookItem._id)
+                        )
+                        img.card-img-top.anh(
+                          alt="lap-ke-hoach-kinh-doanh-hieu-qua" 
+                          src= bookItem.image
+                          )
+                        .card-body.noidungsp.mt-3
+                          h6.card-title.ten=bookItem.name
+                          small.tacgia.text-muted=bookItem.author
+                          .gia.d-flex.align-items-baseline
+                            .giamoi 
+                              | #{(bookItem.price - bookItem.price*bookItem.saleRate/100).toFixed(2)} $
+                            .giacu.text-muted
+                              |#{bookItem.price} $
+                            .sale 
+                              |-#{bookItem.saleRate}%
     // thanh cac dich vu :mien phi giao hang, qua tang mien phi ........
-    .container.mb-5.mt-5.comment-section
-      .card
-        .row
-          .col-md-12
-            h3.text-center.mb-5
-              | Nested comment section
-            .row
-              .col-md-12
-                .media
-                  img.mr-3.rounded-circle(alt='Bootstrap Media Preview' src='https://i.imgur.com/stD0Q19.jpg')
-                  .media-body
-                    .row
-                      .col-8.d-flex
-                        h5 Maria Smantha
-                        span - 2 hours ago
-                      .col-4
-                        .pull-right.reply
-                          a(href='#')
-                            span
-                              i.fa.fa-reply
-                              |  reply
-                    | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;It is a long established fact that a reader will be distracted by the readable content of a page.
-                    .media.mt-4
-                      a.pr-3(href='#')
-                        img.rounded-circle(alt='Bootstrap Media Another Preview' src='https://i.imgur.com/xELPaag.jpg')
-                      .media-body
-                        .row
-                          .col-12.d-flex
-                            h5 Simona Disa
-                            span - 3 hours ago
-                        | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;letters, as opposed to using &apos;Content here, content here&apos;, making it look like readable English.
-                    .media.mt-3
-                      a.pr-3(href='#')
-                        img.rounded-circle(alt='Bootstrap Media Another Preview' src='https://i.imgur.com/nAcoHRf.jpg')
-                      .media-body
-                        .row
-                          .col-12.d-flex
-                            h5 John Smith
-                            span - 4 hours ago
-                        | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;the majority have suffered alteration in some form, by injected humour, or randomised words.
-                .media.mt-4
-                  img.mr-3.rounded-circle(alt='Bootstrap Media Preview' src='https://i.imgur.com/xELPaag.jpg')
-                  .media-body
-                    .row
-                      .col-8.d-flex
-                        h5 Shad f
-                        span - 2 hours ago
-                      .col-4
-                        .pull-right.reply
-                          a(href='#')
-                            span
-                              i.fa.fa-reply
-                              |  reply
-                    | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33.
-                    .media.mt-4
-                      a.pr-3(href='#')
-                        img.rounded-circle(alt='Bootstrap Media Another Preview' src='https://i.imgur.com/nUNhspp.jpg')
-                      .media-body
-                        .row
-                          .col-12.d-flex
-                            h5 Andy flowe
-                            span - 5 hours ago
-                        | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
-                    .media.mt-3
-                      a.pr-3(href='#')
-                        img.rounded-circle(alt='Bootstrap Media Another Preview' src='https://i.imgur.com/HjKTNkG.jpg')
-                      .media-body
-                        .row
-                          .col-12.d-flex
-                            h5 Simp f
-                            span - 5 hours ago
-                        | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur
-                    .media.mt-3
-                      a.pr-3(href='#')
-                        img.rounded-circle(alt='Bootstrap Media Another Preview' src='https://i.imgur.com/nAcoHRf.jpg')
-                      .media-body
-                        .row
-                          .col-12.d-flex
-                            h5 John Smith
-                            span - 4 hours ago
-                        | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;the majority have suffered alteration in some form, by injected humour, or randomised words.
+    //- .container.mb-5.mt-5.comment-section
+    //-   .card
+    //-     .row
+    //-       .col-md-12
+    //-         h3.text-center.mb-5
+    //-           | Nested comment section
+    //-         .row
+    //-           .col-md-12
+    //-             .media
+    //-               img.mr-3.rounded-circle(alt='Bootstrap Media Preview' src='https://i.imgur.com/stD0Q19.jpg')
+    //-               .media-body
+    //-                 .row
+    //-                   .col-8.d-flex
+    //-                     h5 Maria Smantha
+    //-                     span - 2 hours ago
+    //-                   .col-4
+    //-                     .pull-right.reply
+    //-                       a(href='#')
+    //-                         span
+    //-                           i.fa.fa-reply
+    //-                           |  reply
+    //-                 | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;It is a long established fact that a reader will be distracted by the readable content of a page.
+    //-                 .media.mt-4
+    //-                   a.pr-3(href='#')
+    //-                     img.rounded-circle(alt='Bootstrap Media Another Preview' src='https://i.imgur.com/xELPaag.jpg')
+    //-                   .media-body
+    //-                     .row
+    //-                       .col-12.d-flex
+    //-                         h5 Simona Disa
+    //-                         span - 3 hours ago
+    //-                     | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;letters, as opposed to using &apos;Content here, content here&apos;, making it look like readable English.
+    //-                 .media.mt-3
+    //-                   a.pr-3(href='#')
+    //-                     img.rounded-circle(alt='Bootstrap Media Another Preview' src='https://i.imgur.com/nAcoHRf.jpg')
+    //-                   .media-body
+    //-                     .row
+    //-                       .col-12.d-flex
+    //-                         h5 John Smith
+    //-                         span - 4 hours ago
+    //-                     | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;the majority have suffered alteration in some form, by injected humour, or randomised words.
+    //-             .media.mt-4
+    //-               img.mr-3.rounded-circle(alt='Bootstrap Media Preview' src='https://i.imgur.com/xELPaag.jpg')
+    //-               .media-body
+    //-                 .row
+    //-                   .col-8.d-flex
+    //-                     h5 Shad f
+    //-                     span - 2 hours ago
+    //-                   .col-4
+    //-                     .pull-right.reply
+    //-                       a(href='#')
+    //-                         span
+    //-                           i.fa.fa-reply
+    //-                           |  reply
+    //-                 | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33.
+    //-                 .media.mt-4
+    //-                   a.pr-3(href='#')
+    //-                     img.rounded-circle(alt='Bootstrap Media Another Preview' src='https://i.imgur.com/nUNhspp.jpg')
+    //-                   .media-body
+    //-                     .row
+    //-                       .col-12.d-flex
+    //-                         h5 Andy flowe
+    //-                         span - 5 hours ago
+    //-                     | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
+    //-                 .media.mt-3
+    //-                   a.pr-3(href='#')
+    //-                     img.rounded-circle(alt='Bootstrap Media Another Preview' src='https://i.imgur.com/HjKTNkG.jpg')
+    //-                   .media-body
+    //-                     .row
+    //-                       .col-12.d-flex
+    //-                         h5 Simp f
+    //-                         span - 5 hours ago
+    //-                     | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur
+    //-                 .media.mt-3
+    //-                   a.pr-3(href='#')
+    //-                     img.rounded-circle(alt='Bootstrap Media Another Preview' src='https://i.imgur.com/nAcoHRf.jpg')
+    //-                   .media-body
+    //-                     .row
+    //-                       .col-12.d-flex
+    //-                         h5 John Smith
+    //-                         span - 4 hours ago
+    //-                     | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;the majority have suffered alteration in some form, by injected humour, or randomised words.
 
     section.abovefooter.text-white(style="background-color: #CF111A;")
       .container
@@ -1249,7 +577,7 @@ html(lang="li")
             .dichvu.d-flex.align-items-center
               img(
                 alt="icon-gift" 
-                src="images/icon-gift.png"
+                src="http://localhost:3500/images/icon-gift.png"
                 )
               .noidung
                 h6.tieude.font-weight-bold QUÀ TẶNG MIỄN PHÍ
@@ -1272,8 +600,8 @@ html(lang="li")
           .col-md-3.col-xs-6
             .gioithieu
               h6.header.text-uppercase.font-weight-bold Về DealBook
-              a(href="#") Giới thiệu về DealBook
-              a(href="#") Tuyển dụng
+              a() Giới thiệu về DealBook
+              a() Tuyển dụng
               .fb-like(
                 data-share="true" 
                 data-size="small" 
@@ -1285,10 +613,10 @@ html(lang="li")
           .col-md-3.col-xs-6
             .hotrokh
               h6.header.text-uppercase.font-weight-bold HỖ TRỢ KHÁCH HÀNG
-              a(href="#") Hướng dẫn đặt hàng
-              a(href="#") Phương thức thanh toán
-              a(href="#") Phương thức vận chuyển
-              a(href="#") Chính sách đổi trả
+              a() Hướng dẫn đặt hàng
+              a() Phương thức thanh toán
+              a() Phương thức vận chuyển
+              a() Chính sách đổi trả
           .col-md-3.col-xs-6
             .lienket
               h6.header.text-uppercase.font-weight-bold HỢP TÁC VÀ LIÊN KẾT

@@ -85,16 +85,25 @@ const data = response.data;
 // lay book theo idrs
 app.get("/product/:id", async (req, res) => {
   const id = req.params.id;
-  const tag = await axios
+   await axios
     .get("http://localhost:3500/tag")
     .then((res) => (tagData = res.data.tags));
-
+  const booksTag = [];
   const response = await axios.get("http://localhost:3500/management/" + id);
   const book = response.data;
-  console.log(book)
+  const tag = book.tag;
+  for (const tagItem of tag) {
+    const response = await axios.get(`http://localhost:3500/tag/books/${tagItem}`);
+    if (response.data.books[0]) {
+      const booksArray = response.data.books[0].books;
+      booksTag.push(booksArray);
+    }
+  }
+  console.log(booksTag);
   res.render("product.pug", {
     book,
-    tags: tagData.slice(0, 11)
+    tags: tagData.slice(0, 11),
+    booksTag
   });
 });
 
@@ -112,6 +121,27 @@ app.get("/tag/:name", async (req, res) => {
   });
 });
 
+app.get("/product-list/:name?", async (req, res) => {
+  console.log("Calling product list")
+  let booksTag = ""
+  if (req.params.name) {
+    const name = req.params.name;
+    const response = await axios.get(`http://localhost:3500/catalog/${name}`);
+    booksTag = response.data;
+  }
+  else {
+    const response = await axios.get(`http://localhost:3500/management`);
+    booksTag = response.data;
+  }
+  const tag = await axios
+    .get("http://localhost:3500/tag")
+    .then((res) => (tagData = res.data.tags));
+  res.render("product-list.pug", {
+    booksTag,
+    tags: tagData.slice(0, 11),
+    name: req.params.name || "General books" // set name to empty string if name is not provided
+  });
+});
 
 
 app.get("/tai-khoan", async (req, res) => {
