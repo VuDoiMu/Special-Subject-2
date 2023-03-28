@@ -20,6 +20,7 @@ html(lang="vi")
     script(
       src="/js/main.js" 
       type="text/javascript"
+      defer
       )
     link(
       href="/fontawesome_free_5.13.0/css/all.css" 
@@ -104,17 +105,18 @@ html(lang="vi")
           span.navbar-toggler-icon
         #collapsibleNavId.collapse.navbar-collapse
           // form tìm kiếm
-          form.form-inline.ml-auto.my-2.my-lg-0.mr-3
+          form#form-search.form-inline.ml-auto.my-2.my-lg-0.mr-3
             .input-group(style="width: 520px;")
               input.form-control(
                 placeholder="Enter the book you want to search..." 
                 aria-label="Small" 
                 type="text"
+                id="search"
                 )
               .input-group-append
                 button.btn(
                   style="background-color: #CF111A; color: white;" 
-                  type="button"
+                  type="submit"
                   )
                   i.fa.fa-search
           // ô đăng nhập đăng ký giỏ hàng trên header
@@ -259,25 +261,17 @@ html(lang="vi")
                   placeholder="Password" 
                   type="password"
                   )
-              .custom-control.custom-checkbox.mb-3
-                input#customCheck1.custom-control-input(type="checkbox")
-                label.custom-control-label(for="customCheck1") Nhớ mật khẩu
-                a.float-right.text-decoration-none(
-                  style="color: #F5A623" 
-                  href="#"
-                  )
-                  | Forget password
               button.btn.btn-lg.btn-block.btn-signin.text-uppercase.text-white(
                 style="background: #F5A623" 
                 type="submit"
                 ) Signin
-              hr.my-4
-              button.btn.btn-lg.btn-google.btn-block.text-uppercase(type="submit")
-                i.fab.fa-google.mr-2
-                | Signin by Google
-              button.btn.btn-lg.btn-facebook.btn-block.text-uppercase(type="submit")
-                i.fab.fa-facebook-f.mr-2
-                | Signin by Facebook
+              //- hr.my-4
+              //- button.btn.btn-lg.btn-google.btn-block.text-uppercase(type="submit")
+              //-   i.fab.fa-google.mr-2
+              //-   | Signin by Google
+              //- button.btn.btn-lg.btn-facebook.btn-block.text-uppercase(type="submit")
+              //-   i.fab.fa-facebook-f.mr-2
+              //-   | Signin by Facebook
     // thanh "danh muc sach" đã được ẩn bên trong + hotline + ho tro truc tuyen
     section.duoinavbar
       .container.text-white
@@ -298,16 +292,23 @@ html(lang="vi")
                     style="" 
                     href=('/tag/' + tag.name))=tag.name 
                       i.fa.fa-chevron-right.float-right
-    section.breadcrumbbar
-      .container
-        ol.breadcrumb.mb-0.p-0.bg-transparent
-          li.breadcrumb-item
-            a(href="/") Trang chủ
-          li.breadcrumb-item.active
-            a(href="sach-kinh-te.html")=name.toUpperCase()
-    // thể loại sách: kinh tế chính trị nhân vật bài học kinh doanh ( từng ô vuông)
-    section.page-content.my-3
-      .container
+    -if(searchPara)
+      div#search-result
+        .container
+          span(class="result-text") Search result: 
+          span(class="result")= searchPara
+    -else 
+      section.breadcrumbbar
+        .container
+          ol.breadcrumb.mb-0.p-0.bg-transparent
+            li.breadcrumb-item
+              a(href="/") Trang chủ
+            li.breadcrumb-item.active
+              -if(name)
+                a(href="sach-kinh-te.html")=name.toUpperCase()
+      // thể loại sách: kinh tế chính trị nhân vật bài học kinh doanh ( từng ô vuông)
+      section.page-content.my-3
+        .container
 
     // khối sản phẩm
     section.content.my-4
@@ -331,6 +332,7 @@ html(lang="vi")
           // các sản phẩm
           .items
             .row
+              -if(boo)
               for book in booksTag
                 .col-lg-3.col-md-4.col-xs-6.item.DeanGraziosi(style="position: initial;")
                   .card
@@ -368,24 +370,23 @@ html(lang="vi")
                         <span class="sr-only">Previous</span>
                         </a>
                         </li>
-                    li.page-item.active
-                      a.page-link(href="#") 1
-                    li.page-item
-                      a.page-link(href="#") 2
-                    li.page-item
-                      a.page-link(
-                        aria-label="Next" 
-                        href="#"
-                        )
-                        span(aria-hidden="true") ›
-                        span.sr-only Next
-                    li.page-item
-                      a.page-link(
-                        aria-label="Next" 
-                        href="#"
-                        )
-                        span(aria-hidden="true") »
-                        span.sr-only Next
+                    - const maxPagesToShow = 5; // maximum number of page links to show
+                    - const middlePage = Math.ceil(maxPagesToShow/2);
+                    - let startPage = Math.max(currentPage - middlePage, 1);
+                    - let endPage = Math.min(startPage + maxPagesToShow - 1, totalPages);
+                    - if (endPage - startPage < maxPagesToShow) {
+                    -   startPage = Math.max(endPage - maxPagesToShow + 1, 1);
+                    - }
+                    if currentPage > 1
+                      li.page-item
+                        a.page-link(href=`/product-list/${name}/${currentPage-1}`) Previous
+                    - for (var i = startPage; i <= endPage; i++) {
+                      li.page-item(class=i===currentPage ? 'active' : '')
+                        a.page-link(href=`/product-list/${name}/${i}`)= i
+                    - }
+                    if (currentPage < totalPages)
+                      li.page-item
+                        a.page-link(href=`/product-list/${name}/${currentPage+1}`) Next
           // het khoi san pham
           // het div noidung
           // het container

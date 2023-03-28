@@ -1115,3 +1115,15 @@ h3.account-header {
     left: initial !important;
     top: initial !important;
 }
+
+#search-result {
+    margin-top: 4px;
+}
+
+#search-result .result-text {
+    font-weight: 500;
+}
+
+#search-result .result {
+    color: #F5A623;
+}

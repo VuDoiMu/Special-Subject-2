@@ -37,13 +37,16 @@ const addToCart = async (req, res ) =>{
     }
 }
 const getCart = async (req, res) => {
-    const token = req.cookies.token;
-    const decoded = jwt.verify(token, "thisisourwebsite!");
-    const userId = decoded.userId;
-    const cart = await Cart.findOne({userId: userId})
-    // const cart = await Cart.find();
-    res.json({success : true, cart })
+    const userId = req.params.userId;
+    try {
+        const cart = await Cart.findOne({ userId: userId });
+        res.json({ success: true, cart });
+    } catch (err) {
+        console.log(err);
+        res.json({ success: false, message: err.message });
+    }
 }
+
 const saveToOrder = async (req, res) => {
     const token = req.cookies.token;
     const decoded = jwt.verify(token, "thisisourwebsite!");

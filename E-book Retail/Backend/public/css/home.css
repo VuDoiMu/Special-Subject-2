@@ -669,5 +669,16 @@ footer .header {
     }
 }
 
+@media (min-width: 768px) 
+{
+    .navbar-expand-md .navbar-nav {
+        -ms-flex-direction: row;
+        flex-direction: row;
+        margin-left: 20px !important;
+}
+}
 
+.navbar-light .navbar-nav .nav-link {
+    margin-left: 2px;
+}
 

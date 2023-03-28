@@ -59,7 +59,7 @@ const login = async (req, res) => {
         bcrypt.compare(password, storedHashedPassword, (err, result) => {
             if (result === true) {
                 // đăng nhập thành công
-                const accesstoken = jwt.sign({userId: user._id, role: user.role},"thisisourwebsite!")
+                const accesstoken = jwt.sign({userId: user._id, role: user.role,username: user.username},"thisisourwebsite!")
         res.cookie('token', accesstoken);
         res.json(user)
             } else {
@@ -121,8 +121,12 @@ const logout = async (req, res) => {
 // }
 
 const getUser = async (req, res)=> {
-  const token = req.cookies.userInfor;
-  res.json(token)
+  const token = req.cookies.token;
+  const decoded = jwt.verify(token, "thisisourwebsite!");
+  const userId = decoded.userId;
+  const newPassword = "newpassword"
+  const user = await User.findOne(userId)
+  res.json(user)
 }
 
 let sendMail = async (req, res) => {

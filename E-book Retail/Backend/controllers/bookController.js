@@ -110,21 +110,21 @@ const addLike = async (req, res) => {
 }
 }
 
-//pagination
-const bookPage = async (req, res) => {
-    var aggregateQuery =Book.aggregate();
-    const page = req.params.page;
-  Book.aggregatePaginate(aggregateQuery, { page: page, limit: 10 }, function(
-    err,
-    result
-  ) {
-    if (err) {
-      console.err(err);
-    } else {
-      res.json(result);
-    }
-  });
-}
+// //pagination
+// const bookPage = async (req, res) => {
+//     var aggregateQuery =Book.aggregate();
+//     const page = req.params.page;
+//   Book.aggregatePaginate(aggregateQuery, { page: page, limit: 10 }, function(
+//     err,
+//     result
+//   ) {
+//     if (err) {
+//       console.err(err);
+//     } else {
+//       res.json(result);
+//     }
+//   });
+// }
 
 
 module.exports = {
@@ -133,6 +133,6 @@ module.exports = {
     deleteBook,
     updateBook,
     addBook,
-    bookPage,
+    // bookPage,
     addLike
 };

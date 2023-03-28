@@ -16,7 +16,7 @@ router.route('/:id')
 router.route('/like/:id')
     .put(bookController.addLike);
 
-router.route('/pages/:page')
-.get(bookController.bookPage);
+// router.route('/pages/:page')
+// .get(bookController.bookPage);
 
 module.exports = router;

@@ -4,11 +4,10 @@ const cartController = require('../controllers/cartController');
 
 router.route('/')
     .put(cartController.addToCart)
-    .get(cartController.getCart)
     .delete(cartController.deleteCart)
     .post(cartController.saveToOrder);
 
-// router.route('/:id')
-//     .get(bookController.getByID);
+router.route('/:id')
+    .get(cartController.getCart)
 
 module.exports = router;

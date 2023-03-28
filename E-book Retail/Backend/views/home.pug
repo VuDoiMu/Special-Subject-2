@@ -125,17 +125,18 @@ html(lang="vi")
           span.navbar-toggler-icon
         #collapsibleNavId.collapse.navbar-collapse
           // form tìm kiếm
-          form.form-inline.ml-auto.my-2.my-lg-0.mr-3
+          form#form-search.form-inline.ml-auto.my-2.my-lg-0.mr-3
             .input-group(style="width: 520px;")
               input.form-control(
                 placeholder="Enter the book you want to search..." 
                 aria-label="Small" 
                 type="text"
+                id="search"
                 )
               .input-group-append
                 button.btn(
                   style="background-color: #CF111A; color: white;" 
-                  type="button"
+                  type="submit"
                   )
                   i.fa.fa-search
           // ô đăng nhập đăng ký giỏ hàng trên header
@@ -163,15 +164,15 @@ html(lang="vi")
                   data-toggle="modal" 
                   href="#"
                   ) Signin
-            li.nav-item.giohang
-              a.btn.btn-secondary.rounded-circle(href="/gio-hang")
-                i.fa.fa-shopping-cart
-                .cart-amount 0
-              a.nav-link.text-dark.giohang.text-uppercase(
-                style="display:inline-block" 
-                href="gio-hang"
-                )
-                | My cart
+            //- li.nav-item.giohang
+            //-   a.btn.btn-secondary.rounded-circle(href="/gio-hang")
+            //-     i.fa.fa-shopping-cart
+            //-     .cart-amount 0
+            //-   a.nav-link.text-dark.giohang.text-uppercase(
+            //-     style="display:inline-block" 
+            //-     href="gio-hang"
+            //-     )
+            //-     | My cart
     // form dang ky khi click vao button tren header
     #formdangky.modal.fade.mt-5(
       aria-hidden="true" 
@@ -388,7 +389,7 @@ html(lang="vi")
             // header
             .col-12.d-flex.justify-content-between.align-items-center.pb-2.bg-light
               h2.header.text-uppercase(style="font-weight: 400;") GENERAL BOOK
-              a.btn.btn-warning.btn-sm.text-white(href="/product-list") See all
+              a.btn.btn-warning.btn-sm.text-white(href="/product-list/general-book/1") See all
           .khoisanpham
             
             // 1 san pham
@@ -416,11 +417,11 @@ html(lang="vi")
                         |#{book.price} $
                       .sale
                         |-#{book.saleRate}%
-                    .like 
-                      span.countLike
-                        |Favourite: #{book.countLike}
-                      i.fa.fa-heart.active
-                      i.far.fa-heart
+                    //- .like 
+                    //-   span.countLike
+                    //-     |Favourite: #{book.countLike}
+                    //-   i.fa.fa-heart.active
+                    //-   i.far.fa-heart
                     .sell 
                       span 
                         |Purchases: #{book.countSale}
