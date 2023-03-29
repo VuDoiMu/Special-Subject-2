@@ -560,9 +560,13 @@ if (formdangnhap) {
         password.parentNode.insertBefore(errorLabel, password.nextSibling);
         return;
       }
+     let currentUrl = window.location.href;
       window.setTimeout(() => {
-        console.log(content);
-        location.assign("/homelogin");
+        if (currentUrl === "http://localhost:3500/") {
+          location.assign("http://localhost:3500/homelogin");
+        } else {
+          location.assign(currentUrl);
+        }
       }, 200);
     });
 }
@@ -629,6 +633,10 @@ if (searchform) {
 //   });
 // }
 
+const formSignUp = document.querySelector("#form-signup");
+if (formSignUp) {
+
+}
 document.querySelector("#form-signup").addEventListener("submit", async (e) => {
   e.preventDefault();
   const emailInput = document.getElementById("signup-email");

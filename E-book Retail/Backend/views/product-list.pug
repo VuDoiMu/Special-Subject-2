@@ -144,16 +144,16 @@ html(lang="vi")
                   data-toggle="modal" 
                   href="#"
                   ) Signin
-            li.nav-item.giohang
-              a.btn.btn-secondary.rounded-circle(href="gio-hang.html")
-                i.fa.fa-shopping-cart
-                .cart-amount 0
-              a.nav-link.text-dark.giohang.text-uppercase(
-                style="display:inline-block" 
-                href="/gio-hang.html"
-                )
-                | Giỏ
-                |   Hàng
+            //- li.nav-item.giohang
+            //-   a.btn.btn-secondary.rounded-circle(href="gio-hang.html")
+            //-     i.fa.fa-shopping-cart
+            //-     .cart-amount 0
+            //-   a.nav-link.text-dark.giohang.text-uppercase(
+            //-     style="display:inline-block" 
+            //-     href="/gio-hang.html"
+            //-     )
+            //-     | Giỏ
+            //-     |   Hàng
     // form dang ky khi click vao button tren header
     #formdangky.modal.fade.mt-5(
       aria-hidden="true" 
@@ -181,18 +181,19 @@ html(lang="vi")
             form#form-signup.form-signin.mt-2
               .form-label-group
                 input.form-control(
-                  autofocus="" 
-                  required="" 
-                  name="name" 
-                  placeholder="Enter full name" 
-                  type="text"
-                  )
-              .form-label-group
-                input.form-control(
                   required="" 
                   name="email" 
                   placeholder="Enter email address" 
                   type="email"
+                  id="signup-email"
+                  )
+              .form-label-group
+                input.form-control(
+                  required="" 
+                  name="text" 
+                  placeholder="Enter full name" 
+                  type="text"
+                  id="signup-username"
                   )
               .form-label-group
                 input.form-control(
@@ -200,6 +201,7 @@ html(lang="vi")
                   name="password" 
                   placeholder="Enter password" 
                   type="password"
+                  id="inputPassword"
                   )
               .form-label-group.mb-4
                 input.form-control(
@@ -207,6 +209,7 @@ html(lang="vi")
                   placeholder="Confirm the password" 
                   name="confirm_password" 
                   type="password"
+                  id='confirm_password'
                   )
               button.btn.btn-lg.btn-block.btn-signin.text-uppercase.text-white.mt-3(
                 style="background: #F5A623" 
@@ -214,12 +217,11 @@ html(lang="vi")
                 ) Signup
               hr.mt-3.mb-2
               .custom-control.custom-checkbox
-                p.text-center By registering, you agree to EManga about
+                p.text-center By registering, you agree to Emanga about
                 a.text-decoration-none.text-center(
                   style="color: #F5A623" 
-                  href="#"
                   )
-                  |Translation Terms
+                  | Translation Terms
                   | Service & Privacy Policy
     // form dang nhap khi click vao button tren header
     #formdangnhap.modal.fade.mt-5(
@@ -247,7 +249,8 @@ html(lang="vi")
           .modal-body
             form#form-signin.form-signin.mt-2
               .form-label-group
-                input.form-control(
+                input.form-control.hi(
+                  id="email"
                   autofocus="" 
                   required="" 
                   name="email" 
@@ -256,6 +259,7 @@ html(lang="vi")
                   )
               .form-label-group
                 input.form-control(
+                  id="password"
                   required="" 
                   name="password" 
                   placeholder="Password" 
@@ -265,6 +269,7 @@ html(lang="vi")
                 style="background: #F5A623" 
                 type="submit"
                 ) Signin
+              hr.my-4
               //- hr.my-4
               //- button.btn.btn-lg.btn-google.btn-block.text-uppercase(type="submit")
               //-   i.fab.fa-google.mr-2
@@ -357,6 +362,14 @@ html(lang="vi")
                             |#{book.price} $
                           .sale
                             |-#{book.saleRate}%
+                        .like 
+                          span.countLike
+                            |Favourite: #{book.countLike}
+                          //- i.fa.fa-heart.active
+                          //- i.far.fa-heart
+                        .sell 
+                          span 
+                            |Purchases: #{book.countSale}
           // pagination bar
           .pagination-bar.my-3
             .row
@@ -387,6 +400,105 @@ html(lang="vi")
                     if (currentPage < totalPages)
                       li.page-item
                         a.page-link(href=`/product-list/${name}/${currentPage+1}`) Next
+    section.abovefooter.text-white(style="background-color: #CF111A;")
+      .container
+        .row
+          .col-lg-3.col-sm-6
+            .dichvu.d-flex.align-items-center
+              img(
+                alt="icon-books" 
+                src="http://localhost:3500/images/icon-books.png"
+                )
+              .noidung
+                h3.tieude.font-weight-bold HƠN 14.000 TỰA SÁCH HAY
+                p.detail Tuyển chọn bởi EManga
+          .col-lg-3.col-sm-6
+            .dichvu.d-flex.align-items-center
+              img(
+                alt="icon-ship" 
+                src="http://localhost:3500/images/icon-ship.png"
+                )
+              .noidung
+                h3.tieude.font-weight-bold MIỄN PHÍ GIAO HÀNG
+                p.detail Từ 150.000đ ở TP.HCM
+                p.detail Từ 300.000đ ở tỉnh thành khác
+          .col-lg-3.col-sm-6
+            .dichvu.d-flex.align-items-center
+              img(
+                alt="icon-gift" 
+                src="http://localhost:3500/images/icon-gift.png"
+                )
+              .noidung
+                h3.tieude.font-weight-bold QUÀ TẶNG MIỄN PHÍ
+                p.detail Tặng Bookmark
+                p.detail Bao sách miễn phí
+          .col-lg-3.col-sm-6
+            .dichvu.d-flex.align-items-center
+              img(
+                alt="icon-return" 
+                src="http://localhost:3500/images/icon-return.png"
+                )
+              .noidung
+                h3.tieude.font-weight-bold ĐỔI TRẢ NHANH CHÓNG
+                p.detail Hàng bị lỗi được đổi trả nhanh chóng
+    // footer
+    footer
+      .container.py-4
+        .row
+          .col-md-3.col-xs-6
+            .gioithieu
+              h3.header.text-uppercase.font-weight-bold Về EManga
+              a() Giới thiệu về EManga
+              a() Tuyển dụng
+              .fb-like(
+                data-share="true" 
+                data-size="small" 
+                data-action="like" 
+                data-layout="button" 
+                data-width="300px" 
+                data-href="https://www.facebook.com/EManga-110745443947730/"
+                )
+          .col-md-3.col-xs-6
+            .hotrokh
+              h3.header.text-uppercase.font-weight-bold HỖ TRỢ KHÁCH HÀNG
+              a() Hướng dẫn đặt hàng
+              a() Phương thức thanh toán
+              a() Phương thức vận chuyển
+              a() Chính sách đổi trả
+          .col-md-3.col-xs-6
+            .lienket
+              h3.header.text-uppercase.font-weight-bold HỢP TÁC VÀ LIÊN KẾT
+              img(
+                alt="dang-ky-bo-cong-thuong" 
+                src="http://localhost:3500/images/dang-ky-bo-cong-thuong.png"
+                )
+          .col-md-3.col-xs-6
+            .ptthanhtoan
+              h3.header.text-uppercase.font-weight-bold Phương thức thanh toán
+              img(
+                alt="visa-payment" 
+                src="http://localhost:3500/images/visa-payment.jpg"
+                )
+              img(
+                alt="master-card-payment" 
+                src="	http://localhost:3500/images/master-card-payment.jpg"
+                )
+              img(
+                alt="jcb-payment" 
+                src="	http://localhost:3500/images/jcb-payment.jpg"
+                )
+              img(
+                alt="atm-payment" 
+                src="http://localhost:3500/images/atm-payment.jpg"
+                )
+              img(
+                alt="cod-payment" 
+                src="http://localhost:3500/images/cod-payment.jpg"
+                )
+              img(
+                alt="payoo-payment" 
+                src="http://localhost:3500/images/payoo-payment.jpg"
+                )
           // het khoi san pham
           // het div noidung
           // het container

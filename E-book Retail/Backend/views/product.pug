@@ -20,6 +20,7 @@ html(lang="li")
     script(
       src="/js/main.js" 
       type="text/javascript"
+      defer
       )
     link(
       href="/fontawesome_free_5.13.0/css/all.css" 
@@ -103,17 +104,18 @@ html(lang="li")
           span.navbar-toggler-icon
         #collapsibleNavId.collapse.navbar-collapse
           // form tìm kiếm
-          form.form-inline.ml-auto.my-2.my-lg-0.mr-3
+          form#form-search.form-inline.ml-auto.my-2.my-lg-0.mr-3
             .input-group(style="width: 520px;")
               input.form-control(
-                placeholder="Enter book you want to search" 
+                placeholder="Enter the book you want to search..." 
                 aria-label="Small" 
                 type="text"
+                id="search"
                 )
               .input-group-append
                 button.btn(
                   style="background-color: #CF111A; color: white;" 
-                  type="button"
+                  type="submit"
                   )
                   i.fa.fa-search
           // ô đăng nhập đăng ký giỏ hàng trên header
@@ -141,16 +143,16 @@ html(lang="li")
                   data-toggle="modal" 
                   href="#"
                   ) Signin
-            li.nav-item.giohang
-              a.btn.btn-secondary.rounded-circle(href="gio-hang.html")
-                i.fa.fa-shopping-cart
-                .cart-amount 0
-              a.nav-link.text-dark.giohang.text-uppercase(
-                style="display:inline-block" 
-                href="gio-hang.html"
-                )
-                | Giỏ
-                |   Hàng
+            //- li.nav-item.giohang
+            //-   a.btn.btn-secondary.rounded-circle(href="gio-hang.html")
+            //-     i.fa.fa-shopping-cart
+            //-     .cart-amount 0
+            //-   a.nav-link.text-dark.giohang.text-uppercase(
+            //-     style="display:inline-block" 
+            //-     href="gio-hang.html"
+            //-     )
+            //-     | Giỏ
+            //-     |   Hàng
     // form dang ky khi click vao button tren header
     #formdangky.modal.fade.mt-5(
       aria-hidden="true" 
@@ -178,18 +180,19 @@ html(lang="li")
             form#form-signup.form-signin.mt-2
               .form-label-group
                 input.form-control(
-                  autofocus="" 
-                  required="" 
-                  name="name" 
-                  placeholder="Enter fullname" 
-                  type="text"
-                  )
-              .form-label-group
-                input.form-control(
                   required="" 
                   name="email" 
                   placeholder="Enter email address" 
                   type="email"
+                  id="signup-email"
+                  )
+              .form-label-group
+                input.form-control(
+                  required="" 
+                  name="text" 
+                  placeholder="Enter full name" 
+                  type="text"
+                  id="signup-username"
                   )
               .form-label-group
                 input.form-control(
@@ -197,13 +200,15 @@ html(lang="li")
                   name="password" 
                   placeholder="Enter password" 
                   type="password"
+                  id="inputPassword"
                   )
               .form-label-group.mb-4
                 input.form-control(
                   required="" 
-                  placeholder="Confirm password" 
+                  placeholder="Confirm the password" 
                   name="confirm_password" 
                   type="password"
+                  id='confirm_password'
                   )
               button.btn.btn-lg.btn-block.btn-signin.text-uppercase.text-white.mt-3(
                 style="background: #F5A623" 
@@ -211,7 +216,7 @@ html(lang="li")
                 ) Signup
               hr.mt-3.mb-2
               .custom-control.custom-checkbox
-                p.text-center By registering, you agree to EManga about
+                p.text-center By registering, you agree to Emanga about
                 a.text-decoration-none.text-center(
                   style="color: #F5A623" 
                   )
@@ -243,7 +248,8 @@ html(lang="li")
           .modal-body
             form#form-signin.form-signin.mt-2
               .form-label-group
-                input.form-control(
+                input.form-control.hi(
+                  id="email"
                   autofocus="" 
                   required="" 
                   name="email" 
@@ -252,6 +258,7 @@ html(lang="li")
                   )
               .form-label-group
                 input.form-control(
+                  id="password"
                   required="" 
                   name="password" 
                   placeholder="Password" 
@@ -270,6 +277,7 @@ html(lang="li")
                 style="background: #F5A623" 
                 type="submit"
                 ) Signin
+              hr.my-4
               //- hr.my-4
               //- button.btn.btn-lg.btn-google.btn-block.text-uppercase(type="submit")
               //-   i.fab.fa-google.mr-2

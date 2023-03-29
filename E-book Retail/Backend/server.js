@@ -8,6 +8,12 @@ const cookieParser = require("cookie-parser");
 const axios = require("axios");
 const jwt = require("jsonwebtoken")
 const paginate = require('paginate-array');
+const session = require('express-session');
+app.use(session({
+  secret: 'secret-key',
+  resave: false,
+  saveUninitialized: false
+}));
 
 
 app.use(cookieParser());
@@ -60,9 +66,9 @@ app.get("/homelogin", async (req, res) => {
   const toplike = await axios.get("http://localhost:3500/catalog/toplike");
   const topSell = await axios.get("http://localhost:3500/catalog/topsell");
   const topSale = await axios.get("http://localhost:3500/catalog/topsale");
-  const toplikeBook = toplike.data
-  const topsaleBook = topSale.data
-  const topsellBook = topSell.data
+  const toplikeBook = toplike.data;
+  const topsaleBook = topSale.data;
+  const topsellBook = topSell.data;
   const token = req.cookies.token;
   const decoded = jwt.verify(token, "thisisourwebsite!");
   // console.log(decoded)
@@ -94,6 +100,7 @@ const data = response.data;
     data
   });
 });
+
 app.get("/search/:searchPara", async(req,res) => {
   const searchPara = req.params.searchPara;
   await axios
@@ -107,6 +114,7 @@ app.get("/search/:searchPara", async(req,res) => {
     searchPara
   });
 })
+
 app.get("/product/:id", async (req, res) => {
   const id = req.params.id;
    await axios
@@ -123,7 +131,7 @@ app.get("/product/:id", async (req, res) => {
       booksTag.push(booksArray);
     }
   }
-  console.log(booksTag);
+
   res.render("product.pug", {
     book,
     tags: tagData.slice(0, 11),

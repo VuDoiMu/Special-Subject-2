@@ -459,7 +459,7 @@ ul li a.header{
     padding: 24px 0px 24px;
 }
 
-.dichvu h6.tieude {
+.dichvu h3.tieude {
     font-size: 14px;
     margin-bottom: 3px;
 }
@@ -473,6 +473,7 @@ ul li a.header{
     height: 57px;
     margin-right: 10px;
 }
+
 /* het css cho dichvu  */
 
 /* css cho footer  */
@@ -490,13 +491,14 @@ footer .row a {
 }
 
 footer .row a:hover {
-    color:  #F5A623;
+    color: #F5A623;
 }
 
 footer .header {
     font-size: 14px;
     margin-bottom: 13px;
 }
+
 /* het css cho footer  */
 
 
@@ -1117,7 +1119,7 @@ h3.account-header {
 }
 
 #search-result {
-    margin-top: 4px;
+    margin-top: 8px;
 }
 
 #search-result .result-text {
@@ -1126,4 +1128,31 @@ h3.account-header {
 
 #search-result .result {
     color: #F5A623;
+}
+
+.like {
+    margin-top: 4px;
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #6c757d;
+}
+
+.sell {
+    color: #6c757d;
+    font-size: 12px;
+}
+
+.like i {
+    display: none;
+}
+
+.like i.active {
+    display: inline-block;
+    color: red;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    margin-left: 2px;
 }

@@ -417,11 +417,11 @@ html(lang="vi")
                         |#{book.price} $
                       .sale
                         |-#{book.saleRate}%
-                    //- .like 
-                    //-   span.countLike
-                    //-     |Favourite: #{book.countLike}
-                    //-   i.fa.fa-heart.active
-                    //-   i.far.fa-heart
+                    .like 
+                      span.countLike
+                        |Favourite: #{book.countLike}
+                      //- i.fa.fa-heart.active
+                      //- i.far.fa-heart
                     .sell 
                       span 
                         |Purchases: #{book.countSale}
@@ -684,7 +684,7 @@ html(lang="vi")
             // header
             .col-12.d-flex.justify-content-between.align-items-center.pb-2.bg-light
               h2.header.text-uppercase(style="font-weight: 400;") MOST FAVORITE BOOK
-              a.btn.btn-warning.btn-sm.text-white(href="product-list/toplike") See all
+              a.btn.btn-warning.btn-sm.text-white(href="product-list/toplike/1") See all
           .khoisanpham
             
             each book in toplikeBook
@@ -713,8 +713,8 @@ html(lang="vi")
                     .like 
                       span.countLike
                         |Favourite: #{book.countLike}
-                      i.fa.fa-heart.active
-                      i.far.fa-heart
+                      //- i.fa.fa-heart.active
+                      //- i.far.fa-heart
                     .sell 
                       span 
                         |Purchases: #{book.countSale}
@@ -726,7 +726,7 @@ html(lang="vi")
             // header
             .col-12.d-flex.justify-content-between.align-items-center.pb-2.bg-light
               h2.header.text-uppercase(style="font-weight: 400;") BEST SELLING BOOK
-              a.btn.btn-warning.btn-sm.text-white(href="/product-list/topsell") See all
+              a.btn.btn-warning.btn-sm.text-white(href="/product-list/topsell/1") See all
           .khoisanpham
             // 1 san pham
             each book in topsellBook
@@ -755,8 +755,8 @@ html(lang="vi")
                     .like 
                       span.countLike
                         |Favourite: #{book.countLike}
-                      i.fa.fa-heart.active
-                      i.far.fa-heart
+                      //- i.fa.fa-heart.active
+                      //- i.far.fa-heart
                     .sell 
                       span 
                         |Purchases: #{book.countSale} 
@@ -768,7 +768,7 @@ html(lang="vi")
             // header
             .col-12.d-flex.justify-content-between.align-items-center.pb-2.bg-light
               h2.header.text-uppercase(style="font-weight: 400;") BEST DISCOUNT BOOK
-              a.btn.btn-warning.btn-sm.text-white(href="/product-list/topsale") See all
+              a.btn.btn-warning.btn-sm.text-white(href="/product-list/topsale/1") See all
           .khoisanpham
             // 1 san pham
             each book in topsaleBook
@@ -797,8 +797,8 @@ html(lang="vi")
                     .like 
                       span.countLike
                         |Favourite: #{book.countLike}
-                      i.fa.fa-heart.active
-                      i.far.fa-heart
+                      //- i.fa.fa-heart.active
+                      //- i.far.fa-heart
                     .sell 
                       span 
                         |Purchases: #{book.countSale}
