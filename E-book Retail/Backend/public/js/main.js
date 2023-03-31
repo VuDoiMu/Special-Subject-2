@@ -518,10 +518,13 @@ if (formdangnhap) {
   formdangnhap
     .addEventListener("submit", async (e) => {
       e.preventDefault();
+      
       const email = document.getElementById("email");
       const password = document.getElementById("password");
       const emailValue = document.getElementById("email").value;
       const passwordValue = document.getElementById("password").value;
+      console.log(emailValue);
+      console.log(passwordValue);
       const sendData = await fetch("http://localhost:3500/auth/login", {
         method: "POST",
         headers: {
@@ -717,8 +720,9 @@ likeButtons.forEach(button => {
 function showToast(message) {
   var toastContainer = document.getElementById("toast-container");
   var toastMessage = document.getElementById("toast-message");
-
-  toastMessage.innerHTML = message;
+  if (toastMessage) {
+    toastMessage.innerHTML = message;
+  }
 
   toastContainer.style.display = "block";
   toastMessage.style.opacity = "1";
