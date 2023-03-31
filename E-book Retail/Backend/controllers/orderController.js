@@ -26,10 +26,20 @@ const deleteOrder = async (req, res) => {
     const order = await Order.deleteMany();
     res.status(200).json(order);
 }
+const addOrder = async (req, res) => {
+    const {userId, items, finalTotal} = req.body
+    const order = new Order( {
+        userId:  userId,
+        items: items,
+        finalTotal: finalTotal
+    })
+    await order.save();
+}
 
 
 module.exports = {
     getAllOrder,
     getByID,
-    deleteOrder
+    deleteOrder,
+    addOrder
 }

@@ -4,8 +4,9 @@ const orderController = require('../controllers/orderController');
 
 router.route('/')
     .get(orderController.getAllOrder)
-    .delete(orderController.deleteOrder);
-
+    .delete(orderController.deleteOrder)
+    .post(orderController.addOrder);
+    
 router.route('/:id')
     .get(orderController.getByID);
 
