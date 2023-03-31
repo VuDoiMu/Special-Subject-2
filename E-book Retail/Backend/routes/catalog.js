@@ -22,6 +22,9 @@ router.route('/toplike')
     
  router.route('/nameSort')
  .get(cataController.nameSort);
+  
+ router.route('/dateSort')
+ .get(cataController.dateSort);
 
 router.route('/search/:name')
     .get(cataController.searchByName);

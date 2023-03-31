@@ -123,6 +123,15 @@ const topLike = async (req, res) => {
         }
     
   }
+  const dateSort = async (req, res) => {
+    
+    try{
+      const books = await Book.find().sort({ createdDate: 1 });
+        res.json(books );
+      }catch(error){
+          res.json({success : false, message:"false"})
+      }
+  }
   const searchByName = async (req, res) => {
     const name = req.params.name;
     const regex = new RegExp(name, "i");
@@ -139,5 +148,5 @@ module.exports = {
     topSale,
     searchByName,
     priceAsc,
-    priceDesc, nameSort
+    priceDesc, nameSort, dateSort
 };
