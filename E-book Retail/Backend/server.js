@@ -64,42 +64,9 @@ app.get("/", async (req, res) => {
     toplikeBook,
     topsaleBook,
     tags: tagData.slice(0, 11),
-<<<<<<< HEAD
-    topsellBook,
-  });
-});
-
-app.get("/homelogin", async (req, res) => {
-  const response = await axios.get("http://localhost:3500/management");
-  const toplike = await axios.get("http://localhost:3500/catalog/toplike");
-  const topSell = await axios.get("http://localhost:3500/catalog/topsell");
-  const topSale = await axios.get("http://localhost:3500/catalog/topsale");
-  const toplikeBook = toplike.data;
-  const topsaleBook = topSale.data;
-  const topsellBook = topSell.data;
-  const token = req.cookies.token;
-  const decoded = jwt.verify(token, "thisisourwebsite!");
-  // console.log(decoded)
-  // console.log("fhbsldfhlsfhnsdfgh")
-  // console.log(data)
-  const tag = await axios
-    .get("http://localhost:3500/tag")
-    .then((res) => (tagData = res.data.tags));
-
-  const data = response.data;
-  // console.log(data)
-  res.render("homelogin.pug", {
-    data,
-    toplikeBook,
-    topsaleBook,
-    tags: tagData.slice(0, 11),
-    topsellBook,
-    decoded,
-=======
     topsellBook,
     token,
     decoded
->>>>>>> 2bbedf48633a3bf38e832b947eaf8b5c62637185
   });
 });
 
@@ -160,11 +127,6 @@ app.get("/product/:id", async (req, res) => {
     book,
     tags: tagData.slice(0, 11),
     booksTag,
-<<<<<<< HEAD
-=======
-    token,
-    decoded
->>>>>>> 2bbedf48633a3bf38e832b947eaf8b5c62637185
   });
 });
 
@@ -190,11 +152,8 @@ app.get("/tag/:name", async (req, res) => {
     totalPages: paginatedBooks.totalPages,
     tags: tagData.slice(0, 11),
     name,
-<<<<<<< HEAD
-=======
     token,
     decoded
->>>>>>> 2bbedf48633a3bf38e832b947eaf8b5c62637185
   });
 });
 
@@ -229,13 +188,9 @@ app.get("/product-list/:name?/:page?", async (req, res) => {
     currentPage: paginatedBooks.currentPage,
     totalPages: paginatedBooks.totalPages,
     tags: tagData.slice(0, 11),
-<<<<<<< HEAD
-    name: req.params.name, // set name to empty string if name is not provided
-=======
     name: req.params.name,
     token,
     decoded// set name to empty string if name is not provided
->>>>>>> 2bbedf48633a3bf38e832b947eaf8b5c62637185
   });
 });
 
