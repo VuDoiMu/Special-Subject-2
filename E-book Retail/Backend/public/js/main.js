@@ -562,7 +562,11 @@ if (formdangnhap) {
      let currentUrl = window.location.href;
      showToast("Login successfully!");
       window.setTimeout(() => {
-          location.assign(currentUrl);
+        if(content.role == 0){
+          location.assign(currentUrl);}
+          else {
+            location.assign("/admin");
+          }
       }, 200);
     });
 }
@@ -579,8 +583,10 @@ if(logoutVar) {
       }
     });
     const content = await sendData.json();
+    console.log(content.username)
     let currentUrl = window.location.href;
     window.setTimeout(() => {
+      location.reload();
       location.assign(currentUrl);
     }, 200);
   });
