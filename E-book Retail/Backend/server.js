@@ -147,8 +147,7 @@ app.get("/tag/:name", async (req, res) => {
   }
   
   const page = parseInt(req.params.page) || 1;
-  console.log(limit);
-  const limit = 20;
+  const limit = req.query.limit
 
   const paginatedBooks = paginate(booksTag, page, limit);
   res.render("product-list.pug", {
@@ -175,7 +174,7 @@ app.get("/product-list/:name?/:page?/:limit?", async (req, res) => {
   }
 
   const page = parseInt(req.params.page) || 1;
-  const limit = req.params.limit;
+  const limit = req.query.limit || 10;
 
   const paginatedBooks = paginate(books, page, limit);
 

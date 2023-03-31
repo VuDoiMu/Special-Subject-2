@@ -395,7 +395,7 @@ html(lang="vi")
                         <span class="sr-only">Previous</span>
                         </a>
                         </li>
-                    - const maxPagesToShow = 5; // maximum number of page links to show
+                    - const maxPagesToShow = totalPages; // maximum number of page links to show
                     - const middlePage = Math.ceil(maxPagesToShow/2);
                     - let startPage = Math.max(currentPage - middlePage, 1);
                     - let endPage = Math.min(startPage + maxPagesToShow - 1, totalPages);
