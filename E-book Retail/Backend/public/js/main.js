@@ -531,7 +531,6 @@ if (formdangnhap) {
         body: JSON.stringify({ email: emailValue, password: passwordValue }),
       });
       const content = await sendData.json();
-      console.log(content);
       if (content.message === "Wrong email ") {
         email.classList.remove("valid");
         email.classList.add("error");
@@ -561,12 +560,9 @@ if (formdangnhap) {
         return;
       }
      let currentUrl = window.location.href;
+     showToast("Login successfully!");
       window.setTimeout(() => {
-        if (currentUrl === "http://localhost:3500/") {
-          location.assign("http://localhost:3500/homelogin");
-        } else {
           location.assign(currentUrl);
-        }
       }, 200);
     });
 }
@@ -583,8 +579,9 @@ if(logoutVar) {
       }
     });
     const content = await sendData.json();
+    let currentUrl = window.location.href;
     window.setTimeout(() => {
-      location.assign("/");
+      location.assign(currentUrl);
     }, 200);
   });
 }
@@ -679,9 +676,11 @@ document.querySelector("#form-signup").addEventListener("submit", async (e) => {
       emailInput.parentNode.insertBefore(errorLabel, emailInput.nextSibling);
       return;
     }
+    let currentUrl = window.location.href;
+    showToast("Register successfully!");
     window.setTimeout(() => {
-      location.assign("/");
-    }, 1000);
+      location.assign(currentUrl);
+    }, 200);
   }
 });
 
@@ -708,3 +707,20 @@ likeButtons.forEach(button => {
     emptyHeartIcon.classList.toggle('active');
   });
 });
+
+function showToast(message) {
+  var toastContainer = document.getElementById("toast-container");
+  var toastMessage = document.getElementById("toast-message");
+
+  toastMessage.innerHTML = message;
+
+  toastContainer.style.display = "block";
+  toastMessage.style.opacity = "1";
+
+  setTimeout(function () {
+    toastMessage.style.opacity = "0";
+    setTimeout(function () {
+      toastContainer.style.display = "none";
+    }, 500);
+  }, 5000);
+}

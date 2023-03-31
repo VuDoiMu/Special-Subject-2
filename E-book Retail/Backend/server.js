@@ -53,11 +53,18 @@ app.get("/", async (req, res) => {
 
   const data = response.data;
   // console.log(data)
+  const token = req.cookies.token;
+  let decoded = "";
+  if (token) {
+    decoded = jwt.verify(token, "thisisourwebsite!");
+  }
+
   res.render("home.pug", {
     data,
     toplikeBook,
     topsaleBook,
     tags: tagData.slice(0, 11),
+<<<<<<< HEAD
     topsellBook,
   });
 });
@@ -88,8 +95,15 @@ app.get("/homelogin", async (req, res) => {
     tags: tagData.slice(0, 11),
     topsellBook,
     decoded,
+=======
+    topsellBook,
+    token,
+    decoded
+>>>>>>> 2bbedf48633a3bf38e832b947eaf8b5c62637185
   });
 });
+
+
 
 app.get("/gio-hang", async (req, res) => {
   const token = req.cookies.token;
@@ -127,6 +141,12 @@ app.get("/product/:id", async (req, res) => {
   const response = await axios.get("http://localhost:3500/management/" + id);
   const book = response.data;
   const tag = book.tag;
+
+  const token = req.cookies.token;
+  let decoded = "";
+  if(token) {
+    decoded = jwt.verify(token, "thisisourwebsite!");
+  }
   for (const tagItem of tag) {
     const response = await axios.get(
       `http://localhost:3500/tag/books/${tagItem}`
@@ -136,11 +156,15 @@ app.get("/product/:id", async (req, res) => {
       booksTag.push(booksArray);
     }
   }
-
   res.render("product.pug", {
     book,
     tags: tagData.slice(0, 11),
     booksTag,
+<<<<<<< HEAD
+=======
+    token,
+    decoded
+>>>>>>> 2bbedf48633a3bf38e832b947eaf8b5c62637185
   });
 });
 
@@ -151,10 +175,26 @@ app.get("/tag/:name", async (req, res) => {
   const tag = await axios
     .get("http://localhost:3500/tag")
     .then((res) => (tagData = res.data.tags));
+  const token = req.cookies.token;
+  let decoded = "";
+  if (token) {
+    decoded = jwt.verify(token, "thisisourwebsite!");
+  }
+  const page = parseInt(req.params.page) || 1;
+  const limit = 10;
+
+  const paginatedBooks = paginate(booksTag, page, limit);
   res.render("product-list.pug", {
-    booksTag,
+    booksTag: paginatedBooks.data,
+    currentPage: paginatedBooks.currentPage,
+    totalPages: paginatedBooks.totalPages,
     tags: tagData.slice(0, 11),
     name,
+<<<<<<< HEAD
+=======
+    token,
+    decoded
+>>>>>>> 2bbedf48633a3bf38e832b947eaf8b5c62637185
   });
 });
 
@@ -174,6 +214,12 @@ app.get("/product-list/:name?/:page?", async (req, res) => {
   const limit = 10;
 
   const paginatedBooks = paginate(books, page, limit);
+
+  const token = req.cookies.token;
+  let decoded = "";
+  if (token) {
+    decoded = jwt.verify(token, "thisisourwebsite!");
+  }
   // console.log(paginatedBooks.totalPages);
   const tag = await axios
     .get("http://localhost:3500/tag")
@@ -183,7 +229,13 @@ app.get("/product-list/:name?/:page?", async (req, res) => {
     currentPage: paginatedBooks.currentPage,
     totalPages: paginatedBooks.totalPages,
     tags: tagData.slice(0, 11),
+<<<<<<< HEAD
     name: req.params.name, // set name to empty string if name is not provided
+=======
+    name: req.params.name,
+    token,
+    decoded// set name to empty string if name is not provided
+>>>>>>> 2bbedf48633a3bf38e832b947eaf8b5c62637185
   });
 });
 
