@@ -563,9 +563,19 @@ if (formdangnhap) {
         return;
       }
      let currentUrl = window.location.href;
-     showToast("Login successfully!");
+      // let toastContainer = document.getElementById("toast-container");
+      // let toastMessage = document.getElementById("toast-message");
+
+      // if (toastMessage) {
+      //   toastMessage.innerHTML = "";
+      // }
+
+      // if (toastContainer) {
+      //   toastContainer.style.display = "none";
+      // }
       window.setTimeout(() => {
         if(content.role == 0){
+          showToast("Login successfully!");
           location.assign(currentUrl);}
           else {
             location.assign("/admin");
@@ -723,7 +733,8 @@ function showToast(message) {
   if (toastMessage) {
     toastMessage.innerHTML = message;
   }
-
+  console.log(toastContainer);
+  console.log(toastMessage);
   toastContainer.style.display = "block";
   toastMessage.style.opacity = "1";
 
@@ -737,10 +748,12 @@ function showToast(message) {
 
 // Select limit page
 const hienthiSelect = document.querySelector('.hienthi-select');
-hienthiSelect.addEventListener('change', () => {
-  const selectedValue = hienthiSelect.value;
-  const currentUrl = window.location.href;
-  const urlWithoutLimit = currentUrl.split('?')[0]; // remove any existing query parameters
-  const newUrl = `${urlWithoutLimit}?limit=${selectedValue}`;
-  window.location.href = newUrl;
-});
+if (hienthiSelect) {
+  hienthiSelect.addEventListener('change', () => {
+    const selectedValue = hienthiSelect.value;
+    const currentUrl = window.location.href;
+    const urlWithoutLimit = currentUrl.split('?')[0]; // remove any existing query parameters
+    const newUrl = `${urlWithoutLimit}?limit=${selectedValue}`;
+    location.assign(newUrl);
+  });
+}

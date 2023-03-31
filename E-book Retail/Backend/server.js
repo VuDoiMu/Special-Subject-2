@@ -147,8 +147,8 @@ app.get("/tag/:name", async (req, res) => {
   }
   
   const page = parseInt(req.params.page) || 1;
-  const limit = req.query.limit
-
+  const limit = parseInt(req.query.limit) || 10;
+  console.log(limit);
   const paginatedBooks = paginate(booksTag, page, limit);
   res.render("product-list.pug", {
     booksTag: paginatedBooks.data,
@@ -157,7 +157,8 @@ app.get("/tag/:name", async (req, res) => {
     tags: tagData.slice(0, 11),
     name,
     token,
-    decoded
+    decoded,
+    limit
   });
 });
 
@@ -174,10 +175,12 @@ app.get("/product-list/:name?/:page?/:limit?", async (req, res) => {
   }
 
   const page = parseInt(req.params.page) || 1;
-  const limit = req.query.limit || 10;
-
+  const limit = parseInt(req.query.limit) || 10;
+  console.log("Lay ra limit");
+  console.log(limit);
+  console.log("Lay ra limit");
   const paginatedBooks = paginate(books, page, limit);
-
+// 
   const token = req.cookies.token;
   let decoded = "";
   if (token) {
@@ -194,7 +197,8 @@ app.get("/product-list/:name?/:page?/:limit?", async (req, res) => {
     tags: tagData.slice(0, 11),
     name: req.params.name,
     token,
-    decoded// set name to empty string if name is not provided
+    decoded,
+    limit// set name to empty string if name is not provided
   });
 });
 

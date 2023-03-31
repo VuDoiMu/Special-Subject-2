@@ -346,9 +346,9 @@ html(lang="vi")
               .hien-thi
                 label.label-select(for="hienthi-select") Show
                 select.hienthi-select
-                  option(value="10" selected) 10
-                  option(value="20") 20
-                  option(value="30") 30
+                  each val in [10, 20, 30]
+                    -console.log(limit);
+                    option(value=val selected=limit==val)= val
               .sap-xep
                 label.label-select(for="sapxep-select") Filter
                 select.sapxep-select
