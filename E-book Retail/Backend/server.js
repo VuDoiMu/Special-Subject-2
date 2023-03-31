@@ -123,10 +123,13 @@ app.get("/product/:id", async (req, res) => {
       booksTag.push(booksArray);
     }
   }
+  
   res.render("product.pug", {
     book,
     tags: tagData.slice(0, 11),
     booksTag,
+    token,
+    decoded
   });
 });
 
@@ -209,7 +212,7 @@ app.get("/admin", async (req, res) => {
   const discount = await axios.get("http://localhost:3500/discount");
   const disData = discount.data;
   const topSell = await axios.get("http://localhost:3500/catalog/topsell");
-  const topsellBook = topSell.data.books;
+  const topsellBook = topSell.data;
   const orders = await axios.get("http://localhost:3500/order");
 
   res.render("admin-home.pug", {
@@ -220,6 +223,7 @@ app.get("/admin", async (req, res) => {
     topsellBook: topsellBook.slice(0, 11),
   });
 });
+
 app.get("/admin-management", async (req, res) => {
   const tag = await axios
     .get("http://localhost:3500/tag")
