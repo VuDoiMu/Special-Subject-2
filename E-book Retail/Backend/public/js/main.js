@@ -531,7 +531,6 @@ if (formdangnhap) {
         body: JSON.stringify({ email: emailValue, password: passwordValue }),
       });
       const content = await sendData.json();
-      console.log(content);
       if (content.message === "Wrong email ") {
         email.classList.remove("valid");
         email.classList.add("error");
@@ -562,11 +561,7 @@ if (formdangnhap) {
       }
      let currentUrl = window.location.href;
       window.setTimeout(() => {
-        if (currentUrl === "http://localhost:3500/") {
-          location.assign("http://localhost:3500/homelogin");
-        } else {
           location.assign(currentUrl);
-        }
       }, 200);
     });
 }
@@ -583,8 +578,9 @@ if(logoutVar) {
       }
     });
     const content = await sendData.json();
+    let currentUrl = window.location.href;
     window.setTimeout(() => {
-      location.assign("/");
+      location.assign(currentUrl);
     }, 200);
   });
 }

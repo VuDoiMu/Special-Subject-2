@@ -152,27 +152,37 @@ html(lang="vi")
                   style="display:inline-block" 
                   href="#"
                   )
-                  | Account
+                  if token 
+                    |#{decoded.username}
+                  else 
+                    | Account
               .dropdown-menu(aria-labelledby="dropdownMenuButton")
-                a.dropdown-item.nutdangky.text-center.mb-2(
-                  data-target="#formdangky" 
-                  data-toggle="modal" 
-                  href="#"
-                  ) Signup
-                a.dropdown-item.nutdangnhap.text-center(
-                  data-target="#formdangnhap" 
-                  data-toggle="modal" 
-                  href="#"
-                  ) Signin
-            //- li.nav-item.giohang
-            //-   a.btn.btn-secondary.rounded-circle(href="/gio-hang")
-            //-     i.fa.fa-shopping-cart
-            //-     .cart-amount 0
-            //-   a.nav-link.text-dark.giohang.text-uppercase(
-            //-     style="display:inline-block" 
-            //-     href="gio-hang"
-            //-     )
-            //-     | My cart
+                if token
+                  a.dropdown-item.nutdangky.text-center.mb-2( 
+                  id="logout"
+                  style="cursor: pointer"
+                  ) Logout
+                else 
+                  a.dropdown-item.nutdangky.text-center.mb-2(
+                    data-target="#formdangky" 
+                    data-toggle="modal" 
+                    href="#"
+                    ) Signup
+                  a.dropdown-item.nutdangnhap.text-center(
+                    data-target="#formdangnhap" 
+                    data-toggle="modal" 
+                    href="#"
+                    ) Signin
+            if token
+              li.nav-item.giohang
+                a.btn.btn-secondary.rounded-circle(href="/gio-hang")
+                  i.fa.fa-shopping-cart
+                  .cart-amount 0
+                a.nav-link.text-dark.giohang.text-uppercase(
+                  style="display:inline-block" 
+                  href="gio-hang"
+                  )
+                  | My cart
     // form dang ky khi click vao button tren header
     #formdangky.modal.fade.mt-5(
       aria-hidden="true" 
@@ -420,8 +430,9 @@ html(lang="vi")
                     .like 
                       span.countLike
                         |Favourite: #{book.countLike}
-                      //- i.fa.fa-heart.active
-                      //- i.far.fa-heart
+                      if token
+                        i.fa.fa-heart.active
+                        i.far.fa-heart
                     .sell 
                       span 
                         |Purchases: #{book.countSale}
