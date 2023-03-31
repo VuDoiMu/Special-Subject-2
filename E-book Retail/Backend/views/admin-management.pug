@@ -6,11 +6,14 @@ html(lang='en', dir='ltr')
         // <title> Responsiive Admin Dashboard | CodingLab </title>
         link(rel='stylesheet', href='/css/admin-home.css')
         // Boxicons CDN Link
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/css/multi-select-tag.css">
         link(href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css', rel='stylesheet')
         meta(name='viewport', content='width=device-width, initial-scale=1.0')
+
         link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T', crossorigin='anonymous')
         link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.8.1/css/all.css', integrity='sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf', crossorigin='anonymous')
         link(rel='stylesheet', href='/css/admin-management.css')
+        style("ad")
     body
         .sidebar
             .logo-details
@@ -57,7 +60,7 @@ html(lang='en', dir='ltr')
                                 <span class="text">Up from yesterday</span>
                                 </div>
                         i.bx.bx-cart-alt.cart
-                    
+
                     .box
                         .right-side
                             .box-topic Total Profit
@@ -66,7 +69,7 @@ html(lang='en', dir='ltr')
                         i.bx.bx-cart.cart.two
                     .box
                         .right-side
-                            .box-topic Total Return
+                            .box-topic Total Books
                             .number 0
 
                         i.bx.bxs-cart-download.cart.three
@@ -75,16 +78,31 @@ html(lang='en', dir='ltr')
 
 
 
-                .d-flex.justify-content-center
-                    form.w-50
-                        input#proname.form-control(type='text', autocomplete='off', placeholder='Name')
-                        input#proname.form-control(type='text', autocomplete='off', placeholder='Author')
-                        input#proname.form-control(type='text', autocomplete='off', placeholder='Image link')
-                        input#proname.form-control(type='text', autocomplete='off', placeholder='Category')
-                        input#proname.form-control(type='text', autocomplete='off', placeholder='Price')
-                        input#proname.form-control(type='text', autocomplete='off', placeholder='Publisher')
 
-                        button#btn-create.btn.btn-success Add new Book
+                .d-flex.justify-content-center
+                    form#add-form.w-50
+                        h1 Add a new book
+                        input#proname.form-control(type='text',name='name', autocomplete='off', placeholder='Name')
+                        input#proname.form-control(type='text',name='author' ,autocomplete='off', placeholder='Author')
+                        input#proname.form-control(type='text',name='cover' ,autocomplete='off', placeholder='Image link')
+                        select#countries(name='countries', multiple='')
+                            for t,index in tags
+                             
+                                option(value=index  )=t
+  
+
+
+                        input#proname.form-control(type='text',name='description' ,autocomplete='off', placeholder='Description')
+                        input#proname.form-control(type='text',name='content', autocomplete='off', placeholder='Content')
+                        input#proname.form-control(type='text',name='artist', autocomplete='off', placeholder='Artist')
+                        input#proname.form-control(type='text',name='publisher', autocomplete='off', placeholder='Publisher')
+                        input#proname.form-control(type='text',name='price', autocomplete='off', placeholder='Price')
+                        input#proname.form-control(type='text', name='discountRate',autocomplete='off', placeholder='DiscountRate')
+                        input#proname.form-control(type='text',name='pageCount', autocomplete='off', placeholder='PageCount')
+
+
+
+                        button(id='btn-create' class='btn btn-success' type="submit") Add new Book
                             .container.text-center
 
                 // Table
@@ -109,15 +127,15 @@ html(lang='en', dir='ltr')
                                 th( scope="row") #{book.countSale}
                                 th( scope="row")
 
-                                    button#btn-update.btn.btn-warning 
+                                    button(id='btn-update' class='btn btn-warning updateButton' name=`${book._id}`) 
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
                                         <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
                                         </svg>
 
-                                    button#btn-delete.btn.btn-danger X
+                                    button(id=`btn-delete` name=`${book._id}`  class='btn btn-danger deleteButton') X
+  
 
 
-        // Labels
         //- .w-100.btn.btn-success.insertmsg Data Inserted Successfully...!
         //- .w-100.btn.btn-warning.updatemsg Data Updated..! Refresh Database To See Result
         //- .w-100.btn.btn-danger.deletemsg Data Deleted..!
@@ -128,3 +146,7 @@ html(lang='en', dir='ltr')
         //- script(src='https://unpkg.com/dexie@latest/dist/dexie.js')
         //- // Custom main file
         script(src='/js/admin.js')
+        script(src='https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/js/multi-select-tag.js')
+        script.
+            new MultiSelectTag('countries')  // id
+       
