@@ -145,8 +145,10 @@ app.get("/tag/:name", async (req, res) => {
   if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
   }
+  
   const page = parseInt(req.params.page) || 1;
-  const limit = 10;
+  console.log(limit);
+  const limit = 20;
 
   const paginatedBooks = paginate(booksTag, page, limit);
   res.render("product-list.pug", {
@@ -160,7 +162,7 @@ app.get("/tag/:name", async (req, res) => {
   });
 });
 
-app.get("/product-list/:name?/:page?", async (req, res) => {
+app.get("/product-list/:name?/:page?/:limit?", async (req, res) => {
   // console.log("Calling product list")
   let books = "";
   if (req.params.name != "general-book") {
@@ -173,7 +175,7 @@ app.get("/product-list/:name?/:page?", async (req, res) => {
   }
 
   const page = parseInt(req.params.page) || 1;
-  const limit = 10;
+  const limit = req.params.limit;
 
   const paginatedBooks = paginate(books, page, limit);
 

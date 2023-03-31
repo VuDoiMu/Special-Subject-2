@@ -336,14 +336,15 @@ html(lang="vi")
               .hien-thi
                 label.label-select(for="hienthi-select") Show
                 select.hienthi-select
+                  option(value="10" selected) 10
+                  option(value="20") 20
                   option(value="30") 30
-                  option(value="60") 60
               .sap-xep
                 label.label-select(for="sapxep-select") Filter
                 select.sapxep-select
-                  option(value="moinhat") Mới nhất
-                  option(value="thap-cao") Giá: Thấp - Cao
-                  option(value="cao-thap") Giá: Cao - Thấp
+                  option(value="moinhat") Newest
+                  option(value="thap-cao") Price: Low - High
+                  option(value="cao-thap") Price: High - Low
           // các sản phẩm
           .items
             .row

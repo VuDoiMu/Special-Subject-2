@@ -724,3 +724,13 @@ function showToast(message) {
     }, 500);
   }, 5000);
 }
+
+// Select limit page
+const hienthiSelect = document.querySelector('.hienthi-select');
+hienthiSelect.addEventListener('change', () => {
+  const selectedValue = hienthiSelect.value;
+  const currentUrl = window.location.href;
+  const urlWithoutLimit = currentUrl.split('?')[0]; // remove any existing query parameters
+  const newUrl = `${urlWithoutLimit}?limit=${selectedValue}`;
+  window.location.href = newUrl;
+});
