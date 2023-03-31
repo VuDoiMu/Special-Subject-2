@@ -9,6 +9,7 @@ const axios = require("axios");
 const jwt = require("jsonwebtoken");
 const paginate = require("paginate-array");
 const session = require("express-session");
+const _ = require('lodash');
 app.use(
   session({
     secret: "secret-key",
@@ -136,7 +137,23 @@ app.get("/product/:id", async (req, res) => {
 app.get("/tag/:name", async (req, res) => {
   const name = req.params.name;
   const response = await axios.get(`http://localhost:3500/tag/books/${name}`);
-  const booksTag = response.data.books[0].books;
+  const booksTag = response.data.books[0].books
+  const sortType = req.query.sortType;
+  if(sortType == "priceAsc"){
+   booksTag = _.orderBy(booksTag, ['price'], ['asc']);
+}
+if(sortType == "priceDesc"){
+  booksTag = _.orderBy(booksTag, ['price'], ['desc']);
+}
+if(sortType == "dateDesc"){
+  booksTags = _.orderBy(booksTag, ['createdDate'], ['asc']);
+}
+if(sortType == "nameAsc"){
+  booksTag = _.orderBy(booksTag, ['name'], ['asc']);
+}
+if(sortType == "nameDesc"){
+  booksTag = _.orderBy(booksTag, ['name'], ['desc']);
+}
   const tag = await axios
     .get("http://localhost:3500/tag")
     .then((res) => (tagData = res.data.tags));
