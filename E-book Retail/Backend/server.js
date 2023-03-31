@@ -66,11 +66,9 @@ app.get("/", async (req, res) => {
     tags: tagData.slice(0, 11),
     topsellBook,
     token,
-    decoded
+    decoded,
   });
 });
-
-
 
 app.get("/gio-hang", async (req, res) => {
   const token = req.cookies.token;
@@ -111,7 +109,7 @@ app.get("/product/:id", async (req, res) => {
 
   const token = req.cookies.token;
   let decoded = "";
-  if(token) {
+  if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
   }
   for (const tagItem of tag) {
@@ -123,13 +121,13 @@ app.get("/product/:id", async (req, res) => {
       booksTag.push(booksArray);
     }
   }
-  
+
   res.render("product.pug", {
     book,
     tags: tagData.slice(0, 11),
     booksTag,
     token,
-    decoded
+    decoded,
   });
 });
 
@@ -156,7 +154,7 @@ app.get("/tag/:name", async (req, res) => {
     tags: tagData.slice(0, 11),
     name,
     token,
-    decoded
+    decoded,
   });
 });
 
@@ -193,7 +191,7 @@ app.get("/product-list/:name?/:page?", async (req, res) => {
     tags: tagData.slice(0, 11),
     name: req.params.name,
     token,
-    decoded// set name to empty string if name is not provided
+    decoded, // set name to empty string if name is not provided
   });
 });
 
@@ -214,12 +212,12 @@ app.get("/admin", async (req, res) => {
   const topSell = await axios.get("http://localhost:3500/catalog/topsell");
   const topsellBook = topSell.data;
   const orders = await axios.get("http://localhost:3500/order");
-
+  console.log(topsellBook);
   res.render("admin-home.pug", {
     data,
     userData,
     disData,
-    orders,
+    orders: orders.data,
     topsellBook: topsellBook.slice(0, 11),
   });
 });
@@ -232,11 +230,12 @@ app.get("/admin-management", async (req, res) => {
   for (let i = 0; i < tagData.length; i++) {
     tags.push(tagData[i].name);
   }
+
   const response = await axios.get("http://localhost:3500/management");
   const data = response.data;
   const order = await axios.get("http://localhost:3500/order");
   const orderData = order.data;
-
+  console.log(orderData);
   res.render("admin-management.pug", { data, orderData, tags });
 });
 
