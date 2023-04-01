@@ -134,7 +134,6 @@ app.get("/tag/:name", async (req, res) => {
   if (sortType == "nameDesc") {
     booksTag = _.orderBy(booksTag, ["name"], ["desc"]);
   }
-  console.log(sortType)
   const tag = await axios
     .get("http://localhost:3500/tag")
     .then((res) => (tagData = res.data.tags));
@@ -277,14 +276,23 @@ app.get("/admin", async (req, res) => {
   const disData = discount.data;
   const topSell = await axios.get("http://localhost:3500/catalog/topsell");
   const topsellBook = topSell.data;
-  const orders = await axios.get("http://localhost:3500/order");
-  console.log(topsellBook);
+  const order = await axios.get("http://localhost:3500/order");
+  const orderData = order.data;
+  let totalBooks = 0;
+  let totalProfits = 0;
+  for (let i = 0; i < orderData.length; i++) {
+    totalBooks += orderData[i].items.length;
+    totalProfits += orderData[i].finalTotal;
+  }
+
   res.render("admin-home.pug", {
     data,
     userData,
     disData,
-    orders: orders.data,
+    orders: order.data,
     topsellBook: topsellBook.slice(0, 11),
+    totalBooks,
+    totalProfits,
   });
 });
 
@@ -301,8 +309,14 @@ app.get("/admin-management", async (req, res) => {
   const data = response.data;
   const order = await axios.get("http://localhost:3500/order");
   const orderData = order.data;
-  console.log(orderData);
-  res.render("admin-management.pug", { data, orderData, tags });
+  let totalBooks = 0;
+  let totalProfits = 0;
+  for (let i = 0; i < orderData.length; i++) {
+    totalBooks += orderData[i].items.length;
+    totalProfits += orderData[i].finalTotal;
+  }
+
+  res.render("admin-management.pug", { data, orderData, tags, totalBooks,totalProfits });
 });
 
 app.get("/admin/update/:id", async (req, res) => {
@@ -319,6 +333,19 @@ app.get("/admin/update/:id", async (req, res) => {
   }
 
   res.render("update.pug", { book: data, tags });
+});
+
+app.get("/admin-sale", async (req, res) => {
+  const order = await axios.get("http://localhost:3500/order");
+  const orderData = order.data;
+  let totalBooks = 0;
+  let totalProfits = 0;
+  for (let i = 0; i < orderData.length; i++) {
+    totalBooks += orderData[i].items.length;
+    totalProfits += orderData[i].finalTotal;
+  }
+
+  res.render("admin-sale.pug", { orderData, totalBooks, totalProfits });
 });
 
 //routes
