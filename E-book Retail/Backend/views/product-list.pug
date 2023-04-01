@@ -354,11 +354,13 @@ html(lang="vi")
               .sap-xep
                 label.label-select(for="sapxep-select") Filter
                 select.sapxep-select
-                  option(value="dateAsc") Newest
-                  option(value="priceAsc") Price: Low - High
-                  option(value="priceDesc") Price: High - Low
-                  option(value="nameAsc") Name:(A-Z)
-                  option(value="nameDesc") Name:(Z-A)
+                  //- each val in ["dateAsc", "priceAsc", "priceDesc", "nameAsc", "nameDesc"]
+                  //-   option(value=val selected=limit==val)= val
+                  option(value="dateAsc" selected=sortType=="dateAsc") Newest
+                  option(value="priceAsc" selected=sortType=="priceAsc") Price: Low - High
+                  option(value="priceDesc" selected=sortType=="priceDesc") Price: High - Low
+                  option(value="nameAsc" selected=sortType=="nameAsc") Name:(A-Z)
+                  option(value="nameDesc" selected=sortType=="nameDesc") Name:(Z-A)
           // các sản phẩm
           .items
             .row
