@@ -738,9 +738,11 @@ function showToast(message) {
 
 // Select limit page
 const hienthiSelect = document.querySelector('.hienthi-select');
+const sortSelect = document.querySelector('.sapxep-select');
 if (hienthiSelect) {
   hienthiSelect.addEventListener('change', () => {
     const selectedValue = hienthiSelect.value;
+    const selectedSort = sortSelect.value;
     const currentUrl = window.location.href;
     const urlWithoutParams = currentUrl.split('?')[0]; // remove any existing query parameters
     const urlParams = new URLSearchParams(window.location.search);
@@ -748,24 +750,44 @@ if (hienthiSelect) {
     console.log('pageParam:', pageParam); // add this line to log the value of pageParam
 
     if (hienthiSelect.classList.contains("isTag")) {
-      const newUrl = `${urlWithoutParams}?page=${pageParam}&limit=${selectedValue}`;
+      const newUrl = `${urlWithoutParams}?page=${pageParam}&limit=${selectedValue}&sortType=${selectedSort}`;
       location.assign(newUrl);
     }
     else {
-      const newUrl = `${urlWithoutParams}?limit=${selectedValue}`;
+      const newUrl = `${urlWithoutParams}?limit=${selectedValue}&sortType=${selectedSort}`;
       location.assign(newUrl);
     }
   });
 }
 
-
-const saxpepSelect = document.querySelector('.sapxep-select');
-if (saxpepSelect) {
-  saxpepSelect.addEventListener('change', () => {
-    const selectedValue = saxpepSelect.value;
+if (sortSelect) {
+  sortSelect.addEventListener('change', () => {
+    const selectedValue = hienthiSelect.value;
+    const selectedSort = sortSelect.value;
     const currentUrl = window.location.href;
-    const urlWithoutLimit = currentUrl.split('?')[0]; 
-    const newUrl = `${urlWithoutLimit}?sortType=${selectedValue}&limit=${selectedValue}`;
-    location.assign(newUrl);
+    const urlWithoutParams = currentUrl.split('?')[0]; // remove any existing query parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const pageParam = urlParams.get('page'); // get the value of the 'page' parameter
+    console.log('pageParam:', pageParam); // add this line to log the value of pageParam
+
+    if (hienthiSelect.classList.contains("isTag")) {
+      const newUrl = `${urlWithoutParams}?page=${pageParam}&limit=${selectedValue}&sortType=${selectedSort}`;
+      location.assign(newUrl);
+    }
+    else {
+      const newUrl = `${urlWithoutParams}?limit=${selectedValue}&sortType=${selectedSort}`;
+      location.assign(newUrl);
+    }
   });
 }
+
+// const saxpepSelect = document.querySelector('.sapxep-select');
+// if (saxpepSelect) {
+//   saxpepSelect.addEventListener('change', () => {
+//     const selectedValue = saxpepSelect.value;
+//     const currentUrl = window.location.href;
+//     const urlWithoutLimit = currentUrl.split('?')[0]; 
+//     const newUrl = `${urlWithoutLimit}?sortType=${selectedValue}&limit=${selectedValue}`;
+//     location.assign(newUrl);
+//   });
+// }

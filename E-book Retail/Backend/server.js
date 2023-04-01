@@ -115,33 +115,8 @@ app.get("/product/:id", async (req, res) => {
 
 app.get("/tag/:name", async (req, res) => {
   const name = req.params.name;
-<<<<<<< HEAD
-  let booksTag = "";
-  if(name) {
-    const response = await axios.get(`http://localhost:3500/tag/books/${name}`);
-    booksTag = response.data.books[0].books
-  }
-  
-  const sortType = req.query.sortType;
-  const isTag = true;
-  if(sortType == "priceAsc"){
-   booksTag = _.orderBy(booksTag, ['price'], ['asc']);
-}
-if(sortType == "priceDesc"){
-  booksTag = _.orderBy(booksTag, ['price'], ['desc']);
-}
-if(sortType == "dateAsc"){
-  booksTag = _.orderBy(booksTag, ['createdDate'], ['asc']);
-}
-if(sortType == "nameAsc"){
-  booksTag = _.orderBy(booksTag, ['name'], ['asc']);
-}
-if(sortType == "nameDesc"){
-  booksTag = _.orderBy(booksTag, ['name'], ['desc']);
-}
-=======
   const response = await axios.get(`http://localhost:3500/tag/books/${name}`);
-  const booksTag = response.data.books[0].books;
+  let booksTag = response.data.books[0].books;
   const sortType = req.query.sortType;
   const isTag = true;
   if (sortType == "priceAsc") {
@@ -151,7 +126,7 @@ if(sortType == "nameDesc"){
     booksTag = _.orderBy(booksTag, ["price"], ["desc"]);
   }
   if (sortType == "dateDesc") {
-    booksTags = _.orderBy(booksTag, ["createdDate"], ["asc"]);
+    booksTag = _.orderBy(booksTag, ["createdDate"], ["asc"]);
   }
   if (sortType == "nameAsc") {
     booksTag = _.orderBy(booksTag, ["name"], ["asc"]);
@@ -159,7 +134,7 @@ if(sortType == "nameDesc"){
   if (sortType == "nameDesc") {
     booksTag = _.orderBy(booksTag, ["name"], ["desc"]);
   }
->>>>>>> 8b2fa4154f42b145263076562e9a3a69f467b7cb
+  console.log(sortType)
   const tag = await axios
     .get("http://localhost:3500/tag")
     .then((res) => (tagData = res.data.tags));
@@ -179,7 +154,7 @@ if(sortType == "nameDesc"){
     tags: tagData.slice(0, 11),
     name,
     token,
-   
+    sortType,
     limit,
     isTag,
   });
@@ -187,6 +162,7 @@ if(sortType == "nameDesc"){
 
 app.get("/search/:searchPara?/:page?", async (req, res) => {
   const searchPara = req.params.searchPara;
+  
   await axios
     .get("http://localhost:3500/tag")
     .then((res) => (tagData = res.data.tags));
@@ -198,7 +174,24 @@ app.get("/search/:searchPara?/:page?", async (req, res) => {
   if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
   }
-  const booksTag = response.data;
+  let booksTag = response.data;
+  const sortType = req.query.sortType;
+  if (sortType == "priceAsc") {
+    booksTag = _.orderBy(booksTag, ["price"], ["asc"]);
+  }
+  if (sortType == "priceDesc") {
+    booksTag = _.orderBy(booksTag, ["price"], ["desc"]);
+  }
+  if (sortType == "dateDesc") {
+    booksTag = _.orderBy(booksTag, ["createdDate"], ["asc"]);
+  }
+  if (sortType == "nameAsc") {
+    booksTag = _.orderBy(booksTag, ["name"], ["asc"]);
+  }
+  if (sortType == "nameDesc") {
+    booksTag = _.orderBy(booksTag, ["name"], ["desc"]);
+  }
+  
   const page = parseInt(req.params.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
   const paginatedBooks = paginate(booksTag, page, limit);
@@ -211,7 +204,8 @@ app.get("/search/:searchPara?/:page?", async (req, res) => {
     searchPara,
     token,
     decoded,
-    // >>>>>>> 297d93eb1c2eaae85e9fc9e6a18a9a90c11bdb30
+    sortType
+    
   });
 });
 
@@ -224,6 +218,23 @@ app.get("/product-list/:name?/:page?", async (req, res) => {
   } else {
     const response = await axios.get(`http://localhost:3500/management`);
     books = response.data;
+  }
+ 
+  const sortType = req.query.sortType;
+  if (sortType == "priceAsc") {
+    books = _.orderBy(books, ["price"], ["asc"]);
+  }
+  if (sortType == "priceDesc") {
+    books = _.orderBy(books, ["price"], ["desc"]);
+  }
+  if (sortType == "dateDesc") {
+    books = _.orderBy(books, ["createdDate"], ["asc"]);
+  }
+  if (sortType == "nameAsc") {
+    books = _.orderBy(books, ["name"], ["asc"]);
+  }
+  if (sortType == "nameDesc") {
+    books = _.orderBy(books, ["name"], ["desc"]);
   }
 
   const page = parseInt(req.params.page) || 1;
@@ -245,7 +256,8 @@ app.get("/product-list/:name?/:page?", async (req, res) => {
     tags: tagData.slice(0, 11),
     name: req.params.name,
     token,
-    decoded
+    decoded,
+    sortType
   });
 });
 
