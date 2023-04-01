@@ -518,21 +518,6 @@ $(function () {
 });
 let formdangnhap = document.querySelector("#formdangnhap");
 if (formdangnhap) {
-<<<<<<< HEAD
-  formdangnhap.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const email = document.getElementById("email");
-    const password = document.getElementById("password");
-    const emailValue = document.getElementById("email").value;
-    const passwordValue = document.getElementById("password").value;
-    const sendData = await fetch("http://localhost:3500/auth/login", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email: emailValue, password: passwordValue }),
-=======
   formdangnhap
     .addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -599,7 +584,6 @@ if (formdangnhap) {
             location.assign("/admin");
           }
       }, 200);
->>>>>>> 297d93eb1c2eaae85e9fc9e6a18a9a90c11bdb30
     });
     const content = await sendData.json();
     if (content.message === "Wrong email ") {
@@ -790,8 +774,6 @@ function showToast(message) {
     }, 500);
   }, 5000);
 }
-<<<<<<< HEAD
-=======
 
 // Select limit page
 const hienthiSelect = document.querySelector('.hienthi-select');
@@ -804,4 +786,3 @@ if (hienthiSelect) {
     location.assign(newUrl);
   });
 }
->>>>>>> 297d93eb1c2eaae85e9fc9e6a18a9a90c11bdb30

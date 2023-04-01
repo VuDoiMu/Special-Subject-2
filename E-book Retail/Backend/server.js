@@ -9,7 +9,7 @@ const axios = require("axios");
 const jwt = require("jsonwebtoken");
 const paginate = require("paginate-array");
 const session = require("express-session");
-const _ = require('lodash');
+const _ = require("lodash");
 app.use(
   session({
     secret: "secret-key",
@@ -79,8 +79,6 @@ app.get("/gio-hang", async (req, res) => {
   });
 });
 
-
-
 app.get("/product/:id", async (req, res) => {
   const id = req.params.id;
   await axios
@@ -115,29 +113,27 @@ app.get("/product/:id", async (req, res) => {
   });
 });
 
-
-
 app.get("/tag/:name", async (req, res) => {
   const name = req.params.name;
   const response = await axios.get(`http://localhost:3500/tag/books/${name}`);
-  const booksTag = response.data.books[0].books
+  const booksTag = response.data.books[0].books;
   const sortType = req.query.sortType;
   const isTag = true;
-  if(sortType == "priceAsc"){
-   booksTag = _.orderBy(booksTag, ['price'], ['asc']);
-}
-if(sortType == "priceDesc"){
-  booksTag = _.orderBy(booksTag, ['price'], ['desc']);
-}
-if(sortType == "dateDesc"){
-  booksTags = _.orderBy(booksTag, ['createdDate'], ['asc']);
-}
-if(sortType == "nameAsc"){
-  booksTag = _.orderBy(booksTag, ['name'], ['asc']);
-}
-if(sortType == "nameDesc"){
-  booksTag = _.orderBy(booksTag, ['name'], ['desc']);
-}
+  if (sortType == "priceAsc") {
+    booksTag = _.orderBy(booksTag, ["price"], ["asc"]);
+  }
+  if (sortType == "priceDesc") {
+    booksTag = _.orderBy(booksTag, ["price"], ["desc"]);
+  }
+  if (sortType == "dateDesc") {
+    booksTags = _.orderBy(booksTag, ["createdDate"], ["asc"]);
+  }
+  if (sortType == "nameAsc") {
+    booksTag = _.orderBy(booksTag, ["name"], ["asc"]);
+  }
+  if (sortType == "nameDesc") {
+    booksTag = _.orderBy(booksTag, ["name"], ["desc"]);
+  }
   const tag = await axios
     .get("http://localhost:3500/tag")
     .then((res) => (tagData = res.data.tags));
@@ -146,7 +142,7 @@ if(sortType == "nameDesc"){
   if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
   }
-  
+
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
   const paginatedBooks = paginate(booksTag, page, limit);
@@ -157,11 +153,11 @@ if(sortType == "nameDesc"){
     tags: tagData.slice(0, 11),
     name,
     token,
-    decoded,
-<<<<<<< HEAD
-=======
+    //     decoded,
+    // <<<<<<< HEAD
+    // =======
     limit,
-    isTag
+    isTag,
   });
 });
 
@@ -190,8 +186,8 @@ app.get("/search/:searchPara?/:page?", async (req, res) => {
     limit,
     searchPara,
     token,
-    decoded
->>>>>>> 297d93eb1c2eaae85e9fc9e6a18a9a90c11bdb30
+    decoded,
+    // >>>>>>> 297d93eb1c2eaae85e9fc9e6a18a9a90c11bdb30
   });
 });
 
@@ -209,7 +205,7 @@ app.get("/product-list/:name?/:page?", async (req, res) => {
   const page = parseInt(req.params.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
   const paginatedBooks = paginate(books, page, limit);
-// 
+  //
   const token = req.cookies.token;
   let decoded = "";
   if (token) {
@@ -225,12 +221,12 @@ app.get("/product-list/:name?/:page?", async (req, res) => {
     tags: tagData.slice(0, 11),
     name: req.params.name,
     token,
-<<<<<<< HEAD
-    decoded, // set name to empty string if name is not provided
-=======
+    // <<<<<<< HEAD
+    //     decoded, // set name to empty string if name is not provided
+    // =======
     decoded,
-    limit// set name to empty string if name is not provided
->>>>>>> 297d93eb1c2eaae85e9fc9e6a18a9a90c11bdb30
+    //     limit// set name to empty string if name is not provided
+    // >>>>>>> 297d93eb1c2eaae85e9fc9e6a18a9a90c11bdb30
   });
 });
 
