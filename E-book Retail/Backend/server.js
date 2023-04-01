@@ -46,14 +46,11 @@ app.get("/", async (req, res) => {
   const topsellBook = topSell.data;
   let tagData;
   const userInfor = req.cookies.userInfor;
-  // console.log("fhbsldfhlsfhnsdfgh")
-  // console.log(data)
   const tag = await axios
     .get("http://localhost:3500/tag")
     .then((res) => (tagData = res.data.tags));
 
   const data = response.data;
-  // console.log(data)
   const token = req.cookies.token;
   let decoded = "";
   if (token) {
@@ -84,21 +81,7 @@ app.get("/gio-hang", async (req, res) => {
   });
 });
 
-app.get("/search/:searchPara", async (req, res) => {
-  const searchPara = req.params.searchPara;
-  await axios
-    .get("http://localhost:3500/tag")
-    .then((res) => (tagData = res.data.tags));
-  const response = await axios.get(
-    "http://localhost:3500/catalog/search/" + searchPara
-  );
-  const booksTag = response.data;
-  res.render("product-list.pug", {
-    tags: tagData.slice(0, 11),
-    booksTag,
-    searchPara,
-  });
-});
+
 
 app.get("/product/:id", async (req, res) => {
   const id = req.params.id;
@@ -134,6 +117,8 @@ app.get("/product/:id", async (req, res) => {
   });
 });
 
+
+
 app.get("/tag/:name", async (req, res) => {
   const name = req.params.name;
   const response = await axios.get(`http://localhost:3500/tag/books/${name}`);
@@ -165,7 +150,6 @@ if(sortType == "nameDesc"){
   
   const page = parseInt(req.params.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
-  console.log(limit);
   const paginatedBooks = paginate(booksTag, page, limit);
   res.render("product-list.pug", {
     booksTag: paginatedBooks.data,
@@ -179,8 +163,36 @@ if(sortType == "nameDesc"){
   });
 });
 
-app.get("/product-list/:name?/:page?/:limit?", async (req, res) => {
-  // console.log("Calling product list")
+app.get("/search/:searchPara?/:page?", async (req, res) => {
+  const searchPara = req.params.searchPara;
+  await axios
+    .get("http://localhost:3500/tag")
+    .then((res) => (tagData = res.data.tags));
+  const response = await axios.get(
+    "http://localhost:3500/catalog/search/" + searchPara
+  );
+  const token = req.cookies.token;
+  let decoded = "";
+  if (token) {
+    decoded = jwt.verify(token, "thisisourwebsite!");
+  }
+  const booksTag = response.data;
+  const page = parseInt(req.params.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+  const paginatedBooks = paginate(booksTag, page, limit);
+  res.render("product-list.pug", {
+    tags: tagData.slice(0, 11),
+    booksTag: paginatedBooks.data,
+    currentPage: paginatedBooks.currentPage,
+    totalPages: paginatedBooks.totalPages,
+    limit,
+    searchPara,
+    token,
+    decoded
+  });
+});
+
+app.get("/product-list/:name?/:page?", async (req, res) => {
   let books = "";
   if (req.params.name != "general-book") {
     const name = req.params.name;
@@ -193,9 +205,6 @@ app.get("/product-list/:name?/:page?/:limit?", async (req, res) => {
 
   const page = parseInt(req.params.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
-  console.log("Lay ra limit");
-  console.log(limit);
-  console.log("Lay ra limit");
   const paginatedBooks = paginate(books, page, limit);
 // 
   const token = req.cookies.token;
@@ -203,7 +212,6 @@ app.get("/product-list/:name?/:page?/:limit?", async (req, res) => {
   if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
   }
-  // console.log(paginatedBooks.totalPages);
   const tag = await axios
     .get("http://localhost:3500/tag")
     .then((res) => (tagData = res.data.tags));

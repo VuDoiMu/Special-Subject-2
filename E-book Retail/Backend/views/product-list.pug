@@ -347,7 +347,6 @@ html(lang="vi")
                 label.label-select(for="hienthi-select") Show
                 select.hienthi-select
                   each val in [10, 20, 30]
-                    -console.log(limit);
                     option(value=val selected=limit==val)= val
               .sap-xep
                 label.label-select(for="sapxep-select") Filter
@@ -414,14 +413,23 @@ html(lang="vi")
                     - }
                     if currentPage > 1
                       li.page-item
-                        a.page-link(href=`/product-list/${name}/${currentPage-1}`) Previous
+                        if searchPara
+                          a.page-link(href=`/search/${searchPara}/${currentPage-1}?limit=${limit}`) Previous
+                        else
+                          a.page-link(href=`/product-list/${name}/${currentPage-1}?limit=${limit}`) Previous
                     - for (var i = startPage; i <= endPage; i++) {
                       li.page-item(class=i===currentPage ? 'active' : '')
-                        a.page-link(href=`/product-list/${name}/${i}`)= i
+                        if searchPara
+                          a.page-link(href=`/search/${searchPara}/${i}?limit=${limit}`)= i
+                        else
+                          a.page-link(href=`/product-list/${name}/${i}?limit=${limit}`)= i
                     - }
                     if (currentPage < totalPages)
                       li.page-item
-                        a.page-link(href=`/product-list/${name}/${currentPage+1}`) Next
+                        if searchPara
+                          a.page-link(href=`/search/${searchPara}/${currentPage+1}?limit=${limit}`) Next
+                        else
+                          a.page-link(href=`/product-list/${name}/${currentPage+1}?limit=${limit}`) Next
     section.abovefooter.text-white(style="background-color: #CF111A;")
       .container
         .row

@@ -611,18 +611,8 @@ if (searchform) {
     e.preventDefault();
     const searchname = document.getElementById("search").value;
     console.log(searchname);
-    // const sendData = await fetch("http://localhost:3500/catalog/search" + searchname, {
-    //     method: "GET",
-    //     headers: {
-    //       Accept: "application/json",
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({ name: searchname }),
-    //   });
-    // const content = await sendData.json();
-    // console.log(content);
     window.setTimeout(() => {
-      location.assign("/search/" + searchname);
+      location.assign("/search/" + searchname + "/1?limit=10");
     }, 200);
   });
 }
