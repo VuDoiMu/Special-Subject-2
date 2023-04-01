@@ -26,10 +26,10 @@ html(lang='en', dir='ltr')
           a(href='')
             i.bx.bx-list-ul
             span.links_name Order list
-        li.log_out
-          a(href='')
-            i.bx.bx-log-out
-            span.links_name Log out
+        //- li.log_out
+        //-   a(href='')
+        //-     i.bx.bx-log-out
+        //-     span.links_name Log out
     section.home-section
       nav
         .sidebar-button
@@ -38,16 +38,16 @@ html(lang='en', dir='ltr')
         //- .search-box
         //-   input(type='text', placeholder='Search...')
         //-   i.bx.bx-search
-        .profile-details
-          // <img src="images/profile.jpg" alt="">
-          span.admin_name Admin : Lam
+        //- .profile-details
+        //-   // <img src="images/profile.jpg" alt="">
+        //-   //- span.admin_name Admin : Lam
   
       .home-content
         .overview-boxes
           .box
             .right-side
               .box-topic Book sold
-              .number 40,876
+              .number #{totalBooks}
 
             i.bx.bx-cart-alt.cart
           .box
@@ -58,8 +58,8 @@ html(lang='en', dir='ltr')
             i.bx.bxs-cart-add.cart.two
           .box
             .right-side
-              .box-topic Total income
-              .number $12,876
+              .box-topic Total 
+              .number  $ #{totalProfits}
               
             i.bx.bx-cart.cart.three
           .box
@@ -76,6 +76,7 @@ html(lang='en', dir='ltr')
                 li.topic Date
                 for order in orders
                     li
+                   
                       a(href='#') #{order.createdDate}
                 
               ul.details

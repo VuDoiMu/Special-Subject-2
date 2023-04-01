@@ -115,31 +115,6 @@ app.get("/product/:id", async (req, res) => {
 
 app.get("/tag/:name", async (req, res) => {
   const name = req.params.name;
-<<<<<<< HEAD
-  let booksTag = "";
-  if(name) {
-    const response = await axios.get(`http://localhost:3500/tag/books/${name}`);
-    booksTag = response.data.books[0].books
-  }
-  
-  const sortType = req.query.sortType;
-  const isTag = true;
-  if(sortType == "priceAsc"){
-   booksTag = _.orderBy(booksTag, ['price'], ['asc']);
-}
-if(sortType == "priceDesc"){
-  booksTag = _.orderBy(booksTag, ['price'], ['desc']);
-}
-if(sortType == "dateAsc"){
-  booksTag = _.orderBy(booksTag, ['createdDate'], ['asc']);
-}
-if(sortType == "nameAsc"){
-  booksTag = _.orderBy(booksTag, ['name'], ['asc']);
-}
-if(sortType == "nameDesc"){
-  booksTag = _.orderBy(booksTag, ['name'], ['desc']);
-}
-=======
   const response = await axios.get(`http://localhost:3500/tag/books/${name}`);
   const booksTag = response.data.books[0].books;
   const sortType = req.query.sortType;
@@ -159,7 +134,6 @@ if(sortType == "nameDesc"){
   if (sortType == "nameDesc") {
     booksTag = _.orderBy(booksTag, ["name"], ["desc"]);
   }
->>>>>>> 8b2fa4154f42b145263076562e9a3a69f467b7cb
   const tag = await axios
     .get("http://localhost:3500/tag")
     .then((res) => (tagData = res.data.tags));
@@ -179,7 +153,7 @@ if(sortType == "nameDesc"){
     tags: tagData.slice(0, 11),
     name,
     token,
-   
+
     limit,
     isTag,
   });
@@ -245,7 +219,7 @@ app.get("/product-list/:name?/:page?", async (req, res) => {
     tags: tagData.slice(0, 11),
     name: req.params.name,
     token,
-    decoded
+    decoded,
   });
 });
 
@@ -265,14 +239,23 @@ app.get("/admin", async (req, res) => {
   const disData = discount.data;
   const topSell = await axios.get("http://localhost:3500/catalog/topsell");
   const topsellBook = topSell.data;
-  const orders = await axios.get("http://localhost:3500/order");
-  console.log(topsellBook);
+  const order = await axios.get("http://localhost:3500/order");
+  const orderData = order.data;
+  let totalBooks = 0;
+  let totalProfits = 0;
+  for (let i = 0; i < orderData.length; i++) {
+    totalBooks += orderData[i].items.length;
+    totalProfits += orderData[i].finalTotal;
+  }
+
   res.render("admin-home.pug", {
     data,
     userData,
     disData,
-    orders: orders.data,
+    orders: order.data,
     topsellBook: topsellBook.slice(0, 11),
+    totalBooks,
+    totalProfits,
   });
 });
 
@@ -289,8 +272,14 @@ app.get("/admin-management", async (req, res) => {
   const data = response.data;
   const order = await axios.get("http://localhost:3500/order");
   const orderData = order.data;
-  console.log(orderData);
-  res.render("admin-management.pug", { data, orderData, tags });
+  let totalBooks = 0;
+  let totalProfits = 0;
+  for (let i = 0; i < orderData.length; i++) {
+    totalBooks += orderData[i].items.length;
+    totalProfits += orderData[i].finalTotal;
+  }
+
+  res.render("admin-management.pug", { data, orderData, tags, totalBooks,totalProfits });
 });
 
 app.get("/admin/update/:id", async (req, res) => {
@@ -307,6 +296,19 @@ app.get("/admin/update/:id", async (req, res) => {
   }
 
   res.render("update.pug", { book: data, tags });
+});
+
+app.get("/admin-sale", async (req, res) => {
+  const order = await axios.get("http://localhost:3500/order");
+  const orderData = order.data;
+  let totalBooks = 0;
+  let totalProfits = 0;
+  for (let i = 0; i < orderData.length; i++) {
+    totalBooks += orderData[i].items.length;
+    totalProfits += orderData[i].finalTotal;
+  }
+
+  res.render("admin-sale.pug", { orderData, totalBooks, totalProfits });
 });
 
 //routes

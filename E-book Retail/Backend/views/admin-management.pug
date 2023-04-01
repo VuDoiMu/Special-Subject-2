@@ -32,10 +32,10 @@ html(lang='en', dir='ltr')
                     a(href='/admin-sale')
                         i.bx.bx-list-ul
                         span.links_name Sale list
-                li.log_out
-                    a(href='#')
-                        i.bx.bx-log-out
-                        span.links_name Log out
+                //- li.log_out
+                //-     a(href='#')
+                //-         i.bx.bx-log-out
+                //-         span.links_name Log out
         section.home-section
             nav
                 .sidebar-button
@@ -44,10 +44,10 @@ html(lang='en', dir='ltr')
                 //- .search-box
                 //-   input(type='text', placeholder='Search...')
                 //-   i.bx.bx-search
-                .profile-details
-                    // <img src="images/profile.jpg" alt="">
-                    span.admin_name Prem Shahi
-                    i.bx.bx-chevron-down
+                //- .profile-details
+                //-     // <img src="images/profile.jpg" alt="">
+                //-     span.admin_name Prem Shahi
+                //-     i.bx.bx-chevron-down
             .home-content
                 .overview-boxes
                     .box
@@ -64,13 +64,13 @@ html(lang='en', dir='ltr')
                     .box
                         .right-side
                             .box-topic Total Profit
-                            .number $0
+                            .number $ #{totalProfits}
 
                         i.bx.bx-cart.cart.two
                     .box
                         .right-side
                             .box-topic Total Books
-                            .number 0
+                            .number #{data.length}
 
                         i.bx.bxs-cart-download.cart.three
                             main
