@@ -74,127 +74,38 @@ html(lang='en', dir='ltr')
             .sales-details
               ul.details
                 li.topic Date
-                li
-                  a(href='#') 02 Jan 2021
-                li
-                  a(href='#') 02 Jan 2021
-                li
-                  a(href='#') 02 Jan 2021
-                li
-                  a(href='#') 02 Jan 2021
-                li
-                  a(href='#') 02 Jan 2021
-                li
-                  a(href='#') 02 Jan 2021
-                li
-                  a(href='#') 02 Jan 2021
-                li
-                  a(href='#') 02 Jan 2021
-                li
-                  a(href='#') 02 Jan 2021
+                for order in orders
+                    li
+                      a(href='#') #{order.createdDate}
+                
               ul.details
-                li.topic Customer
-                li
-                  a(href='#') Alex Doe
-                li
-                  a(href='#') David Mart
-                li
-                  a(href='#') Roe Parter
-                li
-                  a(href='#') Diana Penty
-                li
-                  a(href='#') Martin Paw
-                li
-                  a(href='#') Doe Alex
-                li
-                  a(href='#') Aiana Lexa
-                li
-                  a(href='#') Rexel Mags
-                li
-                  a(href='#') Tiana Loths
+                li.topic User
+                for order in orders
+                  li
+                    a(href='#') #{order.userId}
+              
               ul.details
-                li.topic Sales
-                li
-                  a(href='#') Delivered
-                li
-                  a(href='#') Pending
-                li
-                  a(href='#') Returned
-                li
-                  a(href='#') Delivered
-                li
-                  a(href='#') Pending
-                li
-                  a(href='#') Returned
-                li
-                  a(href='#') Delivered
-                li
-                  a(href='#') Pending
-                li
-                  a(href='#') Delivered
+                li.topic Books
+                for order in orders
+                  li
+                    a(href='#') #{order.items.length}
+              
               ul.details
                 li.topic Total
-                li
-                  a(href='#') $204.98
-                li
-                  a(href='#') $24.55
-                li
-                  a(href='#') $25.88
-                li
-                  a(href='#') $170.66
-                li
-                  a(href='#') $56.56
-                li
-                  a(href='#') $44.95
-                li
-                  a(href='#') $67.33
-                li
-                  a(href='#') $23.53
-                li
-                  a(href='#') $46.52
+                for order in orders
+                  li
+                    a(href='#') $ #{order.finalTotal}
+               
             .button
               a(href='/admin-sale') See All
           .top-sales.box
             .title Top Seling Product
             ul.top-sales-details
-              li
-                a(href='#')
-                  // <img src="images/sunglasses.jpg" alt="">
-                  span.product Vuitton Sunglasses
-                span.price $1107
-              li
-                a(href='#')
-                  // <img src="images/jeans.jpg" alt="">
-                  span.product Hourglass Jeans 
-                span.price $1567
-              li
-                a(href='#')
-                  // <img src="images/nike.jpg" alt="">
-                  span.product Nike Sport Shoe
-                span.price $1234
-              li
-                a(href='#')
-                  // <img src="images/scarves.jpg" alt="">
-                  span.product Hermes Silk Scarves.
-                span.price $2312
-              li
-                a(href='#')
-                  // <img src="images/blueBag.jpg" alt="">
-                  span.product Succi Ladies Bag
-                span.price $1456
-              li
-                a(href='#')
-                  // <img src="images/bag.jpg" alt="">
-                  span.product Gucci Womens&apos;s Bags
-                span.price $2345
-              li
-                a(href='#')
-                  // <img src="images/addidas.jpg" alt="">
-                  span.product Addidas Running Shoe
-                span.price $2345
-              li
-                a(href='#')
-                  // <img src="images/shirt.jpg" alt="">
-                  span.product Bilack Wear&apos;s Shirt
-                span.price $1245
+              for book in topsellBook
+                li
+                  a(href='#')
+                    // <img src="images/sunglasses.jpg" alt="">
+                    span.product #{book.name}
+                  span.price #{book.price}
+             
     script(src='/js/admin.js')

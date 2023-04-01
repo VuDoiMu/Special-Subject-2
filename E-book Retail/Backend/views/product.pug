@@ -22,6 +22,11 @@ html(lang="li")
       type="text/javascript"
       defer
       )
+    script(
+      src="/js/cookies.js" 
+      type="text/javascript"
+      defer
+      )
     link(
       href="/fontawesome_free_5.13.0/css/all.css" 
       rel="stylesheet"
@@ -339,9 +344,11 @@ html(lang="li")
                 a.active(
                   data-fancybox="thumb-img" 
                   href="/images/lap-ke-hoach-kinh-doanh-hieu-qua-mt.jpg"
+                  
                   )
                   img.product-image(
                     style="width: 100%;" 
+                    id="book-img"
                     alt="lap-ke-hoach-kinh-doanh-hieu-qua-mt" 
                     src= book.image
                     )
@@ -362,7 +369,7 @@ html(lang="li")
             .col-md-7.khoithongtin
               .row
                 .col-md-12.header
-                  h4.ten= book.name
+                  h4#book-name.ten= book.name
                   //- .rate
                   //-   i.fa.fa-star.active
                   //-   i.fa.fa-star.active
@@ -374,11 +381,11 @@ html(lang="li")
                   .gia
                     .giabia
                       | Old price:
-                      span.giacu.ml-2
+                      span#old-price.giacu.ml-2
                         |#{book.price} $
                     .giaban
                       | New price:
-                      span.giamoi.font-weight-bold 
+                      span#new-price.giamoi.font-weight-bold 
                         | #{(book.price - book.price*book.saleRate/100).toFixed(2)} $
                     .tietkiem
                       | Saving:
@@ -408,7 +415,7 @@ html(lang="li")
                         )
                       .input-group-append
                         span.input-group-text.btn-spin.btn-inc +
-                  .nutmua.btn.w-100.text-uppercase Add to cart
+                  btn#buy-btn.nutmua.btn.w-100.text-uppercase Add to cart
                   .fb-like(
                     data-share="true" 
                     data-size="small" 
@@ -423,7 +430,7 @@ html(lang="li")
                     ul
                       li
                         | Author:
-                        a.tacgia(href="#")=book.author
+                        a#author.tacgia(href="#")=book.author
                       li 
                         |Publisher: #{book.publisher}
                       li 
@@ -705,3 +712,4 @@ html(lang="li")
         href="#"
         )
         i.fa.fa-chevron-up.text-white
+  p#book-id(style="display:none") #{book._id}

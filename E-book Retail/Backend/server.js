@@ -9,7 +9,7 @@ const axios = require("axios");
 const jwt = require("jsonwebtoken");
 const paginate = require("paginate-array");
 const session = require("express-session");
-const _ = require('lodash');
+const _ = require("lodash");
 app.use(
   session({
     secret: "secret-key",
@@ -64,11 +64,9 @@ app.get("/", async (req, res) => {
     tags: tagData.slice(0, 11),
     topsellBook,
     token,
-    decoded
+    decoded,
   });
 });
-
-
 
 app.get("/gio-hang", async (req, res) => {
   const token = req.cookies.token;
@@ -80,8 +78,6 @@ app.get("/gio-hang", async (req, res) => {
     data,
   });
 });
-
-
 
 app.get("/product/:id", async (req, res) => {
   const id = req.params.id;
@@ -95,7 +91,7 @@ app.get("/product/:id", async (req, res) => {
 
   const token = req.cookies.token;
   let decoded = "";
-  if(token) {
+  if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
   }
   for (const tagItem of tag) {
@@ -107,20 +103,19 @@ app.get("/product/:id", async (req, res) => {
       booksTag.push(booksArray);
     }
   }
-  
+
   res.render("product.pug", {
     book,
     tags: tagData.slice(0, 11),
     booksTag,
     token,
-    decoded
+    decoded,
   });
 });
 
-
-
 app.get("/tag/:name", async (req, res) => {
   const name = req.params.name;
+<<<<<<< HEAD
   let booksTag = "";
   if(name) {
     const response = await axios.get(`http://localhost:3500/tag/books/${name}`);
@@ -144,6 +139,27 @@ if(sortType == "nameAsc"){
 if(sortType == "nameDesc"){
   booksTag = _.orderBy(booksTag, ['name'], ['desc']);
 }
+=======
+  const response = await axios.get(`http://localhost:3500/tag/books/${name}`);
+  const booksTag = response.data.books[0].books;
+  const sortType = req.query.sortType;
+  const isTag = true;
+  if (sortType == "priceAsc") {
+    booksTag = _.orderBy(booksTag, ["price"], ["asc"]);
+  }
+  if (sortType == "priceDesc") {
+    booksTag = _.orderBy(booksTag, ["price"], ["desc"]);
+  }
+  if (sortType == "dateDesc") {
+    booksTags = _.orderBy(booksTag, ["createdDate"], ["asc"]);
+  }
+  if (sortType == "nameAsc") {
+    booksTag = _.orderBy(booksTag, ["name"], ["asc"]);
+  }
+  if (sortType == "nameDesc") {
+    booksTag = _.orderBy(booksTag, ["name"], ["desc"]);
+  }
+>>>>>>> 8b2fa4154f42b145263076562e9a3a69f467b7cb
   const tag = await axios
     .get("http://localhost:3500/tag")
     .then((res) => (tagData = res.data.tags));
@@ -152,7 +168,7 @@ if(sortType == "nameDesc"){
   if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
   }
-  
+
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
   const paginatedBooks = paginate(booksTag, page, limit);
@@ -163,9 +179,11 @@ if(sortType == "nameDesc"){
     tags: tagData.slice(0, 11),
     name,
     token,
-    decoded,
+    //     decoded,
+    // <<<<<<< HEAD
+    // =======
     limit,
-    isTag
+    isTag,
   });
 });
 
@@ -194,7 +212,8 @@ app.get("/search/:searchPara?/:page?", async (req, res) => {
     limit,
     searchPara,
     token,
-    decoded
+    decoded,
+    // >>>>>>> 297d93eb1c2eaae85e9fc9e6a18a9a90c11bdb30
   });
 });
 
@@ -212,7 +231,7 @@ app.get("/product-list/:name?/:page?", async (req, res) => {
   const page = parseInt(req.params.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
   const paginatedBooks = paginate(books, page, limit);
-// 
+  //
   const token = req.cookies.token;
   let decoded = "";
   if (token) {
@@ -228,8 +247,12 @@ app.get("/product-list/:name?/:page?", async (req, res) => {
     tags: tagData.slice(0, 11),
     name: req.params.name,
     token,
+    // <<<<<<< HEAD
+    //     decoded, // set name to empty string if name is not provided
+    // =======
     decoded,
-    limit// set name to empty string if name is not provided
+    //     limit// set name to empty string if name is not provided
+    // >>>>>>> 297d93eb1c2eaae85e9fc9e6a18a9a90c11bdb30
   });
 });
 
@@ -250,12 +273,12 @@ app.get("/admin", async (req, res) => {
   const topSell = await axios.get("http://localhost:3500/catalog/topsell");
   const topsellBook = topSell.data;
   const orders = await axios.get("http://localhost:3500/order");
-
+  console.log(topsellBook);
   res.render("admin-home.pug", {
     data,
     userData,
     disData,
-    orders,
+    orders: orders.data,
     topsellBook: topsellBook.slice(0, 11),
   });
 });
@@ -268,11 +291,12 @@ app.get("/admin-management", async (req, res) => {
   for (let i = 0; i < tagData.length; i++) {
     tags.push(tagData[i].name);
   }
+
   const response = await axios.get("http://localhost:3500/management");
   const data = response.data;
   const order = await axios.get("http://localhost:3500/order");
   const orderData = order.data;
-
+  console.log(orderData);
   res.render("admin-management.pug", { data, orderData, tags });
 });
 
