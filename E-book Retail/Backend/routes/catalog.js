@@ -13,6 +13,18 @@ router.route('/toplike')
 
  router.route('/topsale')
     .get(cataController.topSale);
+    
+ router.route('/priceAsc')
+ .get(cataController.priceAsc);
+ 
+ router.route('/priceDesc')
+    .get(cataController.priceDesc);
+    
+ router.route('/nameSort')
+ .get(cataController.nameSort);
+  
+ router.route('/dateSort')
+ .get(cataController.dateSort);
 
 router.route('/search/:name')
     .get(cataController.searchByName);

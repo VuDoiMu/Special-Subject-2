@@ -518,6 +518,7 @@ $(function () {
 });
 let formdangnhap = document.querySelector("#formdangnhap");
 if (formdangnhap) {
+<<<<<<< HEAD
   formdangnhap.addEventListener("submit", async (e) => {
     e.preventDefault();
     const email = document.getElementById("email");
@@ -531,6 +532,74 @@ if (formdangnhap) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ email: emailValue, password: passwordValue }),
+=======
+  formdangnhap
+    .addEventListener("submit", async (e) => {
+      e.preventDefault();
+      
+      const email = document.getElementById("email");
+      const password = document.getElementById("password");
+      const emailValue = document.getElementById("email").value;
+      const passwordValue = document.getElementById("password").value;
+      console.log(emailValue);
+      console.log(passwordValue);
+      const sendData = await fetch("http://localhost:3500/auth/login", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: emailValue, password: passwordValue }),
+      });
+      const content = await sendData.json();
+      if (content.message === "Wrong email ") {
+        email.classList.remove("valid");
+        email.classList.add("error");
+
+        let errorLabel = document.querySelector('#email-error');
+        if (errorLabel) {
+          // If label already exists, remove it
+          errorLabel.parentNode.removeChild(errorLabel);
+        }
+        errorLabel = document.createElement('label');
+        errorLabel.setAttribute('id', 'email-error');
+        errorLabel.setAttribute('class', 'error');
+        errorLabel.setAttribute('for', 'email');
+        errorLabel.innerText = "Wrong email";
+        email.parentNode.insertBefore(errorLabel, email.nextSibling);
+        return;
+      }
+      else if (content.message === " Wrong password") {
+        password.classList.remove("valid");
+        password.classList.add("error");
+        const errorLabel = document.createElement('label');
+        errorLabel.setAttribute('id', 'password-error');
+        errorLabel.setAttribute('class', 'error');
+        errorLabel.setAttribute('for', 'password');
+        errorLabel.innerText = "Wrong password";
+        password.parentNode.insertBefore(errorLabel, password.nextSibling);
+        return;
+      }
+     let currentUrl = window.location.href;
+      // let toastContainer = document.getElementById("toast-container");
+      // let toastMessage = document.getElementById("toast-message");
+
+      // if (toastMessage) {
+      //   toastMessage.innerHTML = "";
+      // }
+
+      // if (toastContainer) {
+      //   toastContainer.style.display = "none";
+      // }
+      window.setTimeout(() => {
+        if(content.role == 0){
+          showToast("Login successfully!");
+          location.assign(currentUrl);}
+          else {
+            location.assign("/admin");
+          }
+      }, 200);
+>>>>>>> 297d93eb1c2eaae85e9fc9e6a18a9a90c11bdb30
     });
     const content = await sendData.json();
     if (content.message === "Wrong email ") {
@@ -579,8 +648,10 @@ if (logoutVar) {
       },
     });
     const content = await sendData.json();
+    console.log(content.username)
     let currentUrl = window.location.href;
     window.setTimeout(() => {
+      location.reload();
       location.assign(currentUrl);
     }, 200);
   });
@@ -592,18 +663,8 @@ if (searchform) {
     e.preventDefault();
     const searchname = document.getElementById("search").value;
     console.log(searchname);
-    // const sendData = await fetch("http://localhost:3500/catalog/search" + searchname, {
-    //     method: "GET",
-    //     headers: {
-    //       Accept: "application/json",
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({ name: searchname }),
-    //   });
-    // const content = await sendData.json();
-    // console.log(content);
     window.setTimeout(() => {
-      location.assign("/search/" + searchname);
+      location.assign("/search/" + searchname + "/1?limit=10");
     }, 200);
   });
 }
@@ -714,9 +775,11 @@ likeButtons.forEach((button) => {
 function showToast(message) {
   var toastContainer = document.getElementById("toast-container");
   var toastMessage = document.getElementById("toast-message");
-
-  toastMessage.innerHTML = message;
-
+  if (toastMessage) {
+    toastMessage.innerHTML = message;
+  }
+  console.log(toastContainer);
+  console.log(toastMessage);
   toastContainer.style.display = "block";
   toastMessage.style.opacity = "1";
 
@@ -727,3 +790,18 @@ function showToast(message) {
     }, 500);
   }, 5000);
 }
+<<<<<<< HEAD
+=======
+
+// Select limit page
+const hienthiSelect = document.querySelector('.hienthi-select');
+if (hienthiSelect) {
+  hienthiSelect.addEventListener('change', () => {
+    const selectedValue = hienthiSelect.value;
+    const currentUrl = window.location.href;
+    const urlWithoutLimit = currentUrl.split('?')[0]; // remove any existing query parameters
+    const newUrl = `${urlWithoutLimit}?limit=${selectedValue}`;
+    location.assign(newUrl);
+  });
+}
+>>>>>>> 297d93eb1c2eaae85e9fc9e6a18a9a90c11bdb30

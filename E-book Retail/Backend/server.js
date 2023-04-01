@@ -9,6 +9,7 @@ const axios = require("axios");
 const jwt = require("jsonwebtoken");
 const paginate = require("paginate-array");
 const session = require("express-session");
+const _ = require('lodash');
 app.use(
   session({
     secret: "secret-key",
@@ -45,14 +46,11 @@ app.get("/", async (req, res) => {
   const topsellBook = topSell.data;
   let tagData;
   const userInfor = req.cookies.userInfor;
-  // console.log("fhbsldfhlsfhnsdfgh")
-  // console.log(data)
   const tag = await axios
     .get("http://localhost:3500/tag")
     .then((res) => (tagData = res.data.tags));
 
   const data = response.data;
-  // console.log(data)
   const token = req.cookies.token;
   let decoded = "";
   if (token) {
@@ -81,21 +79,7 @@ app.get("/gio-hang", async (req, res) => {
   });
 });
 
-app.get("/search/:searchPara", async (req, res) => {
-  const searchPara = req.params.searchPara;
-  await axios
-    .get("http://localhost:3500/tag")
-    .then((res) => (tagData = res.data.tags));
-  const response = await axios.get(
-    "http://localhost:3500/catalog/search/" + searchPara
-  );
-  const booksTag = response.data;
-  res.render("product-list.pug", {
-    tags: tagData.slice(0, 11),
-    booksTag,
-    searchPara,
-  });
-});
+
 
 app.get("/product/:id", async (req, res) => {
   const id = req.params.id;
@@ -131,10 +115,29 @@ app.get("/product/:id", async (req, res) => {
   });
 });
 
+
+
 app.get("/tag/:name", async (req, res) => {
   const name = req.params.name;
   const response = await axios.get(`http://localhost:3500/tag/books/${name}`);
-  const booksTag = response.data.books[0].books;
+  const booksTag = response.data.books[0].books
+  const sortType = req.query.sortType;
+  const isTag = true;
+  if(sortType == "priceAsc"){
+   booksTag = _.orderBy(booksTag, ['price'], ['asc']);
+}
+if(sortType == "priceDesc"){
+  booksTag = _.orderBy(booksTag, ['price'], ['desc']);
+}
+if(sortType == "dateDesc"){
+  booksTags = _.orderBy(booksTag, ['createdDate'], ['asc']);
+}
+if(sortType == "nameAsc"){
+  booksTag = _.orderBy(booksTag, ['name'], ['asc']);
+}
+if(sortType == "nameDesc"){
+  booksTag = _.orderBy(booksTag, ['name'], ['desc']);
+}
   const tag = await axios
     .get("http://localhost:3500/tag")
     .then((res) => (tagData = res.data.tags));
@@ -143,9 +146,9 @@ app.get("/tag/:name", async (req, res) => {
   if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
   }
-  const page = parseInt(req.params.page) || 1;
-  const limit = 10;
-
+  
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
   const paginatedBooks = paginate(booksTag, page, limit);
   res.render("product-list.pug", {
     booksTag: paginatedBooks.data,
@@ -155,11 +158,44 @@ app.get("/tag/:name", async (req, res) => {
     name,
     token,
     decoded,
+<<<<<<< HEAD
+=======
+    limit,
+    isTag
+  });
+});
+
+app.get("/search/:searchPara?/:page?", async (req, res) => {
+  const searchPara = req.params.searchPara;
+  await axios
+    .get("http://localhost:3500/tag")
+    .then((res) => (tagData = res.data.tags));
+  const response = await axios.get(
+    "http://localhost:3500/catalog/search/" + searchPara
+  );
+  const token = req.cookies.token;
+  let decoded = "";
+  if (token) {
+    decoded = jwt.verify(token, "thisisourwebsite!");
+  }
+  const booksTag = response.data;
+  const page = parseInt(req.params.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+  const paginatedBooks = paginate(booksTag, page, limit);
+  res.render("product-list.pug", {
+    tags: tagData.slice(0, 11),
+    booksTag: paginatedBooks.data,
+    currentPage: paginatedBooks.currentPage,
+    totalPages: paginatedBooks.totalPages,
+    limit,
+    searchPara,
+    token,
+    decoded
+>>>>>>> 297d93eb1c2eaae85e9fc9e6a18a9a90c11bdb30
   });
 });
 
 app.get("/product-list/:name?/:page?", async (req, res) => {
-  // console.log("Calling product list")
   let books = "";
   if (req.params.name != "general-book") {
     const name = req.params.name;
@@ -171,16 +207,14 @@ app.get("/product-list/:name?/:page?", async (req, res) => {
   }
 
   const page = parseInt(req.params.page) || 1;
-  const limit = 10;
-
+  const limit = parseInt(req.query.limit) || 10;
   const paginatedBooks = paginate(books, page, limit);
-
+// 
   const token = req.cookies.token;
   let decoded = "";
   if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
   }
-  // console.log(paginatedBooks.totalPages);
   const tag = await axios
     .get("http://localhost:3500/tag")
     .then((res) => (tagData = res.data.tags));
@@ -191,7 +225,12 @@ app.get("/product-list/:name?/:page?", async (req, res) => {
     tags: tagData.slice(0, 11),
     name: req.params.name,
     token,
+<<<<<<< HEAD
     decoded, // set name to empty string if name is not provided
+=======
+    decoded,
+    limit// set name to empty string if name is not provided
+>>>>>>> 297d93eb1c2eaae85e9fc9e6a18a9a90c11bdb30
   });
 });
 

@@ -97,6 +97,41 @@ const topLike = async (req, res) => {
             res.json({success : false, message:"false"})
         }
   }
+  const priceAsc = async (req, res) => {  // thaps ddens cao
+    try{
+      const books = await Book.find().sort({ price: 1 });
+        res.json(books );
+      }catch(error){
+          res.json({success : false, message:"false"})
+      }
+  }
+  const priceDesc = async (req, res) => {  
+    try{
+      const books = await Book.find().sort({ price: -1 });
+        res.json(books );
+      }catch(error){
+          res.json({success : false, message:"false"})
+      }
+  }
+  const nameSort = async (req, res) =>{
+    
+      try{
+        const books = await Book.find().sort({ name: 1 });
+          res.json(books );
+        }catch(error){
+            res.json({success : false, message:"false"})
+        }
+    
+  }
+  const dateSort = async (req, res) => {
+    
+    try{
+      const books = await Book.find().sort({ createdDate: 1 });
+        res.json(books );
+      }catch(error){
+          res.json({success : false, message:"false"})
+      }
+  }
   const searchByName = async (req, res) => {
     const name = req.params.name;
     const regex = new RegExp(name, "i");
@@ -111,5 +146,7 @@ module.exports = {
     topSell,
     topLike,
     topSale,
-    searchByName
+    searchByName,
+    priceAsc,
+    priceDesc, nameSort, dateSort
 };

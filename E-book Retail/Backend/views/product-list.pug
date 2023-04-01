@@ -84,6 +84,8 @@ html(lang="vi")
       defer="" 
       async=""
       )
+    #toast-container
+      #toast-message
     // header
     nav.navbar.navbar-expand-md.bg-white.navbar-light
       .container
@@ -160,10 +162,9 @@ html(lang="vi")
                   .cart-amount 0
                 a.nav-link.text-dark.giohang.text-uppercase(
                   style="display:inline-block" 
-                  href="/gio-hang"
+                  href="gio-hang"
                   )
-                  | Giỏ
-                  |   Hàng
+                  | My cart
     // form dang ky khi click vao button tren header
     #formdangky.modal.fade.mt-5(
       aria-hidden="true" 
@@ -275,6 +276,15 @@ html(lang="vi")
                   placeholder="Password" 
                   type="password"
                   )
+              //- .custom-control.custom-checkbox.mb-3
+              //-   input#customCheck1.custom-control-input(type="checkbox")
+              //-   label.custom-control-label(for="customCheck1") Nhớ mật khẩu
+              //-   a.float-right.text-decoration-none(
+              //-     style="color: #F5A623" 
+              //-     href="#"
+              //-     )
+              //-     | Quên mật
+              //-     |   khẩu
               button.btn.btn-lg.btn-block.btn-signin.text-uppercase.text-white(
                 style="background: #F5A623" 
                 type="submit"
@@ -305,7 +315,7 @@ html(lang="vi")
                     data-placement="" 
                     data-toggle="" 
                     style="" 
-                    href=('/tag/' + tag.name))=tag.name 
+                    href=('/tag/' + tag.name +  "?page=1&limit=10"))=tag.name 
                         i.fa.fa-chevron-right.float-right
     -if(searchPara)
       div#search-result
@@ -336,14 +346,14 @@ html(lang="vi")
               .hien-thi
                 label.label-select(for="hienthi-select") Show
                 select.hienthi-select
-                  option(value="30") 30
-                  option(value="60") 60
+                  each val in [10, 20, 30]
+                    option(value=val selected=limit==val)= val
               .sap-xep
                 label.label-select(for="sapxep-select") Filter
                 select.sapxep-select
-                  option(value="moinhat") Mới nhất
-                  option(value="thap-cao") Giá: Thấp - Cao
-                  option(value="cao-thap") Giá: Cao - Thấp
+                  option(value="moinhat") Newest
+                  option(value="thap-cao") Price: Low - High
+                  option(value="cao-thap") Price: High - Low
           // các sản phẩm
           .items
             .row
@@ -394,7 +404,7 @@ html(lang="vi")
                         <span class="sr-only">Previous</span>
                         </a>
                         </li>
-                    - const maxPagesToShow = 5; // maximum number of page links to show
+                    - const maxPagesToShow = totalPages; // maximum number of page links to show
                     - const middlePage = Math.ceil(maxPagesToShow/2);
                     - let startPage = Math.max(currentPage - middlePage, 1);
                     - let endPage = Math.min(startPage + maxPagesToShow - 1, totalPages);
@@ -403,14 +413,29 @@ html(lang="vi")
                     - }
                     if currentPage > 1
                       li.page-item
-                        a.page-link(href=`/product-list/${name}/${currentPage-1}`) Previous
+                        if searchPara
+                          a.page-link(href=`/search/${searchPara}/${currentPage-1}?limit=${limit}`) Previous
+                        else if isTag 
+                          a.page-link(href=`/tag/${name}?page=&${currentPage-1}limit=${limit}`) Previous
+                        else
+                          a.page-link(href=`/product-list/${name}/${currentPage-1}?limit=${limit}`) Previous
                     - for (var i = startPage; i <= endPage; i++) {
                       li.page-item(class=i===currentPage ? 'active' : '')
-                        a.page-link(href=`/product-list/${name}/${i}`)= i
+                        if searchPara
+                          a.page-link(href=`/search/${searchPara}/${i}?limit=${limit}`)= i
+                        else if isTag 
+                          a.page-link(href=`/tag/${name}?page=${i}&limit=${limit}`)= i
+                        else
+                          a.page-link(href=`/product-list/${name}/${i}?limit=${limit}`)= i
                     - }
                     if (currentPage < totalPages)
                       li.page-item
-                        a.page-link(href=`/product-list/${name}/${currentPage+1}`) Next
+                        if searchPara
+                          a.page-link(href=`/search/${searchPara}/${currentPage+1}?limit=${limit}`) Next
+                        else if isTag 
+                          a.page-link(href=`/tag/${name}?page=${currentPage+1}&limit=${limit}`) Next
+                        else
+                          a.page-link(href=`/product-list/${name}/${currentPage+1}?limit=${limit}`) Next
     section.abovefooter.text-white(style="background-color: #CF111A;")
       .container
         .row
