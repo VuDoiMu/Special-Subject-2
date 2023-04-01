@@ -307,38 +307,38 @@ $(function () {
   let carts = document.querySelector(".nutmua");
   if (carts) {
     carts.addEventListener("click", () => {
-      // cartNumbers(product);
+      cartNumbers(product);
       totalCost(product);
     });
   }
 
-  // function onLoadCartNumbers() {
-  //   let productNumbers = localStorage.getItem("cartNumbers");
-  //   if (productNumbers) {
-  //     document.querySelector(".giohang .cart-amount").textContent =
-  //       productNumbers;
-  //   }
-  // }
+  function onLoadCartNumbers() {
+    let productNumbers = localStorage.getItem("cartNumbers");
+    if (productNumbers) {
+      document.querySelector(".giohang .cart-amount").textContent =
+        productNumbers;
+    }
+  }
 
-  // function cartNumbers(product) {
-  //   let productNumbers = localStorage.getItem("cartNumbers");
-  //   productNumbers = parseInt(productNumbers);
+  function cartNumbers(product) {
+    let productNumbers = localStorage.getItem("cartNumbers");
+    productNumbers = parseInt(productNumbers);
 
-  //   if (productNumbers) {
-  //     localStorage.setItem(
-  //       "cartNumbers",
-  //       productNumbers + parseInt($(".soluongsp").val())
-  //     );
-  //     document.querySelector(".giohang .cart-amount").textContent =
-  //       productNumbers + parseInt($(".soluongsp").val());
-  //   } else {
-  //     localStorage.setItem("cartNumbers", parseInt($(".soluongsp").val()));
-  //     document.querySelector(".giohang .cart-amount").textContent = parseInt(
-  //       $(".soluongsp").val()
-  //     );
-  //   }
-  //   setItem(product);
-  // }
+    if (productNumbers) {
+      localStorage.setItem(
+        "cartNumbers",
+        productNumbers + parseInt($(".soluongsp").val())
+      );
+      document.querySelector(".giohang .cart-amount").textContent =
+        productNumbers + parseInt($(".soluongsp").val());
+    } else {
+      localStorage.setItem("cartNumbers", parseInt($(".soluongsp").val()));
+      document.querySelector(".giohang .cart-amount").textContent = parseInt(
+        $(".soluongsp").val()
+      );
+    }
+    setItem(product);
+  }
 
   function setItem(product) {
     let cartItems = localStorage.getItem("productsInCart");
@@ -406,23 +406,20 @@ $(function () {
         cartContent.innerHTML += `
                     <div class="cart-item d-flex">
                         <a href="product-item.html" class="img">
-                            <img src="images/${
-                              item.tag
-                            }.jpg" class="img-fluid" alt="${item.tag}">
+                            <img src="images/${item.tag
+          }.jpg" class="img-fluid" alt="${item.tag}">
                         </a>
                         <div class="item-caption d-flex w-100">
                             <div class="item-info ml-3">
-                                <a href="product-item.html" class="ten">${
-                                  item.name
-                                }</a>
+                                <a href="product-item.html" class="ten">${item.name
+          }</a>
                                 <div class="soluong d-flex">
                                     <div class="input-number input-group mb-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text btn-spin btn-dec">-</span>
                                         </div>
-                                        <input type="text" value="${
-                                          item.inCart
-                                        }" class="soluongsp  text-center">
+                                        <input type="text" value="${item.inCart
+          }" class="soluongsp  text-center">
                                         <div class="input-group-append">
                                             <span class="input-group-text btn-spin btn-inc">+</span>
                                         </div>
@@ -431,11 +428,11 @@ $(function () {
                             </div>
                             <div class="item-price ml-auto d-flex flex-column align-items-end">
                                 <div class="giamoi">${parseFloat(
-                                  item.price
-                                ).toFixed(3)} ₫</div>
+            item.price
+          ).toFixed(3)} ₫</div>
                                 <div class="giacu">${parseFloat(
-                                  item.old_price
-                                ).toFixed(3)} ₫</div>
+            item.old_price
+          ).toFixed(3)} ₫</div>
                                 <span class="remove mt-auto"><i class="far fa-trash-alt"></i></span>
                             </div>
                         </div>
@@ -456,8 +453,8 @@ $(function () {
                         <div class="group d-flex justify-content-between">
                             <p class="label">Tạm tính:</p>
                             <p class="tamtinh">${parseFloat(cartCost).toFixed(
-                              3
-                            )} ₫</p>
+        3
+      )} ₫</p>
                         </div>
                         <div class="group d-flex justify-content-between">
                             <p class="label">Giảm giá:</p>
@@ -474,8 +471,8 @@ $(function () {
                         <div class="group d-flex justify-content-between align-items-center">
                             <strong class="text-uppercase">Tổng cộng:</strong>
                             <p class="tongcong">${parseFloat(cartCost).toFixed(
-                              3
-                            )} ₫</p>
+        3
+      )} ₫</p>
                         </div>
                         <small class="note d-flex justify-content-end text-muted">
                             (Giá đã bao gồm VAT)
@@ -493,8 +490,8 @@ $(function () {
     alert("cảm ơn đã mua hàng");
   });
 
-  // onLoadCartNumbers();
-  // displayCart();
+  onLoadCartNumbers();
+  displayCart();
 
   $(".items .row").isotope({
     itemSelector: ".item",
@@ -585,51 +582,18 @@ if (formdangnhap) {
           }
       }, 200);
     });
-    const content = await sendData.json();
-    if (content.message === "Wrong email ") {
-      email.classList.remove("valid");
-      email.classList.add("error");
-
-      let errorLabel = document.querySelector("#email-error");
-      if (errorLabel) {
-        // If label already exists, remove it
-        errorLabel.parentNode.removeChild(errorLabel);
-      }
-      errorLabel = document.createElement("label");
-      errorLabel.setAttribute("id", "email-error");
-      errorLabel.setAttribute("class", "error");
-      errorLabel.setAttribute("for", "email");
-      errorLabel.innerText = "Wrong email";
-      email.parentNode.insertBefore(errorLabel, email.nextSibling);
-      return;
-    } else if (content.message === " Wrong password") {
-      password.classList.remove("valid");
-      password.classList.add("error");
-      const errorLabel = document.createElement("label");
-      errorLabel.setAttribute("id", "password-error");
-      errorLabel.setAttribute("class", "error");
-      errorLabel.setAttribute("for", "password");
-      errorLabel.innerText = "Wrong password";
-      password.parentNode.insertBefore(errorLabel, password.nextSibling);
-      return;
-    }
-    let currentUrl = window.location.href;
-    showToast("Login successfully!");
-    window.setTimeout(() => {
-      location.assign(currentUrl);
-    }, 200);
-  });
 }
+  
 
-const logoutVar = document.querySelector("#logout");
-if (logoutVar) {
+const logoutVar = document.querySelector("#logout")
+if(logoutVar) {
   logoutVar.addEventListener("click", async (e) => {
     const sendData = await fetch("http://localhost:3500/auth/logout", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-      },
+      }
     });
     const content = await sendData.json();
     console.log(content.username)
@@ -641,7 +605,7 @@ if (logoutVar) {
   });
 }
 
-const searchform = document.querySelector("#form-search");
+const searchform = document.querySelector("#form-search")
 if (searchform) {
   searchform.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -653,21 +617,22 @@ if (searchform) {
   });
 }
 
+
 // if (searchform) {
 //   searchform.addEventListener("submit", async (e) => {
 //     e.preventDefault();
 //     const searchname =  document.getElementById("search").value;
 
 //     console.log("grgfjhfktg56")
-// const sendData = await fetch("http://localhost:3500/catalog/search" + searchname, {
-//   method: "GET",
-//   headers: {
-//     Accept: "application/json",
-//     "Content-Type": "application/json",
-//   },
-//   body: JSON.stringify({ name: searchname }),
-// });
-// const content = await sendData.json();
+    // const sendData = await fetch("http://localhost:3500/catalog/search" + searchname, {
+    //   method: "GET",
+    //   headers: {
+    //     Accept: "application/json",
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({ name: searchname }),
+    // });
+    // const content = await sendData.json();
 //     window.setTimeout(() => {
 //       location.assign("/search/"+searchname);
 //     }, 200);
@@ -676,6 +641,7 @@ if (searchform) {
 
 const formSignUp = document.querySelector("#form-signup");
 if (formSignUp) {
+
 }
 document.querySelector("#form-signup").addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -686,8 +652,7 @@ document.querySelector("#form-signup").addEventListener("submit", async (e) => {
 
   const emailInputValue = document.getElementById("signup-email").value;
   const passwordInputValue = document.getElementById("inputPassword").value;
-  const confirmPasswordInputValue =
-    document.getElementById("confirm_password").value;
+  const confirmPasswordInputValue = document.getElementById("confirm_password").value;
   const usernameInputValue = document.getElementById("signup-username").value;
   if (
     !emailInput.classList.contains("valid") ||
@@ -705,21 +670,17 @@ document.querySelector("#form-signup").addEventListener("submit", async (e) => {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        email: emailInputValue,
-        password: passwordInputValue,
-        username: usernameInputValue,
-      }),
+      body: JSON.stringify({ email: emailInputValue, password: passwordInputValue, username: usernameInputValue }),
     });
     const content = await sendData.json();
     console.log(content.message);
     if (content.message === "this email is already used!") {
       emailInput.classList.remove("valid");
       emailInput.classList.add("error");
-      const errorLabel = document.createElement("label");
-      errorLabel.setAttribute("id", "signup-email-error");
-      errorLabel.setAttribute("class", "error");
-      errorLabel.setAttribute("for", "signup-email");
+      const errorLabel = document.createElement('label');
+      errorLabel.setAttribute('id', 'signup-email-error');
+      errorLabel.setAttribute('class', 'error');
+      errorLabel.setAttribute('for', 'signup-email');
       errorLabel.innerText = "This email is already used!";
       emailInput.parentNode.insertBefore(errorLabel, emailInput.nextSibling);
       return;
@@ -734,25 +695,25 @@ document.querySelector("#form-signup").addEventListener("submit", async (e) => {
 
 function fetchProduct(url) {
   fetch(url)
-    .then((response) => response.json())
-    .then((data) => {
+    .then(response => response.json())
+    .then(data => {
       // Handle the product data here
       console.log(data);
     })
-    .catch((error) => {
+    .catch(error => {
       console.error(error);
     });
 }
 
 // toggle like
-const likeButtons = document.querySelectorAll(".like");
-likeButtons.forEach((button) => {
-  button.addEventListener("click", (e) => {
+const likeButtons = document.querySelectorAll('.like');
+likeButtons.forEach(button => {
+  button.addEventListener('click', (e) => {
     e.preventDefault();
-    const heartIcon = button.querySelector("i.fa.fa-heart");
-    const emptyHeartIcon = button.querySelector("i.far.fa-heart");
-    heartIcon.classList.toggle("active");
-    emptyHeartIcon.classList.toggle("active");
+    const heartIcon = button.querySelector('i.fa.fa-heart');
+    const emptyHeartIcon = button.querySelector('i.far.fa-heart');
+    heartIcon.classList.toggle('active');
+    emptyHeartIcon.classList.toggle('active');
   });
 });
 

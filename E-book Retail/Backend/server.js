@@ -153,9 +153,7 @@ app.get("/tag/:name", async (req, res) => {
     tags: tagData.slice(0, 11),
     name,
     token,
-    //     decoded,
-    // <<<<<<< HEAD
-    // =======
+   
     limit,
     isTag,
   });
@@ -221,12 +219,7 @@ app.get("/product-list/:name?/:page?", async (req, res) => {
     tags: tagData.slice(0, 11),
     name: req.params.name,
     token,
-    // <<<<<<< HEAD
-    //     decoded, // set name to empty string if name is not provided
-    // =======
-    decoded,
-    //     limit// set name to empty string if name is not provided
-    // >>>>>>> 297d93eb1c2eaae85e9fc9e6a18a9a90c11bdb30
+    decoded
   });
 });
 
