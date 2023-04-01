@@ -344,16 +344,21 @@ html(lang="vi")
 
             .sort.d-flex.ml-auto
               .hien-thi
-                label.label-select(for="hienthi-select") Show
+                if isTag 
+                  label.label-select(for="hienthi-select") Show
+                else 
+                  label.label-select(for="hienthi-select") Show
                 select.hienthi-select
                   each val in [10, 20, 30]
                     option(value=val selected=limit==val)= val
               .sap-xep
                 label.label-select(for="sapxep-select") Filter
                 select.sapxep-select
-                  option(value="moinhat") Newest
-                  option(value="thap-cao") Price: Low - High
-                  option(value="cao-thap") Price: High - Low
+                  option(value="dateAsc") Newest
+                  option(value="priceAsc") Price: Low - High
+                  option(value="priceDesc") Price: High - Low
+                  option(value="nameAsc") Name:(A-Z)
+                  option(value="nameDesc") Name:(Z-A)
           // các sản phẩm
           .items
             .row

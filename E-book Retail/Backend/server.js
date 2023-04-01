@@ -121,8 +121,12 @@ app.get("/product/:id", async (req, res) => {
 
 app.get("/tag/:name", async (req, res) => {
   const name = req.params.name;
-  const response = await axios.get(`http://localhost:3500/tag/books/${name}`);
-  const booksTag = response.data.books[0].books
+  let booksTag = "";
+  if(name) {
+    const response = await axios.get(`http://localhost:3500/tag/books/${name}`);
+    booksTag = response.data.books[0].books
+  }
+  
   const sortType = req.query.sortType;
   const isTag = true;
   if(sortType == "priceAsc"){
@@ -131,8 +135,8 @@ app.get("/tag/:name", async (req, res) => {
 if(sortType == "priceDesc"){
   booksTag = _.orderBy(booksTag, ['price'], ['desc']);
 }
-if(sortType == "dateDesc"){
-  booksTags = _.orderBy(booksTag, ['createdDate'], ['asc']);
+if(sortType == "dateAsc"){
+  booksTag = _.orderBy(booksTag, ['createdDate'], ['asc']);
 }
 if(sortType == "nameAsc"){
   booksTag = _.orderBy(booksTag, ['name'], ['asc']);

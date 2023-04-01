@@ -742,8 +742,30 @@ if (hienthiSelect) {
   hienthiSelect.addEventListener('change', () => {
     const selectedValue = hienthiSelect.value;
     const currentUrl = window.location.href;
-    const urlWithoutLimit = currentUrl.split('?')[0]; // remove any existing query parameters
-    const newUrl = `${urlWithoutLimit}?limit=${selectedValue}`;
+    const urlWithoutParams = currentUrl.split('?')[0]; // remove any existing query parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const pageParam = urlParams.get('page'); // get the value of the 'page' parameter
+    console.log('pageParam:', pageParam); // add this line to log the value of pageParam
+
+    if (hienthiSelect.classList.contains("isTag")) {
+      const newUrl = `${urlWithoutParams}?page=${pageParam}&limit=${selectedValue}`;
+      location.assign(newUrl);
+    }
+    else {
+      const newUrl = `${urlWithoutParams}?limit=${selectedValue}`;
+      location.assign(newUrl);
+    }
+  });
+}
+
+
+const saxpepSelect = document.querySelector('.sapxep-select');
+if (saxpepSelect) {
+  saxpepSelect.addEventListener('change', () => {
+    const selectedValue = saxpepSelect.value;
+    const currentUrl = window.location.href;
+    const urlWithoutLimit = currentUrl.split('?')[0]; 
+    const newUrl = `${urlWithoutLimit}?sortType=${selectedValue}&limit=${selectedValue}`;
     location.assign(newUrl);
   });
 }
