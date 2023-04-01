@@ -152,7 +152,7 @@ html(lang="vi")
                   i.fa.fa-user
                 a.nav-link.text-dark.text-uppercase(
                   style="display:inline-block" 
-                  href="#"
+                  href="/tai-khoan"
                   )
                   if token 
                     |#{decoded.username}
@@ -160,6 +160,10 @@ html(lang="vi")
                     | Account
               .dropdown-menu(aria-labelledby="dropdownMenuButton")
                 if token
+                  a.dropdown-item.nutdangky.text-center.mb-2( 
+                  href="/tai-khoan"
+                  style="cursor: pointer"
+                  ) Account detail
                   a.dropdown-item.nutdangky.text-center.mb-2( 
                   id="logout"
                   style="cursor: pointer"

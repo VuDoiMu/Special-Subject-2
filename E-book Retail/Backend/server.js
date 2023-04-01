@@ -282,9 +282,16 @@ app.get("/product-list/:name?/:page?", async (req, res) => {
 });
 
 app.get("/tai-khoan", async (req, res) => {
+  const token = req.cookies.token;
+  let decoded = "";
+  if (token) {
+    decoded = jwt.verify(token, "thisisourwebsite!");
+  }
+
   const response = await axios.get("http://localhost:3500/");
   res.render("tai-khoan.pug", {
-    title: "hello world",
+    token,
+    decoded,
   });
 });
 

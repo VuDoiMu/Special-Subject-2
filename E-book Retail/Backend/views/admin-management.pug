@@ -18,7 +18,8 @@ html(lang='en', dir='ltr')
         .sidebar
             .logo-details
                 i.E
-                span.logo_name EManga
+                a(href="/")
+                    span.logo_name EManga
             ul.nav-links
                 li
                     a.active(href='/admin')
@@ -50,31 +51,9 @@ html(lang='en', dir='ltr')
                 //-     i.bx.bx-chevron-down
             .home-content
                 .overview-boxes
-                    .box
-                        .right-side
-                            .box-topic Total Order
-                            .number=orderData.length
-                            //
-                                <div class="indicator">
-                                <i class='bx bx-up-arrow-alt'></i>
-                                <span class="text">Up from yesterday</span>
-                                </div>
-                        i.bx.bx-cart-alt.cart
+    
 
-                    .box
-                        .right-side
-                            .box-topic Total Profit
-                            .number $ #{totalProfits}
-
-                        i.bx.bx-cart.cart.two
-                    .box
-                        .right-side
-                            .box-topic Total Books
-                            .number #{data.length}
-
-                        i.bx.bxs-cart-download.cart.three
-                            main
-
+   
 
 
 

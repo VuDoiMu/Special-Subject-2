@@ -89,10 +89,9 @@ html(lang="vi")
         // logo
         a.navbar-brand(
           style="color: #CF111A;" 
-          href="index.html"
+          href="/"
           )
-          b DealBook
-          | .xyz
+          b EManga
         // navbar-toggler
         button.navbar-toggler.d-lg-none(
           aria-label="Toggle navigation" 
@@ -121,27 +120,40 @@ html(lang="vi")
           // ô thông tin tài khoản nút đăng xuất và giỏ hàng trên header
           ul.navbar-nav.mb-1.ml-auto
             .dropdown
-              li.nav-item.account.d-flex(
+              li.nav-item.account(
                 data-toggle="dropdown" 
                 type="button"
                 )
                 a.btn.btn-secondary.rounded-circle(href="#")
                   i.fa.fa-user
-                .info-logout
-                  a.nav-link.text-dark.text-uppercase.username(href="tai-khoan.html") Khánh Nguyễn
-                  a.nav-link.text-dark.logout(href="#")
-                    | Thoát
-                    i.fas.fa-sign-out-alt
-            li.nav-item.giohang
-              a.btn.btn-secondary.rounded-circle(href="gio-hang.html")
-                i.fa.fa-shopping-cart
-                .cart-amount 0
-              a.nav-link.text-dark.giohang.text-uppercase(
-                style="display:inline-block" 
-                href="gio-hang.html"
-                )
-                | Giỏ
-                |   Hàng
+                a.nav-link.text-dark.text-uppercase(
+                  style="display:inline-block" 
+                  href="/tai-khoan"
+                  )
+                  if token 
+                    |#{decoded.username}
+                  else 
+                    | Account
+              .dropdown-menu(aria-labelledby="dropdownMenuButton")
+                if token
+                  a.dropdown-item.nutdangky.text-center.mb-2( 
+                  href="/tai-khoan"
+                  style="cursor: pointer"
+                  ) Account detail
+                  a.dropdown-item.nutdangky.text-center.mb-2( 
+                  id="logout"
+                  style="cursor: pointer"
+                  ) Logout
+            if token
+              li.nav-item.giohang
+                a.btn.btn-secondary.rounded-circle(href="/gio-hang")
+                  i.fa.fa-shopping-cart
+                  .cart-amount 0
+                a.nav-link.text-dark.giohang.text-uppercase(
+                  style="display:inline-block" 
+                  href="gio-hang"
+                  )
+                  | My cart
     // form dang ky khi click vao button tren header
     #formdangky.modal.fade.mt-5(
       aria-hidden="true" 
