@@ -115,6 +115,31 @@ app.get("/product/:id", async (req, res) => {
 
 app.get("/tag/:name", async (req, res) => {
   const name = req.params.name;
+<<<<<<< HEAD
+  let booksTag = "";
+  if(name) {
+    const response = await axios.get(`http://localhost:3500/tag/books/${name}`);
+    booksTag = response.data.books[0].books
+  }
+  
+  const sortType = req.query.sortType;
+  const isTag = true;
+  if(sortType == "priceAsc"){
+   booksTag = _.orderBy(booksTag, ['price'], ['asc']);
+}
+if(sortType == "priceDesc"){
+  booksTag = _.orderBy(booksTag, ['price'], ['desc']);
+}
+if(sortType == "dateAsc"){
+  booksTag = _.orderBy(booksTag, ['createdDate'], ['asc']);
+}
+if(sortType == "nameAsc"){
+  booksTag = _.orderBy(booksTag, ['name'], ['asc']);
+}
+if(sortType == "nameDesc"){
+  booksTag = _.orderBy(booksTag, ['name'], ['desc']);
+}
+=======
   const response = await axios.get(`http://localhost:3500/tag/books/${name}`);
   const booksTag = response.data.books[0].books;
   const sortType = req.query.sortType;
@@ -134,6 +159,7 @@ app.get("/tag/:name", async (req, res) => {
   if (sortType == "nameDesc") {
     booksTag = _.orderBy(booksTag, ["name"], ["desc"]);
   }
+>>>>>>> 8b2fa4154f42b145263076562e9a3a69f467b7cb
   const tag = await axios
     .get("http://localhost:3500/tag")
     .then((res) => (tagData = res.data.tags));
