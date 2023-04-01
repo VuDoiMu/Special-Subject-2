@@ -124,6 +124,7 @@ app.get("/tag/:name", async (req, res) => {
   const response = await axios.get(`http://localhost:3500/tag/books/${name}`);
   const booksTag = response.data.books[0].books
   const sortType = req.query.sortType;
+  const isTag = true;
   if(sortType == "priceAsc"){
    booksTag = _.orderBy(booksTag, ['price'], ['asc']);
 }
@@ -148,7 +149,7 @@ if(sortType == "nameDesc"){
     decoded = jwt.verify(token, "thisisourwebsite!");
   }
   
-  const page = parseInt(req.params.page) || 1;
+  const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
   const paginatedBooks = paginate(booksTag, page, limit);
   res.render("product-list.pug", {
@@ -159,7 +160,8 @@ if(sortType == "nameDesc"){
     name,
     token,
     decoded,
-    limit
+    limit,
+    isTag
   });
 });
 

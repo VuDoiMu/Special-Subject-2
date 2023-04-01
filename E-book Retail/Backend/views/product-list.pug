@@ -315,7 +315,7 @@ html(lang="vi")
                     data-placement="" 
                     data-toggle="" 
                     style="" 
-                    href=('/tag/' + tag.name))=tag.name 
+                    href=('/tag/' + tag.name +  "?page=1&limit=10"))=tag.name 
                         i.fa.fa-chevron-right.float-right
     -if(searchPara)
       div#search-result
@@ -415,12 +415,16 @@ html(lang="vi")
                       li.page-item
                         if searchPara
                           a.page-link(href=`/search/${searchPara}/${currentPage-1}?limit=${limit}`) Previous
+                        else if isTag 
+                          a.page-link(href=`/tag/${name}?page=&${currentPage-1}limit=${limit}`) Previous
                         else
                           a.page-link(href=`/product-list/${name}/${currentPage-1}?limit=${limit}`) Previous
                     - for (var i = startPage; i <= endPage; i++) {
                       li.page-item(class=i===currentPage ? 'active' : '')
                         if searchPara
                           a.page-link(href=`/search/${searchPara}/${i}?limit=${limit}`)= i
+                        else if isTag 
+                          a.page-link(href=`/tag/${name}?page=${i}&limit=${limit}`)= i
                         else
                           a.page-link(href=`/product-list/${name}/${i}?limit=${limit}`)= i
                     - }
@@ -428,6 +432,8 @@ html(lang="vi")
                       li.page-item
                         if searchPara
                           a.page-link(href=`/search/${searchPara}/${currentPage+1}?limit=${limit}`) Next
+                        else if isTag 
+                          a.page-link(href=`/tag/${name}?page=${currentPage+1}&limit=${limit}`) Next
                         else
                           a.page-link(href=`/product-list/${name}/${currentPage+1}?limit=${limit}`) Next
     section.abovefooter.text-white(style="background-color: #CF111A;")
