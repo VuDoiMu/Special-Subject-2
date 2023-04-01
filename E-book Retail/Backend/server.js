@@ -168,6 +168,7 @@ app.get("/tag/:name", async (req, res) => {
   const limit = parseInt(req.query.limit) || 10;
   const paginatedBooks = paginate(booksTag, page, limit);
   res.render("product-list.pug", {
+    decoded,
     booksTag: paginatedBooks.data,
     currentPage: paginatedBooks.currentPage,
     totalPages: paginatedBooks.totalPages,
@@ -182,7 +183,7 @@ app.get("/tag/:name", async (req, res) => {
 
 app.get("/search/:searchPara?/:page?", async (req, res) => {
   const searchPara = req.params.searchPara;
-  
+
   await axios
     .get("http://localhost:3500/tag")
     .then((res) => (tagData = res.data.tags));
@@ -211,7 +212,7 @@ app.get("/search/:searchPara?/:page?", async (req, res) => {
   if (sortType == "nameDesc") {
     booksTag = _.orderBy(booksTag, ["name"], ["desc"]);
   }
-  
+
   const page = parseInt(req.params.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
   const paginatedBooks = paginate(booksTag, page, limit);
@@ -224,8 +225,7 @@ app.get("/search/:searchPara?/:page?", async (req, res) => {
     searchPara,
     token,
     decoded,
-    sortType
-    
+    sortType,
   });
 });
 
@@ -239,7 +239,7 @@ app.get("/product-list/:name?/:page?", async (req, res) => {
     const response = await axios.get(`http://localhost:3500/management`);
     books = response.data;
   }
- 
+
   const sortType = req.query.sortType;
   if (sortType == "priceAsc") {
     books = _.orderBy(books, ["price"], ["asc"]);
@@ -277,7 +277,7 @@ app.get("/product-list/:name?/:page?", async (req, res) => {
     name: req.params.name,
     token,
     decoded,
-    sortType
+    sortType,
   });
 });
 
