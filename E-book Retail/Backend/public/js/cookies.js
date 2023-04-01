@@ -9,7 +9,7 @@ const addToCart = () => {
   const img = document.getElementById("book-img").src;
   const bookName = document.getElementById("book-name").innerHTML;
   const id = document.getElementById("book-id").innerHTML;
-  console.log(author, oldPrice, newPrice, img, bookName);
+
   const item = { author, oldPrice, newPrice, image: img, name: bookName, id };
 
   // const itemId = // Get the item ID from the form or button
@@ -22,6 +22,13 @@ const addToCart = () => {
 
   //     };
   let cart = getCartFromCookie(); // Retrieve the cart from the cookie
+  for (let i = 0; i < cart.length; i++) {
+    if (cart[i].id === item.id) {
+      console.log("hi");
+      return;
+    }
+  }
+
   cart.push(item);
 
   // Update the cart on the client-side to reflect the newly added item
@@ -52,4 +59,4 @@ function getCookie(name) {
   return null;
 }
 
-console.log(getCookie("cart"))
+console.log(getCookie("cart"));

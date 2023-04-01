@@ -70,16 +70,36 @@ app.get("/", async (req, res) => {
 
 app.get("/gio-hang", async (req, res) => {
   const token = req.cookies.token;
+  let tagData;
+  const tag = await axios
+    .get("http://localhost:3500/tag")
+    .then((res) => (tagData = res.data.tags));
   const decoded = jwt.verify(token, "thisisourwebsite!");
   const id = decoded.userId;
   const response = await axios.get("http://localhost:3500/cart/" + id);
   const data = response.data;
+  const cookies = req.headers.cookie ? req.headers.cookie.split("; ") : [];
+  let empty = false;
+  const cart = cookies[1] + "";
+  if (cart == "cart=[]") {
+    empty = true;
+  }
+
   res.render("gio-hang.pug", {
     data,
+    empty,
+    tags: tagData.slice(0, 11),
   });
 });
 
 app.get("/product/:id", async (req, res) => {
+  const cartCookie = req.cookies.cart;
+  let itemCount = 0;
+
+  if (cartCookie) {
+    const cart = JSON.parse(cartCookie);
+    itemCount = Object.keys(cart).length;
+  }
   const id = req.params.id;
   await axios
     .get("http://localhost:3500/tag")
@@ -110,6 +130,7 @@ app.get("/product/:id", async (req, res) => {
     booksTag,
     token,
     decoded,
+    itemCount,
   });
 });
 
@@ -279,7 +300,13 @@ app.get("/admin-management", async (req, res) => {
     totalProfits += orderData[i].finalTotal;
   }
 
-  res.render("admin-management.pug", { data, orderData, tags, totalBooks,totalProfits });
+  res.render("admin-management.pug", {
+    data,
+    orderData,
+    tags,
+    totalBooks,
+    totalProfits,
+  });
 });
 
 app.get("/admin/update/:id", async (req, res) => {

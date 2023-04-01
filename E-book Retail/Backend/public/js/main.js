@@ -313,7 +313,9 @@ $(function () {
   }
 
   function onLoadCartNumbers() {
-    let productNumbers = localStorage.getItem("cartNumbers");
+    let cartItems = getCookie("cart");
+    cartItems = JSON.parse(cartItems);
+    let productNumbers = cartItems.length;
     if (productNumbers) {
       document.querySelector(".giohang .cart-amount").textContent =
         productNumbers;
@@ -321,7 +323,9 @@ $(function () {
   }
 
   function cartNumbers(product) {
-    let productNumbers = localStorage.getItem("cartNumbers");
+    let cartItems = getCookie("cart");
+    cartItems = JSON.parse(cartItems);
+    let productNumbers = cartItems.length;
     productNumbers = parseInt(productNumbers);
 
     if (productNumbers) {
@@ -378,13 +382,26 @@ $(function () {
       );
     }
   }
+  function getCookie(name) {
+    const match = document.cookie.match(new RegExp(`(^| )${name}=([^;]+)`));
+    if (match) {
+      return match[2];
+    }
+    return null;
+  }
 
   function displayCart() {
-    let cartItems = localStorage.getItem("productsInCart");
+    let cartItems = getCookie("cart");
     cartItems = JSON.parse(cartItems);
+    let totalProfits = 0;
+
+    for (let i = 0; i < cartItems.length; i++) {
+      totalProfits += cartItems[i].newPrice.split(" ")[1] * 1;
+    }
     let cartContent = document.querySelector(".cart-content");
-    let cartCost = localStorage.getItem("totalCost");
-    let productNumbers = localStorage.getItem("cartNumbers");
+    let cartCost = totalProfits;
+
+    let productNumbers = cartItems.lenght;
 
     if (cartItems == null) {
       $(".cart-empty").removeClass("d-none");
@@ -399,41 +416,32 @@ $(function () {
       cartContent.innerHTML = "";
 
       cartContent.innerHTML += `
-            <h6 class="header-gio-hang">GIỎ HÀNG CỦA BẠN <span>(${productNumbers} sản phẩm)</span></h6>
+            <h6 class="header-gio-hang">GIỎ HÀNG CỦA BẠN <span>(${cartItems.length} sản phẩm)</span></h6>
             <div class="cart-list-items">
             `;
       Object.values(cartItems).map((item) => {
         cartContent.innerHTML += `
                     <div class="cart-item d-flex">
-                        <a href="product-item.html" class="img">
-                            <img src="images/${item.tag
-          }.jpg" class="img-fluid" alt="${item.tag}">
+                        <a href="product/${item.id}" class="img">
+                            <img src="${
+                              item.image
+                            }.jpg" class="img-fluid" alt="${item.tag}">
                         </a>
                         <div class="item-caption d-flex w-100">
                             <div class="item-info ml-3">
-                                <a href="product-item.html" class="ten">${item.name
-          }</a>
-                                <div class="soluong d-flex">
-                                    <div class="input-number input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text btn-spin btn-dec">-</span>
-                                        </div>
-                                        <input type="text" value="${item.inCart
-          }" class="soluongsp  text-center">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text btn-spin btn-inc">+</span>
-                                        </div>
-                                    </div>
-                                </div>
+                                <a href="product/${item.id}" class="ten">${
+          item.name
+        }</a>
+                              
                             </div>
                             <div class="item-price ml-auto d-flex flex-column align-items-end">
                                 <div class="giamoi">${parseFloat(
-            item.price
-          ).toFixed(3)} ₫</div>
+                                  item.newPrice
+                                )} $</div>
                                 <div class="giacu">${parseFloat(
-            item.old_price
-          ).toFixed(3)} ₫</div>
-                                <span class="remove mt-auto"><i class="far fa-trash-alt"></i></span>
+                                  item.oldPrice
+                                )} $</div>
+       
                             </div>
                         </div>
                     </div>
@@ -446,33 +454,22 @@ $(function () {
 
             <div class="row">
                 <div class="col-md-3">
-                    <a href="index.html" class="btn nutmuathem mb-3">Mua thêm</a>
+                    <a href="/" class="btn nutmuathem mb-3">Mua thêm</a>
                 </div>
                 <div class="col-md-5 offset-md-4">
                     <div class="tonggiatien">
                         <div class="group d-flex justify-content-between">
-                            <p class="label">Tạm tính:</p>
-                            <p class="tamtinh">${parseFloat(cartCost).toFixed(
-        3
-      )} ₫</p>
+                           
                         </div>
-                        <div class="group d-flex justify-content-between">
-                            <p class="label">Giảm giá:</p>
-                            <p class="giamgia">0 ₫</p>
-                        </div>
-                        <div class="group d-flex justify-content-between">
-                            <p class="label">Phí vận chuyển:</p>
-                            <p class="phivanchuyen">0 ₫</p>
-                        </div>
+                       
+                      
                         <div class="group d-flex justify-content-between">
                             <p class="label">Phí dịch vụ:</p>
                             <p class="phidicvu">0 ₫</p>
                         </div>
                         <div class="group d-flex justify-content-between align-items-center">
                             <strong class="text-uppercase">Tổng cộng:</strong>
-                            <p class="tongcong">${parseFloat(cartCost).toFixed(
-        3
-      )} ₫</p>
+                            <p class="tongcong">${cartCost} $</p>
                         </div>
                         <small class="note d-flex justify-content-end text-muted">
                             (Giá đã bao gồm VAT)
@@ -484,8 +481,20 @@ $(function () {
     }
   }
 
+  function setCartCookie(cart) {
+    const expires = new Date(Date.now() + 86400000).toUTCString(); // Expire the cookie after 24 hours
+    document.cookie = `cart=${JSON.stringify(
+      cart
+    )}; expires=${expires}; path=/`;
+  }
   $(".btn-checkout").click(function (e) {
-    localStorage.clear();
+    let cart = []; // Create an empty cart
+
+    // Update the cart on the client-side to reflect the cleared cart
+    // ...
+
+    // Save the cleared cart to the cookie
+    setCartCookie(cart);
     location.reload(true);
     alert("cảm ơn đã mua hàng");
   });
@@ -515,88 +524,85 @@ $(function () {
 });
 let formdangnhap = document.querySelector("#formdangnhap");
 if (formdangnhap) {
-  formdangnhap
-    .addEventListener("submit", async (e) => {
-      e.preventDefault();
-      
-      const email = document.getElementById("email");
-      const password = document.getElementById("password");
-      const emailValue = document.getElementById("email").value;
-      const passwordValue = document.getElementById("password").value;
-      console.log(emailValue);
-      console.log(passwordValue);
-      const sendData = await fetch("http://localhost:3500/auth/login", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email: emailValue, password: passwordValue }),
-      });
-      const content = await sendData.json();
-      if (content.message === "Wrong email ") {
-        email.classList.remove("valid");
-        email.classList.add("error");
+  formdangnhap.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-        let errorLabel = document.querySelector('#email-error');
-        if (errorLabel) {
-          // If label already exists, remove it
-          errorLabel.parentNode.removeChild(errorLabel);
-        }
-        errorLabel = document.createElement('label');
-        errorLabel.setAttribute('id', 'email-error');
-        errorLabel.setAttribute('class', 'error');
-        errorLabel.setAttribute('for', 'email');
-        errorLabel.innerText = "Wrong email";
-        email.parentNode.insertBefore(errorLabel, email.nextSibling);
-        return;
-      }
-      else if (content.message === " Wrong password") {
-        password.classList.remove("valid");
-        password.classList.add("error");
-        const errorLabel = document.createElement('label');
-        errorLabel.setAttribute('id', 'password-error');
-        errorLabel.setAttribute('class', 'error');
-        errorLabel.setAttribute('for', 'password');
-        errorLabel.innerText = "Wrong password";
-        password.parentNode.insertBefore(errorLabel, password.nextSibling);
-        return;
-      }
-     let currentUrl = window.location.href;
-      // let toastContainer = document.getElementById("toast-container");
-      // let toastMessage = document.getElementById("toast-message");
-
-      // if (toastMessage) {
-      //   toastMessage.innerHTML = "";
-      // }
-
-      // if (toastContainer) {
-      //   toastContainer.style.display = "none";
-      // }
-      window.setTimeout(() => {
-        if(content.role == 0){
-          showToast("Login successfully!");
-          location.assign(currentUrl);}
-          else {
-            location.assign("/admin");
-          }
-      }, 200);
+    const email = document.getElementById("email");
+    const password = document.getElementById("password");
+    const emailValue = document.getElementById("email").value;
+    const passwordValue = document.getElementById("password").value;
+    console.log(emailValue);
+    console.log(passwordValue);
+    const sendData = await fetch("http://localhost:3500/auth/login", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email: emailValue, password: passwordValue }),
     });
-}
-  
+    const content = await sendData.json();
+    if (content.message === "Wrong email ") {
+      email.classList.remove("valid");
+      email.classList.add("error");
 
-const logoutVar = document.querySelector("#logout")
-if(logoutVar) {
+      let errorLabel = document.querySelector("#email-error");
+      if (errorLabel) {
+        // If label already exists, remove it
+        errorLabel.parentNode.removeChild(errorLabel);
+      }
+      errorLabel = document.createElement("label");
+      errorLabel.setAttribute("id", "email-error");
+      errorLabel.setAttribute("class", "error");
+      errorLabel.setAttribute("for", "email");
+      errorLabel.innerText = "Wrong email";
+      email.parentNode.insertBefore(errorLabel, email.nextSibling);
+      return;
+    } else if (content.message === " Wrong password") {
+      password.classList.remove("valid");
+      password.classList.add("error");
+      const errorLabel = document.createElement("label");
+      errorLabel.setAttribute("id", "password-error");
+      errorLabel.setAttribute("class", "error");
+      errorLabel.setAttribute("for", "password");
+      errorLabel.innerText = "Wrong password";
+      password.parentNode.insertBefore(errorLabel, password.nextSibling);
+      return;
+    }
+    let currentUrl = window.location.href;
+    // let toastContainer = document.getElementById("toast-container");
+    // let toastMessage = document.getElementById("toast-message");
+
+    // if (toastMessage) {
+    //   toastMessage.innerHTML = "";
+    // }
+
+    // if (toastContainer) {
+    //   toastContainer.style.display = "none";
+    // }
+    window.setTimeout(() => {
+      if (content.role == 0) {
+        showToast("Login successfully!");
+        location.assign(currentUrl);
+      } else {
+        location.assign("/admin");
+      }
+    }, 200);
+  });
+}
+
+const logoutVar = document.querySelector("#logout");
+if (logoutVar) {
   logoutVar.addEventListener("click", async (e) => {
     const sendData = await fetch("http://localhost:3500/auth/logout", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-      }
+      },
     });
     const content = await sendData.json();
-    console.log(content.username)
+    console.log(content.username);
     let currentUrl = window.location.href;
     window.setTimeout(() => {
       location.reload();
@@ -605,7 +611,7 @@ if(logoutVar) {
   });
 }
 
-const searchform = document.querySelector("#form-search")
+const searchform = document.querySelector("#form-search");
 if (searchform) {
   searchform.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -617,22 +623,21 @@ if (searchform) {
   });
 }
 
-
 // if (searchform) {
 //   searchform.addEventListener("submit", async (e) => {
 //     e.preventDefault();
 //     const searchname =  document.getElementById("search").value;
 
 //     console.log("grgfjhfktg56")
-    // const sendData = await fetch("http://localhost:3500/catalog/search" + searchname, {
-    //   method: "GET",
-    //   headers: {
-    //     Accept: "application/json",
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({ name: searchname }),
-    // });
-    // const content = await sendData.json();
+// const sendData = await fetch("http://localhost:3500/catalog/search" + searchname, {
+//   method: "GET",
+//   headers: {
+//     Accept: "application/json",
+//     "Content-Type": "application/json",
+//   },
+//   body: JSON.stringify({ name: searchname }),
+// });
+// const content = await sendData.json();
 //     window.setTimeout(() => {
 //       location.assign("/search/"+searchname);
 //     }, 200);
@@ -641,7 +646,6 @@ if (searchform) {
 
 const formSignUp = document.querySelector("#form-signup");
 if (formSignUp) {
-
 }
 document.querySelector("#form-signup").addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -652,7 +656,8 @@ document.querySelector("#form-signup").addEventListener("submit", async (e) => {
 
   const emailInputValue = document.getElementById("signup-email").value;
   const passwordInputValue = document.getElementById("inputPassword").value;
-  const confirmPasswordInputValue = document.getElementById("confirm_password").value;
+  const confirmPasswordInputValue =
+    document.getElementById("confirm_password").value;
   const usernameInputValue = document.getElementById("signup-username").value;
   if (
     !emailInput.classList.contains("valid") ||
@@ -670,17 +675,21 @@ document.querySelector("#form-signup").addEventListener("submit", async (e) => {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email: emailInputValue, password: passwordInputValue, username: usernameInputValue }),
+      body: JSON.stringify({
+        email: emailInputValue,
+        password: passwordInputValue,
+        username: usernameInputValue,
+      }),
     });
     const content = await sendData.json();
     console.log(content.message);
     if (content.message === "this email is already used!") {
       emailInput.classList.remove("valid");
       emailInput.classList.add("error");
-      const errorLabel = document.createElement('label');
-      errorLabel.setAttribute('id', 'signup-email-error');
-      errorLabel.setAttribute('class', 'error');
-      errorLabel.setAttribute('for', 'signup-email');
+      const errorLabel = document.createElement("label");
+      errorLabel.setAttribute("id", "signup-email-error");
+      errorLabel.setAttribute("class", "error");
+      errorLabel.setAttribute("for", "signup-email");
       errorLabel.innerText = "This email is already used!";
       emailInput.parentNode.insertBefore(errorLabel, emailInput.nextSibling);
       return;
@@ -695,25 +704,25 @@ document.querySelector("#form-signup").addEventListener("submit", async (e) => {
 
 function fetchProduct(url) {
   fetch(url)
-    .then(response => response.json())
-    .then(data => {
+    .then((response) => response.json())
+    .then((data) => {
       // Handle the product data here
       console.log(data);
     })
-    .catch(error => {
+    .catch((error) => {
       console.error(error);
     });
 }
 
 // toggle like
-const likeButtons = document.querySelectorAll('.like');
-likeButtons.forEach(button => {
-  button.addEventListener('click', (e) => {
+const likeButtons = document.querySelectorAll(".like");
+likeButtons.forEach((button) => {
+  button.addEventListener("click", (e) => {
     e.preventDefault();
-    const heartIcon = button.querySelector('i.fa.fa-heart');
-    const emptyHeartIcon = button.querySelector('i.far.fa-heart');
-    heartIcon.classList.toggle('active');
-    emptyHeartIcon.classList.toggle('active');
+    const heartIcon = button.querySelector("i.fa.fa-heart");
+    const emptyHeartIcon = button.querySelector("i.far.fa-heart");
+    heartIcon.classList.toggle("active");
+    emptyHeartIcon.classList.toggle("active");
   });
 });
 
@@ -737,34 +746,32 @@ function showToast(message) {
 }
 
 // Select limit page
-const hienthiSelect = document.querySelector('.hienthi-select');
+const hienthiSelect = document.querySelector(".hienthi-select");
 if (hienthiSelect) {
-  hienthiSelect.addEventListener('change', () => {
+  hienthiSelect.addEventListener("change", () => {
     const selectedValue = hienthiSelect.value;
     const currentUrl = window.location.href;
-    const urlWithoutParams = currentUrl.split('?')[0]; // remove any existing query parameters
+    const urlWithoutParams = currentUrl.split("?")[0]; // remove any existing query parameters
     const urlParams = new URLSearchParams(window.location.search);
-    const pageParam = urlParams.get('page'); // get the value of the 'page' parameter
-    console.log('pageParam:', pageParam); // add this line to log the value of pageParam
+    const pageParam = urlParams.get("page"); // get the value of the 'page' parameter
+    console.log("pageParam:", pageParam); // add this line to log the value of pageParam
 
     if (hienthiSelect.classList.contains("isTag")) {
       const newUrl = `${urlWithoutParams}?page=${pageParam}&limit=${selectedValue}`;
       location.assign(newUrl);
-    }
-    else {
+    } else {
       const newUrl = `${urlWithoutParams}?limit=${selectedValue}`;
       location.assign(newUrl);
     }
   });
 }
 
-
-const saxpepSelect = document.querySelector('.sapxep-select');
+const saxpepSelect = document.querySelector(".sapxep-select");
 if (saxpepSelect) {
-  saxpepSelect.addEventListener('change', () => {
+  saxpepSelect.addEventListener("change", () => {
     const selectedValue = saxpepSelect.value;
     const currentUrl = window.location.href;
-    const urlWithoutLimit = currentUrl.split('?')[0]; 
+    const urlWithoutLimit = currentUrl.split("?")[0];
     const newUrl = `${urlWithoutLimit}?sortType=${selectedValue}&limit=${selectedValue}`;
     location.assign(newUrl);
   });

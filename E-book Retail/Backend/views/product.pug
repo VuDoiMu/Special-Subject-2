@@ -164,10 +164,10 @@ html(lang="li")
               li.nav-item.giohang
                 a.btn.btn-secondary.rounded-circle(href="/gio-hang")
                   i.fa.fa-shopping-cart
-                  .cart-amount 0
+                  .cart-amount #{itemCount}
                 a.nav-link.text-dark.giohang.text-uppercase(
                   style="display:inline-block" 
-                  href="gio-hang"
+                  href="/gio-hang"
                   )
                   | My cart
             //- li.nav-item.giohang
@@ -404,18 +404,8 @@ html(lang="li")
                         b HOT book combo - 25% OFF
                       li Free Bookmark for every order
                       li Free book cover (on request)
-                  .soluong.d-flex
-                    label.font-weight-bold Quantity:
-                    .input-number.input-group.mb-3
-                      .input-group-prepend
-                        span.input-group-text.btn-spin.btn-dec -
-                      input.soluongsp.text-center(
-                        value="1" 
-                        type="text"
-                        )
-                      .input-group-append
-                        span.input-group-text.btn-spin.btn-inc +
-                  btn#buy-btn.nutmua.btn.w-100.text-uppercase Add to cart
+                 
+                  btn(id='buy-btn' class='nutmua btn w-100 text-uppercase' onclick="window.location.href='/gio-hang';")  Add to cart
                   .fb-like(
                     data-share="true" 
                     data-size="small" 
