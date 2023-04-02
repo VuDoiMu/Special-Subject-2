@@ -278,6 +278,7 @@ app.get("/product-list/:name?/:page?", async (req, res) => {
     token,
     decoded,
     sortType,
+    limit
   });
 });
 
