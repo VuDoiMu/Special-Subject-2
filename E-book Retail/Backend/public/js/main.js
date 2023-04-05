@@ -719,10 +719,47 @@ const likeButtons = document.querySelectorAll(".like");
 likeButtons.forEach((button) => {
   button.addEventListener("click", (e) => {
     e.preventDefault();
+    const bookId = $(button).closest(".card").find(".like i.fa-heart").data("book-id");
     const heartIcon = button.querySelector("i.fa.fa-heart");
-    const emptyHeartIcon = button.querySelector("i.far.fa-heart");
-    heartIcon.classList.toggle("active");
-    emptyHeartIcon.classList.toggle("active");
+    if(heartIcon.classList.contains("active")){ 
+      console.log("Active")
+      heartIcon.classList.toggle("active");
+      //bớt like
+      $.ajax({
+        type: 'PUT',
+        url: `http://localhost:3500/management/sublike/${bookId}`,
+        success: function(data) {
+          
+          $('#like-count-' + bookId).text("Favourite: " + (data.countLike-1));
+          
+        },
+        error: function(xhr, status, error) {
+          console.log(error);
+        }
+      });
+    }else{
+      console.log("Non-Active");
+      heartIcon.classList.toggle("active");
+      //thêm like
+      $.ajax({
+        type: 'PUT',
+        url: `http://localhost:3500/management/addlike/${bookId}`,
+        success: function(data) {
+          console.log(data)
+          $('#like-count-' + bookId).text("Favourite: " + (data.countLike+1));
+          
+        },
+        error: function(xhr, status, error) {
+          console.log(error);
+        }
+      });
+    }
+   
+    // const emptyHeartIcon = button.querySelector("i.far.fa-heart");
+    // if(emptyHeartIcon){
+    //   console.log("empty heart icon active");
+    // emptyHeartIcon.classList.toggle("active");
+    // }
   });
 });
 

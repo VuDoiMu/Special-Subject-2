@@ -104,7 +104,24 @@ const addLike = async (req, res) => {
     
     const updateUser = await User.findOneAndUpdate({ _id: userId }, { $push: { favorbooks: bookId } },{new: "true"});
    
-    res.json({success : true, updateBook})
+    res.json( updateBook)
+}catch(error){
+    res.json(error)
+}
+}
+const subLike = async (req, res) => {
+    const token = req.cookies.token;
+    const decoded = jwt.verify(token, "thisisourwebsite!");
+    const userId = decoded.userId;
+    const bookId = req.params.id;
+    
+    try{
+    
+    const updateBook = await Book.findOneAndUpdate({ _id: bookId }, { $inc: { countLike: -1 } });
+    
+    const updateUser = await User.findOneAndUpdate({ _id: userId }, { $pull: { favorbooks: bookId } },{new: "true"});
+   
+    res.json( updateBook)
 }catch(error){
     res.json(error)
 }
@@ -134,5 +151,6 @@ module.exports = {
     updateBook,
     addBook,
     // bookPage,
-    addLike
+    addLike,
+    subLike
 };

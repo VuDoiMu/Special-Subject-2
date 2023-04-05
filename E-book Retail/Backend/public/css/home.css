@@ -498,7 +498,7 @@ small.tacgia.text-muted {
 }
 
 .like i {
-    display: none;
+    color: rgb(55, 58, 55);
 }
 
 .like i.active {
