@@ -435,7 +435,7 @@ html(lang="vi")
                       .sale
                         |-#{book.saleRate}%
                     .like 
-                      span.countLike(id="like-count-#{book._id}")
+                      span.countLike(id="like-count-"+book._id)
                         |Favourite: #{book.countLike}
                       if token
                         i.fa.fa-heart(data-book-id=book._id)
