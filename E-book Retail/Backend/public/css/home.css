@@ -62,26 +62,6 @@ a.btn.btn-secondary.rounded-circle {
   border: #cacaca;
 }
 
-<<<<<<< HEAD
-#img-account {
-    width: 42px;
-    height: 40px;
-    border-radius: 50%;
-    margin-left: -12px;
-    margin-top: -5px;
-}
-
-.cart-amount{
-    height: 18px;
-    width: 18px;
-    border-radius: 50%;
-    background: #F5A623;
-    font-size: 12px;
-    position: relative;
-    left: 19px;
-    bottom: 32px;
-    transition: 0.2s;
-=======
 .cart-amount {
   height: 18px;
   width: 18px;
@@ -92,7 +72,14 @@ a.btn.btn-secondary.rounded-circle {
   left: 19px;
   bottom: 32px;
   transition: 0.2s;
->>>>>>> e22c7b0551ff54e38592e1527bb965070971b9fa
+}
+
+#img-account {
+  width: 42px;
+  height: 40px;
+  border-radius: 50%;
+  margin-left: -12px;
+  margin-top: -5px;
 }
 
 .nav-item.giohang:hover .cart-amount {

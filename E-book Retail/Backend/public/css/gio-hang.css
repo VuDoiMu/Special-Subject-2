@@ -4,16 +4,14 @@
   font-family: "Roboto", sans-serif;
 }
 
-<<<<<<< HEAD
 #img-account {
-    width: 42px;
-    height: 40px;
-    border-radius: 50%;
-    margin-left: -12px;
-    margin-top: -5px;
+  width: 42px;
+  height: 40px;
+  border-radius: 50%;
+  margin-left: -12px;
+  margin-top: -5px;
 }
 
-=======
 .trash-can {
   display: flex;
   justify-content: center;
@@ -23,7 +21,6 @@
   border: none;
   background-color: #b0b0b0;
 }
->>>>>>> e22c7b0551ff54e38592e1527bb965070971b9fa
 /* css cho navbar  */
 body,
 html {
