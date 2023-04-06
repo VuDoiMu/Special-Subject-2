@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+const moment = require("moment");
 const connectDB = require("./configs/dbCon");
 const path = require("path");
 const data = require("./data/book.json");
@@ -100,39 +101,49 @@ app.get("/product/:id", async (req, res) => {
     const cart = JSON.parse(cartCookie);
     itemCount = Object.keys(cart).length;
   }
-  const id = req.params.id;
-  await axios
-    .get("http://localhost:3500/tag")
-    .then((res) => (tagData = res.data.tags));
-  const booksTag = [];
-  const response = await axios.get("http://localhost:3500/management/" + id);
-  const book = response.data;
-  const tag = book.tag;
 
-  const token = req.cookies.token;
-  let decoded = "";
-  if (token) {
-    decoded = jwt.verify(token, "thisisourwebsite!");
-  }
-  for (const tagItem of tag) {
-    const response = await axios.get(
-      `http://localhost:3500/tag/books/${tagItem}`
-    );
+  const id = req.params.id;
+
+  // Retrieve the book data from the backend API
+  const response = await axios.get(`http://localhost:3500/management/${id}`);
+  const book = response.data;
+
+  // Retrieve the comments data from the backend API
+  const commentsResponse = await axios.get(`http://localhost:3500/comment/${id}`);
+  const comments = commentsResponse.data;
+
+  // Retrieve the tag data from the backend API
+  const tagResponse = await axios.get("http://localhost:3500/tag");
+  const tagData = tagResponse.data.tags;
+
+  const booksTag = []
+
+  // Retrieve the books associated with each tag
+  for (const tagItem of book.tag) {
+    const response = await axios.get(`http://localhost:3500/tag/books/${tagItem}`);
     if (response.data.books[0]) {
       const booksArray = response.data.books[0].books;
       booksTag.push(booksArray);
     }
   }
 
+  const token = req.cookies.token;
+  let decoded = "";
+  if (token) {
+    decoded = jwt.verify(token, "thisisourwebsite!");
+  }
   res.render("product.pug", {
     book,
+    comments,
     tags: tagData.slice(0, 11),
     booksTag,
     token,
     decoded,
     itemCount,
+    moment
   });
 });
+
 
 app.get("/tag/:name", async (req, res) => {
   const name = req.params.name;
@@ -384,6 +395,7 @@ app.get("/admin-sale", async (req, res) => {
 });
 
 //routes
+app.use("/comment", require("./routes/comment"));
 app.use("/management", require("./routes/books"));
 app.use("/order", require("./routes/order"));
 app.use("/auth", require("./routes/user"));
@@ -397,3 +409,4 @@ mongoose.connection.once("open", () => {
   console.log("connected to MongoDb");
   app.listen(3500, () => console.log("Server running on port 3500!"));
 });
+

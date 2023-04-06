@@ -59,7 +59,8 @@ const login = async (req, res) => {
         bcrypt.compare(password, storedHashedPassword, (err, result) => {
             if (result === true) {
                 // đăng nhập thành công
-                const accesstoken = jwt.sign({userId: user._id, role: user.role,username: user.username},"thisisourwebsite!")
+                console.log(user);
+                const accesstoken = jwt.sign({userId: user._id, role: user.role,username: user.username,image: user.image},"thisisourwebsite!")
         res.cookie('token', accesstoken);
         res.json(user)
             } else {

@@ -60,6 +60,14 @@ a.btn.btn-secondary.rounded-circle {
     border: #cacaca;
 }
 
+#img-account {
+    width: 42px;
+    height: 40px;
+    border-radius: 50%;
+    margin-left: -12px;
+    margin-top: -5px;
+}
+
 .cart-amount{
     height: 18px;
     width: 18px;

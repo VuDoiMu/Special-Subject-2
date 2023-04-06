@@ -531,8 +531,6 @@ if (formdangnhap) {
     const password = document.getElementById("password");
     const emailValue = document.getElementById("email").value;
     const passwordValue = document.getElementById("password").value;
-    console.log(emailValue);
-    console.log(passwordValue);
     const sendData = await fetch("http://localhost:3500/auth/login", {
       method: "POST",
       headers: {
@@ -602,7 +600,6 @@ if (logoutVar) {
       },
     });
     const content = await sendData.json();
-    console.log(content.username);
     let currentUrl = window.location.href;
     window.setTimeout(() => {
       location.reload();
@@ -616,7 +613,6 @@ if (searchform) {
   searchform.addEventListener("submit", async (e) => {
     e.preventDefault();
     const searchname = document.getElementById("search").value;
-    console.log(searchname);
     window.setTimeout(() => {
       location.assign("/search/" + searchname + "/1?limit=10");
     }, 200);
@@ -682,7 +678,6 @@ document.querySelector("#form-signup").addEventListener("submit", async (e) => {
       }),
     });
     const content = await sendData.json();
-    console.log(content.message);
     if (content.message === "this email is already used!") {
       emailInput.classList.remove("valid");
       emailInput.classList.add("error");
@@ -732,8 +727,6 @@ function showToast(message) {
   if (toastMessage) {
     toastMessage.innerHTML = message;
   }
-  console.log(toastContainer);
-  console.log(toastMessage);
   toastContainer.style.display = "block";
   toastMessage.style.opacity = "1";
 
@@ -756,7 +749,7 @@ if (hienthiSelect) {
     const urlWithoutParams = currentUrl.split("?")[0]; // remove any existing query parameters
     const urlParams = new URLSearchParams(window.location.search);
     const pageParam = urlParams.get("page"); // get the value of the 'page' parameter
-    console.log("pageParam:", pageParam); // add this line to log the value of pageParam
+    // console.log("pageParam:", pageParam); // add this line to log the value of pageParam
 
     if (hienthiSelect.classList.contains("isTag")) {
       const newUrl = `${urlWithoutParams}?page=${pageParam}&limit=${selectedValue}&sortType=${selectedSort}`;
@@ -800,3 +793,46 @@ if (sortSelect) {
 //     location.assign(newUrl);
 //   });
 // }
+
+const editCommentButtons = document.querySelectorAll('.edit-comment');
+
+editCommentButtons.forEach(editCommentButton => {
+  editCommentButton.addEventListener('click', () => {
+    const commentId = editCommentButton.dataset.commentId;
+    const commentContent = document.querySelector(`#comment-${commentId}`).textContent.trim();
+    const editForm = document.querySelector(`#edit-form-${commentId}`);
+    const editFormInput = editForm.querySelector('input[name="content"]');
+    editFormInput.value = commentContent;
+    editForm.classList.remove('d-none');
+  });
+});
+
+document.querySelectorAll('.form-edit').forEach(form => {
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const content = form.querySelector('input[name="content"]').value;
+    const commentId = form.dataset.commentId;
+    const bookId = form.dataset.bookId;
+    
+    try {
+      const response = await fetch(`/comment/${bookId}/${commentId}`, {
+        method: 'PUT',
+        headers: {
+        "Content-Type": "application/json",
+      },
+        body: JSON.stringify({content})
+      });
+      const updatedComment = await response.json();
+      console.log(updatedComment);
+      console.log("Update comment thôi nào!");
+      // Update the comment content on the page
+      const commentElement = document.querySelector(`#comment-${commentId}`);
+      commentElement.innerText = updatedComment.content;
+      // Hide the edit form
+      const editForm = document.querySelector(`#edit-form-${commentId}`);
+      editForm.classList.add('d-none');
+    } catch (error) {
+      console.error(error);
+    }
+  });
+});

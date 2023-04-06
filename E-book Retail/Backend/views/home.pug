@@ -149,7 +149,10 @@ html(lang="vi")
                 type="button"
                 )
                 a.btn.btn-secondary.rounded-circle(href="#")
-                  i.fa.fa-user
+                  if decoded.image
+                    img#img-account(alt="account-image" src=decoded.image)
+                  else
+                    i.fa.fa-user
                 a.nav-link.text-dark.text-uppercase(
                   style="display:inline-block" 
                   href="/tai-khoan"
@@ -730,8 +733,9 @@ html(lang="vi")
                     .like 
                       span.countLike
                         |Favourite: #{book.countLike}
-                      //- i.fa.fa-heart.active
-                      //- i.far.fa-heart
+                      if token
+                        i.fa.fa-heart.active
+                        i.far.fa-heart
                     .sell 
                       span 
                         |Purchases: #{book.countSale}
@@ -772,8 +776,9 @@ html(lang="vi")
                     .like 
                       span.countLike
                         |Favourite: #{book.countLike}
-                      //- i.fa.fa-heart.active
-                      //- i.far.fa-heart
+                      if token
+                        i.fa.fa-heart.active
+                        i.far.fa-heart
                     .sell 
                       span 
                         |Purchases: #{book.countSale} 
@@ -814,8 +819,9 @@ html(lang="vi")
                     .like 
                       span.countLike
                         |Favourite: #{book.countLike}
-                      //- i.fa.fa-heart.active
-                      //- i.far.fa-heart
+                      if token
+                        i.fa.fa-heart.active
+                        i.far.fa-heart
                     .sell 
                       span 
                         |Purchases: #{book.countSale}
