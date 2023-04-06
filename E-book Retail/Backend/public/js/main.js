@@ -316,7 +316,11 @@ $(function () {
     let cartItems = getCookie("cart");
     cartItems = JSON.parse(cartItems);
     let productNumbers = cartItems.length;
-    if (productNumbers) {
+    console.log(productNumbers);
+    if (productNumbers === 0) {
+      document.querySelector(".giohang .cart-amount").textContent = 0;
+    }
+    if (productNumbers !== 0) {
       document.querySelector(".giohang .cart-amount").textContent =
         productNumbers;
     }
@@ -328,7 +332,7 @@ $(function () {
     let productNumbers = cartItems.length;
     productNumbers = parseInt(productNumbers);
 
-    if (productNumbers) {
+    if (productNumbers.length !== 0) {
       localStorage.setItem(
         "cartNumbers",
         productNumbers + parseInt($(".soluongsp").val())
@@ -345,7 +349,7 @@ $(function () {
   }
 
   function setItem(product) {
-    let cartItems = localStorage.getItem("productsInCart");
+    let cartItems = getCookie("cart");
     cartItems = JSON.parse(cartItems);
 
     if (cartItems != null) {
@@ -441,7 +445,9 @@ $(function () {
                                 <div class="giacu">${parseFloat(
                                   item.oldPrice
                                 )} $</div>
-       
+                                  <button class="trash-can" data-item-id=${
+                                    item.id
+                                  }>X </button>
                             </div>
                         </div>
                     </div>
@@ -479,6 +485,36 @@ $(function () {
             </div>
             `;
     }
+    function removeFromCart(id) {
+      let cartItems = JSON.parse(getCookie("cart"));
+
+      cartItems = cartItems.filter((item) => item.id !== id + "");
+
+      setCartCookie(cartItems);
+    }
+    cartContent.addEventListener("click", function (event) {
+      // Check if the clicked element is a delete button
+      if (event.target && event.target.matches(".trash-can")) {
+        // Get the ID of the item to remove from the data attribute
+        const itemId = event.target.dataset.itemId;
+
+        removeFromCart(itemId);
+
+        // Update the UI
+        displayCart();
+        onLoadCartNumbers();
+      }
+    });
+
+    window.addEventListener("load", function (event) {
+      let removeButtons = document.getElementsByClassName("trash-can");
+
+      for (let i = 0; i < removeButtons.length; i++) {
+        removeButtons[i].addEventListener("click", function () {
+          removeFromCart(this.name);
+        });
+      }
+    });
   }
 
   function setCartCookie(cart) {
@@ -498,6 +534,18 @@ $(function () {
     location.reload(true);
     alert("cảm ơn đã mua hàng");
   });
+
+  //START
+  // const addFunctionToRemoveButton = () => {
+  //   window.addEventListener("load", function (event) {
+  //     let removeButtons = document.getElementsByClassName("trash-can");
+  //     for (let i = 0; i < removeButtons.length; i++) {
+  //       removeButtons[i].addEventListener("click", function () {
+  //         removeFromCart(this.name);
+  //       });
+  //     }
+  //   });
+  // };
 
   onLoadCartNumbers();
   displayCart();
@@ -719,42 +767,42 @@ const likeButtons = document.querySelectorAll(".like");
 likeButtons.forEach((button) => {
   button.addEventListener("click", (e) => {
     e.preventDefault();
-    const bookId = $(button).closest(".card").find(".like i.fa-heart").data("book-id");
+    const bookId = $(button)
+      .closest(".card")
+      .find(".like i.fa-heart")
+      .data("book-id");
     const heartIcon = button.querySelector("i.fa.fa-heart");
-    if(heartIcon.classList.contains("active")){ 
-      console.log("Active")
+    if (heartIcon.classList.contains("active")) {
+      console.log("Active");
       heartIcon.classList.toggle("active");
       //bớt like
       $.ajax({
-        type: 'PUT',
+        type: "PUT",
         url: `http://localhost:3500/management/sublike/${bookId}`,
-        success: function(data) {
-          
-          $('#like-count-' + bookId).text("Favourite: " + (data.countLike-1));
-          
+        success: function (data) {
+          $("#like-count-" + bookId).text("Favourite: " + (data.countLike - 1));
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
           console.log(error);
-        }
+        },
       });
-    }else{
+    } else {
       console.log("Non-Active");
       heartIcon.classList.toggle("active");
       //thêm like
       $.ajax({
-        type: 'PUT',
+        type: "PUT",
         url: `http://localhost:3500/management/addlike/${bookId}`,
-        success: function(data) {
-          console.log(data)
-          $('#like-count-' + bookId).text("Favourite: " + (data.countLike+1));
-          
+        success: function (data) {
+          console.log(data);
+          $("#like-count-" + bookId).text("Favourite: " + (data.countLike + 1));
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
           console.log(error);
-        }
+        },
       });
     }
-   
+
     // const emptyHeartIcon = button.querySelector("i.far.fa-heart");
     // if(emptyHeartIcon){
     //   console.log("empty heart icon active");
@@ -783,8 +831,8 @@ function showToast(message) {
 }
 
 // Select limit page
-const hienthiSelect = document.querySelector('.hienthi-select');
-const sortSelect = document.querySelector('.sapxep-select');
+const hienthiSelect = document.querySelector(".hienthi-select");
+const sortSelect = document.querySelector(".sapxep-select");
 if (hienthiSelect) {
   hienthiSelect.addEventListener("change", () => {
     const selectedValue = hienthiSelect.value;
@@ -798,8 +846,7 @@ if (hienthiSelect) {
     if (hienthiSelect.classList.contains("isTag")) {
       const newUrl = `${urlWithoutParams}?page=${pageParam}&limit=${selectedValue}&sortType=${selectedSort}`;
       location.assign(newUrl);
-    }
-    else {
+    } else {
       const newUrl = `${urlWithoutParams}?limit=${selectedValue}&sortType=${selectedSort}`;
       location.assign(newUrl);
     }
@@ -807,20 +854,19 @@ if (hienthiSelect) {
 }
 
 if (sortSelect) {
-  sortSelect.addEventListener('change', () => {
+  sortSelect.addEventListener("change", () => {
     const selectedValue = hienthiSelect.value;
     const selectedSort = sortSelect.value;
     const currentUrl = window.location.href;
-    const urlWithoutParams = currentUrl.split('?')[0]; // remove any existing query parameters
+    const urlWithoutParams = currentUrl.split("?")[0]; // remove any existing query parameters
     const urlParams = new URLSearchParams(window.location.search);
-    const pageParam = urlParams.get('page'); // get the value of the 'page' parameter
-    console.log('pageParam:', pageParam); // add this line to log the value of pageParam
+    const pageParam = urlParams.get("page"); // get the value of the 'page' parameter
+    console.log("pageParam:", pageParam); // add this line to log the value of pageParam
 
     if (hienthiSelect.classList.contains("isTag")) {
       const newUrl = `${urlWithoutParams}?page=${pageParam}&limit=${selectedValue}&sortType=${selectedSort}`;
       location.assign(newUrl);
-    }
-    else {
+    } else {
       const newUrl = `${urlWithoutParams}?limit=${selectedValue}&sortType=${selectedSort}`;
       location.assign(newUrl);
     }
@@ -832,7 +878,7 @@ if (sortSelect) {
 //   saxpepSelect.addEventListener('change', () => {
 //     const selectedValue = saxpepSelect.value;
 //     const currentUrl = window.location.href;
-//     const urlWithoutLimit = currentUrl.split('?')[0]; 
+//     const urlWithoutLimit = currentUrl.split('?')[0];
 //     const newUrl = `${urlWithoutLimit}?sortType=${selectedValue}&limit=${selectedValue}`;
 //     location.assign(newUrl);
 //   });

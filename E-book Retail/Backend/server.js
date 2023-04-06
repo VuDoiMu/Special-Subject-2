@@ -296,7 +296,7 @@ app.get("/tai-khoan", async (req, res) => {
   });
 });
 
-app.get("/admin", async (req, res) => {
+app.get("/admin/dash-board", async (req, res) => {
   const response = await axios.get("http://localhost:3500/management");
   const data = response.data;
   const user = await axios.get("http://localhost:3500/auth/getAllUser");
@@ -325,7 +325,7 @@ app.get("/admin", async (req, res) => {
   });
 });
 
-app.get("/admin-management", async (req, res) => {
+app.get("/admin/management", async (req, res) => {
   const tag = await axios
     .get("http://localhost:3500/tag")
     .then((res) => (tagData = res.data.tags));
@@ -370,7 +370,7 @@ app.get("/admin/update/:id", async (req, res) => {
   res.render("update.pug", { book: data, tags });
 });
 
-app.get("/admin-sale", async (req, res) => {
+app.get("/admin/sale", async (req, res) => {
   const order = await axios.get("http://localhost:3500/order");
   const orderData = order.data;
   let totalBooks = 0;
