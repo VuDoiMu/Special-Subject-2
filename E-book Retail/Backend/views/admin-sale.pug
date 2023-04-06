@@ -18,21 +18,26 @@ html(lang='en', dir='ltr')
         span.logo_name EManga
       ul.nav-links
         li
-          a.active(href='/admin')
+          a.active(href='/admin/dashboard')
             i.bx.bx-grid-alt
             span.links_name Dashboard
         li
-          a(href='/admin-management')
+          a(href='/admin/management')
             i.bx.bx-box
             span.links_name Book managment
         li
-          a(href='#')
+          a(href='/admin/sale')
             i.bx.bx-list-ul
             span.links_name Sale list
-        //- li.log_out
-        //-   a(href='#')
-        //-     i.bx.bx-log-out
-        //-     span.links_name Log out
+        li.log_out
+          a(href='/admin/login')
+            i.bx.bx-log-out
+            span.links_name Log out
+        li
+          a(href='/admin/add-book')
+            i.bx.bx-list-ul
+            span.links_name Add new book   
+
     section.home-section
       nav
         .sidebar-button

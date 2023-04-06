@@ -40,7 +40,7 @@ document
         publisher: publisher,
         price: price,
         saleRate: saleRate,
-        pageCount: saleRate,
+        pageCount: pageCount,
         tag: tag,
       }),
     })
@@ -48,7 +48,7 @@ document
       .then((res) => (message = res));
     if (message) {
       window.setTimeout(() => {
-        location.assign("/admin-management");
+        location.assign("/admin/management");
         alert(`You just update a book`);
       }, 1000);
     }

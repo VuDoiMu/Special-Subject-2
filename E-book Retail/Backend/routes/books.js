@@ -13,8 +13,10 @@ router.route('/:id')
     .delete(bookController.deleteBook)
     .post(reviewController.reviewing);
 
-router.route('/like/:id')
+router.route('/addlike/:id')
     .put(bookController.addLike);
+router.route('/sublike/:id')
+    .put(bookController.subLike);
 
 // router.route('/pages/:page')
 // .get(bookController.bookPage);

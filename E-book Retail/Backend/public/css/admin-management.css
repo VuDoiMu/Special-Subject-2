@@ -47,3 +47,8 @@ table .btndelete {
     top: -40px;
   }
 } */
+
+label {
+  margin-top: 10px;
+  margin-bottom: 0px;
+}

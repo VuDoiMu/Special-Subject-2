@@ -289,7 +289,7 @@ app.get("/product-list/:name?/:page?", async (req, res) => {
     token,
     decoded,
     sortType,
-    limit
+    limit,
   });
 });
 
@@ -307,7 +307,7 @@ app.get("/tai-khoan", async (req, res) => {
   });
 });
 
-app.get("/admin", async (req, res) => {
+app.get("/admin/dashboard", async (req, res) => {
   const response = await axios.get("http://localhost:3500/management");
   const data = response.data;
   const user = await axios.get("http://localhost:3500/auth/getAllUser");
@@ -336,7 +336,11 @@ app.get("/admin", async (req, res) => {
   });
 });
 
-app.get("/admin-management", async (req, res) => {
+app.get("/admin/login", (req, res) => {
+  res.render("admin-login.pug");
+});
+
+app.get("/admin/management", async (req, res) => {
   const tag = await axios
     .get("http://localhost:3500/tag")
     .then((res) => (tagData = res.data.tags));
@@ -365,6 +369,35 @@ app.get("/admin-management", async (req, res) => {
   });
 });
 
+app.get("/admin/add-book", async (req, res) => {
+  const tag = await axios
+    .get("http://localhost:3500/tag")
+    .then((res) => (tagData = res.data.tags));
+  const tags = [];
+  for (let i = 0; i < tagData.length; i++) {
+    tags.push(tagData[i].name);
+  }
+
+  const response = await axios.get("http://localhost:3500/management");
+  const data = response.data;
+  const order = await axios.get("http://localhost:3500/order");
+  const orderData = order.data;
+  let totalBooks = 0;
+  let totalProfits = 0;
+  for (let i = 0; i < orderData.length; i++) {
+    totalBooks += orderData[i].items.length;
+    totalProfits += orderData[i].finalTotal;
+  }
+
+  res.render("add-book.pug", {
+    data,
+    orderData,
+    tags,
+    totalBooks,
+    totalProfits,
+  });
+});
+
 app.get("/admin/update/:id", async (req, res) => {
   const id = req.params.id;
   const response = await axios.get(`http://localhost:3500/management/${id}`);
@@ -381,7 +414,7 @@ app.get("/admin/update/:id", async (req, res) => {
   res.render("update.pug", { book: data, tags });
 });
 
-app.get("/admin-sale", async (req, res) => {
+app.get("/admin/sale", async (req, res) => {
   const order = await axios.get("http://localhost:3500/order");
   const orderData = order.data;
   let totalBooks = 0;
