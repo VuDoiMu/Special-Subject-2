@@ -4,7 +4,13 @@
     font-family: 'Roboto', sans-serif;
 }
 
-
+#img-account {
+    width: 42px;
+    height: 40px;
+    border-radius: 50%;
+    margin-left: -12px;
+    margin-top: -5px;
+}
 
 
 li.nav-item.account {

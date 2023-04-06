@@ -9,6 +9,9 @@ const userSchema = new mongoose.Schema({
         minLength: 3,
         maxLength: 100
     },
+    image: {
+        type: String
+    },
     dateOfBirth: {
         type: String,
         required: false

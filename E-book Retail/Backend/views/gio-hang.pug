@@ -22,9 +22,11 @@ html(lang="vi")
       type="text/javascript"
       defer
       )
+
     script(
       src="js/main.js" 
       type="text/javascript"
+      defer
       )
     link(
       href="fontawesome_free_5.13.0/css/all.css" 
@@ -96,7 +98,7 @@ html(lang="vi")
           href="/"
           )
           b EManga
-        
+
         // navbar-toggler
         button.navbar-toggler.d-lg-none(
           aria-label="Toggle navigation" 
@@ -130,7 +132,10 @@ html(lang="vi")
                 type="button"
                 )
                 a.btn.btn-secondary.rounded-circle(href="#")
-                  i.fa.fa-user
+                  if decoded.image
+                    img#img-account(alt="account-image" src=decoded.image)
+                  else
+                    i.fa.fa-user
                 a.nav-link.text-dark.text-uppercase(
                   style="display:inline-block" 
                   href="#"
@@ -308,8 +313,8 @@ html(lang="vi")
                     li
                       a(href="#") #{tag.name}
                       i.fa.fa-chevron-right.float-right
-                   
-                 
+
+
           .col-md-5.ml-auto.contact.d-none.d-md-block
             .benphai.float-right
               .hotline
@@ -340,7 +345,7 @@ html(lang="vi")
             // giao diện giỏ hàng khi có hàng (phần comment màu xanh bên dưới là phần 2 sản phẩm trong giỏ hàng nhưng giờ đã demo bằng jquery)
             .col-md-8.cart
               .cart-content.py-3.pl-3
-          
+
             // giao diện phần thanh toán nằm bên phải
 
             if !empty
@@ -349,9 +354,9 @@ html(lang="vi")
                   aria-multiselectable="true" 
                   role="tablist"
                   )
-        
 
-                
+
+
                     .card
                       #step1header.card-header(role="tab")
                         h5.mb-0
@@ -365,7 +370,7 @@ html(lang="vi")
                             span.steps 
                             span.label Thanh toán đặt mua
                             i.fa.fa-chevron-right.float-right
-                      
+
                           hr
                           .pttt
                             h6.header.text-uppercase Chọn phương thức thanh toán
@@ -387,7 +392,7 @@ html(lang="vi")
                               p.mt-4
                                 | - Quý khách chỉ chuyển khoản khi được xác nhận có đủ
                                 |   sách qua điện thoại từ Emanga
-                              
+
                               p
                                 | - Nội dung chuyển khoản cần ghi:
                                 a(href="#") [Mã đơn hàng]
@@ -403,114 +408,114 @@ html(lang="vi")
                             | (Vui lòng kiểm tra lại đơn hàng
                             |   trước khi Đặt Mua)
             // het div cart-steps
-          // het row
-        // het cart-page
-      // het container
-    // het khoi content
-    // thanh cac dich vu :mien phi giao hang, qua tang mien phi ........
-    section.abovefooter.text-white(style="background-color: #CF111A; margin-top: 300px")
-      .container
-        .row
-          .col-lg-3.col-sm-6
-            .dichvu.d-flex.align-items-center
-              img(
-                alt="icon-books" 
-                src="images/icon-books.png"
+            // het row
+            // het cart-page
+            // het container
+            // het khoi content
+            // thanh cac dich vu :mien phi giao hang, qua tang mien phi ........
+            section.abovefooter.text-white(style="background-color: #CF111A; margin-top: 300px")
+              .container
+                .row
+                  .col-lg-3.col-sm-6
+                    .dichvu.d-flex.align-items-center
+                      img(
+                        alt="icon-books" 
+                        src="images/icon-books.png"
+                        )
+                      .noidung
+                        h6.tieude.font-weight-bold HƠN 14.000 TỰA SÁCH HAY
+                        p.detail Tuyển chọn bởi DealBooks
+                  .col-lg-3.col-sm-6
+                    .dichvu.d-flex.align-items-center
+                      img(
+                        alt="icon-ship" 
+                        src="images/icon-ship.png"
+                        )
+                      .noidung
+                        h6.tieude.font-weight-bold MIỄN PHÍ GIAO HÀNG
+                        p.detail Từ 150.000đ ở TP.HCM
+                        p.detail Từ 300.000đ ở tỉnh thành khác
+                  .col-lg-3.col-sm-6
+                    .dichvu.d-flex.align-items-center
+                      img(
+                        alt="icon-gift" 
+                        src="images/icon-gift.png"
+                        )
+                      .noidung
+                        h6.tieude.font-weight-bold QUÀ TẶNG MIỄN PHÍ
+                        p.detail Tặng Bookmark
+                        p.detail Bao sách miễn phí
+                  .col-lg-3.col-sm-6
+                    .dichvu.d-flex.align-items-center
+                      img(
+                        alt="icon-return" 
+                        src="images/icon-return.png"
+                        )
+                      .noidung
+                        h6.tieude.font-weight-bold ĐỔI TRẢ NHANH CHÓNG
+                        p.detail Hàng bị lỗi được đổi trả nhanh chóng
+            footer
+              .container.py-4
+                .row
+                  .col-md-3.col-xs-6
+                    .gioithieu
+                      h6.header.text-uppercase.font-weight-bold Về DealBook
+                      a(href="#") Giới thiệu về DealBook
+                      a(href="#") Tuyển dụng
+                      .fb-like(
+                        data-share="true" 
+                        data-size="small" 
+                        data-action="like" 
+                        data-layout="button" 
+                        data-width="300px" 
+                        data-href="https://www.facebook.com/DealBook-110745443947730/"
+                        )
+                  .col-md-3.col-xs-6
+                    .hotrokh
+                      h6.header.text-uppercase.font-weight-bold HỖ TRỢ KHÁCH HÀNG
+                      a(href="#") Hướng dẫn đặt hàng
+                      a(href="#") Phương thức thanh toán
+                      a(href="#") Phương thức vận chuyển
+                      a(href="#") Chính sách đổi trả
+                  .col-md-3.col-xs-6
+                    .lienket
+                      h6.header.text-uppercase.font-weight-bold HỢP TÁC VÀ LIÊN KẾT
+                      img(
+                        alt="dang-ky-bo-cong-thuong" 
+                        src="images/dang-ky-bo-cong-thuong.png"
+                        )
+                  .col-md-3.col-xs-6
+                    .ptthanhtoan
+                      h6.header.text-uppercase.font-weight-bold Phương thức thanh toán
+                      img(
+                        alt="visa-payment" 
+                        src="images/visa-payment.jpg"
+                        )
+                      img(
+                        alt="master-card-payment" 
+                        src="images/master-card-payment.jpg"
+                        )
+                      img(
+                        alt="jcb-payment" 
+                        src="images/jcb-payment.jpg"
+                        )
+                      img(
+                        alt="atm-payment" 
+                        src="images/atm-payment.jpg"
+                        )
+                      img(
+                        alt="cod-payment" 
+                        src="images/cod-payment.jpg"
+                        )
+                      img(
+                        alt="payoo-payment" 
+                        src="images/payoo-payment.jpg"
+                        )
+            // nut cuon len dau trang
+            .fixed-bottom
+              #backtotop.btn.btn-warning.float-right.rounded-circle.nutcuonlen(
+                style="background:#CF111A;" 
+                href="#"
                 )
-              .noidung
-                h6.tieude.font-weight-bold HƠN 14.000 TỰA SÁCH HAY
-                p.detail Tuyển chọn bởi DealBooks
-          .col-lg-3.col-sm-6
-            .dichvu.d-flex.align-items-center
-              img(
-                alt="icon-ship" 
-                src="images/icon-ship.png"
-                )
-              .noidung
-                h6.tieude.font-weight-bold MIỄN PHÍ GIAO HÀNG
-                p.detail Từ 150.000đ ở TP.HCM
-                p.detail Từ 300.000đ ở tỉnh thành khác
-          .col-lg-3.col-sm-6
-            .dichvu.d-flex.align-items-center
-              img(
-                alt="icon-gift" 
-                src="images/icon-gift.png"
-                )
-              .noidung
-                h6.tieude.font-weight-bold QUÀ TẶNG MIỄN PHÍ
-                p.detail Tặng Bookmark
-                p.detail Bao sách miễn phí
-          .col-lg-3.col-sm-6
-            .dichvu.d-flex.align-items-center
-              img(
-                alt="icon-return" 
-                src="images/icon-return.png"
-                )
-              .noidung
-                h6.tieude.font-weight-bold ĐỔI TRẢ NHANH CHÓNG
-                p.detail Hàng bị lỗi được đổi trả nhanh chóng
-    footer
-      .container.py-4
-        .row
-          .col-md-3.col-xs-6
-            .gioithieu
-              h6.header.text-uppercase.font-weight-bold Về DealBook
-              a(href="#") Giới thiệu về DealBook
-              a(href="#") Tuyển dụng
-              .fb-like(
-                data-share="true" 
-                data-size="small" 
-                data-action="like" 
-                data-layout="button" 
-                data-width="300px" 
-                data-href="https://www.facebook.com/DealBook-110745443947730/"
-                )
-          .col-md-3.col-xs-6
-            .hotrokh
-              h6.header.text-uppercase.font-weight-bold HỖ TRỢ KHÁCH HÀNG
-              a(href="#") Hướng dẫn đặt hàng
-              a(href="#") Phương thức thanh toán
-              a(href="#") Phương thức vận chuyển
-              a(href="#") Chính sách đổi trả
-          .col-md-3.col-xs-6
-            .lienket
-              h6.header.text-uppercase.font-weight-bold HỢP TÁC VÀ LIÊN KẾT
-              img(
-                alt="dang-ky-bo-cong-thuong" 
-                src="images/dang-ky-bo-cong-thuong.png"
-                )
-          .col-md-3.col-xs-6
-            .ptthanhtoan
-              h6.header.text-uppercase.font-weight-bold Phương thức thanh toán
-              img(
-                alt="visa-payment" 
-                src="images/visa-payment.jpg"
-                )
-              img(
-                alt="master-card-payment" 
-                src="images/master-card-payment.jpg"
-                )
-              img(
-                alt="jcb-payment" 
-                src="images/jcb-payment.jpg"
-                )
-              img(
-                alt="atm-payment" 
-                src="images/atm-payment.jpg"
-                )
-              img(
-                alt="cod-payment" 
-                src="images/cod-payment.jpg"
-                )
-              img(
-                alt="payoo-payment" 
-                src="images/payoo-payment.jpg"
-                )
-    // nut cuon len dau trang
-    .fixed-bottom
-      #backtotop.btn.btn-warning.float-right.rounded-circle.nutcuonlen(
-        style="background:#CF111A;" 
-        href="#"
-        )
-        i.fa.fa-chevron-up.text-white
+                i.fa.fa-chevron-up.text-white
 

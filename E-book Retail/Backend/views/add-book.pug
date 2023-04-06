@@ -32,10 +32,10 @@ html(lang='en', dir='ltr')
                     a(href='/admin/sale')
                         i.bx.bx-list-ul
                         span.links_name Sale list
-                li.log_out
-                    a(href='#')
-                        i.bx.bx-log-out
-                        span.links_name Log out
+                //- li.log_out
+                //-     a(href=)
+                //-         i.bx.bx-log-out
+                //-         span.links_name Log out
         section.home-section
             nav
                 .sidebar-button
@@ -44,7 +44,7 @@ html(lang='en', dir='ltr')
                 //- .search-box
                 //-   input(type='text', placeholder='Search...')
                 //-   i.bx.bx-search
- 
+
             .home-content
     
 
@@ -54,42 +54,38 @@ html(lang='en', dir='ltr')
 
                 .d-flex.justify-content-center
                     form#add-form.w-50
-                        h1 Update #{book.name} 
-                        h7(style="display:none" id="bookId") #{book._id}
-                        label(for="updateName") Name:
-                        input#proname.form-control(type='text',name='updateName', autocomplete='off', placeholder='Name' value=book.name)
-                        label(for="updateName") Author: 
-                        input#proname.form-control(type='text',name='updateAuthor' ,autocomplete='off', placeholder='Author' value=book.author)
+                        h1 Add a new book
+                        label(for="name") Name:
+                        input#proname.form-control(type='text',name='name', autocomplete='off', placeholder='Name')
+                        label(for="name") Author:
+                        input#proname.form-control(type='text',name='author' ,autocomplete='off', placeholder='Author')
 
-                        label(for="updateName") Tags: 
-                        select#countries(name='countries', multiple='' value="Action")
-
+                        label(for="name") Tags:
+                        select#countries(name='countries', multiple='')
                             for t,index in tags
-                                if book.tag.includes(t) 
-                                    option(value=index selected="selected" )=t
-                                else
-                                    option(value=index )=t
-             
-                        label(for="updateName") Description: 
-                        input#proname.form-control(type='text',name='updateDescription' ,autocomplete='off', placeholder='Description' value=book.description)
-                        label(for="updateName") Content: 
-                        input#proname.form-control(type='text',name='updateContent', autocomplete='off', placeholder='Content' value=book.content)
-                        label(for="updateName") Arist: 
-                        input#proname.form-control(type='text',name='updateArtist', autocomplete='off', placeholder='Artist' value=book.artist)
-                        label(for="updateName") Publisher: 
-                        input#proname.form-control(type='text',name='updatePublisher', autocomplete='off', placeholder='Publisher', value=book.publisher)
-                        label(for="updateName") Price: 
-                        input#proname.form-control(type='text',name='updatePrice', autocomplete='off', placeholder='Price' value=book.price)
-                        label(for="updateName") Discount: 
-                        input#proname.form-control(type='text', name='updateDiscountRate',autocomplete='off', placeholder='DiscountRate' value=book.discountRate)
-                        label(for="updateName") Page Count: 
-                        input#proname.form-control(type='text',name='updatePageCount', autocomplete='off', placeholder='PageCount' value=book.pageCount)
-                        label(for="updateName") Image: 
-                        input#proname.form-control(type='text',name='updateCover' ,autocomplete='off', placeholder='Image link' value=book.image)
-                        img(src=book.image style="display:block; margin-bottom:2rem")
+                             
+                                option(value=index  )=t
+  
+
+                        label(for="name") Description:
+                        input#proname.form-control(type='text',name='description' ,autocomplete='off', placeholder='Description')
+                        label(for="name") Content:
+                        input#proname.form-control(type='text',name='content', autocomplete='off', placeholder='Content')
+                        label(for="name") Artist:
+                        input#proname.form-control(type='text',name='artist', autocomplete='off', placeholder='Artist')
+                        label(for="name") Publisher:
+                        input#proname.form-control(type='text',name='publisher', autocomplete='off', placeholder='Publisher')
+                        label(for="name") Price:
+                        input#proname.form-control(type='text',name='price', autocomplete='off', placeholder='Price')
+                        label(for="name") Discount:
+                        input#proname.form-control(type='text', name='discountRate',autocomplete='off', placeholder='DiscountRate')
+                        label(for="name") Page Count:
+                        input#proname.form-control(type='text',name='pageCount', autocomplete='off', placeholder='PageCount')
+                        label(for="name") Cover:
+                        input#proname.form-control(type='text',name='cover' ,autocomplete='off', placeholder='Image link')
 
 
-                        button(id='btn-submit-update' class='btn btn-success' type="submit") Update
+                        button(id='btn-create' class='btn btn-success' type="submit") Add new Book
                             .container.text-center
 
                 
@@ -104,7 +100,8 @@ html(lang='en', dir='ltr')
         //- // Include Dexie
         //- script(src='https://unpkg.com/dexie@latest/dist/dexie.js')
         //- // Custom main file
-        script(src='/js/updateBook.js')
+        script(src='/js/admin.js')
+        script(src='/js/create-book.js')
         script(src='https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/js/multi-select-tag.js')
         script.
             new MultiSelectTag('countries')  // id

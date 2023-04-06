@@ -1,0 +1,28 @@
+
+doctype html
+// Designined by CodingLab | www.youtube.com/codinglabyt
+html(lang='en', dir='ltr')
+  head
+    meta(charset='UTF-8')
+    // <title> Responsiive Admin Dashboard | CodingLab </title>
+    link(rel='stylesheet', href='/css/admin-login.css')
+    // Boxicons CDN Link
+    link(href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css', rel='stylesheet')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+  body
+    .screen-1
+        h1 Emanga
+        .email
+            label(for="email") UserName
+            .sec-2
+                ion-icon(name="mail-outline")
+                input(type="email" name="email" id="email")
+        .password
+            label(for="password") Password
+            .sec-2
+                ion-icon(name="lock-closed-outline")
+                input.pas(type="password" name="password" id="password" )
+                ion-icon.show-hide(name="eye-outline")
+        button.login Login 
+
+    script(src='/js/admin-login.js')

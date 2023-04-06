@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+const moment = require("moment");
 const connectDB = require("./configs/dbCon");
 const path = require("path");
 const data = require("./data/book.json");
@@ -101,39 +102,49 @@ app.get("/product/:id", async (req, res) => {
     const cart = JSON.parse(cartCookie);
     itemCount = Object.keys(cart).length;
   }
-  const id = req.params.id;
-  await axios
-    .get("http://localhost:3500/tag")
-    .then((res) => (tagData = res.data.tags));
-  const booksTag = [];
-  const response = await axios.get("http://localhost:3500/management/" + id);
-  const book = response.data;
-  const tag = book.tag;
 
-  const token = req.cookies.token;
-  let decoded = "";
-  if (token) {
-    decoded = jwt.verify(token, "thisisourwebsite!");
-  }
-  for (const tagItem of tag) {
-    const response = await axios.get(
-      `http://localhost:3500/tag/books/${tagItem}`
-    );
+  const id = req.params.id;
+
+  // Retrieve the book data from the backend API
+  const response = await axios.get(`http://localhost:3500/management/${id}`);
+  const book = response.data;
+
+  // Retrieve the comments data from the backend API
+  const commentsResponse = await axios.get(`http://localhost:3500/comment/${id}`);
+  const comments = commentsResponse.data;
+
+  // Retrieve the tag data from the backend API
+  const tagResponse = await axios.get("http://localhost:3500/tag");
+  const tagData = tagResponse.data.tags;
+
+  const booksTag = []
+
+  // Retrieve the books associated with each tag
+  for (const tagItem of book.tag) {
+    const response = await axios.get(`http://localhost:3500/tag/books/${tagItem}`);
     if (response.data.books[0]) {
       const booksArray = response.data.books[0].books;
       booksTag.push(booksArray);
     }
   }
 
+  const token = req.cookies.token;
+  let decoded = "";
+  if (token) {
+    decoded = jwt.verify(token, "thisisourwebsite!");
+  }
   res.render("product.pug", {
     book,
+    comments,
     tags: tagData.slice(0, 11),
     booksTag,
     token,
     decoded,
     itemCount,
+    moment
   });
 });
+
 
 app.get("/tag/:name", async (req, res) => {
   const name = req.params.name;
@@ -279,7 +290,7 @@ app.get("/product-list/:name?/:page?", async (req, res) => {
     token,
     decoded,
     sortType,
-    limit
+    limit,
   });
 });
 
@@ -297,7 +308,7 @@ app.get("/tai-khoan", async (req, res) => {
   });
 });
 
-app.get("/admin", async (req, res) => {
+app.get("/admin/dashboard", async (req, res) => {
   const response = await axios.get("http://localhost:3500/management");
   const data = response.data;
   const user = await axios.get("http://localhost:3500/auth/getAllUser");
@@ -326,7 +337,11 @@ app.get("/admin", async (req, res) => {
   });
 });
 
-app.get("/admin-management", async (req, res) => {
+app.get("/admin/login", (req, res) => {
+  res.render("admin-login.pug");
+});
+
+app.get("/admin/management", async (req, res) => {
   const tag = await axios
     .get("http://localhost:3500/tag")
     .then((res) => (tagData = res.data.tags));
@@ -355,6 +370,35 @@ app.get("/admin-management", async (req, res) => {
   });
 });
 
+app.get("/admin/add-book", async (req, res) => {
+  const tag = await axios
+    .get("http://localhost:3500/tag")
+    .then((res) => (tagData = res.data.tags));
+  const tags = [];
+  for (let i = 0; i < tagData.length; i++) {
+    tags.push(tagData[i].name);
+  }
+
+  const response = await axios.get("http://localhost:3500/management");
+  const data = response.data;
+  const order = await axios.get("http://localhost:3500/order");
+  const orderData = order.data;
+  let totalBooks = 0;
+  let totalProfits = 0;
+  for (let i = 0; i < orderData.length; i++) {
+    totalBooks += orderData[i].items.length;
+    totalProfits += orderData[i].finalTotal;
+  }
+
+  res.render("add-book.pug", {
+    data,
+    orderData,
+    tags,
+    totalBooks,
+    totalProfits,
+  });
+});
+
 app.get("/admin/update/:id", async (req, res) => {
   const id = req.params.id;
   const response = await axios.get(`http://localhost:3500/management/${id}`);
@@ -371,7 +415,7 @@ app.get("/admin/update/:id", async (req, res) => {
   res.render("update.pug", { book: data, tags });
 });
 
-app.get("/admin-sale", async (req, res) => {
+app.get("/admin/sale", async (req, res) => {
   const order = await axios.get("http://localhost:3500/order");
   const orderData = order.data;
   let totalBooks = 0;
@@ -385,6 +429,7 @@ app.get("/admin-sale", async (req, res) => {
 });
 
 //routes
+app.use("/comment", require("./routes/comment"));
 app.use("/management", require("./routes/books"));
 app.use("/order", require("./routes/order"));
 app.use("/auth", require("./routes/user"));
@@ -398,3 +443,4 @@ mongoose.connection.once("open", () => {
   console.log("connected to MongoDb");
   app.listen(3500, () => console.log("Server running on port 3500!"));
 });
+
