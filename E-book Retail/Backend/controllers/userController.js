@@ -39,49 +39,44 @@ const register = async (req, res) => {
   }
 };
 const login = async (req, res) => {
-  const { email, password } = req.body;
-
-  if (!email || !password)
-    return res.status(400).json({ success: false, message: "Missing data " });
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email))
-    return res.status.json(`${email} is not a valid email address`);
-  try {
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(400).json({ success: false, message: "Wrong email " });
+    const {email, password} = req.body;
+    
+    if(!email || !password)
+    return res.status(400).json({success: false, message:"Missing data "})
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) 
+    return res.status.json(`${email} is not a valid email address`)
+    try {
+        const user = await User.findOne({email})
+        if (!user){
+          return res.status(400).json({success: false, message:"Wrong email "})
+        }
+        const userId = user._id;
+        const storedHashedPassword = user.password; // mật khẩu đã lưu trữ trong cơ sở dữ liệu
+        // so sánh mật khẩu
+        bcrypt.compare(password, storedHashedPassword, (err, result) => {
+            if (result === true) {
+                // đăng nhập thành công
+                const accesstoken = jwt.sign({userId: user._id, role: user.role,username: user.username, favorbooks: user.favorbooks},"thisisourwebsite!")
+        res.cookie('token', accesstoken);
+        res.json(user)
+            } else {
+                // đăng nhập thất bại
+                return res.status(400).json({success: false, message:" Wrong password"});
+            }
+        });
+        // const passwordValid = await argon2.verify(user.password, password )
+        
+        const cartValid = await Cart.findOne({userId})
+        
+        if(!cartValid){
+        const cart = new Cart({userId, finalTotal: 0})
+        await cart.save();
+        }
+    } catch (error) {
+        console.error(error);
     }
-    const userId = user._id;
-    const storedHashedPassword = user.password; // mật khẩu đã lưu trữ trong cơ sở dữ liệu
-    // so sánh mật khẩu
-    bcrypt.compare(password, storedHashedPassword, (err, result) => {
-      if (result === true) {
-        // đăng nhập thành công
-        const accesstoken = jwt.sign(
-          { userId: user._id, role: user.role, username: user.username },
-          "thisisourwebsite!"
-        );
-        res.cookie("token", accesstoken);
-        res.json(user);
-      } else {
-        // đăng nhập thất bại
-        return res
-          .status(400)
-          .json({ success: false, message: " Wrong password" });
-      }
-    });
-    // const passwordValid = await argon2.verify(user.password, password )
-
-    const cartValid = await Cart.findOne({ userId });
-
-    if (!cartValid) {
-      const cart = new Cart({ userId, finalTotal: 0 });
-      await cart.save();
-    }
-  } catch (error) {
-    console.error(error);
-  }
-};
+}
 const updateInfo = async (req, res) => {
   const { username, dateOfBirth, userPhone, address } = req.body;
   const token = req.cookies.token;

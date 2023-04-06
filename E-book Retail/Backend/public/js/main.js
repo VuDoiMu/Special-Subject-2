@@ -770,12 +770,14 @@ likeButtons.forEach((button) => {
     if (heartIcon.classList.contains("active")) {
       console.log("Active");
       heartIcon.classList.toggle("active");
+      
       //bớt like
       $.ajax({
         type: "PUT",
         url: `http://localhost:3500/management/sublike/${bookId}`,
-        success: function (data) {
-          $("#like-count-" + bookId).text("Favourite: " + (data.countLike - 1));
+        success: function(result) {
+          console.log(result)
+          $(button).closest('.card').find('.countLike').text("Favourite: " + (result.countLike-1));
         },
         error: function (xhr, status, error) {
           console.log(error);
@@ -788,9 +790,9 @@ likeButtons.forEach((button) => {
       $.ajax({
         type: "PUT",
         url: `http://localhost:3500/management/addlike/${bookId}`,
-        success: function (data) {
-          console.log(data);
-          $("#like-count-" + bookId).text("Favourite: " + (data.countLike + 1));
+        success: function(result) {
+          console.log(result)
+          $(button).closest('.card').find('.countLike').text("Favourite: " + (result.countLike+1));
         },
         error: function (xhr, status, error) {
           console.log(error);

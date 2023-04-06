@@ -38,6 +38,7 @@ app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
 
 app.get("/", async (req, res) => {
+  
   const response = await axios.get("http://localhost:3500/management");
   const toplike = await axios.get("http://localhost:3500/catalog/toplike");
   const topSell = await axios.get("http://localhost:3500/catalog/topsell");
