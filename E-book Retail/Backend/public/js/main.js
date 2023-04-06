@@ -633,7 +633,7 @@ if (formdangnhap) {
         showToast("Login successfully!");
         location.assign(currentUrl);
       } else {
-        location.assign("/admin");
+        location.assign("/admin/dashboard");
       }
     }, 200);
   });

@@ -17,21 +17,25 @@ html(lang='en', dir='ltr')
 
       ul.nav-links
         li
-          a(href='/admin')
+          a(href='/admin/dashboard')
             i.bx.bx-grid-alt
             span.links_name Dashboard
         li
-          a(href='/admin-management')
+          a(href='/admin/management')
             i.bx.bx-box
             span.links_name Book management
         li
           a(href='')
             i.bx.bx-list-ul
             span.links_name Order list
-        //- li.log_out
-        //-   a(href='')
-        //-     i.bx.bx-log-out
-        //-     span.links_name Log out
+        li
+          a(href='/admin/add-book')
+            i.bx.bx-list-ul
+            span.links_name Add new book   
+        li.log_out
+          a(href='/admin/login')
+            i.bx.bx-log-out
+            span.links_name Log out
     section.home-section
       nav
         .sidebar-button
@@ -100,7 +104,7 @@ html(lang='en', dir='ltr')
                     a(href='#') $ #{order.finalTotal}
                
             .button
-              a(href='/admin-sale') See All
+              a(href='/admin/sale') See All
           .top-sales.box
             .title Top Seling Product
             ul.top-sales-details
