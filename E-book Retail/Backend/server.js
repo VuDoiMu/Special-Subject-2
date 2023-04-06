@@ -58,6 +58,7 @@ app.get("/", async (req, res) => {
   if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
   }
+  console.log(decoded);
 
   res.render("home.pug", {
     data,
