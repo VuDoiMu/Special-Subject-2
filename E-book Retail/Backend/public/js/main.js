@@ -768,11 +768,6 @@ likeButtons.forEach((button) => {
       .data("book-id");
     const heartIcon = button.querySelector("i.fa.fa-heart");
     if (heartIcon.classList.contains("active")) {
-<<<<<<< HEAD
-      
-      console.log("Active");
-=======
->>>>>>> 91cbcb1bceeb258ac21a2d80567618fff3a859a4
       heartIcon.classList.toggle("active");
       
       //bớt like
@@ -854,14 +849,16 @@ if (hienthiSelect) {
     const selectedSort = sortSelect.value;
     const currentUrl = window.location.href;
     const urlWithoutParams = currentUrl.split("?")[0]; // remove any existing query parameters
+    
     const urlParams = new URLSearchParams(window.location.search);
     const pageParam = urlParams.get("page"); // get the value of the 'page' parameter
     // console.log("pageParam:", pageParam); // add this line to log the value of pageParam
-
+    
     if (hienthiSelect.classList.contains("isTag")) {
       const newUrl = `${urlWithoutParams}?page=${pageParam}&limit=${selectedValue}&sortType=${selectedSort}`;
       location.assign(newUrl);
     } else {
+      // urlWithoutParams = urlWithoutParams.set("page", 1);
       const newUrl = `${urlWithoutParams}?limit=${selectedValue}&sortType=${selectedSort}`;
       location.assign(newUrl);
     }
