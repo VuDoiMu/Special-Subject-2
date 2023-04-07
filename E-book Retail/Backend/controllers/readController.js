@@ -8,8 +8,9 @@ const readBook = async (req, res) => {
        }
 
    const book = await Book.findOne({ _id: req.body._id }).exec();
+   const result = book.content;
 
-       res.status(200).json(book);
+       res.status(200).json(result);
 } 
 
 module.exports = {
