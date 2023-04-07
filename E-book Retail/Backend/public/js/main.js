@@ -316,7 +316,6 @@ $(function () {
     let cartItems = getCookie("cart");
     cartItems = JSON.parse(cartItems);
     let productNumbers = cartItems.length;
-    console.log(productNumbers);
     if (productNumbers === 0) {
       document.querySelector(".giohang .cart-amount").textContent = 0;
     }
@@ -768,7 +767,6 @@ likeButtons.forEach((button) => {
       .data("book-id");
     const heartIcon = button.querySelector("i.fa.fa-heart");
     if (heartIcon.classList.contains("active")) {
-      console.log("Active");
       heartIcon.classList.toggle("active");
       
       //bớt like
@@ -776,7 +774,6 @@ likeButtons.forEach((button) => {
         type: "PUT",
         url: `http://localhost:3500/management/sublike/${bookId}`,
         success: function(result) {
-          console.log(result)
           $(button).closest('.card').find('.countLike').text("Favourite: " + (result.countLike-1));
         },
         error: function (xhr, status, error) {
@@ -791,7 +788,6 @@ likeButtons.forEach((button) => {
         type: "PUT",
         url: `http://localhost:3500/management/addlike/${bookId}`,
         success: function(result) {
-          console.log(result)
           $(button).closest('.card').find('.countLike').text("Favourite: " + (result.countLike+1));
         },
         error: function (xhr, status, error) {
@@ -879,13 +875,21 @@ if (sortSelect) {
 //   });
 // }
 
-const editCommentButtons = document.querySelectorAll('.edit-comment');
+function addEventListenerComment() {
+  const editCommentButtons = document.querySelectorAll('.edit-comment');
 
 editCommentButtons.forEach(editCommentButton => {
   editCommentButton.addEventListener('click', () => {
     const commentId = editCommentButton.dataset.commentId;
     const commentContent = document.querySelector(`#comment-${commentId}`).textContent.trim();
-    const editForm = document.querySelector(`#edit-form-${commentId}`);
+    console.log(commentContent);
+    console.log(commentId);
+    const editFormId = "#edit-form-" + commentId;
+    console.log(editFormId);
+    const editForm = document.querySelector(editFormId);
+    const editFormByClass = document.querySelector(".form-edit");
+    console.log(editFormByClass);
+    console.log(editForm);
     const editFormInput = editForm.querySelector('input[name="content"]');
     editFormInput.value = commentContent;
     editForm.classList.remove('d-none');
@@ -908,8 +912,6 @@ document.querySelectorAll('.form-edit').forEach(form => {
         body: JSON.stringify({content})
       });
       const updatedComment = await response.json();
-      console.log(updatedComment);
-      console.log("Update comment thôi nào!");
       // Update the comment content on the page
       const commentElement = document.querySelector(`#comment-${commentId}`);
       commentElement.innerText = updatedComment.content;
@@ -921,3 +923,103 @@ document.querySelectorAll('.form-edit').forEach(form => {
     }
   });
 });
+
+// document.querySelectorAll('.delete-comment').forEach(btn => {
+//   btn.addEventListener('click', async () => {
+//     const commentId = btn.dataset.commentId;
+//     const bookId =btn.dataset.bookId;
+//     const response = await fetch(`/comment/${bookId}/${commentId}`, {
+//       method: 'DELETE'
+//     });
+//     if (response.ok) {
+//       const commentEl = document.getElementById(`comment-item${commentId}`);
+//       if(commentEl) {
+//         commentEl.remove();
+//       }
+//       const commentSection = document.querySelector("#comment-section");
+//       if (commentSection.children.length === 0) {
+//         const noCommentsEl = document.createElement('p');
+//         noCommentsEl.id = 'comment-empty';
+//         noCommentsEl.textContent = 'No comments yet.';
+//         commentSection.appendChild(noCommentsEl);
+//       }
+//     }
+//   });
+// });
+  const confirmModal = document.getElementById('confirm-delete-modal');
+  const confirmBtn = document.getElementById('delete-comment-confirm');
+  const cancelBtn = document.getElementById('delete-comment-cancel');
+
+
+  document.querySelectorAll('.delete-comment').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const commentId = btn.dataset.commentId;
+      const bookId = btn.dataset.bookId;
+
+      // Show the confirmation modal
+      confirmModal.style.display = "block";
+
+      const closeBtn = confirmModal.querySelector('.close-btn');
+      
+      confirmModal.addEventListener('click', function (event) {
+        console.log(event.target);
+        console.log(this);
+        if (event.target === this) {
+          confirmModal.style.display = 'none';
+        }
+      });
+
+      // window.addEventListener('click', function (event) {
+      //   console.log("Click");
+      //   if (confirmModal.style.display == "block") {
+      //     if (event.target != confirmModal && !confirmModal.contains(event.target)) {
+      //       confirmModal.style.display = 'none';
+      //       console.log("Click2");
+      //     } 
+      //   }
+      //   console.log("Click3");
+      // });
+
+      // Add event listener for close button
+      closeBtn.addEventListener('click', () => {
+        confirmModal.style.display = "none";
+        // document.body.style.overflow = 'auto'; 
+      });
+
+      // Handle the "Yes" button click
+      confirmBtn.addEventListener('click', async () => {
+        const response = await fetch(`/comment/${bookId}/${commentId}`, {
+          method: 'DELETE'
+        });
+        if (response.ok) {
+          const commentEl = document.getElementById(`comment-item${commentId}`);
+          if (commentEl) {
+            commentEl.remove();
+          }
+          const commentSection = document.querySelector("#comment-section");
+          if (commentSection.children.length === 0) {
+            const noCommentsEl = document.createElement('p');
+            noCommentsEl.id = 'comment-empty';
+            noCommentsEl.textContent = 'No comments yet.';
+            commentSection.appendChild(noCommentsEl);
+          }
+        }
+
+        // Hide the confirmation modal
+        confirmModal.style.display = "none";
+      });
+
+      // Handle the "No" button click
+      cancelBtn.addEventListener('click', () => {
+        // Hide the confirmation modal
+        confirmModal.style.display = "none";
+      });
+      
+    });
+  });
+
+
+}
+
+addEventListenerComment();
+
