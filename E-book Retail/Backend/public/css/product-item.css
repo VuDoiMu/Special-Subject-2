@@ -1258,12 +1258,25 @@ h3.account-header {
 }
 
 .edit-comment {
+    color: black;
     opacity: .9;
     cursor: pointer;
     margin-left: 16px;
+    margin-right: 16px;
 }
 
 .edit-comment:hover{
+    opacity: 1;
+}
+
+.delete-comment {
+    color: black;
+    opacity: .9;
+    cursor: pointer;
+}
+
+.delete-comment:hover{
+    color: black;
     opacity: 1;
 }
 
@@ -1274,4 +1287,99 @@ h3.account-header {
 
 .form-edit button {
     margin-top: 6px;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
+}
+
+.modal .modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    margin-top: 10%;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 700px;
+}
+
+.modal .modal-header h2 {
+    margin-top: 0;
+}
+
+.modal .close-btn {
+    cursor: pointer;
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.modal .close-btn:hover,
+.modal .close-btn:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal .modal-body {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.modal .modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 20px;
+}
+
+.modal .btn-primary {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.modal .btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.modal .btn-primary:hover {
+    background-color: #0069d9;
+}
+
+.modal .btn-secondary:hover {
+    background-color: #5a6268;
 }

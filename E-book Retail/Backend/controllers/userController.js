@@ -54,10 +54,15 @@ const login = async (req, res) => {
         const userId = user._id;
         const storedHashedPassword = user.password; // mật khẩu đã lưu trữ trong cơ sở dữ liệu
         // so sánh mật khẩu
+        console.log(user);
         bcrypt.compare(password, storedHashedPassword, (err, result) => {
             if (result === true) {
                 // đăng nhập thành công
+<<<<<<< HEAD
                 const accesstoken = jwt.sign({userId: user._id, role: user.role,username: user.username,image: user.image, favorbooks: user.favorbooks},"thisisourwebsite!")
+=======
+                const accesstoken = jwt.sign({userId: user._id, role: user.role,username: user.username, favorbooks: user.favorbooks, image: user.image},"thisisourwebsite!")
+>>>>>>> 91cbcb1bceeb258ac21a2d80567618fff3a859a4
         res.cookie('token', accesstoken);
         res.json(user)
             } else {
