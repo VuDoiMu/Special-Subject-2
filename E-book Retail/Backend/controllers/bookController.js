@@ -161,12 +161,12 @@ const addBook = async (req, res) => {
         }
 
         const images = []
-        if (Array.isArray(request.files.images)) {
-            for (let a = 0; a < request.files.images.length; a++) {
-                images.push(request.files.images[a])
+        if (Array.isArray(res.files.images)) {
+            for (let a = 0; a < res.files.images.length; a++) {
+                images.push(res.files.images[a])
             }
         } else {
-            images.push(request.files.images)
+            images.push(res.files.images)
         }
 
         const content = {
