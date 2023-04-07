@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const moment = require("moment");
 const connectDB = require("./configs/dbCon");
 const path = require("path");
+const User = require('./models/User')
 const data = require("./data/book.json");
 const cookieParser = require("cookie-parser");
 const axios = require("axios");
@@ -38,7 +39,14 @@ app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
 
 app.get("/", async (req, res) => {
-  
+  const token = req.cookies.token;
+  let decoded = "";
+  // if(token) {
+  //   decoded = jwt.verify(token, "thisisourwebsite!");
+  //   const updateUser = await User.findById({ _id: decoded.userId });
+  //   const newtoken = jwt.sign({userId: updateUser._id, role: updateUser.role, username: updateUser.username, favorbooks: updateUser.favorbooks},"thisisourwebsite!");
+  //   res.cookie('token', newtoken);
+  // }
   const response = await axios.get("http://localhost:3500/management");
   const toplike = await axios.get("http://localhost:3500/catalog/toplike");
   const topSell = await axios.get("http://localhost:3500/catalog/topsell");
@@ -53,8 +61,7 @@ app.get("/", async (req, res) => {
     .then((res) => (tagData = res.data.tags));
 
   const data = response.data;
-  const token = req.cookies.token;
-  let decoded = "";
+  
   if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
   }
@@ -92,6 +99,7 @@ app.get("/gio-hang", async (req, res) => {
     data,
     empty,
     tags: tagData.slice(0, 11),
+    decoded
   });
 });
 

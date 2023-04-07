@@ -758,6 +758,7 @@ function fetchProduct(url) {
 }
 
 // toggle like
+
 const likeButtons = document.querySelectorAll(".like");
 likeButtons.forEach((button) => {
   button.addEventListener("click", (e) => {
@@ -768,6 +769,7 @@ likeButtons.forEach((button) => {
       .data("book-id");
     const heartIcon = button.querySelector("i.fa.fa-heart");
     if (heartIcon.classList.contains("active")) {
+      
       console.log("Active");
       heartIcon.classList.toggle("active");
       
@@ -778,11 +780,23 @@ likeButtons.forEach((button) => {
         success: function(result) {
           console.log(result)
           $(button).closest('.card').find('.countLike').text("Favourite: " + (result.countLike-1));
+         
+          const allCards = document.querySelectorAll(".card");
+          allCards.forEach((card) => {
+            const cardId = card.querySelector(".like i.fa-heart").dataset.bookId;
+            if (cardId == bookId) {
+              const heart = card.querySelector("i.fa.fa-heart");
+              heart.classList.remove("active");
+              const countLike = card.querySelector(".countLike");
+              countLike.textContent = "Favourite: " + (result.countLike-1);
+            }
+          });
         },
         error: function (xhr, status, error) {
           console.log(error);
         },
       });
+      
     } else {
       console.log("Non-Active");
       heartIcon.classList.toggle("active");
@@ -793,18 +807,24 @@ likeButtons.forEach((button) => {
         success: function(result) {
           console.log(result)
           $(button).closest('.card').find('.countLike').text("Favourite: " + (result.countLike+1));
+          
+          const allCards = document.querySelectorAll(".card");
+          allCards.forEach((card) => {
+            const cardId = card.querySelector(".like i.fa-heart").dataset.bookId;
+            if (cardId == bookId) {
+              const heart = card.querySelector("i.fa.fa-heart");
+              heart.classList.add("active");
+
+              const countLike = card.querySelector(".countLike");
+              countLike.textContent = "Favourite: " + (result.countLike+1);
+            }
+          });
         },
         error: function (xhr, status, error) {
           console.log(error);
         },
       });
     }
-
-    // const emptyHeartIcon = button.querySelector("i.far.fa-heart");
-    // if(emptyHeartIcon){
-    //   console.log("empty heart icon active");
-    // emptyHeartIcon.classList.toggle("active");
-    // }
   });
 });
 
