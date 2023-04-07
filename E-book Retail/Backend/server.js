@@ -439,6 +439,7 @@ app.use("/tag", require("./routes/tag"));
 app.use("/catalog", require("./routes/catalog"));
 app.use("/discount", require("./routes/discount"));
 app.use("/review", require("./routes/review"));
+app.use("/read", require("./routes/read"));
 
 mongoose.connection.once("open", () => {
   console.log("connected to MongoDb");
