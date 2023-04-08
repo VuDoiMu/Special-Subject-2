@@ -757,6 +757,7 @@ function fetchProduct(url) {
 }
 
 // toggle like
+
 const likeButtons = document.querySelectorAll(".like");
 likeButtons.forEach((button) => {
   button.addEventListener("click", (e) => {
@@ -775,11 +776,23 @@ likeButtons.forEach((button) => {
         url: `http://localhost:3500/management/sublike/${bookId}`,
         success: function(result) {
           $(button).closest('.card').find('.countLike').text("Favourite: " + (result.countLike-1));
+         
+          const allCards = document.querySelectorAll(".card");
+          allCards.forEach((card) => {
+            const cardId = card.querySelector(".like i.fa-heart").dataset.bookId;
+            if (cardId == bookId) {
+              const heart = card.querySelector("i.fa.fa-heart");
+              heart.classList.remove("active");
+              const countLike = card.querySelector(".countLike");
+              countLike.textContent = "Favourite: " + (result.countLike-1);
+            }
+          });
         },
         error: function (xhr, status, error) {
           console.log(error);
         },
       });
+      
     } else {
       console.log("Non-Active");
       heartIcon.classList.toggle("active");
@@ -789,18 +802,24 @@ likeButtons.forEach((button) => {
         url: `http://localhost:3500/management/addlike/${bookId}`,
         success: function(result) {
           $(button).closest('.card').find('.countLike').text("Favourite: " + (result.countLike+1));
+          
+          const allCards = document.querySelectorAll(".card");
+          allCards.forEach((card) => {
+            const cardId = card.querySelector(".like i.fa-heart").dataset.bookId;
+            if (cardId == bookId) {
+              const heart = card.querySelector("i.fa.fa-heart");
+              heart.classList.add("active");
+
+              const countLike = card.querySelector(".countLike");
+              countLike.textContent = "Favourite: " + (result.countLike+1);
+            }
+          });
         },
         error: function (xhr, status, error) {
           console.log(error);
         },
       });
     }
-
-    // const emptyHeartIcon = button.querySelector("i.far.fa-heart");
-    // if(emptyHeartIcon){
-    //   console.log("empty heart icon active");
-    // emptyHeartIcon.classList.toggle("active");
-    // }
   });
 });
 
@@ -829,17 +848,27 @@ if (hienthiSelect) {
     const selectedValue = hienthiSelect.value;
     const selectedSort = sortSelect.value;
     const currentUrl = window.location.href;
+<<<<<<< HEAD
     let urlWithoutParams = currentUrl.split("?")[0]; // remove any existing query parameters
+=======
+    const urlWithoutParams = currentUrl.split("?")[0]; // remove any existing query parameters
+    
+>>>>>>> 959ee97b7d0230271446bfad544b7904171c3c65
     const urlParams = new URLSearchParams(window.location.search);
     const pageParam = urlParams.get("page"); // get the value of the 'page' parameter
     // console.log("pageParam:", pageParam); // add this line to log the value of pageParam
-
+    
     if (hienthiSelect.classList.contains("isTag")) {
       const newUrl = `${urlWithoutParams}?page=1&limit=${selectedValue}&sortType=${selectedSort}`;
       location.assign(newUrl);
     } else {
+<<<<<<< HEAD
       urlWithoutParams = urlWithoutParams.substring(0, urlWithoutParams.length - 2);
       const newUrl = `${urlWithoutParams}/1?limit=${selectedValue}&sortType=${selectedSort}`;
+=======
+      // urlWithoutParams = urlWithoutParams.set("page", 1);
+      const newUrl = `${urlWithoutParams}?limit=${selectedValue}&sortType=${selectedSort}`;
+>>>>>>> 959ee97b7d0230271446bfad544b7904171c3c65
       location.assign(newUrl);
     }
   });

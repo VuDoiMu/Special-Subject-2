@@ -200,10 +200,12 @@ const addLike = async (req, res) => {
     try{
     
     const updateBook = await Book.findOneAndUpdate({ _id: bookId }, { $inc: { countLike: 1 } });
-    
-    const updateUser = await User.findOneAndUpdate({ _id: userId }, { $push: { favorbooks: bookId } },{new: "true"});
    
-    res.json( updateBook)
+    const updateUser = await User.findByIdAndUpdate({ _id: userId }, { $push: { favorbooks: bookId } },{new: "true"});
+
+    const newtoken = jwt.sign({userId: updateUser._id, role: updateUser.role, username: updateUser.username,image: updateUser.image, favorbooks: updateUser.favorbooks},"thisisourwebsite!");
+    res.cookie('token', newtoken);
+    res.json( updateBook);
 }catch(error){
     res.json(error)
 }
@@ -216,11 +218,13 @@ const subLike = async (req, res) => {
     
     try{
     
-    const updateBook = await Book.findOneAndUpdate({ _id: bookId }, { $inc: { countLike: -1 } });
+    const updateBook = await Book.findByIdAndUpdate({ _id: bookId }, { $inc: { countLike: -1 } });
     
-    const updateUser = await User.findOneAndUpdate({ _id: userId }, { $pull: { favorbooks: bookId } },{new: "true"});
-   
-    res.json( updateBook)
+    const updateUser = await User.findByIdAndUpdate({ _id: userId }, { $pull: { favorbooks: bookId } },{new: "true"});
+  
+    const newtoken = jwt.sign({userId: updateUser._id, role: updateUser.role, username: updateUser.username,image: updateUser.image, favorbooks: updateUser.favorbooks},"thisisourwebsite!");
+        res.cookie('token', newtoken);
+    res.json( updateBook);
 }catch(error){
     res.json(error)
 }

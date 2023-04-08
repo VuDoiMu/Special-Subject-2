@@ -1176,7 +1176,7 @@ h3.account-header {
 }
 
 .like i {
-    display: none;
+    color: rgb(55, 58, 55);
 }
 
 .like i.active {

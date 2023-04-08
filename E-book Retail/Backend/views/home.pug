@@ -4,12 +4,10 @@
 -          [array[i], array[j]] = [array[j], array[i]];
 -        }
 -      }
-- function favorBook(array, bookId) {
--       for (let i = array.length - 1; i > 0; i--) {
+-function favorBook(array, bookId) {
+-       for (let i = 0; i <array.length; i++) {
 -         if (array[i] == bookId){
--             return true;
--     }
--   return false;
+-             return true;}
 -}
 -}
 doctype html
@@ -747,7 +745,10 @@ html(lang="vi")
                       span.countLike(id="like-count-"+book._id)
                         |Favourite: #{book.countLike}
                       if token
-                        i.fa.fa-heart(data-book-id=book._id)
+                        if (-favorBook(decoded.favorbooks, book._id))
+                          i.fa.fa-heart.active(data-book-id=book._id)
+                        else 
+                          i.fa.fa-heart(data-book-id=book._id)
                     .sell 
                       span 
                         |Purchases: #{book.countSale}
@@ -789,7 +790,10 @@ html(lang="vi")
                       span.countLike(id="like-count-"+book._id)
                         |Favourite: #{book.countLike}
                       if token
-                        i.fa.fa-heart(data-book-id=book._id)
+                        if (-favorBook(decoded.favorbooks, book._id))
+                          i.fa.fa-heart.active(data-book-id=book._id)
+                        else 
+                          i.fa.fa-heart(data-book-id=book._id)
                       //- i.fa.fa-heart.active
                       //- i.far.fa-heart
                     .sell 
@@ -833,7 +837,10 @@ html(lang="vi")
                       span.countLike(id="like-count-"+book._id)
                         |Favourite: #{book.countLike}
                       if token
-                        i.fa.fa-heart(data-book-id=book._id)
+                        if (-favorBook(decoded.favorbooks, book._id))
+                          i.fa.fa-heart.active(data-book-id=book._id)
+                        else 
+                          i.fa.fa-heart(data-book-id=book._id)
                     .sell 
                       span 
                         |Purchases: #{book.countSale}
