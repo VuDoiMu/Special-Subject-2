@@ -829,16 +829,17 @@ if (hienthiSelect) {
     const selectedValue = hienthiSelect.value;
     const selectedSort = sortSelect.value;
     const currentUrl = window.location.href;
-    const urlWithoutParams = currentUrl.split("?")[0]; // remove any existing query parameters
+    let urlWithoutParams = currentUrl.split("?")[0]; // remove any existing query parameters
     const urlParams = new URLSearchParams(window.location.search);
     const pageParam = urlParams.get("page"); // get the value of the 'page' parameter
     // console.log("pageParam:", pageParam); // add this line to log the value of pageParam
 
     if (hienthiSelect.classList.contains("isTag")) {
-      const newUrl = `${urlWithoutParams}?page=${pageParam}&limit=${selectedValue}&sortType=${selectedSort}`;
+      const newUrl = `${urlWithoutParams}?page=1&limit=${selectedValue}&sortType=${selectedSort}`;
       location.assign(newUrl);
     } else {
-      const newUrl = `${urlWithoutParams}?limit=${selectedValue}&sortType=${selectedSort}`;
+      urlWithoutParams = urlWithoutParams.substring(0, urlWithoutParams.length - 2);
+      const newUrl = `${urlWithoutParams}/1?limit=${selectedValue}&sortType=${selectedSort}`;
       location.assign(newUrl);
     }
   });
