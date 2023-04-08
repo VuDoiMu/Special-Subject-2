@@ -1290,7 +1290,7 @@ h3.account-header {
 }
 
 /* Modal */
-.modal {
+#confirm-delete-modal {
     display: none;
     /* Hidden by default */
     position: fixed;
@@ -1309,7 +1309,7 @@ h3.account-header {
     /* Black w/ opacity */
 }
 
-.modal .modal-content {
+#confirm-delete-modal .modal-content {
     background-color: #fefefe;
     margin: auto;
     margin-top: 10%;
@@ -1318,11 +1318,11 @@ h3.account-header {
     width: 700px;
 }
 
-.modal .modal-header h2 {
+#confirm-delete-modal .modal-header h2 {
     margin-top: 0;
 }
 
-.modal .close-btn {
+#confirm-delete-modal .close-btn {
     cursor: pointer;
     color: #aaaaaa;
     float: right;
@@ -1330,25 +1330,25 @@ h3.account-header {
     font-weight: bold;
 }
 
-.modal .close-btn:hover,
-.modal .close-btn:focus {
+#confirm-delete-modal .close-btn:hover,
+#confirm-delete-modal .close-btn:focus {
     color: #000;
     text-decoration: none;
     cursor: pointer;
 }
 
-.modal .modal-body {
+#confirm-delete-modal .modal-body {
     padding-top: 20px;
     padding-bottom: 20px;
 }
 
-.modal .modal-footer {
+#confirm-delete-modal .modal-footer {
     display: flex;
     justify-content: flex-end;
     padding-top: 20px;
 }
 
-.modal .btn-primary {
+#confirm-delete-modal .btn-primary {
     background-color: #007bff;
     color: white;
     border: none;
@@ -1362,7 +1362,7 @@ h3.account-header {
     border-radius: 4px;
 }
 
-.modal .btn-secondary {
+#confirm-delete-modal .btn-secondary {
     background-color: #6c757d;
     color: white;
     border: none;
@@ -1376,10 +1376,10 @@ h3.account-header {
     border-radius: 4px;
 }
 
-.modal .btn-primary:hover {
+#confirm-delete-modal .btn-primary:hover {
     background-color: #0069d9;
 }
 
-.modal .btn-secondary:hover {
+#confirm-delete-modal .btn-secondary:hover {
     background-color: #5a6268;
 }

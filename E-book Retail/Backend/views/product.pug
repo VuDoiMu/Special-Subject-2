@@ -1,4 +1,10 @@
 - const moment = locals.moment;
+-function favorBook(array, bookId) {
+-       for (let i = 0; i <array.length; i++) {
+-         if (array[i] == bookId){
+-             return true;}
+-}
+-}
 doctype html
 html(lang="li")
   head
@@ -11,7 +17,6 @@ html(lang="li")
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
       rel="stylesheet"
     )
-    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
     script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js")
     script(src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js")
     script(src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js")
@@ -497,7 +502,7 @@ html(lang="li")
               each bookTag in booksTag
                 each bookItem in bookTag
                   if book.name!= bookItem.name
-                    .card
+                    .card(id="card-"+book._id)
                       a.motsanpham(
                         title=bookItem.name
                         data-placement="bottom" 
@@ -520,11 +525,13 @@ html(lang="li")
                             .sale 
                               |-#{bookItem.saleRate}%
                           .like 
-                            span.countLike
+                            span.countLike(id="like-count-"+book._id)
                               |Favourite: #{book.countLike}
                             if token
-                              i.fa.fa-heart.active
-                              i.far.fa-heart
+                              if (-favorBook(decoded.favorbooks, book._id))
+                                i.fa.fa-heart.active(data-book-id=book._id)
+                              else 
+                                i.fa.fa-heart(data-book-id=book._id)
                           .sell 
                             span 
                               |Purchases: #{book.countSale}
