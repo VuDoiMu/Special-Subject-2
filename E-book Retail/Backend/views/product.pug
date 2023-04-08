@@ -502,7 +502,7 @@ html(lang="li")
               each bookTag in booksTag
                 each bookItem in bookTag
                   if book.name!= bookItem.name
-                    .card(id="card-"+book._id)
+                    .card(id="card-"+bookItem._id)
                       a.motsanpham(
                         title=bookItem.name
                         data-placement="bottom" 
@@ -525,13 +525,13 @@ html(lang="li")
                             .sale 
                               |-#{bookItem.saleRate}%
                           .like 
-                            span.countLike(id="like-count-"+book._id)
-                              |Favourite: #{book.countLike}
+                            span.countLike(id="like-count-"+bookItem._id)
+                              |Favourite: #{bookItem.countLike}
                             if token
-                              if (-favorBook(decoded.favorbooks, book._id))
-                                i.fa.fa-heart.active(data-book-id=book._id)
+                              if (-favorBook(decoded.favorbooks, bookItem._id))
+                                i.fa.fa-heart.active(data-book-id=bookItem._id)
                               else 
-                                i.fa.fa-heart(data-book-id=book._id)
+                                i.fa.fa-heart(data-book-id=bookItem._id)
                           .sell 
                             span 
                               |Purchases: #{book.countSale}
@@ -573,10 +573,10 @@ html(lang="li")
                               span.time - #{timeAgo}
                             .col-4
                               .pull-right.reply
-                                a(href='#')
-                                  span
-                                    i.fa.fa-reply
-                                    | Reply
+                                //- a(href='#')
+                                //-   span
+                                //-     i.fa.fa-reply
+                                //-     | Reply
                                 if(decoded.userId === comment.user._id)
                                   a(class='edit-comment' data-comment-id=comment._id)
                                     i.fa.fa-edit
