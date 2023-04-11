@@ -10,5 +10,6 @@ router.route("/deleteAll").delete(userController.deleteUser);
 router.route("/getUser").get(userController.getUser);
 router.route('/sendmail').post(userController.sendMail);
 router.route("/getAllUser").get(userController.getAllUser);
+router.route("/profile").get(userController.userProfile);
 
 module.exports = router;
