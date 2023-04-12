@@ -8,10 +8,13 @@ const User = require("./models/User");
 const data = require("./data/book.json");
 const cookieParser = require("cookie-parser");
 const axios = require("axios");
+const multer = require("multer");
 const jwt = require("jsonwebtoken");
+const fs = require("fs");
 const paginate = require("paginate-array");
 const session = require("express-session");
 const _ = require("lodash");
+const upload = multer({ dest: "uploads/" });
 app.use(
   session({
     secret: "secret-key",
@@ -440,11 +443,49 @@ app.get("/admin/sale", async (req, res) => {
   res.render("admin-sale.pug", { orderData, totalBooks, totalProfits });
 });
 
+// Get all author data
+app.get("/admin/author-list", async (req, res) => {
+  const response = await axios.get("http://localhost:3500/management");
+  const data = response.data;
+
+  res.render("author-management.pug", {
+    data,
+  });
+});
+
 app.post("/create-order", async (req, res) => {
   const cartItems = JSON.parse(req.cookies["cart"]);
   console.log(cartItems[0]);
 });
 
+app.post("/test", upload.array("images", 5), (req, res) => {
+  const files = req.files;
+  console.log(req.formData);
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    const filePath = file.path;
+
+    fs.readFile(filePath, (err, data) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Error reading file");
+      } else {
+        // Handle file data here
+        console.log(data);
+      }
+
+      fs.unlink(filePath, (err) => {
+        if (err) {
+          console.error(err);
+        } else {
+          console.log(`Deleted file ${filePath}`);
+        }
+      });
+    });
+  }
+
+  res.send("Files uploaded!");
+});
 //routes
 app.use("/comment", require("./routes/comment"));
 app.use("/management", require("./routes/books"));

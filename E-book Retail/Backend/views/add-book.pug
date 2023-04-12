@@ -53,7 +53,7 @@ html(lang='en', dir='ltr')
 
 
                 .d-flex.justify-content-center
-                    form#add-form.w-50
+                    form(id="add-form" class="w-50" enctype="multipart/form-data")
                         h1 Add a new book
                         label(for="name") Name:
                         input#proname.form-control(type='text',name='name', autocomplete='off', placeholder='Name')
@@ -69,8 +69,7 @@ html(lang='en', dir='ltr')
 
                         label(for="name") Description:
                         input#proname.form-control(type='text',name='description' ,autocomplete='off', placeholder='Description')
-                        label(for="name") Content:
-                        input#proname.form-control(type='text',name='content', autocomplete='off', placeholder='Content')
+
                         label(for="name") Artist:
                         input#proname.form-control(type='text',name='artist', autocomplete='off', placeholder='Artist')
                         label(for="name") Publisher:
@@ -81,11 +80,16 @@ html(lang='en', dir='ltr')
                         input#proname.form-control(type='text', name='discountRate',autocomplete='off', placeholder='DiscountRate')
                         label(for="name") Page Count:
                         input#proname.form-control(type='text',name='pageCount', autocomplete='off', placeholder='PageCount')
+               
                         label(for="name") Cover:
-                        input#proname.form-control(type='text',name='cover' ,autocomplete='off', placeholder='Image link')
+                        <input type="file" id="file-cover" name="images"  style="display:block" multiple />
+                        <img src="#" alt="Chosen file" id="image-preview">
 
+                        label(for="name") Content:
+                        <input type="file" name="images"  id="content-images" style="display:block" multiple />
+       
 
-                        button(id='btn-create' class='btn btn-success' type="submit") Add new Book
+                        button(id='btn-create' class='btn btn-success'  multiple  type="submit") Add new Book
                             .container.text-center
 
                 

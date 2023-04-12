@@ -35,8 +35,6 @@ for (let i = 0; i < deleteButtons.length; i++) {
 
 // CREATE BOOK
 
-
-
 // UPDATE BOOK
 
 let updateButtons = document.getElementsByClassName("updateButton");
@@ -56,3 +54,8 @@ for (let i = 0; i < updateButtons.length; i++) {
 //       "Content-Type": "application/json",
 //     },
 //   });)
+
+document.getElementById("add-book").addEventListener("click", () => {
+  console.log("click");
+  window.location.replace("http://localhost:3500/admin/add-book");
+});

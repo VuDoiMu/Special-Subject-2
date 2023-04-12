@@ -72,8 +72,8 @@ html(lang='en', dir='ltr')
              
                         label(for="updateName") Description: 
                         input#proname.form-control(type='text',name='updateDescription' ,autocomplete='off', placeholder='Description' value=book.description)
-                        label(for="updateName") Content: 
-                        input#proname.form-control(type='text',name='updateContent', autocomplete='off', placeholder='Content' value=book.content)
+                        //- label(for="updateName") Content: 
+                        //- input#proname.form-control(type='text',name='updateContent', autocomplete='off', placeholder='Content' value=book.content)
                         label(for="updateName") Arist: 
                         input#proname.form-control(type='text',name='updateArtist', autocomplete='off', placeholder='Artist' value=book.artist)
                         label(for="updateName") Publisher: 
@@ -84,10 +84,14 @@ html(lang='en', dir='ltr')
                         input#proname.form-control(type='text', name='updateDiscountRate',autocomplete='off', placeholder='DiscountRate' value=book.discountRate)
                         label(for="updateName") Page Count: 
                         input#proname.form-control(type='text',name='updatePageCount', autocomplete='off', placeholder='PageCount' value=book.pageCount)
-                        label(for="updateName") Image: 
-                        input#proname.form-control(type='text',name='updateCover' ,autocomplete='off', placeholder='Image link' value=book.image)
-                        img(src=book.image style="display:block; margin-bottom:2rem")
+                       
+                        //- input#proname.form-control(type='text',name='updateCover' ,autocomplete='off', placeholder='Image link' value=book.image)
 
+                        label(for="name") Cover:
+                        <input type="file" id="file-cover" name="file"  style="display:block" multiple />
+                        img(src=book.image style="display:block; margin-bottom:2rem")
+                        label(for="name") Content:
+                        <input type="file" name="file"  id="file-content" style="display:block" multiple />
 
                         button(id='btn-submit-update' class='btn btn-success' type="submit") Update
                             .container.text-center

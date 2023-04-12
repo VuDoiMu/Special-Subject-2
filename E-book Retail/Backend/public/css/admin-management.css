@@ -52,3 +52,13 @@ label {
   margin-top: 10px;
   margin-bottom: 0px;
 }
+#image-preview {
+  display: none;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+input[type="file"] {
+  display: block;
+  margin-bottom: 20px;
+}
