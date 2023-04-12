@@ -4,6 +4,12 @@
 -          [array[i], array[j]] = [array[j], array[i]];
 -        }
 -      }
+-function favorBook(array, bookId) {
+-       for (let i = 0; i <array.length; i++) {
+-         if (array[i] == bookId){
+-             return true;}
+-}
+-}
 doctype html
 html(lang="vi")
   head
@@ -149,7 +155,10 @@ html(lang="vi")
                 type="button"
                 )
                 a.btn.btn-secondary.rounded-circle(href="#")
-                  i.fa.fa-user
+                  if decoded.image
+                    img#img-account(alt="account-image" src=decoded.image)
+                  else
+                    i.fa.fa-user
                 a.nav-link.text-dark.text-uppercase(
                   style="display:inline-block" 
                   href="/tai-khoan"
@@ -411,7 +420,7 @@ html(lang="vi")
             // 1 san pham
             -shuffle(data)
             each book in data 
-              .card(id="card-#{book._id}")
+              .card(id="card-"+book._id)
                 a.motsanpham(
                   title=book.name 
                   data-placement="bottom" 
@@ -438,7 +447,10 @@ html(lang="vi")
                       span.countLike(id="like-count-"+book._id)
                         |Favourite: #{book.countLike}
                       if token
-                        i.fa.fa-heart(data-book-id=book._id)
+                        if (-favorBook(decoded.favorbooks, book._id))
+                          i.fa.fa-heart.active(data-book-id=book._id)
+                        else 
+                          i.fa.fa-heart(data-book-id=book._id)
                         //- i.far.fa-heart
                     .sell 
                       span 
@@ -706,17 +718,18 @@ html(lang="vi")
           .khoisanpham
             
             each book in toplikeBook
-              .card
+              .card(id="card-"+book._id)
                 a.motsanpham(
                   title=book.name 
                   data-placement="bottom" 
                   data-toggle="tooltip" 
                   style="text-decoration: none; color: black;" 
-                  href='/product/' + book._id
+                  href=('/product/' + book._id)
+                  
                   )
                   img.card-img-top.anh(
-                    alt="combo-chuyen-nghe-chuyen-doi" 
-                    src=book.image
+                    alt="lap-ke-hoach-kinh-doanh-hieu-qua" 
+                    src= book.image
                     )
                   .card-body.noidungsp.mt-3
                     h3.card-title.ten=book.name
@@ -729,10 +742,13 @@ html(lang="vi")
                       .sale
                         |-#{book.saleRate}%
                     .like 
-                      span.countLike
+                      span.countLike(id="like-count-"+book._id)
                         |Favourite: #{book.countLike}
-                      //- i.fa.fa-heart.active
-                      //- i.far.fa-heart
+                      if token
+                        if (-favorBook(decoded.favorbooks, book._id))
+                          i.fa.fa-heart.active(data-book-id=book._id)
+                        else 
+                          i.fa.fa-heart(data-book-id=book._id)
                     .sell 
                       span 
                         |Purchases: #{book.countSale}
@@ -771,8 +787,13 @@ html(lang="vi")
                       .sale
                         |-#{book.saleRate}%
                     .like 
-                      span.countLike
+                      span.countLike(id="like-count-"+book._id)
                         |Favourite: #{book.countLike}
+                      if token
+                        if (-favorBook(decoded.favorbooks, book._id))
+                          i.fa.fa-heart.active(data-book-id=book._id)
+                        else 
+                          i.fa.fa-heart(data-book-id=book._id)
                       //- i.fa.fa-heart.active
                       //- i.far.fa-heart
                     .sell 
@@ -813,10 +834,13 @@ html(lang="vi")
                       .sale
                         |-#{book.saleRate}%
                     .like 
-                      span.countLike
+                      span.countLike(id="like-count-"+book._id)
                         |Favourite: #{book.countLike}
-                      //- i.fa.fa-heart.active
-                      //- i.far.fa-heart
+                      if token
+                        if (-favorBook(decoded.favorbooks, book._id))
+                          i.fa.fa-heart.active(data-book-id=book._id)
+                        else 
+                          i.fa.fa-heart(data-book-id=book._id)
                     .sell 
                       span 
                         |Purchases: #{book.countSale}

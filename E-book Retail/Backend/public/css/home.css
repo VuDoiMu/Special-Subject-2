@@ -74,6 +74,14 @@ a.btn.btn-secondary.rounded-circle {
   transition: 0.2s;
 }
 
+#img-account {
+  width: 42px;
+  height: 40px;
+  border-radius: 50%;
+  margin-left: -12px;
+  margin-top: -5px;
+}
+
 .nav-item.giohang:hover .cart-amount {
   background: #cf111a;
   color: white;

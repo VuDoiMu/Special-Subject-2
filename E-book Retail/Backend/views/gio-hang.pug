@@ -128,7 +128,10 @@ html(lang="vi")
                 type="button"
                 )
                 a.btn.btn-secondary.rounded-circle(href="#")
-                  i.fa.fa-user
+                  if decoded.image
+                    img#img-account(alt="account-image" src=decoded.image)
+                  else
+                    i.fa.fa-user
                 a.nav-link.text-dark.text-uppercase(
                   style="display:inline-block" 
                   href="#"

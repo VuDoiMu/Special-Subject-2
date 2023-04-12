@@ -316,7 +316,6 @@ $(function () {
     let cartItems = getCookie("cart");
     cartItems = JSON.parse(cartItems);
     let productNumbers = cartItems.length;
-    console.log(productNumbers);
     if (productNumbers === 0) {
       document.querySelector(".giohang .cart-amount").textContent = 0;
     }
@@ -596,8 +595,6 @@ if (formdangnhap) {
     const password = document.getElementById("password");
     const emailValue = document.getElementById("email").value;
     const passwordValue = document.getElementById("password").value;
-    console.log(emailValue);
-    console.log(passwordValue);
     const sendData = await fetch("http://localhost:3500/auth/login", {
       method: "POST",
       headers: {
@@ -667,7 +664,6 @@ if (logoutVar) {
       },
     });
     const content = await sendData.json();
-    console.log(content.username);
     let currentUrl = window.location.href;
     window.setTimeout(() => {
       location.reload();
@@ -681,7 +677,6 @@ if (searchform) {
   searchform.addEventListener("submit", async (e) => {
     e.preventDefault();
     const searchname = document.getElementById("search").value;
-    console.log(searchname);
     window.setTimeout(() => {
       location.assign("/search/" + searchname + "/1?limit=10");
     }, 200);
@@ -747,7 +742,6 @@ document.querySelector("#form-signup").addEventListener("submit", async (e) => {
       }),
     });
     const content = await sendData.json();
-    console.log(content.message);
     if (content.message === "this email is already used!") {
       emailInput.classList.remove("valid");
       emailInput.classList.add("error");
@@ -780,6 +774,7 @@ function fetchProduct(url) {
 }
 
 // toggle like
+
 const likeButtons = document.querySelectorAll(".like");
 likeButtons.forEach((button) => {
   button.addEventListener("click", (e) => {
@@ -790,19 +785,31 @@ likeButtons.forEach((button) => {
       .data("book-id");
     const heartIcon = button.querySelector("i.fa.fa-heart");
     if (heartIcon.classList.contains("active")) {
-      console.log("Active");
       heartIcon.classList.toggle("active");
+      
       //bớt like
       $.ajax({
         type: "PUT",
         url: `http://localhost:3500/management/sublike/${bookId}`,
-        success: function (data) {
-          $("#like-count-" + bookId).text("Favourite: " + (data.countLike - 1));
+        success: function(result) {
+          $(button).closest('.card').find('.countLike').text("Favourite: " + (result.countLike-1));
+         
+          const allCards = document.querySelectorAll(".card");
+          allCards.forEach((card) => {
+            const cardId = card.querySelector(".like i.fa-heart").dataset.bookId;
+            if (cardId == bookId) {
+              const heart = card.querySelector("i.fa.fa-heart");
+              heart.classList.remove("active");
+              const countLike = card.querySelector(".countLike");
+              countLike.textContent = "Favourite: " + (result.countLike-1);
+            }
+          });
         },
         error: function (xhr, status, error) {
           console.log(error);
         },
       });
+      
     } else {
       console.log("Non-Active");
       heartIcon.classList.toggle("active");
@@ -810,21 +817,26 @@ likeButtons.forEach((button) => {
       $.ajax({
         type: "PUT",
         url: `http://localhost:3500/management/addlike/${bookId}`,
-        success: function (data) {
-          console.log(data);
-          $("#like-count-" + bookId).text("Favourite: " + (data.countLike + 1));
+        success: function(result) {
+          $(button).closest('.card').find('.countLike').text("Favourite: " + (result.countLike+1));
+          
+          const allCards = document.querySelectorAll(".card");
+          allCards.forEach((card) => {
+            const cardId = card.querySelector(".like i.fa-heart").dataset.bookId;
+            if (cardId == bookId) {
+              const heart = card.querySelector("i.fa.fa-heart");
+              heart.classList.add("active");
+
+              const countLike = card.querySelector(".countLike");
+              countLike.textContent = "Favourite: " + (result.countLike+1);
+            }
+          });
         },
         error: function (xhr, status, error) {
           console.log(error);
         },
       });
     }
-
-    // const emptyHeartIcon = button.querySelector("i.far.fa-heart");
-    // if(emptyHeartIcon){
-    //   console.log("empty heart icon active");
-    // emptyHeartIcon.classList.toggle("active");
-    // }
   });
 });
 
@@ -834,8 +846,6 @@ function showToast(message) {
   if (toastMessage) {
     toastMessage.innerHTML = message;
   }
-  console.log(toastContainer);
-  console.log(toastMessage);
   toastContainer.style.display = "block";
   toastMessage.style.opacity = "1";
 
@@ -855,16 +865,17 @@ if (hienthiSelect) {
     const selectedValue = hienthiSelect.value;
     const selectedSort = sortSelect.value;
     const currentUrl = window.location.href;
-    const urlWithoutParams = currentUrl.split("?")[0]; // remove any existing query parameters
+    let urlWithoutParams = currentUrl.split("?")[0]; // remove any existing query parameters
     const urlParams = new URLSearchParams(window.location.search);
     const pageParam = urlParams.get("page"); // get the value of the 'page' parameter
-    console.log("pageParam:", pageParam); // add this line to log the value of pageParam
-
+    // console.log("pageParam:", pageParam); // add this line to log the value of pageParam
+    
     if (hienthiSelect.classList.contains("isTag")) {
-      const newUrl = `${urlWithoutParams}?page=${pageParam}&limit=${selectedValue}&sortType=${selectedSort}`;
+      const newUrl = `${urlWithoutParams}?page=1&limit=${selectedValue}&sortType=${selectedSort}`;
       location.assign(newUrl);
     } else {
-      const newUrl = `${urlWithoutParams}?limit=${selectedValue}&sortType=${selectedSort}`;
+      urlWithoutParams = urlWithoutParams.substring(0, urlWithoutParams.length - 2);
+      const newUrl = `${urlWithoutParams}/1?limit=${selectedValue}&sortType=${selectedSort}`;
       location.assign(newUrl);
     }
   });
@@ -900,3 +911,152 @@ if (sortSelect) {
 //     location.assign(newUrl);
 //   });
 // }
+
+function addEventListenerComment() {
+  const editCommentButtons = document.querySelectorAll('.edit-comment');
+
+editCommentButtons.forEach(editCommentButton => {
+  editCommentButton.addEventListener('click', () => {
+    const commentId = editCommentButton.dataset.commentId;
+    const commentContent = document.querySelector(`#comment-${commentId}`).textContent.trim();
+    console.log(commentContent);
+    console.log(commentId);
+    const editFormId = "#edit-form-" + commentId;
+    console.log(editFormId);
+    const editForm = document.querySelector(editFormId);
+    const editFormByClass = document.querySelector(".form-edit");
+    console.log(editFormByClass);
+    console.log(editForm);
+    const editFormInput = editForm.querySelector('input[name="content"]');
+    editFormInput.value = commentContent;
+    editForm.classList.remove('d-none');
+  });
+});
+
+document.querySelectorAll('.form-edit').forEach(form => {
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const content = form.querySelector('input[name="content"]').value;
+    const commentId = form.dataset.commentId;
+    const bookId = form.dataset.bookId;
+    
+    try {
+      const response = await fetch(`/comment/${bookId}/${commentId}`, {
+        method: 'PUT',
+        headers: {
+        "Content-Type": "application/json",
+      },
+        body: JSON.stringify({content})
+      });
+      const updatedComment = await response.json();
+      // Update the comment content on the page
+      const commentElement = document.querySelector(`#comment-${commentId}`);
+      commentElement.innerText = updatedComment.content;
+      // Hide the edit form
+      const editForm = document.querySelector(`#edit-form-${commentId}`);
+      editForm.classList.add('d-none');
+    } catch (error) {
+      console.error(error);
+    }
+  });
+});
+
+// document.querySelectorAll('.delete-comment').forEach(btn => {
+//   btn.addEventListener('click', async () => {
+//     const commentId = btn.dataset.commentId;
+//     const bookId =btn.dataset.bookId;
+//     const response = await fetch(`/comment/${bookId}/${commentId}`, {
+//       method: 'DELETE'
+//     });
+//     if (response.ok) {
+//       const commentEl = document.getElementById(`comment-item${commentId}`);
+//       if(commentEl) {
+//         commentEl.remove();
+//       }
+//       const commentSection = document.querySelector("#comment-section");
+//       if (commentSection.children.length === 0) {
+//         const noCommentsEl = document.createElement('p');
+//         noCommentsEl.id = 'comment-empty';
+//         noCommentsEl.textContent = 'No comments yet.';
+//         commentSection.appendChild(noCommentsEl);
+//       }
+//     }
+//   });
+// });
+  const confirmModal = document.getElementById('confirm-delete-modal');
+  const confirmBtn = document.getElementById('delete-comment-confirm');
+  const cancelBtn = document.getElementById('delete-comment-cancel');
+
+
+  document.querySelectorAll('.delete-comment').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const commentId = btn.dataset.commentId;
+      const bookId = btn.dataset.bookId;
+
+      // Show the confirmation modal
+      confirmModal.style.display = "block";
+
+      const closeBtn = confirmModal.querySelector('.close-btn');
+      
+      confirmModal.addEventListener('click', function (event) {
+        console.log(event.target);
+        console.log(this);
+        if (event.target === this) {
+          confirmModal.style.display = 'none';
+        }
+      });
+
+      // window.addEventListener('click', function (event) {
+      //   console.log("Click");
+      //   if (confirmModal.style.display == "block") {
+      //     if (event.target != confirmModal && !confirmModal.contains(event.target)) {
+      //       confirmModal.style.display = 'none';
+      //       console.log("Click2");
+      //     } 
+      //   }
+      //   console.log("Click3");
+      // });
+
+      // Add event listener for close button
+      closeBtn.addEventListener('click', () => {
+        confirmModal.style.display = "none";
+        // document.body.style.overflow = 'auto'; 
+      });
+
+      // Handle the "Yes" button click
+      confirmBtn.addEventListener('click', async () => {
+        const response = await fetch(`/comment/${bookId}/${commentId}`, {
+          method: 'DELETE'
+        });
+        if (response.ok) {
+          const commentEl = document.getElementById(`comment-item${commentId}`);
+          if (commentEl) {
+            commentEl.remove();
+          }
+          const commentSection = document.querySelector("#comment-section");
+          if (commentSection.children.length === 0) {
+            const noCommentsEl = document.createElement('p');
+            noCommentsEl.id = 'comment-empty';
+            noCommentsEl.textContent = 'No comments yet.';
+            commentSection.appendChild(noCommentsEl);
+          }
+        }
+
+        // Hide the confirmation modal
+        confirmModal.style.display = "none";
+      });
+
+      // Handle the "No" button click
+      cancelBtn.addEventListener('click', () => {
+        // Hide the confirmation modal
+        confirmModal.style.display = "none";
+      });
+      
+    });
+  });
+
+
+}
+
+addEventListenerComment();
+

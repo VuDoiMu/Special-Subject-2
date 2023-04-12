@@ -1,3 +1,9 @@
+-function favorBook(array, bookId) {
+-       for (let i = 0; i <array.length; i++) {
+-         if (array[i] == bookId){
+-             return true;}
+-}
+-}
 doctype html
 html(lang="vi")
   head
@@ -129,7 +135,10 @@ html(lang="vi")
                 type="button"
                 )
                 a.btn.btn-secondary.rounded-circle(href="#")
-                  i.fa.fa-user
+                  if decoded.image
+                    img#img-account(alt="account-image" src=decoded.image)
+                  else
+                    i.fa.fa-user
                 a.nav-link.text-dark.text-uppercase(
                   style="display:inline-block" 
                   href="#"
@@ -367,7 +376,7 @@ html(lang="vi")
               -if(boo)
               for book in booksTag
                 .col-lg-3.col-md-4.col-xs-6.item.DeanGraziosi(style="position: initial;")
-                  .card
+                  .card(id="card-"+book._id)
                     a.motsanpham(
                       title=book.name 
                       data-placement="bottom" 
@@ -390,11 +399,14 @@ html(lang="vi")
                           .sale
                             |-#{book.saleRate}%
                         .like 
-                          span.countLike
+                          span.countLike(id="like-count-"+book._id)
                             |Favourite: #{book.countLike}
                           if token
-                            i.fa.fa-heart.active
-                            i.far.fa-heart
+                            if (-favorBook(decoded.favorbooks, book._id))
+                              i.fa.fa-heart.active(data-book-id=book._id)
+                            else 
+                              i.fa.fa-heart(data-book-id=book._id)
+                            //- i.far.fa-heart
                         .sell 
                           span 
                             |Purchases: #{book.countSale}

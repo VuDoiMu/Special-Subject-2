@@ -7,6 +7,57 @@ const jwt = require("jsonwebtoken")
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 
+const formidable = require("express-formidable")
+app.use(formidable({
+    multiples: true, // request.files to be arrays of files
+}))
+
+const fileSystem = require("fs")
+
+app.use("/bookContent", express.static(__dirname + "/bookContent"))
+
+//callback for upload book images
+function callbackFileUpload(bookID, images, index, savedPaths = [], success = null) {
+	const self = this
+
+	if (images.length > index) {
+
+		fileSystem.readFile(images[index].path, function (error, data) {
+			if (error) {
+				console.error(error)
+				return
+			}
+
+			const filePath = `bookContent/${bookID}/` + images[index].name
+
+			fileSystem.writeFile(filePath, data, async function (error) {
+				if (error) {
+					console.error(error)
+					return
+				}
+
+				savedPaths.push(filePath)
+
+				if (index == (images.length - 1)) {
+					success(savedPaths)
+				} else {
+					index++
+					callbackFileUpload(bookID, images, index, savedPaths, success)
+				}
+			})
+
+			fileSystem.unlink(images[index].path, function (error) {
+				if (error) {
+					console.error(error)
+					return
+				}
+			})
+		})
+	} else {
+		success(savedPaths)
+	}
+}
+
 
 const getAllBook = async (req, res) => {
     const books = await Book.find();
@@ -74,7 +125,7 @@ const addBook = async (req, res) => {
     try {
         const result = await Book.create({
             name: newBook.name,
-            image: newBook.image,
+            image: '',
             price: newBook.price,
             description: newBook.description,
             tag: newBook.tag,
@@ -83,10 +134,58 @@ const addBook = async (req, res) => {
             publisher: newBook.publisher,
             pageCount: newBook.pageCount,
             saleRate: newBook.saleRate,
-            content: newBook.content
+            content: {}
         });
         const updateResult = await Tag.updateMany({ name: { $in: newBook.tag } }, { $push: { books: result._id } });
-  
+        
+        const bookID = result._id;
+        
+        const bookContentFolder = './bookContent';
+        try {
+            if (!fileSystem.existsSync(bookContentFolder)) {
+                fileSystem.mkdirSync(bookContentFolder);
+                console.log("bookContent folder added");
+            }
+        } catch (err) {
+            console.error(err);
+        }
+
+        const folderName = `./bookContent/${bookID}`;
+        try {
+            if (!fileSystem.existsSync(folderName)) {
+                fileSystem.mkdirSync(folderName);
+                console.log(`content folder for bood ID: ${bookID} added`);
+            }
+        } catch (err) {
+            console.error(err);
+        }
+
+        const images = []
+        if (Array.isArray(res.files.images)) {
+            for (let a = 0; a < res.files.images.length; a++) {
+                images.push(res.files.images[a])
+            }
+        } else {
+            images.push(res.files.images)
+        }
+
+        const content = {
+            
+        };
+        for (let i = 0; i <images.length; i++) {
+            content[i+1] = `/bookContent/${bookID}/${i+1}`;
+        }
+
+        callbackFileUpload(bookID, images, 0, [], async function (savedPaths) {
+            await Book.findOneAndUpdate({
+                _id: bookID
+            }, {
+                cover: `./bookContent/${bookID}/cover`,
+                content: content
+            })
+
+            result.send("Images has been uploaded.")
+        })
         res.status(201).json(result);
     } catch (err) {
         console.error(err);
@@ -101,10 +200,12 @@ const addLike = async (req, res) => {
     try{
     
     const updateBook = await Book.findOneAndUpdate({ _id: bookId }, { $inc: { countLike: 1 } });
-    
-    const updateUser = await User.findOneAndUpdate({ _id: userId }, { $push: { favorbooks: bookId } },{new: "true"});
    
-    res.json( updateBook)
+    const updateUser = await User.findByIdAndUpdate({ _id: userId }, { $push: { favorbooks: bookId } },{new: "true"});
+
+    const newtoken = jwt.sign({userId: updateUser._id, role: updateUser.role, username: updateUser.username,image: updateUser.image, favorbooks: updateUser.favorbooks},"thisisourwebsite!");
+    res.cookie('token', newtoken);
+    res.json( updateBook);
 }catch(error){
     res.json(error)
 }
@@ -117,11 +218,13 @@ const subLike = async (req, res) => {
     
     try{
     
-    const updateBook = await Book.findOneAndUpdate({ _id: bookId }, { $inc: { countLike: -1 } });
+    const updateBook = await Book.findByIdAndUpdate({ _id: bookId }, { $inc: { countLike: -1 } });
     
-    const updateUser = await User.findOneAndUpdate({ _id: userId }, { $pull: { favorbooks: bookId } },{new: "true"});
-   
-    res.json( updateBook)
+    const updateUser = await User.findByIdAndUpdate({ _id: userId }, { $pull: { favorbooks: bookId } },{new: "true"});
+  
+    const newtoken = jwt.sign({userId: updateUser._id, role: updateUser.role, username: updateUser.username,image: updateUser.image, favorbooks: updateUser.favorbooks},"thisisourwebsite!");
+        res.cookie('token', newtoken);
+    res.json( updateBook);
 }catch(error){
     res.json(error)
 }

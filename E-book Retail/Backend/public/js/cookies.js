@@ -24,7 +24,6 @@ const addToCart = () => {
   let cart = getCartFromCookie(); // Retrieve the cart from the cookie
   for (let i = 0; i < cart.length; i++) {
     if (cart[i].id === item.id) {
-      console.log("hi");
       return;
     }
   }
@@ -58,5 +57,3 @@ function getCookie(name) {
   }
   return null;
 }
-
-console.log(getCookie("cart"));

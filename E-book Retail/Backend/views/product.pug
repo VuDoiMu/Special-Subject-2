@@ -1,3 +1,10 @@
+- const moment = locals.moment;
+-function favorBook(array, bookId) {
+-       for (let i = 0; i <array.length; i++) {
+-         if (array[i] == bookId){
+-             return true;}
+-}
+-}
 doctype html
 html(lang="li")
   head
@@ -9,10 +16,13 @@ html(lang="li")
     link(
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
       rel="stylesheet"
-      )
-    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
+    )
     script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js")
     script(src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js")
+    script(src="https://code.jquery.com/jquery-3.6.0.min.js")
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js")
     link(
       href="/css/product-item.css" 
       rel="stylesheet"
@@ -23,10 +33,16 @@ html(lang="li")
       defer
       )
     script(
+      src="/js/sub.js" 
+      type="text/javascript"
+      defer
+      )
+    script(
       src="/js/cookies.js" 
       type="text/javascript"
       defer
       )
+    //- 
     link(
       href="/fontawesome_free_5.13.0/css/all.css" 
       rel="stylesheet"
@@ -79,6 +95,7 @@ html(lang="li")
       href="/favicon_io/site.webmanifest" 
       rel="manifest"
       )
+    
   body
     // code cho nut like share facebook
     #fb-root
@@ -133,7 +150,11 @@ html(lang="li")
                 type="button"
                 )
                 a.btn.btn-secondary.rounded-circle(href="#")
-                  i.fa.fa-user
+                  if decoded.image
+                    img#img-account(alt="account-image" src=decoded.image)
+                  else
+                    i.fa.fa-user
+                  
                 a.nav-link.text-dark.text-uppercase(
                   style="display:inline-block" 
                   href="#"
@@ -481,7 +502,7 @@ html(lang="li")
               each bookTag in booksTag
                 each bookItem in bookTag
                   if book.name!= bookItem.name
-                    .card
+                    .card(id="card-"+bookItem._id)
                       a.motsanpham(
                         title=bookItem.name
                         data-placement="bottom" 
@@ -500,101 +521,86 @@ html(lang="li")
                             .giamoi 
                               | #{(bookItem.price - bookItem.price*bookItem.saleRate/100).toFixed(2)} $
                             .giacu.text-muted
-                              |#{bookItem.price} $
+                              |#{bookItem.price} 
                             .sale 
                               |-#{bookItem.saleRate}%
                           .like 
-                            span.countLike
-                              |Favourite: #{book.countLike}
+                            span.countLike(id="like-count-"+bookItem._id)
+                              |Favourite: #{bookItem.countLike}
                             if token
-                              i.fa.fa-heart.active
-                              i.far.fa-heart
+                              if (-favorBook(decoded.favorbooks, bookItem._id))
+                                i.fa.fa-heart.active(data-book-id=bookItem._id)
+                              else 
+                                i.fa.fa-heart(data-book-id=bookItem._id)
                           .sell 
                             span 
                               |Purchases: #{book.countSale}
-    // thanh cac dich vu :mien phi giao hang, qua tang mien phi ........
-    //- .container.mb-5.mt-5.comment-section
-    //-   .card
-    //-     .row
-    //-       .col-md-12
-    //-         h3.text-center.mb-5
-    //-           | Nested comment section
-    //-         .row
-    //-           .col-md-12
-    //-             .media
-    //-               img.mr-3.rounded-circle(alt='Bootstrap Media Preview' src='https://i.imgur.com/stD0Q19.jpg')
-    //-               .media-body
-    //-                 .row
-    //-                   .col-8.d-flex
-    //-                     h5 Maria Smantha
-    //-                     span - 2 hours ago
-    //-                   .col-4
-    //-                     .pull-right.reply
-    //-                       a(href='#')
-    //-                         span
-    //-                           i.fa.fa-reply
-    //-                           |  reply
-    //-                 | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;It is a long established fact that a reader will be distracted by the readable content of a page.
-    //-                 .media.mt-4
-    //-                   a.pr-3(href='#')
-    //-                     img.rounded-circle(alt='Bootstrap Media Another Preview' src='https://i.imgur.com/xELPaag.jpg')
-    //-                   .media-body
-    //-                     .row
-    //-                       .col-12.d-flex
-    //-                         h5 Simona Disa
-    //-                         span - 3 hours ago
-    //-                     | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;letters, as opposed to using &apos;Content here, content here&apos;, making it look like readable English.
-    //-                 .media.mt-3
-    //-                   a.pr-3(href='#')
-    //-                     img.rounded-circle(alt='Bootstrap Media Another Preview' src='https://i.imgur.com/nAcoHRf.jpg')
-    //-                   .media-body
-    //-                     .row
-    //-                       .col-12.d-flex
-    //-                         h5 John Smith
-    //-                         span - 4 hours ago
-    //-                     | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;the majority have suffered alteration in some form, by injected humour, or randomised words.
-    //-             .media.mt-4
-    //-               img.mr-3.rounded-circle(alt='Bootstrap Media Preview' src='https://i.imgur.com/xELPaag.jpg')
-    //-               .media-body
-    //-                 .row
-    //-                   .col-8.d-flex
-    //-                     h5 Shad f
-    //-                     span - 2 hours ago
-    //-                   .col-4
-    //-                     .pull-right.reply
-    //-                       a(href='#')
-    //-                         span
-    //-                           i.fa.fa-reply
-    //-                           |  reply
-    //-                 | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33.
-    //-                 .media.mt-4
-    //-                   a.pr-3(href='#')
-    //-                     img.rounded-circle(alt='Bootstrap Media Another Preview' src='https://i.imgur.com/nUNhspp.jpg')
-    //-                   .media-body
-    //-                     .row
-    //-                       .col-12.d-flex
-    //-                         h5 Andy flowe
-    //-                         span - 5 hours ago
-    //-                     | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
-    //-                 .media.mt-3
-    //-                   a.pr-3(href='#')
-    //-                     img.rounded-circle(alt='Bootstrap Media Another Preview' src='https://i.imgur.com/HjKTNkG.jpg')
-    //-                   .media-body
-    //-                     .row
-    //-                       .col-12.d-flex
-    //-                         h5 Simp f
-    //-                         span - 5 hours ago
-    //-                     | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur
-    //-                 .media.mt-3
-    //-                   a.pr-3(href='#')
-    //-                     img.rounded-circle(alt='Bootstrap Media Another Preview' src='https://i.imgur.com/nAcoHRf.jpg')
-    //-                   .media-body
-    //-                     .row
-    //-                       .col-12.d-flex
-    //-                         h5 John Smith
-    //-                         span - 4 hours ago
-    //-                     | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;the majority have suffered alteration in some form, by injected humour, or randomised words.
 
+          
+    if token
+      .container.mb-5.mt-5.comment-section
+        form#form-comment.add-comment-form
+          div.form-group
+            label(for="content") Add a comment:
+            textarea.form-control#content(name="content" rows="3" required)
+          div.form-group
+            input(type="hidden" name="book" value=`${book._id}`)
+            input(type="hidden" name="user" value=`${decoded.userId}`)
+            button.btn.btn-primary(type="submit") Add comment
+        .card
+          .row
+            h3#comment-title.text-center.mb-5
+                | Comments
+            div#comment-section.col-md-12
+              if comments.length > 0
+                -const sortedComments = comments.sort((a, b) => {
+                -return new Date(a.createdDate) - new Date(b.createdDate);
+                -});
+                -const reversedComments = sortedComments.reverse();
+                each comment in reversedComments
+                  .row.comment-item(id= 'comment-item' + comment._id)
+                    .col-md-12
+                      .media
+                        img.mr-3.rounded-circle(alt='Bootstrap Media Preview' src=comment.user.image)
+                        .media-body
+                          .row
+                            .col-8.d-flex.headInfo
+                              - const username = comment.user.username.split(' ').map(str => str.charAt(0).toUpperCase() + str.slice(1)).join(' ')
+                              h5
+                                |#{username}
+                              -const createdDate = comment.createdDate;
+                              -const timeAgo = moment(createdDate).fromNow();
+                              span.time - #{timeAgo}
+                            .col-4
+                              .pull-right.reply
+                                //- a(href='#')
+                                //-   span
+                                //-     i.fa.fa-reply
+                                //-     | Reply
+                                if(decoded.userId === comment.user._id)
+                                  a(class='edit-comment' data-comment-id=comment._id)
+                                    i.fa.fa-edit
+                                    | Edit
+                                  a(class='delete-comment',data-comment-id=comment._id, data-book-id=comment.book)
+                                    i.fa.fa-trash
+                                    | Delete
+                          p(id= 'comment-' + comment._id)
+                            | #{comment.content}
+                          form(id= 'edit-form-' + comment._id, data-book-id=comment.book, data-comment-id=comment._id).d-none.form-edit
+                            input(type='text' name='content' class='form-control' placeholder='Edit your comment')
+                            button.btn.btn-primary(type='submit') Update
+              else 
+                p#comment-empty No comments yet
+        
+                    //- .media.mt-4
+                    //-   a.pr-3(href='#')
+                    //-     img.rounded-circle(alt='Bootstrap Media Another Preview' src='https://i.imgur.com/xELPaag.jpg')
+                    //-   .media-body
+                    //-     .row
+                    //-       .col-12.d-flex
+                    //-         h5 Simona Disa
+                    //-         span - 3 hours ago
+                    //-     | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;letters, as opposed to using &apos;Content here, content here&apos;, making it look like readable English.
     section.abovefooter.text-white(style="background-color: #CF111A;")
       .container
         .row
@@ -696,10 +702,120 @@ html(lang="li")
                 src="/images/payoo-payment.jpg"
                 )
     // nut cuon len dau trang
+    #confirm-delete-modal.modal
+      .modal-content
+        .modal-header
+          h2 Confirm Delete
+          span.close-btn ×
+        .modal-body
+          p Are you sure you want to delete this comment?
+        .modal-footer
+          button#delete-comment-confirm.btn.btn-primary Yes
+          button#delete-comment-cancel.btn.btn-secondary No
     .fixed-bottom
       #backtotop.btn.btn-warning.float-right.rounded-circle.nutcuonlen(
         style="background:#CF111A;" 
         href="#"
         )
         i.fa.fa-chevron-up.text-white
+    script.
+      let formComment = document.querySelector('#form-comment');
+      let content = document.querySelector('#content');
+      
+      let bookId = "";
+      let userId = "";
+      if (formComment) {
+        const book = formComment.querySelector('input[name="book"]');
+        if (book) {
+          bookId = formComment.querySelector('input[name="book"]').value;
+        }
+        const user = formComment.querySelector('input[name="user"]');
+        if (user) {
+          userId = formComment.querySelector('input[name="user"]').value;
+        }
+
+        formComment.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          let commentEmpty = document.querySelector('#comment-empty');
+          if(commentEmpty) {
+            commentEmpty.remove();
+          }
+          const formData = new FormData();
+          formData.append('book', bookId);
+          formData.append('user', userId);
+          formData.append('content', content.value);
+
+          try {
+            const response = await fetch(`/comment/${bookId}`, {
+              method: 'POST',
+              body: JSON.stringify({
+                "book": bookId,
+                "user": userId,
+                "content": content.value
+              }),
+              headers: {
+                "Content-Type": "application/json",
+              }
+            });
+            const data = await response.json();
+            renderComment(data);
+            content.value = '';
+          } catch (error) {
+            console.error(error);
+          }
+        });
+      }
+
+      function renderComment(comment) {
+        const commentSection = document.querySelector('#comment-section');
+        const commentEl = document.createElement('div');
+        commentEl.classList.add('row');
+        commentEl.classList.add('comment-item');
+        commentEl.id='comment-item' + comment._id;
+        const username = comment.user.username.split(' ').map(str => str.charAt(0).toUpperCase() + str.slice(1)).join(' ')
+        const createdDate = comment.createdDate;
+        const timeAgo = moment(createdDate).fromNow();
+        commentEl.innerHTML = `
+                      <div class="col-md-12">
+                        <div class="media">
+                          <img class="mr-3 rounded-circle" alt="Bootstrap Media Preview" src="${comment.user.image}">
+                          <div class="media-body">
+                            <div class="row">
+                              <div class="col-8 d-flex headInfo">
+                                <h5>${username}</h5>
+                                <span class="time">- ${timeAgo}</span>
+                              </div>
+                              <div class="col-4">
+                                <div class="pull-right reply">
+                                  <a href="#">
+                                    <span>
+                                      <i class="fa fa-reply"></i>
+                                      reply
+                                    </span>
+                                  </a>
+                                  <a class="edit-comment" data-comment-id="${comment._id}">
+                                    <i class="fa fa-edit"></i>
+                                    Edit
+                                  </a>
+                                  <a class="delete-comment" data-comment-id="${comment._id}" data-book-id="${comment.book}">
+                                    <i class="fa fa-trash"></i>
+                                    Delete
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                            <p id="comment-${comment._id}">${comment.content}</p>
+                            <form id="edit-form-${comment._id}" data-book-id="${comment.book}" data-comment-id="${comment._id}" class="d-none form-edit">
+                              <input type="text" name="content" class="form-control" placeholder="Edit your comment">
+                              <button type="submit" class="btn btn-primary">Update</button>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    `;
+
+        const pullRight = document.querySelector(".pull-right");
+        commentSection.insertBefore(commentEl, commentSection.firstChild);
+        addEventListenerComment();
+      }
   p#book-id(style="display:none") #{book._id}

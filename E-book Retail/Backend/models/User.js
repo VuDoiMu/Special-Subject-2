@@ -1,4 +1,3 @@
-const { ObjectId } = require("mongodb");
 const mongoose  = require("mongoose");
 
 const userSchema = new mongoose.Schema({
@@ -8,6 +7,9 @@ const userSchema = new mongoose.Schema({
         lowercase: true,
         minLength: 3,
         maxLength: 100
+    },
+    image: {
+        type: String
     },
     dateOfBirth: {
         type: String,
@@ -36,7 +38,7 @@ const userSchema = new mongoose.Schema({
         length: 255,
     },
     inventory: {
-        type: [ObjectId],
+        type: [String],
     },
     role: {
         type: Number,
