@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const moment = require("moment");
 const connectDB = require("./configs/dbCon");
 const path = require("path");
-const User = require('./models/User')
+const User = require("./models/User");
 const data = require("./data/book.json");
 const cookieParser = require("cookie-parser");
 const axios = require("axios");
@@ -61,7 +61,7 @@ app.get("/", async (req, res) => {
     .then((res) => (tagData = res.data.tags));
 
   const data = response.data;
-  
+
   if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
   }
@@ -99,7 +99,7 @@ app.get("/gio-hang", async (req, res) => {
     data,
     empty,
     tags: tagData.slice(0, 11),
-    decoded
+    decoded,
   });
 });
 
@@ -119,18 +119,22 @@ app.get("/product/:id", async (req, res) => {
   const book = response.data;
 
   // Retrieve the comments data from the backend API
-  const commentsResponse = await axios.get(`http://localhost:3500/comment/${id}`);
+  const commentsResponse = await axios.get(
+    `http://localhost:3500/comment/${id}`
+  );
   const comments = commentsResponse.data;
 
   // Retrieve the tag data from the backend API
   const tagResponse = await axios.get("http://localhost:3500/tag");
   const tagData = tagResponse.data.tags;
 
-  const booksTag = []
+  const booksTag = [];
 
   // Retrieve the books associated with each tag
   for (const tagItem of book.tag) {
-    const response = await axios.get(`http://localhost:3500/tag/books/${tagItem}`);
+    const response = await axios.get(
+      `http://localhost:3500/tag/books/${tagItem}`
+    );
     if (response.data.books[0]) {
       const booksArray = response.data.books[0].books;
       booksTag.push(booksArray);
@@ -150,10 +154,9 @@ app.get("/product/:id", async (req, res) => {
     token,
     decoded,
     itemCount,
-    moment
+    moment,
   });
 });
-
 
 app.get("/tag/:name", async (req, res) => {
   const name = req.params.name;
@@ -458,4 +461,3 @@ mongoose.connection.once("open", () => {
   console.log("connected to MongoDb");
   app.listen(3500, () => console.log("Server running on port 3500!"));
 });
-

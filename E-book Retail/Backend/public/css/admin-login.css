@@ -124,3 +124,11 @@ button {
 body {
   font-size: 120%;
 }
+
+label {
+  font-size: 80%;
+}
+
+input {
+  font-size: 110%;
+}

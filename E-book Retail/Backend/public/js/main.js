@@ -536,11 +536,7 @@ $(function () {
     }
 
     let cartItems = await JSON.parse(getCookie("cart"));
-
-    setCartCookie(cart);
-    location.reload(true);
-    alert("cảm ơn đã mua hàng");
-    const sendData = await fetch("http://localhost:3500/create-order", {
+    await fetch("http://localhost:3500/create-order", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -548,6 +544,10 @@ $(function () {
       },
       body: JSON.stringify({ cartItems }),
     });
+    setCartCookie(cart);
+    location.reload(true);
+    alert("cảm ơn đã mua hàng");
+
     // Save the cleared cart to the cookie
   });
 
@@ -786,22 +786,26 @@ likeButtons.forEach((button) => {
     const heartIcon = button.querySelector("i.fa.fa-heart");
     if (heartIcon.classList.contains("active")) {
       heartIcon.classList.toggle("active");
-      
+
       //bớt like
       $.ajax({
         type: "PUT",
         url: `http://localhost:3500/management/sublike/${bookId}`,
-        success: function(result) {
-          $(button).closest('.card').find('.countLike').text("Favourite: " + (result.countLike-1));
-         
+        success: function (result) {
+          $(button)
+            .closest(".card")
+            .find(".countLike")
+            .text("Favourite: " + (result.countLike - 1));
+
           const allCards = document.querySelectorAll(".card");
           allCards.forEach((card) => {
-            const cardId = card.querySelector(".like i.fa-heart").dataset.bookId;
+            const cardId =
+              card.querySelector(".like i.fa-heart").dataset.bookId;
             if (cardId == bookId) {
               const heart = card.querySelector("i.fa.fa-heart");
               heart.classList.remove("active");
               const countLike = card.querySelector(".countLike");
-              countLike.textContent = "Favourite: " + (result.countLike-1);
+              countLike.textContent = "Favourite: " + (result.countLike - 1);
             }
           });
         },
@@ -809,7 +813,6 @@ likeButtons.forEach((button) => {
           console.log(error);
         },
       });
-      
     } else {
       console.log("Non-Active");
       heartIcon.classList.toggle("active");
@@ -817,18 +820,22 @@ likeButtons.forEach((button) => {
       $.ajax({
         type: "PUT",
         url: `http://localhost:3500/management/addlike/${bookId}`,
-        success: function(result) {
-          $(button).closest('.card').find('.countLike').text("Favourite: " + (result.countLike+1));
-          
+        success: function (result) {
+          $(button)
+            .closest(".card")
+            .find(".countLike")
+            .text("Favourite: " + (result.countLike + 1));
+
           const allCards = document.querySelectorAll(".card");
           allCards.forEach((card) => {
-            const cardId = card.querySelector(".like i.fa-heart").dataset.bookId;
+            const cardId =
+              card.querySelector(".like i.fa-heart").dataset.bookId;
             if (cardId == bookId) {
               const heart = card.querySelector("i.fa.fa-heart");
               heart.classList.add("active");
 
               const countLike = card.querySelector(".countLike");
-              countLike.textContent = "Favourite: " + (result.countLike+1);
+              countLike.textContent = "Favourite: " + (result.countLike + 1);
             }
           });
         },
@@ -869,12 +876,15 @@ if (hienthiSelect) {
     const urlParams = new URLSearchParams(window.location.search);
     const pageParam = urlParams.get("page"); // get the value of the 'page' parameter
     // console.log("pageParam:", pageParam); // add this line to log the value of pageParam
-    
+
     if (hienthiSelect.classList.contains("isTag")) {
       const newUrl = `${urlWithoutParams}?page=1&limit=${selectedValue}&sortType=${selectedSort}`;
       location.assign(newUrl);
     } else {
-      urlWithoutParams = urlWithoutParams.substring(0, urlWithoutParams.length - 2);
+      urlWithoutParams = urlWithoutParams.substring(
+        0,
+        urlWithoutParams.length - 2
+      );
       const newUrl = `${urlWithoutParams}/1?limit=${selectedValue}&sortType=${selectedSort}`;
       location.assign(newUrl);
     }
@@ -913,96 +923,97 @@ if (sortSelect) {
 // }
 
 function addEventListenerComment() {
-  const editCommentButtons = document.querySelectorAll('.edit-comment');
+  const editCommentButtons = document.querySelectorAll(".edit-comment");
 
-editCommentButtons.forEach(editCommentButton => {
-  editCommentButton.addEventListener('click', () => {
-    const commentId = editCommentButton.dataset.commentId;
-    const commentContent = document.querySelector(`#comment-${commentId}`).textContent.trim();
-    console.log(commentContent);
-    console.log(commentId);
-    const editFormId = "#edit-form-" + commentId;
-    console.log(editFormId);
-    const editForm = document.querySelector(editFormId);
-    const editFormByClass = document.querySelector(".form-edit");
-    console.log(editFormByClass);
-    console.log(editForm);
-    const editFormInput = editForm.querySelector('input[name="content"]');
-    editFormInput.value = commentContent;
-    editForm.classList.remove('d-none');
+  editCommentButtons.forEach((editCommentButton) => {
+    editCommentButton.addEventListener("click", () => {
+      const commentId = editCommentButton.dataset.commentId;
+      const commentContent = document
+        .querySelector(`#comment-${commentId}`)
+        .textContent.trim();
+      console.log(commentContent);
+      console.log(commentId);
+      const editFormId = "#edit-form-" + commentId;
+      console.log(editFormId);
+      const editForm = document.querySelector(editFormId);
+      const editFormByClass = document.querySelector(".form-edit");
+      console.log(editFormByClass);
+      console.log(editForm);
+      const editFormInput = editForm.querySelector('input[name="content"]');
+      editFormInput.value = commentContent;
+      editForm.classList.remove("d-none");
+    });
   });
-});
 
-document.querySelectorAll('.form-edit').forEach(form => {
-  form.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const content = form.querySelector('input[name="content"]').value;
-    const commentId = form.dataset.commentId;
-    const bookId = form.dataset.bookId;
-    
-    try {
-      const response = await fetch(`/comment/${bookId}/${commentId}`, {
-        method: 'PUT',
-        headers: {
-        "Content-Type": "application/json",
-      },
-        body: JSON.stringify({content})
-      });
-      const updatedComment = await response.json();
-      // Update the comment content on the page
-      const commentElement = document.querySelector(`#comment-${commentId}`);
-      commentElement.innerText = updatedComment.content;
-      // Hide the edit form
-      const editForm = document.querySelector(`#edit-form-${commentId}`);
-      editForm.classList.add('d-none');
-    } catch (error) {
-      console.error(error);
-    }
+  document.querySelectorAll(".form-edit").forEach((form) => {
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const content = form.querySelector('input[name="content"]').value;
+      const commentId = form.dataset.commentId;
+      const bookId = form.dataset.bookId;
+
+      try {
+        const response = await fetch(`/comment/${bookId}/${commentId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ content }),
+        });
+        const updatedComment = await response.json();
+        // Update the comment content on the page
+        const commentElement = document.querySelector(`#comment-${commentId}`);
+        commentElement.innerText = updatedComment.content;
+        // Hide the edit form
+        const editForm = document.querySelector(`#edit-form-${commentId}`);
+        editForm.classList.add("d-none");
+      } catch (error) {
+        console.error(error);
+      }
+    });
   });
-});
 
-// document.querySelectorAll('.delete-comment').forEach(btn => {
-//   btn.addEventListener('click', async () => {
-//     const commentId = btn.dataset.commentId;
-//     const bookId =btn.dataset.bookId;
-//     const response = await fetch(`/comment/${bookId}/${commentId}`, {
-//       method: 'DELETE'
-//     });
-//     if (response.ok) {
-//       const commentEl = document.getElementById(`comment-item${commentId}`);
-//       if(commentEl) {
-//         commentEl.remove();
-//       }
-//       const commentSection = document.querySelector("#comment-section");
-//       if (commentSection.children.length === 0) {
-//         const noCommentsEl = document.createElement('p');
-//         noCommentsEl.id = 'comment-empty';
-//         noCommentsEl.textContent = 'No comments yet.';
-//         commentSection.appendChild(noCommentsEl);
-//       }
-//     }
-//   });
-// });
-  const confirmModal = document.getElementById('confirm-delete-modal');
-  const confirmBtn = document.getElementById('delete-comment-confirm');
-  const cancelBtn = document.getElementById('delete-comment-cancel');
+  // document.querySelectorAll('.delete-comment').forEach(btn => {
+  //   btn.addEventListener('click', async () => {
+  //     const commentId = btn.dataset.commentId;
+  //     const bookId =btn.dataset.bookId;
+  //     const response = await fetch(`/comment/${bookId}/${commentId}`, {
+  //       method: 'DELETE'
+  //     });
+  //     if (response.ok) {
+  //       const commentEl = document.getElementById(`comment-item${commentId}`);
+  //       if(commentEl) {
+  //         commentEl.remove();
+  //       }
+  //       const commentSection = document.querySelector("#comment-section");
+  //       if (commentSection.children.length === 0) {
+  //         const noCommentsEl = document.createElement('p');
+  //         noCommentsEl.id = 'comment-empty';
+  //         noCommentsEl.textContent = 'No comments yet.';
+  //         commentSection.appendChild(noCommentsEl);
+  //       }
+  //     }
+  //   });
+  // });
+  const confirmModal = document.getElementById("confirm-delete-modal");
+  const confirmBtn = document.getElementById("delete-comment-confirm");
+  const cancelBtn = document.getElementById("delete-comment-cancel");
 
-
-  document.querySelectorAll('.delete-comment').forEach(btn => {
-    btn.addEventListener('click', async () => {
+  document.querySelectorAll(".delete-comment").forEach((btn) => {
+    btn.addEventListener("click", async () => {
       const commentId = btn.dataset.commentId;
       const bookId = btn.dataset.bookId;
 
       // Show the confirmation modal
       confirmModal.style.display = "block";
 
-      const closeBtn = confirmModal.querySelector('.close-btn');
-      
-      confirmModal.addEventListener('click', function (event) {
+      const closeBtn = confirmModal.querySelector(".close-btn");
+
+      confirmModal.addEventListener("click", function (event) {
         console.log(event.target);
         console.log(this);
         if (event.target === this) {
-          confirmModal.style.display = 'none';
+          confirmModal.style.display = "none";
         }
       });
 
@@ -1012,21 +1023,21 @@ document.querySelectorAll('.form-edit').forEach(form => {
       //     if (event.target != confirmModal && !confirmModal.contains(event.target)) {
       //       confirmModal.style.display = 'none';
       //       console.log("Click2");
-      //     } 
+      //     }
       //   }
       //   console.log("Click3");
       // });
 
       // Add event listener for close button
-      closeBtn.addEventListener('click', () => {
+      closeBtn.addEventListener("click", () => {
         confirmModal.style.display = "none";
-        // document.body.style.overflow = 'auto'; 
+        // document.body.style.overflow = 'auto';
       });
 
       // Handle the "Yes" button click
-      confirmBtn.addEventListener('click', async () => {
+      confirmBtn.addEventListener("click", async () => {
         const response = await fetch(`/comment/${bookId}/${commentId}`, {
-          method: 'DELETE'
+          method: "DELETE",
         });
         if (response.ok) {
           const commentEl = document.getElementById(`comment-item${commentId}`);
@@ -1035,9 +1046,9 @@ document.querySelectorAll('.form-edit').forEach(form => {
           }
           const commentSection = document.querySelector("#comment-section");
           if (commentSection.children.length === 0) {
-            const noCommentsEl = document.createElement('p');
-            noCommentsEl.id = 'comment-empty';
-            noCommentsEl.textContent = 'No comments yet.';
+            const noCommentsEl = document.createElement("p");
+            noCommentsEl.id = "comment-empty";
+            noCommentsEl.textContent = "No comments yet.";
             commentSection.appendChild(noCommentsEl);
           }
         }
@@ -1047,16 +1058,12 @@ document.querySelectorAll('.form-edit').forEach(form => {
       });
 
       // Handle the "No" button click
-      cancelBtn.addEventListener('click', () => {
+      cancelBtn.addEventListener("click", () => {
         // Hide the confirmation modal
         confirmModal.style.display = "none";
       });
-      
     });
   });
-
-
 }
 
 addEventListenerComment();
-
