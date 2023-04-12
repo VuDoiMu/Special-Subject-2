@@ -116,6 +116,7 @@ const deleteUser = async (req, res) => {
 };
 const logout = async (req, res) => {
   res.clearCookie("token");
+  res.clearCookie("cart");
   res.json({ success: true, message: "user logout" });
 };
 // const access = async (req, res) => {

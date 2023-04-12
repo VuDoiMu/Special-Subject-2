@@ -416,6 +416,11 @@ app.get("/admin/sale", async (req, res) => {
   res.render("admin-sale.pug", { orderData, totalBooks, totalProfits });
 });
 
+app.post("/create-order", async (req, res) => {
+  const cartItems = JSON.parse(req.cookies["cart"]);
+  console.log(cartItems[0]);
+});
+
 //routes
 app.use("/management", require("./routes/books"));
 app.use("/order", require("./routes/order"));
