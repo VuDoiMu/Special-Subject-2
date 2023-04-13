@@ -3,18 +3,19 @@ const app = express();
 const mongoose = require("mongoose");
 const moment = require("moment");
 const connectDB = require("./configs/dbCon");
+const multer = require("multer");
 const path = require("path");
 const User = require("./models/User");
 const data = require("./data/book.json");
 const cookieParser = require("cookie-parser");
 const axios = require("axios");
-const multer = require("multer");
+
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
 const paginate = require("paginate-array");
 const session = require("express-session");
 const _ = require("lodash");
-const upload = multer({ dest: "uploads/" });
+
 app.use(
   session({
     secret: "secret-key",
@@ -23,13 +24,13 @@ app.use(
   })
 );
 
+const upload = multer({ dest: "uploads/" });
 app.use(cookieParser());
 
 //connect to MongoDb
 connectDB();
 
 //decode req.body from form-data
-app.use(express.urlencoded({ extended: true }));
 
 // decode req.body from post body message
 app.use(express.json());
@@ -458,34 +459,78 @@ app.post("/create-order", async (req, res) => {
   console.log(cartItems[0]);
 });
 
-app.post("/test", upload.array("images", 5), (req, res) => {
-  const files = req.files;
-  console.log(req.formData);
-  for (let i = 0; i < files.length; i++) {
-    const file = files[i];
-    const filePath = file.path;
+// THong tin tac gia + sach cua tac gia day
+app.get("/all-book-by/:author", (req, res) => {
+  const author = req.params.author;
+  console.log(author);
+  res.render("author.pug", {});
+});
 
-    fs.readFile(filePath, (err, data) => {
-      if (err) {
-        console.error(err);
-        res.status(500).send("Error reading file");
-      } else {
-        // Handle file data here
-        console.log(data);
-      }
+app.get("/read-book/:id", async (req, res) => {
+  const cartCookie = req.cookies.cart;
+  let itemCount = 0;
 
-      fs.unlink(filePath, (err) => {
-        if (err) {
-          console.error(err);
-        } else {
-          console.log(`Deleted file ${filePath}`);
-        }
-      });
-    });
+  if (cartCookie) {
+    const cart = JSON.parse(cartCookie);
+    itemCount = Object.keys(cart).length;
   }
 
-  res.send("Files uploaded!");
+  const id = req.params.id;
+
+  // Retrieve the book data from the backend API
+  const response = await axios.get(`http://localhost:3500/management/${id}`);
+  const book = response.data;
+
+  // Retrieve the comments data from the backend API
+  const commentsResponse = await axios.get(
+    `http://localhost:3500/comment/${id}`
+  );
+  const comments = commentsResponse.data;
+
+  // Retrieve the tag data from the backend API
+  const tagResponse = await axios.get("http://localhost:3500/tag");
+  const tagData = tagResponse.data.tags;
+
+  const booksTag = [];
+
+  // Retrieve the books associated with each tag
+  for (const tagItem of book.tag) {
+    const response = await axios.get(
+      `http://localhost:3500/tag/books/${tagItem}`
+    );
+    if (response.data.books[0]) {
+      const booksArray = response.data.books[0].books;
+      booksTag.push(booksArray);
+    }
+  }
+
+  const token = req.cookies.token;
+  let decoded = "";
+  if (token) {
+    decoded = jwt.verify(token, "thisisourwebsite!");
+  }
+  res.render("read-book.pug", {
+    book,
+    comments,
+    tags: tagData.slice(0, 11),
+    booksTag,
+    token,
+    decoded,
+    itemCount,
+    moment,
+  });
 });
+
+// Handle files
+app.post(
+  "/upload",
+  upload.fields([{ name: "images" }, { name: "content-images" }]),
+  function (req, res, next) {
+    console.log(req.body); // contains form fields
+    console.log(req.files);
+  }
+);
+
 //routes
 app.use("/comment", require("./routes/comment"));
 app.use("/management", require("./routes/books"));

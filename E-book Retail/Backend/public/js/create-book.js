@@ -3,41 +3,52 @@ document.getElementById("add-form").onsubmit = function () {
   uploadImages(event);
 };
 
-function uploadImages(event) {
+async function uploadImages(event) {
   // prevent the form from reloading the page
   event.preventDefault();
 
   // get form tag
   const form = event.target;
-
+  console.log(form);
   // create form data object from <form>
   const formData = new FormData(form);
-
-  // create AJAX object
-  const ajax = new XMLHttpRequest();
-
-  // 1st parameter = method, GET/POST
-  // 2nd parameter = path to server file
-  // 3rd parameter = asynchronous
-  ajax.open("POST", "/management", true);
-
-  // when status of request changes
-  ajax.onreadystatechange = function () {
-    // operation is completed
-    if (this.readyState == 4) {
-      // response from server is okay
-      if (this.status == 200) {
-        // response from server
-        console.log(this.responseText);
-      }
-    }
-  };
-
-  // send AJAX request
-  ajax.send(formData);
-  console.log(formData);
+  console.log(formData.get("images"));
+  fetch("http://localhost:3500/upload", {
+    method: "POST",
+    body: formData,
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Success:", data);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 }
 
+// // create AJAX object
+// const ajax = new XMLHttpRequest();
+
+// // 1st parameter = method, GET/POST
+// // 2nd parameter = path to server file
+// // 3rd parameter = asynchronous
+// ajax.open("POST", "/test", true);
+
+// // when status of request changes
+// ajax.onreadystatechange = function () {
+//   // operation is completed
+//   if (this.readyState == 4) {
+//     // response from server is okay
+//     if (this.status == 200) {
+//       // response from server
+//       console.log(this.responseText);
+//     }
+//   }
+// };
+
+// // send AJAX request
+
+// ajax.send(formData);
 //OLD VERSION
 
 // document.getElementById("btn-create").addEventListener("click", async (e) => {
@@ -65,65 +76,46 @@ function uploadImages(event) {
 //   const contentForm = new FormData();
 
 //   coverForm.append("cover", fileCover.files[0]);
-
+//   console.log(coverForm[0]);
 //   for (let i = 0; i < fileContent.files.length; i++) {
 //     contentForm.append(i + 1 + "", fileContent.files[i]);
 //   }
 //   console.log(contentForm);
-//   console.log(contentForm.get("1"));
-//   console.log(contentForm.get("2"));
-//   const ajax = new XMLHttpRequest();
+// console.log(contentForm.get("1"));
+// console.log(contentForm.get("2"));
 
-//   // 1st parameter = method, GET/POST
-//   // 2nd parameter = path to server file
-//   // 3rd parameter = asynchronous
-//   ajax.open("POST", "/uploads", true);
-
-//   // when status of request changes
-//   ajax.onreadystatechange = function () {
-//     // operation is completed
-//     if (this.readyState == 4) {
-//       // response from server is okay
-//       if (this.status == 200) {
-//         // response from server
-//         console.log(this.responseText);
-//       }
-//     }
-//   };
-
-//   // send AJAX request
-//   ajax.send(coverForm, contentForm);
 //   // http://localhost:3500/management
-//   // const addBook = await fetch(`http://localhost:3500/test`, {
-//   //   method: "POST",
-//   //   headers: {
-//   //     "Content-Type": "application/json",
-//   //   },
-//   //   body: JSON.stringify({
-//   //     name: name,
-//   //     cover: coverForm,
-//   //     author: author,
-//   //     description: description,
-//   //     content: contentForm,
-//   //     artist: artist,
-//   //     publisher: publisher,
-//   //     price: price,
-//   //     saleRate: saleRate,
-//   //     pageCount: saleRate,
-//   //     tag: tag,
-//   //     images: { image: coverForm, content: contentForm },
-//   //   }),
-//   // })
-//   //   .then((response) => response.json())
-//   //   .then((data) => (message = data.message));
-//   // if (message === "A book with this name is already exist!") {
-//   //   alert(`A book with this name is already exist!`);
-//   // } else {
-//   //   window.setTimeout(() => {
-//   //     location.assign("/admin/management");
-//   //   }, 1000);
-//   //   alert(`You just added ${name}`);
-//   // }
+//   const addBook = await fetch(`http://localhost:3500/management`, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({
+//       name: name,
+//       cover: coverForm,
+//       author: author,
+//       description: description,
+//       content: contentForm,
+//       artist: artist,
+//       publisher: publisher,
+//       price: price,
+//       saleRate: saleRate,
+//       pageCount: saleRate,
+//       tag: tag,
+//       images: { image: coverForm, content: contentForm },
+//     }),
+//     formdata: { contentForm, coverForm },
+//   })
+//     .then((response) => response.json())
+//     .then((data) => (message = data.message));
+//   if (message === "A book with this name is already exist!") {
+//     alert(`A book with this name is already exist!`);
+//   } else {
+//     window.setTimeout(() => {
+//       location.assign("/admin/management");
+//     }, 1000);
+//     alert(`You just added ${name}`);
+//   }
 // });
 // const fileInput = document.querySelector("#file-cover");
 // const imagePreview = document.querySelector("#image-preview");
@@ -143,36 +135,36 @@ function uploadImages(event) {
 //   }
 // });
 
-// // function uploadImages(e) {
-// //   // prevent the form from reloading the page
-// //   e.preventDefault()
+// // // function uploadImages(e) {
+// // //   // prevent the form from reloading the page
+// // //   e.preventDefault()
 
-// //   // get form tag
-// //   const form = e.target
+// // //   // get form tag
+// // //   const form = e.target
 
-// //   // create form data object from <form>
-// //   const formData = new FormData(form)
+// // //   // create form data object from <form>
+// // //   const formData = new FormData(form)
 
-// //   // create AJAX object
-// //   const ajax = new XMLHttpRequest()
+// // //   // create AJAX object
+// // //   const ajax = new XMLHttpRequest()
 
-// //   // 1st parameter = method, GET/POST
-// //   // 2nd parameter = path to server file
-// //   // 3rd parameter = asynchronous
-// //   ajax.open("POST", "/uploadImages", true)
+// // //   // 1st parameter = method, GET/POST
+// // //   // 2nd parameter = path to server file
+// // //   // 3rd parameter = asynchronous
+// // //   ajax.open("POST", "/uploadImages", true)
 
-// //   // when status of request changes
-// //   ajax.onreadystatechange = function () {
-// //       // operation is completed
-// //       if (this.readyState == 4) {
-// //           // response from server is okay
-// //           if (this.status == 200) {
-// //               // response from server
-// //               console.log(this.responseText)
-// //           }
-// //       }
-// //   }
+// // //   // when status of request changes
+// // //   ajax.onreadystatechange = function () {
+// // //       // operation is completed
+// // //       if (this.readyState == 4) {
+// // //           // response from server is okay
+// // //           if (this.status == 200) {
+// // //               // response from server
+// // //               console.log(this.responseText)
+// // //           }
+// // //       }
+// // //   }
 
-// //   // send AJAX request
-// //   ajax.send(formData)
-// // }
+// // //   // send AJAX request
+// // //   ajax.send(formData)
+// // // }
