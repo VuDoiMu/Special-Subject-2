@@ -5,6 +5,7 @@ const User = require("../models/User");
 const Tag = require("../models/Tag");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
+const multer = require("multer");
 app.use(cookieParser());
 
 const formidable = require("express-formidable");
@@ -14,56 +15,71 @@ app.use(
   })
 );
 
+const path = require('path');
 const fileSystem = require("fs");
 
 app.use("/bookContent", express.static(__dirname + "/bookContent"));
 
-//callback for upload book images
-function callbackFileUpload(
-  bookID,
-  images,
-  index,
-  savedPaths = [],
-  success = null
-) {
-  const self = this;
-
-  if (images.length > index) {
-    fileSystem.readFile(images[index].path, function (error, data) {
-      if (error) {
-        console.error(error);
-        return;
-      }
-
-      const filePath = `bookContent/${bookID}/` + images[index].name;
-
-      fileSystem.writeFile(filePath, data, async function (error) {
-        if (error) {
-          console.error(error);
-          return;
-        }
-
-        savedPaths.push(filePath);
-
-        if (index == images.length - 1) {
-          success(savedPaths);
-        } else {
-          index++;
-          callbackFileUpload(bookID, images, index, savedPaths, success);
-        }
-      });
-
-      fileSystem.unlink(images[index].path, function (error) {
-        if (error) {
-          console.error(error);
-          return;
-        }
-      });
+//moves the $file to $dir2
+var moveFile = (file, dir2)=>{
+  
+    //gets file name and adds it to dir2
+    var f = path.basename(file);
+    var dest = path.resolve(dir2, f);
+  
+    fileSystem.rename(file, dest, (err)=>{
+      if(err) throw err;
+      else console.log('Successfully moved');
     });
-  } else {
-    success(savedPaths);
-  }
-}
+  };
+
+
+//callback for upload book images
+// function callbackFileUpload(
+//   bookID,
+//   images,
+//   index,
+//   savedPaths = [],
+//   success = null
+// ) {
+//   const self = this;
+
+//   if (images.length > index) {
+//     fileSystem.readFile(images[index].path, function (error, data) {
+//       if (error) {
+//         console.error(error);
+//         return;
+//       }
+
+//       const filePath = `bookContent/${bookID}/` + images[index].name;
+
+//       fileSystem.writeFile(filePath, data, async function (error) {
+//         if (error) {
+//           console.error(error);
+//           return;
+//         }
+
+//         savedPaths.push(filePath);
+
+//         if (index == images.length - 1) {
+//           success(savedPaths);
+//         } else {
+//           index++;
+//           callbackFileUpload(bookID, images, index, savedPaths, success);
+//         }
+//       });
+
+//       fileSystem.unlink(images[index].path, function (error) {
+//         if (error) {
+//           console.error(error);
+//           return;
+//         }
+//       });
+//     });
+//   } else {
+//     success(savedPaths);
+//   }
+// }
 
 const getAllBook = async (req, res) => {
   const books = await Book.find();
@@ -127,8 +143,11 @@ const updateBook = async (req, res) => {
 };
 
 const addBook = async (req, res) => {
-  console.log("req", req);
+  console.log("body", req.body);
+  console.log("images", req.files)
   const newBook = req.body;
+  const uploadedImages = req.files.images;
+  console.log(uploadedImages);
   const book = await Book.findOne({ name: newBook.name }).exec();
 
   if (book != null) {
@@ -168,7 +187,7 @@ const addBook = async (req, res) => {
       console.error(err);
     }
 
-    const folderName = `./bookContent/${bookID}`;
+    const folderName = `./bookContent/${bookID}/`;
     try {
       if (!fileSystem.existsSync(folderName)) {
         fileSystem.mkdirSync(folderName);
@@ -177,34 +196,39 @@ const addBook = async (req, res) => {
     } catch (err) {
       console.error(err);
     }
+    
+    moveFile(`./uploads/cover.bmp`, folderName)
 
-    const images = [];
-    if (Array.isArray(req.files.images)) {
-      for (let a = 0; a < req.files.images.length; a++) {
-        images.push(req.files.images[a]);
-      }
-    } else {
-      images.push(req.files.images);
+    for (let i = 0; i< uploadedImages.length-1; i++) {
+       // const temp = uploadedImages[i+1];
+       // console.log(temp);
+        const uploadedPath = `./uploads/${i+1}.bmp`;
+        // console.log(uploadedPath);
+        // console.log(folderName);
+        moveFile(uploadedPath, folderName);
     }
 
     const content = {};
-    for (let i = 0; i < images.length; i++) {
+    for (let i = 0; i < uploadedImages.length-1; i++) {
       content[i + 1] = `/bookContent/${bookID}/${i + 1}`;
     }
 
-    callbackFileUpload(bookID, images, 0, [], async function (savedPaths) {
-      await Book.findOneAndUpdate(
-        {
-          _id: bookID,
-        },
-        {
-          cover: `./bookContent/${bookID}/cover`,
-          content: content,
-        }
-      );
+    // callbackFileUpload(bookID, images, 0, [], async function (savedPaths) {
+    //   await Book.findOneAndUpdate(
+    //     {
+    //       _id: bookID,
+    //     },
+    //     {
+    //       cover: `./bookContent/${bookID}/cover`,
+    //       content: content,
+    //     }
+    //   );
 
-      result.send("Images has been uploaded.");
-    });
+    //   result.send("Images has been uploaded.");
+    // });
+    // console.log("----");
+
+    // console.log("content of images: " +images);
     res.status(201).json(result);
   } catch (err) {
     console.error(err);

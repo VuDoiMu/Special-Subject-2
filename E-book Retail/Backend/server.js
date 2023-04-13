@@ -24,7 +24,16 @@ app.use(
   })
 );
 
-const upload = multer({ dest: "uploads/" });
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname)
+  }
+})
+const upload = multer({storage: storage})
+
 app.use(cookieParser());
 
 //connect to MongoDb
@@ -522,13 +531,12 @@ app.get("/read-book/:id", async (req, res) => {
 });
 
 // Handle files
+const bookThings = require("./controllers/bookController")
+
 app.post(
   "/upload",
   upload.fields([{ name: "images" }, { name: "content-images" }]),
-  function (req, res, next) {
-    console.log(req.body); // contains form fields
-    console.log(req.files);
-  }
+ bookThings.addBook
 );
 
 //routes
