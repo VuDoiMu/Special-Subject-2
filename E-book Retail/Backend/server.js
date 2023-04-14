@@ -185,15 +185,23 @@ app.get("/tai-khoan", async (req, res) => {
   const tag = await axios
     .get("http://localhost:3500/tag")
     .then((res) => (tagData = res.data.tags));
-  const user = await User.findById(decoded.userId)
+  const user = await User.findById(decoded.userId);
+  console.log(decoded.userId);
   console.log("User o day ne");
-  console.log(user);
-  console.log("User o day ne");
+  let orders = "";
+  try {
+    const response = await axios.get('http://localhost:3500/order/' + decoded.userId);
+    orders = response.data;
+  } catch (error) {
+    console.log(error);
+  }
   res.render("tai-khoan.pug", {
     token,
     tags: tagData.slice(0, 11),
     decoded,
-    user
+    user,
+    orders,
+    moment
   });
 });
 

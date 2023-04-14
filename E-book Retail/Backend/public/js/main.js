@@ -662,7 +662,7 @@ if (formdangnhap) {
         console.log(content)
         location.assign("/admin/dashboard");
       }
-    }, 200);
+    }, 2);
   });
 }
 

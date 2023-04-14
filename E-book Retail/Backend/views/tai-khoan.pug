@@ -428,6 +428,21 @@ html(lang="vi")
                         th Ngày mua
                         th Sản phẩm
                         th Tổng tiền
+                      each order in orders
+                        tr
+                          td= order._id
+                          -const formattedDate = moment(order.createdDate).format('DD/MM/YYYY');
+                          td= formattedDate
+                          td
+                            each item in order.items
+                              div.product
+                                div.product-head
+                                  img.img-product(src=item.product.image, alt=item.product.name)
+                                  span.price= '$' + item.product.price.toFixed(2)
+                                div
+                                  p.product-name= item.product.name
+                          td
+                            p.finalTotal= '$' + order.finalTotal.toFixed(2)
     // thanh cac dich vu :mien phi giao hang, qua tang mien phi ........
     section.abovefooter.text-white(style="background-color: #CF111A;")
       .container
