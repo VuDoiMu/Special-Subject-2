@@ -144,11 +144,16 @@ html(lang="vi")
                   href="#"
                   )
                   if token 
-                    |#{decoded.username}
+                    p#username
+                      |#{user && user.username}
                   else 
                     | Account
               .dropdown-menu(aria-labelledby="dropdownMenuButton")
                 if token
+                  a.dropdown-item.nutdangky.text-center.mb-2( 
+                  href="/tai-khoan"
+                  style="cursor: pointer"
+                  ) Account detail
                   a.dropdown-item.nutdangky.text-center.mb-2( 
                   id="logout"
                   style="cursor: pointer"

@@ -160,11 +160,16 @@ html(lang="li")
                   href="#"
                   )
                   if token 
-                    |#{decoded.username}
+                    p#username
+                      |#{user && user.username}
                   else 
                     | Account
               .dropdown-menu(aria-labelledby="dropdownMenuButton")
                 if token
+                  a.dropdown-item.nutdangky.text-center.mb-2( 
+                  href="/tai-khoan"
+                  style="cursor: pointer"
+                  ) Account detail
                   a.dropdown-item.nutdangky.text-center.mb-2( 
                   id="logout"
                   style="cursor: pointer"
@@ -561,11 +566,11 @@ html(lang="li")
                   .row.comment-item(id= 'comment-item' + comment._id)
                     .col-md-12
                       .media
-                        img.mr-3.rounded-circle(alt='Bootstrap Media Preview' src=comment.user.image)
+                        img.mr-3.rounded-circle(alt='Bootstrap Media Preview' src=comment.user && comment.user.image)
                         .media-body
                           .row
                             .col-8.d-flex.headInfo
-                              - const username = comment.user.username.split(' ').map(str => str.charAt(0).toUpperCase() + str.slice(1)).join(' ')
+                              - const username = comment.user && comment.user.username.split(' ').map(str => str.charAt(0).toUpperCase() + str.slice(1)).join(' ')
                               h5
                                 |#{username}
                               -const createdDate = comment.createdDate;
@@ -577,7 +582,7 @@ html(lang="li")
                                 //-   span
                                 //-     i.fa.fa-reply
                                 //-     | Reply
-                                if(decoded.userId === comment.user._id)
+                                if(decoded.userId === comment.user && comment.user._id)
                                   a(class='edit-comment' data-comment-id=comment._id)
                                     i.fa.fa-edit
                                     | Edit
@@ -787,12 +792,6 @@ html(lang="li")
                               </div>
                               <div class="col-4">
                                 <div class="pull-right reply">
-                                  <a href="#">
-                                    <span>
-                                      <i class="fa fa-reply"></i>
-                                      reply
-                                    </span>
-                                  </a>
                                   <a class="edit-comment" data-comment-id="${comment._id}">
                                     <i class="fa fa-edit"></i>
                                     Edit

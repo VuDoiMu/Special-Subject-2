@@ -36,7 +36,7 @@ app.use(express.json());
 
 // access to static file in public
 app.use(express.static(path.join(__dirname, "public")));
-
+app.use(express.static('public', { 'Content-Type': 'application/javascript' }));
 // set view engine and views
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
@@ -66,10 +66,10 @@ app.get("/", async (req, res) => {
   const data = response.data;
 
   if (token) {
-    decoded = jwt.verify(token, "thisisourwebsite!");
+    decoded = token;
   }
   console.log(decoded);
-
+  const user = await User.findById(decoded.userId);
   res.render("home.pug", {
     data,
     toplikeBook,
@@ -78,6 +78,7 @@ app.get("/", async (req, res) => {
     topsellBook,
     token,
     decoded,
+    user
   });
 });
 
@@ -87,7 +88,7 @@ app.get("/gio-hang", async (req, res) => {
   const tag = await axios
     .get("http://localhost:3500/tag")
     .then((res) => (tagData = res.data.tags));
-  const decoded = jwt.verify(token, "thisisourwebsite!");
+  const decoded = token
   const id = decoded.userId;
   const response = await axios.get("http://localhost:3500/cart/" + id);
   const data = response.data;
@@ -97,12 +98,14 @@ app.get("/gio-hang", async (req, res) => {
   if (cart == "cart=[]") {
     empty = true;
   }
-
+  const user = await User.findById(decoded.userId)
   res.render("gio-hang.pug", {
     data,
     empty,
     tags: tagData.slice(0, 11),
     decoded,
+    token,
+    user
   });
 });
 
@@ -147,8 +150,9 @@ app.get("/product/:id", async (req, res) => {
   const token = req.cookies.token;
   let decoded = "";
   if (token) {
-    decoded = jwt.verify(token, "thisisourwebsite!");
+    decoded = token
   }
+  const user = await User.findById(decoded.userId)
   res.render("product.pug", {
     book,
     comments,
@@ -158,6 +162,28 @@ app.get("/product/:id", async (req, res) => {
     decoded,
     itemCount,
     moment,
+    user
+  });
+});
+
+app.get("/tai-khoan", async (req, res) => {
+  const token = req.cookies.token;
+  let decoded = "";
+  if (token) {
+    decoded = token
+  }
+  const tag = await axios
+    .get("http://localhost:3500/tag")
+    .then((res) => (tagData = res.data.tags));
+  const user = await User.findById(decoded.userId)
+  console.log("User o day ne");
+  console.log(user);
+  console.log("User o day ne");
+  res.render("tai-khoan.pug", {
+    token,
+    tags: tagData.slice(0, 11),
+    decoded,
+    user
   });
 });
 
@@ -188,12 +214,13 @@ app.get("/tag/:name", async (req, res) => {
   const token = req.cookies.token;
   let decoded = "";
   if (token) {
-    decoded = jwt.verify(token, "thisisourwebsite!");
+    decoded = token
   }
 
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
   const paginatedBooks = paginate(booksTag, page, limit);
+  const user = await User.findById(decoded.userId)
   res.render("product-list.pug", {
     decoded,
     booksTag: paginatedBooks.data,
@@ -205,6 +232,7 @@ app.get("/tag/:name", async (req, res) => {
     sortType,
     limit,
     isTag,
+    user
   });
 });
 
@@ -220,7 +248,7 @@ app.get("/search/:searchPara?/:page?", async (req, res) => {
   const token = req.cookies.token;
   let decoded = "";
   if (token) {
-    decoded = jwt.verify(token, "thisisourwebsite!");
+    decoded = token
   }
   let booksTag = response.data;
   const sortType = req.query.sortType;
@@ -243,6 +271,7 @@ app.get("/search/:searchPara?/:page?", async (req, res) => {
   const page = parseInt(req.params.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
   const paginatedBooks = paginate(booksTag, page, limit);
+  const user = await User.findById(decoded.userId)
   res.render("product-list.pug", {
     tags: tagData.slice(0, 11),
     booksTag: paginatedBooks.data,
@@ -253,6 +282,7 @@ app.get("/search/:searchPara?/:page?", async (req, res) => {
     token,
     decoded,
     sortType,
+    user
   });
 });
 
@@ -291,11 +321,12 @@ app.get("/product-list/:name?/:page?", async (req, res) => {
   const token = req.cookies.token;
   let decoded = "";
   if (token) {
-    decoded = jwt.verify(token, "thisisourwebsite!");
+    decoded = token
   }
   const tag = await axios
     .get("http://localhost:3500/tag")
     .then((res) => (tagData = res.data.tags));
+  const user = await User.findById(decoded.userId)
   res.render("product-list.pug", {
     booksTag: paginatedBooks.data,
     currentPage: paginatedBooks.currentPage,
@@ -306,22 +337,11 @@ app.get("/product-list/:name?/:page?", async (req, res) => {
     decoded,
     sortType,
     limit,
+    user
   });
 });
 
-app.get("/tai-khoan", async (req, res) => {
-  const token = req.cookies.token;
-  let decoded = "";
-  if (token) {
-    decoded = jwt.verify(token, "thisisourwebsite!");
-  }
 
-  const response = await axios.get("http://localhost:3500/");
-  res.render("tai-khoan.pug", {
-    token,
-    decoded,
-  });
-});
 
 app.get("/admin/dashboard", async (req, res) => {
   const response = await axios.get("http://localhost:3500/management");

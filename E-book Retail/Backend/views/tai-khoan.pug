@@ -1,3 +1,4 @@
+- const jwt = locals.jwt;
 doctype html
 html(lang="vi")
   head
@@ -10,9 +11,12 @@ html(lang="vi")
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
       rel="stylesheet"
       )
+    link(rel='stylesheet', href='https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css')
     script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
     script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js")
     script(src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js")
+    script(src='https://code.jquery.com/jquery-1.12.4.js')
+    script(src='https://code.jquery.com/ui/1.12.1/jquery-ui.js')
     link(
       href="css/tai-khoan.css" 
       rel="stylesheet"
@@ -20,6 +24,7 @@ html(lang="vi")
     script(
       src="js/main.js" 
       type="text/javascript"
+      defer
       )
     link(
       href="fontawesome_free_5.13.0/css/all.css" 
@@ -104,17 +109,18 @@ html(lang="vi")
           span.navbar-toggler-icon
         #collapsibleNavId.collapse.navbar-collapse
           // form tìm kiếm
-          form.form-inline.ml-auto.my-2.my-lg-0.mr-3
+          form#form-search.form-inline.ml-auto.my-2.my-lg-0.mr-3
             .input-group(style="width: 520px;")
               input.form-control(
-                placeholder="Nhập sách cần tìm kiếm..." 
+                placeholder="Enter the book you want to search..." 
                 aria-label="Small" 
                 type="text"
+                id="search"
                 )
               .input-group-append
                 button.btn(
                   style="background-color: #CF111A; color: white;" 
-                  type="button"
+                  type="submit"
                   )
                   i.fa.fa-search
           // ô thông tin tài khoản nút đăng xuất và giỏ hàng trên header
@@ -134,7 +140,8 @@ html(lang="vi")
                   href="/tai-khoan"
                   )
                   if token 
-                    |#{decoded.username}
+                    p#username
+                      |#{user && user.username}
                   else 
                     | Account
               .dropdown-menu(aria-labelledby="dropdownMenuButton")
@@ -303,235 +310,14 @@ html(lang="vi")
               // CATEGORIES
               .categorycontent
                 ul
-                  li
-                    a(href="#") Sách Kinh Tế - Kỹ Năng
-                    i.fa.fa-chevron-right.float-right
-                    ul
-                      li.liheader
-                        a.header.text-uppercase(href="#")
-                          | Sách Kinh Tế - Kỹ
-                          |   Năng
-                      .content.trai
-                        li
-                          a(href="#") Kinh Tế - Chính Trị
-                        li
-                          a(href="#") Sách Khởi Nghiệp
-                        li
-                          a(href="#") Sách Tài Chính, Kế Toán
-                        li
-                          a(href="#") Sách Quản Trị Nhân Sự
-                        li
-                          a(href="#") Sách Kỹ Năng Làm Việc
-                      .content.phai
-                        li
-                          a(href="#") Nhân Vật - Bài Học Kinh Doanh
-                        li
-                          a(href="#") Sách Quản Trị - Lãnh Đạo
-                        li
-                          a(href="#") Sách Kinh Tế Học
-                        li
-                          a(href="#") Sách Chứng Khoán - Bất Động Sản - Đầu Tư
-                        li
-                          a(href="#") Sách Marketing - Bán Hàng
-                  li
-                    a(href="") Nghệ Thuật Sống - Tâm Lý
-                    i.fa.fa-chevron-right.float-right
-                    ul
-                      li.liheader
-                        a.header.text-uppercase(href="#")
-                          | Nghệ Thuật Sống -
-                          |   Tâm
-                          |   Lý
-                      .content.trai
-                        li
-                          a(href="#") Sách Nghệ Thuật Sống
-                        li
-                          a(href="#") Sách Tâm Lý
-                        li
-                          a(href="#") Sách Hướng Nghiệp
-                      .content.phai
-                        li
-                          a(href="#") Sách Nghệ Thuật Sống Đẹp
-                        li
-                          a(href="#") Sách Tư Duy
-                  li
-                    a(href="#") Sách Văn Học Việt Nam
-                    i.fa.fa-chevron-right.float-right
-                    ul
-                      li.liheader
-                        a.header.text-uppercase(href="#")
-                          | Sách Văn Học Việt
-                          |   Nam
-                      .content.trai
-                        li
-                          a(href="#") Truyện Ngắn - Tản Văn
-                        li
-                          a(href="#") Tiểu Thuyết lịch Sử
-                        li
-                          a(href="#") Phóng Sự - Ký Sự - Du ký - Tùy Bút
-                        li
-                          a(href="#") Thơ
-                      .content.phai
-                        li
-                          a(href="#") Tiểu thuyết
-                        li
-                          a(href="#") Tiểu sử - Hồi ký
-                        li
-                          a(href="#") Phê Bình Văn Học
-                  li
-                    a(href="#") Sách Văn Học Nước Ngoài
-                    i.fa.fa-chevron-right.float-right
-                    ul
-                      li.liheader
-                        a.header.text-uppercase(href="#")
-                          | Sách Văn Học Nước
-                          |   Ngoài
-                      .content.trai
-                        li
-                          a(href="#") Văn Học Hiện Đại
-                        li
-                          a(href="#") Tiểu Thuyết
-                        li
-                          a(href="#") Truyện Trinh Thám
-                        li
-                          a(href="#") Thần Thoại - Cổ Tích
-                      .content.phai
-                        li
-                          a(href="#") Văn Học Kinh Điển
-                        li
-                          a(href="#") Sách Giả Tưởng - Kinh Dị
-                        li
-                          a(href="#") Truyện Kiếm Hiệp
-                  li
-                    a(href="#") Sách Thiếu Nhi
-                    i.fa.fa-chevron-right.float-right
-                    ul
-                      li.liheader
-                        a.header.text-uppercase(href="#")
-                          | Sách Thiếu
-                          |   Nhi
-                      .content.trai
-                        li
-                          a(href="#") Mẫu Giáo
-                        li
-                          a(href="#") Thiếu Niên
-                        li
-                          a(href="#") Kiến Thức - Bách Khoa
-                        li
-                          a(href="#") Truyện Cổ Tích
-                      .content.phai
-                        li
-                          a(href="#") Nhi Đồng
-                        li
-                          a(href="#") Văn Học Thiếu Nhi
-                        li
-                          a(href="#") Kỹ Năng Sống
-                        li
-                          a(href="#") Truyện Tranh
-                  li
-                    a(href="#") Sách Giáo Dục - Gia Đình
-                    i.fa.fa-chevron-right.float-right
-                    ul
-                      li.liheader
-                        a.header.text-uppercase(href="#")
-                          | Sách Giáo Dục -
-                          |   Gia
-                          |   Đình
-                      .content.trai
-                        li
-                          a(href="#") Giáo dục
-                        li
-                          a(href="#") Thai Giáo
-                        li
-                          a(href="#") Sách Dinh Dưỡng - Chăm Sóc Trẻ
-                        li
-                          a(href="#") Ẩm Thực - Nấu Ăn
-                        li
-                          a(href="#") Sách Tham Khảo
-                      .content.phai
-                        li
-                          a(href="#") Giới Tính
-                        li
-                          a(href="#") Sách Làm Cha Mẹ
-                        li
-                          a(href="#") Kiến Thức - Kỹ Năng Cho Trẻ
-                        li
-                          a(href="#") Ngoại Ngữ - Từ Điển
-                  li
-                    a(href="#") Sách Lịch Sử
-                    i.fa.fa-chevron-right.float-right
-                    ul
-                      li.liheader
-                        a.header.text-uppercase(href="#") Sách Lịch Sử
-                      .content.trai
-                        li
-                          a(href="#") Lịch Sử Việt Nam
-                      .content.phai
-                        li
-                          a(href="#") Lịch Sử Thế Giới
-                  li
-                    a(href="#") Sách Văn Hóa - Nghệ Thuật
-                    i.fa.fa-chevron-right.float-right
-                    ul
-                      li.liheader
-                        a.header.text-uppercase(href="#")
-                          | Sách Văn Hóa -
-                          |   Nghệ
-                          |   Thuật
-                      .content.trai
-                        li
-                          a(href="#") Văn Hóa
-                        li
-                          a(href="#") Phong Tục Tập Quán
-                        li
-                          a(href="#") Phong Thủy
-                      .content.phai
-                        li
-                          a(href="#") Nghệ Thuật
-                        li
-                          a(href="#") Kiến Trúc
-                        li
-                          a(href="#") Du Lịch
-                  li
-                    a(href="#") Sách Khoa Học - Triết Học
-                    i.fa.fa-chevron-right.float-right
-                    ul
-                      li.liheader
-                        a.header.text-uppercase(href="#")
-                          | Sách Khoa Học -
-                          |   Triết
-                          |   Học
-                      .content.trai
-                        li
-                          a(href="#") Triết Học Phương Tây
-                        li
-                          a(href="#") Khoa Học Cơ Bản
-                      .content.phai
-                        li
-                          a(href="#") Minh Tiết Phương Đông
-                  li
-                    a(href="#") Sách Tâm Linh - Tôn Giáo
-                    i.fa.fa-chevron-right.float-right
-                  li
-                    a(href="#") Sách Y Học - Thực Dưỡng
-                    i.fa.fa-chevron-right.float-right
-                    ul
-                      li.liheader
-                        a.header.text-uppercase(href="#")
-                          | Sách Y Học - Thực
-                          |   Dưỡng
-                      .content.trai
-                        li
-                          a(href="#") Chăm Sóc Sức Khỏe
-                        li
-                          a(href="#") Y Học
-                        li
-                          a(href="#") Thiền - Yoga
-                      .content.phai
-                        li
-                          a(href="#") Thực Dưỡng
-                        li
-                          a(href="#") Đông Y - Cổ Truyền
+                  each tag in tags
+                    li
+                      a(title=tag.name
+                    data-placement="" 
+                    data-toggle="" 
+                    style="" 
+                    href=('/tag/' + tag.name +  "?page=1&limit=10"))=tag.name 
+                        i.fa.fa-chevron-right.float-right
           .col-md-5.ml-auto.contact.d-none.d-md-block
             .benphai.float-right
               .hotline
@@ -572,55 +358,63 @@ html(lang="vi")
                 )
                 .offset-md-4.mt-3
                   h3.account-header Thông tin tài khoản
-                .hoten.my-3
-                  .row
-                    label.col-md-2.offset-md-2(for="account-hoten") Họ tên
-                    input.col-md-4(
-                      name="account-hoten" 
-                      type="text"
-                      )
                 .email.my-3
                   .row
-                    label.col-md-2.offset-md-2(for="account-email") Địa chỉ email
+                    label.col-md-2.offset-md-2(for="account-email") Email address
                     input.col-md-4(
-                      value="abc@gmail.com" 
+                      value=user && user.email
                       disabled="disabled" 
                       name="account-email" 
                       type="text"
                       )
-                .checkbox-change-pass.my-3
+                .hoten.my-3
                   .row
-                    input#changepass.offset-md-4(
-                      style="margin-top: 6px;margin-right: 5px; " 
-                      name="changepass" 
-                      type="checkbox"
+                    -console.log(decoded)
+                    label.col-md-2.offset-md-2(for="account-hoten") Fullname
+                    input.col-md-4(
+                      name="account-hoten" 
+                      type="text"
+                      value=user && user.username
                       )
-                    label(for="changepass") Thay đổi mật khẩu
+                .phone.my-3
+                  .row
+                    label.col-md-2.offset-md-2(for="account-phone") Phone
+                    input.col-md-4(
+                      value=user && user.userPhone
+                      name="account-phone" 
+                      type="text"
+                      )
+                .dob.my-3.datepicker(data-default-date=user && user.dateOfBirth)
+                  .row
+                    label.col-md-2.offset-md-2(for="account-dob") Date of birth
+                    input.col-md-4(
+                      value=user && user.dateOfBirth
+                      name="account-dob" 
+                      type="text"
+                    )
+                .checkPassword.my-3
+                  .row
+                    input#toggle-password-change(type="checkbox")
+                    label(for="toggle-password-change") Thay đổi mật khẩu
                 .thay-doi-mk
-                  .mkcu.my-3
-                    .row
-                      label.col-md-2.offset-md-2(for="account-mkcu") Mật khẩu cũ
-                      input.col-md-4(
-                        name="account-mkcu" 
-                        type="text"
-                        )
+  
                   .mkmoi.my-3
                     .row
-                      label.col-md-2.offset-md-2(for="account-mkmoi") Mật khẩu mới
+                      label.col-md-2.offset-md-2(for="account-mkmoi") New password
                       input.col-md-4(
                         name="account-mkmoi" 
-                        type="text"
+                        type="password"
                         )
                   .xacnhan-mkmoi.my-3
                     .row
-                      label.col-md-2.offset-md-2(for="account-xacnhan-mkmoi") Xác nhận mật khẩu
+                      label.col-md-2.offset-md-2(for="account-xacnhan-mkmoi") Confirm password
                       input.col-md-4(
                         name="account-xacnhan-mkmoi" 
-                        type="text"
+                        type="password"
                         )
-                  .capnhat.my-3
-                    .row
-                      button.button-capnhat.text-uppercase.offset-md-4.btn.btn-warning.mb-4(type="button") Cập nhật
+                .capnhat.my-3
+                  .row
+                    button.button-capnhat.text-uppercase.offset-md-4.btn.btn-warning.mb-4(type="button") Update
               // nội dung tab 2: danh sách đơn hàng
               #nav-donhang.tab-pane.fade.py-3(
                 aria-labelledby="nav-donhang-tab" 
@@ -742,3 +536,22 @@ html(lang="vi")
         href="#"
         )
         i.fa.fa-chevron-up.text-white
+    script.
+      const datePicker = document.querySelector(".datepicker");
+      const defaultDate = datePicker.dataset.defaultDate;
+      let isoDate = "";
+      if(defaultDate) {
+        const [day, month, year] = defaultDate.split("/");
+        isoDate = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+      }
+      $(function() {
+        $('.datepicker input').datepicker({
+          defaultDate: isoDate,
+          dateFormat: 'dd/mm/yy',
+          changeMonth: true,
+          changeYear: true,
+          yearRange: "-100:+0"
+        });
+      });
+
+

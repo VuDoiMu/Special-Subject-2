@@ -28,7 +28,7 @@ const userSchema = new mongoose.Schema({
     //add more password validator
   },
   userPhone: {
-    type: Number,
+    type: String,
     required: false,
     length: 10,
   },

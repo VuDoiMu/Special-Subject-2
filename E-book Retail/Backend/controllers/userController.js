@@ -53,14 +53,14 @@ const login = async (req, res) => {
         }
         const userId = user._id;
         const storedHashedPassword = user.password; // mật khẩu đã lưu trữ trong cơ sở dữ liệu
-        // so sánh mật khẩu
-        console.log(user);
+        
+
         bcrypt.compare(password, storedHashedPassword, (err, result) => {
             if (result === true) {
                 // đăng nhập thành công
-                const accesstoken = jwt.sign({userId: user._id, role: user.role,username: user.username, favorbooks: user.favorbooks, image: user.image},"thisisourwebsite!")
+                const accesstoken = {userId: user._id, role: user.role,username: user.username, favorbooks: user.favorbooks, image: user.image}
         res.cookie('token', accesstoken);
-        res.json(user)
+              res.json( user)
             } else {
                 // đăng nhập thất bại
                 return res.status(400).json({success: false, message:" Wrong password"});
@@ -79,29 +79,45 @@ const login = async (req, res) => {
     }
 }
 const updateInfo = async (req, res) => {
-  const { username, dateOfBirth, userPhone, address } = req.body;
+  const { username, dateOfBirth, userPhone, address , password} = req.body;
   const token = req.cookies.token;
-  const decoded = jwt.verify(token, "thisisourwebsite!");
+  const decoded = token;
   const userId = decoded.userId;
+  console.log(token);
+  console.log("Decoded owd ");
+  
   try {
-    let updateUser = {
+    let updateUser= ""
+    if (password) { 
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(password, salt);
+    updateUser = {
       username,
       dateOfBirth,
       userPhone,
       address,
+      password:hash
     };
-    const userUpdateCondition = { _id: userId };
+  }else{
+      updateUser = {
+        username,
+        dateOfBirth,
+        userPhone,
+        address
+      }
+  }
+    // const userUpdateCondition = { _id: userId };
 
-    updateUser = await User.findOneAndUpdate(userUpdateCondition, updateUser, {
+    const updatedUser = await User.findByIdAndUpdate(userId, updateUser, {
       new: true,
     });
 
-    if (!updateUser)
+    if (!updatedUser)
       return res
         .status(401)
         .json({ success: false, message: "not know what ưởng" });
 
-    res.json({ success: true, message: "new", updateUser });
+    res.json({ success: true, message: "new", updatedUser });
   } catch (error) {
     console.log(error);
   }
@@ -125,16 +141,18 @@ const logout = async (req, res) => {
 //         res.status(403).send('Forbidden');
 // }
 // }
-
-const getUser = async (req, res) => {
-  const token = req.cookies.token;
-  const decoded = jwt.verify(token, "thisisourwebsite!");
-  const userId = decoded.userId;
-  const newPassword = "newpassword";
-  const user = await User.findOne(userId);
-  res.json(user);
-};
-
+const getUserInfor = async (req, res) => {
+  try{
+    const token = req.cookies.token;
+    console.log(token)
+    const decoded = jwt.verify(token, "thisisourwebsite!");
+    const userId = decoded.userId;
+    const userInfor = await User.findById(userId);
+    res.json(userInfor)
+  }catch(error){
+    res.json(error);
+  }
+}
 let sendMail = async (req, res) => {
   try {
     const token = req.cookies.token;
@@ -178,5 +196,5 @@ module.exports = {
   sendMail,
   updateInfo,
   getAllUser,
-  getUser,
+  getUserInfor,
 };

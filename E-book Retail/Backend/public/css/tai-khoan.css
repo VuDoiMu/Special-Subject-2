@@ -405,6 +405,7 @@ label.error {
 .categorycontent ul li a{
     text-decoration: none;
     color: black;
+    display: block;
 }
 
 .categorycontent ul li:hover ul{
@@ -1103,4 +1104,19 @@ h3.account-header {
     font-size: 18px;
 }
 
+.thay-doi-mk {
+    display: none;
+}
 
+.checkPassword .row{
+    align-items: center;
+}
+
+.checkPassword input {
+    margin-left: calc(16.666667% + 15px);
+}
+
+.checkPassword label {
+    margin-left: 6px;
+    margin-bottom: 0px;
+}
