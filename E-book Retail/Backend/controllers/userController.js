@@ -3,6 +3,7 @@ const app = express();
 const User = require("../models/User");
 const Cart = require("../models/Cart");
 const bcrypt = require("bcryptjs");
+const Order = require("../models/Order");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 
@@ -188,6 +189,24 @@ const getAllUser = async (req, res) => {
   const user = await User.find();
   res.json(user);
 };
+
+const userProfile = async (req, res) => {
+  try{
+    const token = req.cookies.token;
+    console.log(token)
+    const decoded = jwt.verify(token, "thisisourwebsite!");
+    const userId = decoded.userId;
+    const userInfo = await User.findById(userId);
+    const purchaseHistory = Order.findOne({ userId: userId});
+    const result = {
+    "userInfo" : userInfo,
+    "purchaseHistory": purchaseHistory
+    }
+    res.status(200).json(result)
+  }catch(error){
+    res.json(error);
+  }
+}
 module.exports = {
   register,
   login,
@@ -197,4 +216,5 @@ module.exports = {
   updateInfo,
   getAllUser,
   getUserInfor,
+  userProfile
 };
