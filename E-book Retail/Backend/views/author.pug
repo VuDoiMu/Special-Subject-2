@@ -1,0 +1,570 @@
+-function favorBook(array, bookId) {
+-       for (let i = 0; i <array.length; i++) {
+-         if (array[i] == bookId){
+-             return true;}
+-}
+-}
+doctype html
+html(lang="vi")
+  head
+    meta(charset="UTF-8")
+    meta(
+      content="width=device-width, initial-scale=1.0" 
+      name="viewport"
+      )
+    link(
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
+      rel="stylesheet"
+      )
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js")
+    script(src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js")
+    link(
+      href="/css/product-item.css" 
+      rel="stylesheet"
+      )
+    script(
+      src="/js/main.js" 
+      type="text/javascript"
+      defer
+      )
+    link(
+      href="/fontawesome_free_5.13.0/css/all.css" 
+      rel="stylesheet"
+      )
+    link(
+      rel="stylesheet" 
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
+      )
+    link(
+      href="/slick/slick.css" 
+      type="text/css" 
+      rel="stylesheet"
+      )
+    link(
+      href="/slick/slick-theme.css" 
+      type="text/css" 
+      rel="stylesheet"
+      )
+    script(
+      src="/slick/slick.min.js" 
+      type="text/javascript"
+      )
+    link(
+      href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" 
+      rel="stylesheet"
+      )
+    script(src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js")
+    script(
+      src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js" 
+      type="text/javascript"
+      )
+    script(src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js")
+    link(
+      href="/favicon_io/apple-touch-icon.png" 
+      sizes="180x180" 
+      rel="apple-touch-icon"
+      )
+    link(
+      href="/favicon_io/favicon-32x32.png" 
+      sizes="32x32" 
+      type="image/png" 
+      rel="icon"
+      )
+    link(
+      href="/favicon_io/favicon-16x16.png" 
+      sizes="16x16" 
+      type="image/png" 
+      rel="icon"
+      )
+    link(
+      href="/favicon_io/site.webmanifest" 
+      rel="manifest"
+      )
+  body
+    // code cho nut like share facebook
+    #fb-root
+    script(
+      src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v6.0" 
+      crossorigin="anonymous" 
+      defer="" 
+      async=""
+      )
+    #toast-container
+      #toast-message
+    // header
+    nav.navbar.navbar-expand-md.bg-white.navbar-light
+      .container
+        // logo
+        a.navbar-brand(
+          style="color: #CF111A;" 
+          href="/"
+          )
+          b EManga
+        // navbar-toggler
+        button.navbar-toggler.d-lg-none(
+          aria-label="Toggle navigation" 
+          aria-expanded="false" 
+          aria-controls="collapsibleNavId" 
+          data-target="#collapsibleNavId" 
+          data-toggle="collapse" 
+          type="button"
+          )
+          span.navbar-toggler-icon
+        #collapsibleNavId.collapse.navbar-collapse
+          // form tìm kiếm
+          form#form-search.form-inline.ml-auto.my-2.my-lg-0.mr-3
+            .input-group(style="width: 520px;")
+              input.form-control(
+                placeholder="Enter the book you want to search..." 
+                aria-label="Small" 
+                type="text"
+                id="search"
+                )
+              .input-group-append
+                button.btn(
+                  style="background-color: #CF111A; color: white;" 
+                  type="submit"
+                  )
+                  i.fa.fa-search
+          // ô đăng nhập đăng ký giỏ hàng trên header
+          ul.navbar-nav.mb-1.ml-auto
+            .dropdown
+              li.nav-item.account(
+                data-toggle="dropdown" 
+                type="button"
+                )
+                a.btn.btn-secondary.rounded-circle(href="#")
+                  if decoded.image
+                    img#img-account(alt="account-image" src=decoded.image)
+                  else
+                    i.fa.fa-user
+                a.nav-link.text-dark.text-uppercase(
+                  style="display:inline-block" 
+                  href="#"
+                  )
+                  if token 
+                    |#{decoded.username}
+                  else 
+                    | Account
+              .dropdown-menu(aria-labelledby="dropdownMenuButton")
+                if token
+                  a.dropdown-item.nutdangky.text-center.mb-2( 
+                  id="logout"
+                  style="cursor: pointer"
+                  ) Logout
+                else 
+                  a.dropdown-item.nutdangky.text-center.mb-2(
+                    data-target="#formdangky" 
+                    data-toggle="modal" 
+                    href="#"
+                    ) Signup
+                  a.dropdown-item.nutdangnhap.text-center(
+                    data-target="#formdangnhap" 
+                    data-toggle="modal" 
+                    href="#"
+                    ) Signin
+            if token
+              li.nav-item.giohang
+                a.btn.btn-secondary.rounded-circle(href="/gio-hang")
+                  i.fa.fa-shopping-cart
+                  .cart-amount 0
+                a.nav-link.text-dark.giohang.text-uppercase(
+                  style="display:inline-block" 
+                  href="gio-hang"
+                  )
+                  | My cart
+    // form dang ky khi click vao button tren header
+    #formdangky.modal.fade.mt-5(
+      aria-hidden="true" 
+      aria-labelledby="dangky_tieude" 
+      tabindex="-1" 
+      data-backdrop="static"
+      )
+      .modal-dialog
+        .modal-content
+          .modal-header
+            ul.tabs.d-flex.justify-content-around.list-unstyled.mb-0
+              li.tab.tab-dangnhap.text-center
+                a.text-decoration-none Signin
+                hr
+              li.tab.tab-dangky.text-center
+                a.text-decoration-none Signup
+                hr
+            button.close(
+              aria-label="Close" 
+              data-dismiss="modal" 
+              type="button"
+              )
+              span(aria-hidden="true") ×
+          .modal-body
+            form#form-signup.form-signin.mt-2
+              .form-label-group
+                input.form-control(
+                  required="" 
+                  name="email" 
+                  placeholder="Enter email address" 
+                  type="email"
+                  id="signup-email"
+                  )
+              .form-label-group
+                input.form-control(
+                  required="" 
+                  name="text" 
+                  placeholder="Enter full name" 
+                  type="text"
+                  id="signup-username"
+                  )
+              .form-label-group
+                input.form-control(
+                  required="" 
+                  name="password" 
+                  placeholder="Enter password" 
+                  type="password"
+                  id="inputPassword"
+                  )
+              .form-label-group.mb-4
+                input.form-control(
+                  required="" 
+                  placeholder="Confirm the password" 
+                  name="confirm_password" 
+                  type="password"
+                  id='confirm_password'
+                  )
+              button.btn.btn-lg.btn-block.btn-signin.text-uppercase.text-white.mt-3(
+                style="background: #F5A623" 
+                type="submit"
+                ) Signup
+              hr.mt-3.mb-2
+              .custom-control.custom-checkbox
+                p.text-center By registering, you agree to Emanga about
+                a.text-decoration-none.text-center(
+                  style="color: #F5A623" 
+                  )
+                  | Translation Terms
+                  | Service & Privacy Policy
+    // form dang nhap khi click vao button tren header
+    #formdangnhap.modal.fade.mt-5(
+      aria-hidden="true" 
+      aria-labelledby="dangnhap_tieude" 
+      tabindex="-1" 
+      data-backdrop="static"
+      )
+      .modal-dialog
+        .modal-content
+          .modal-header
+            ul.tabs.d-flex.justify-content-around.list-unstyled.mb-0
+              li.tab.tab-dangnhap.text-center
+                a.text-decoration-none Signin
+                hr
+              li.tab.tab-dangky.text-center
+                a.text-decoration-none Signup
+                hr
+            button.close(
+              aria-label="Close" 
+              data-dismiss="modal" 
+              type="button"
+              )
+              span(aria-hidden="true") ×
+          .modal-body
+            form#form-signin.form-signin.mt-2
+              .form-label-group
+                input.form-control.hi(
+                  id="email"
+                  autofocus="" 
+                  required="" 
+                  name="email" 
+                  placeholder="Enter email address" 
+                  type="email"
+                  )
+              .form-label-group
+                input.form-control(
+                  id="password"
+                  required="" 
+                  name="password" 
+                  placeholder="Password" 
+                  type="password"
+                  )
+              //- .custom-control.custom-checkbox.mb-3
+              //-   input#customCheck1.custom-control-input(type="checkbox")
+              //-   label.custom-control-label(for="customCheck1") Nhớ mật khẩu
+              //-   a.float-right.text-decoration-none(
+              //-     style="color: #F5A623" 
+              //-     href="#"
+              //-     )
+              //-     | Quên mật
+              //-     |   khẩu
+              button.btn.btn-lg.btn-block.btn-signin.text-uppercase.text-white(
+                style="background: #F5A623" 
+                type="submit"
+                ) Signin
+              hr.my-4
+              //- hr.my-4
+              //- button.btn.btn-lg.btn-google.btn-block.text-uppercase(type="submit")
+              //-   i.fab.fa-google.mr-2
+              //-   | Signin by Google
+              //- button.btn.btn-lg.btn-facebook.btn-block.text-uppercase(type="submit")
+              //-   i.fab.fa-facebook-f.mr-2
+              //-   | Signin by Facebook
+    // thanh "danh muc sach" đã được ẩn bên trong + hotline + ho tro truc tuyen
+    section.duoinavbar
+      .container.text-white
+        .row.justify
+          .col-lg-3.col-md-5
+            .categoryheader
+              .noidungheader.text-white
+                i.fa.fa-bars
+                span.text-uppercase.font-weight-bold.ml-1 Book category
+              // CATEGORIES
+              .categorycontent
+                ul
+                  each tag in tags
+                    li
+                      a(title=tag.name
+                    data-placement="" 
+                    data-toggle="" 
+                    style="" 
+                    href=('/tag/' + tag.name +  "?page=1&limit=10"))=tag.name 
+                        i.fa.fa-chevron-right.float-right
+        .author-container 
+            p author name
+    -if(searchPara)
+      div#search-result
+        .container
+          span(class="result-text") Search result: 
+          span(class="result")= searchPara
+    -else 
+      section.breadcrumbbar
+        .container
+          ol.breadcrumb.mb-0.p-0.bg-transparent
+            li.breadcrumb-item
+              a(href="/") Trang chủ
+            li.breadcrumb-item.active
+              -if(name)
+                a(href="sach-kinh-te.html")=name.toUpperCase()
+      // thể loại sách: kinh tế chính trị nhân vật bài học kinh doanh ( từng ô vuông)
+      section.page-content.my-3
+        .container
+
+    // khối sản phẩm
+    section.content.my-4
+      .container
+        .noidung.bg-white(style=" width: 100%;")
+          // header của khối sản phẩm : tag(tác giả), bộ lọc và sắp xếp
+          .header-khoi-sp.d-flex
+
+            .sort.d-flex.ml-auto
+              .hien-thi
+                if isTag 
+                  label.label-select(for="hienthi-select") Show
+                else 
+                  label.label-select(for="hienthi-select") Show
+                select.hienthi-select
+                  each val in [10, 20, 30]
+                    option(value=val selected=limit==val)= val
+              .sap-xep
+                label.label-select(for="sapxep-select") Filter
+                select.sapxep-select
+                  //- each val in ["dateAsc", "priceAsc", "priceDesc", "nameAsc", "nameDesc"]
+                  //-   option(value=val selected=limit==val)= val
+                  option(value="dateAsc" selected=sortType=="dateAsc") Newest
+                  option(value="priceAsc" selected=sortType=="priceAsc") Price: Low - High
+                  option(value="priceDesc" selected=sortType=="priceDesc") Price: High - Low
+                  option(value="nameAsc" selected=sortType=="nameAsc") Name:(A-Z)
+                  option(value="nameDesc" selected=sortType=="nameDesc") Name:(Z-A)
+          // các sản phẩm
+          .items
+            .row
+              -if(boo)
+              for book in booksTag
+                .col-lg-3.col-md-4.col-xs-6.item.DeanGraziosi(style="position: initial;")
+                  .card(id="card-"+book._id)
+                    a.motsanpham(
+                      title=book.name 
+                      data-placement="bottom" 
+                      data-toggle="tooltip" 
+                      style="text-decoration: none; color: black;" 
+                      href='/product/' + book._id
+                      )
+                      img.card-img-top.anh(
+                        alt="lap-ke-hoach-kinh-doanh-hieu-qua" 
+                        src=book.image
+                        )
+                      .card-body.noidungsp.mt-3
+                        h6.card-title.ten=book.name
+                        small.tacgia.text-muted=book.author
+                        .gia.d-flex.align-items-baseline
+                          .giamoi
+                            | #{(book.price - book.price*book.saleRate/100).toFixed(2)} $
+                          .giacu.text-muted 
+                            |#{book.price} $
+                          .sale
+                            |-#{book.saleRate}%
+                        .like 
+                          span.countLike(id="like-count-"+book._id)
+                            |Favourite: #{book.countLike}
+                          if token
+                            if (-favorBook(decoded.favorbooks, book._id))
+                              i.fa.fa-heart.active(data-book-id=book._id)
+                            else 
+                              i.fa.fa-heart(data-book-id=book._id)
+                            //- i.far.fa-heart
+                        .sell 
+                          span 
+                            |Purchases: #{book.countSale}
+          // pagination bar
+          .pagination-bar.my-3
+            .row
+              .col-12
+                nav
+                  ul.pagination.justify-content-center
+                    //
+                      <li class="page-item disabled">
+                        <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                        </a>
+                        </li>
+                    - const maxPagesToShow = totalPages; // maximum number of page links to show
+                    - const middlePage = Math.ceil(maxPagesToShow/2);
+                    - let startPage = Math.max(currentPage - middlePage, 1);
+                    - let endPage = Math.min(startPage + maxPagesToShow - 1, totalPages);
+                    - if (endPage - startPage < maxPagesToShow) {
+                    -   startPage = Math.max(endPage - maxPagesToShow + 1, 1);
+                    - }
+                    if currentPage > 1
+                      li.page-item
+                        if searchPara
+                          a.page-link(href=`/search/${searchPara}/${currentPage-1}?limit=${limit}`) Previous
+                        else if isTag 
+                          a.page-link(href=`/tag/${name}?page=&${currentPage-1}limit=${limit}`) Previous
+                        else
+                          a.page-link(href=`/product-list/${name}/${currentPage-1}?limit=${limit}`) Previous
+                    - for (var i = startPage; i <= endPage; i++) {
+                      li.page-item(class=i===currentPage ? 'active' : '')
+                        if searchPara
+                          a.page-link(href=`/search/${searchPara}/${i}?limit=${limit}`)= i
+                        else if isTag 
+                          a.page-link(href=`/tag/${name}?page=${i}&limit=${limit}`)= i
+                        else
+                          a.page-link(href=`/product-list/${name}/${i}?limit=${limit}`)= i
+                    - }
+                    if (currentPage < totalPages)
+                      li.page-item
+                        if searchPara
+                          a.page-link(href=`/search/${searchPara}/${currentPage+1}?limit=${limit}`) Next
+                        else if isTag 
+                          a.page-link(href=`/tag/${name}?page=${currentPage+1}&limit=${limit}`) Next
+                        else
+                          a.page-link(href=`/product-list/${name}/${currentPage+1}?limit=${limit}`) Next
+    section.abovefooter.text-white(style="background-color: #CF111A;")
+      .container
+        .row
+          .col-lg-3.col-sm-6
+            .dichvu.d-flex.align-items-center
+              img(
+                alt="icon-books" 
+                src="http://localhost:3500/images/icon-books.png"
+                )
+              .noidung
+                h3.tieude.font-weight-bold HƠN 14.000 TỰA SÁCH HAY
+                p.detail Tuyển chọn bởi EManga
+          .col-lg-3.col-sm-6
+            .dichvu.d-flex.align-items-center
+              img(
+                alt="icon-ship" 
+                src="http://localhost:3500/images/icon-ship.png"
+                )
+              .noidung
+                h3.tieude.font-weight-bold MIỄN PHÍ GIAO HÀNG
+                p.detail Từ 150.000đ ở TP.HCM
+                p.detail Từ 300.000đ ở tỉnh thành khác
+          .col-lg-3.col-sm-6
+            .dichvu.d-flex.align-items-center
+              img(
+                alt="icon-gift" 
+                src="http://localhost:3500/images/icon-gift.png"
+                )
+              .noidung
+                h3.tieude.font-weight-bold QUÀ TẶNG MIỄN PHÍ
+                p.detail Tặng Bookmark
+                p.detail Bao sách miễn phí
+          .col-lg-3.col-sm-6
+            .dichvu.d-flex.align-items-center
+              img(
+                alt="icon-return" 
+                src="http://localhost:3500/images/icon-return.png"
+                )
+              .noidung
+                h3.tieude.font-weight-bold ĐỔI TRẢ NHANH CHÓNG
+                p.detail Hàng bị lỗi được đổi trả nhanh chóng
+    // footer
+    footer
+      .container.py-4
+        .row
+          .col-md-3.col-xs-6
+            .gioithieu
+              h3.header.text-uppercase.font-weight-bold Về EManga
+              a() Giới thiệu về EManga
+              a() Tuyển dụng
+              .fb-like(
+                data-share="true" 
+                data-size="small" 
+                data-action="like" 
+                data-layout="button" 
+                data-width="300px" 
+                data-href="https://www.facebook.com/EManga-110745443947730/"
+                )
+          .col-md-3.col-xs-6
+            .hotrokh
+              h3.header.text-uppercase.font-weight-bold HỖ TRỢ KHÁCH HÀNG
+              a() Hướng dẫn đặt hàng
+              a() Phương thức thanh toán
+              a() Phương thức vận chuyển
+              a() Chính sách đổi trả
+          .col-md-3.col-xs-6
+            .lienket
+              h3.header.text-uppercase.font-weight-bold HỢP TÁC VÀ LIÊN KẾT
+              img(
+                alt="dang-ky-bo-cong-thuong" 
+                src="http://localhost:3500/images/dang-ky-bo-cong-thuong.png"
+                )
+          .col-md-3.col-xs-6
+            .ptthanhtoan
+              h3.header.text-uppercase.font-weight-bold Phương thức thanh toán
+              img(
+                alt="visa-payment" 
+                src="http://localhost:3500/images/visa-payment.jpg"
+                )
+              img(
+                alt="master-card-payment" 
+                src="	http://localhost:3500/images/master-card-payment.jpg"
+                )
+              img(
+                alt="jcb-payment" 
+                src="	http://localhost:3500/images/jcb-payment.jpg"
+                )
+              img(
+                alt="atm-payment" 
+                src="http://localhost:3500/images/atm-payment.jpg"
+                )
+              img(
+                alt="cod-payment" 
+                src="http://localhost:3500/images/cod-payment.jpg"
+                )
+              img(
+                alt="payoo-payment" 
+                src="http://localhost:3500/images/payoo-payment.jpg"
+                )
+          // het khoi san pham
+          // het div noidung
+          // het container
+          // het _1khoi
+          // thanh cac dich vu :mien phi giao hang, qua tang mien phi ........
+          // nut cuon len dau trang
+          .fixed-bottom
+            #backtotop.btn.btn-warning.float-right.rounded-circle.nutcuonlen(
+              style="background:#CF111A;" 
+              href="#"
+              )
+              i.fa.fa-chevron-up.text-white
