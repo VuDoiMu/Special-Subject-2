@@ -386,7 +386,7 @@ app.get("/admin/login", (req, res) => {
   res.render("admin-login.pug");
 });
 
-app.get("/admin/management", async (req, res) => {
+app.get("/admin/management/:page", async (req, res) => {
   const tag = await axios
     .get("http://localhost:3500/tag")
     .then((res) => (tagData = res.data.tags));
@@ -405,9 +405,15 @@ app.get("/admin/management", async (req, res) => {
     totalBooks += orderData[i].items.length;
     totalProfits += orderData[i].finalTotal;
   }
+  const page = parseInt(req.params.page) || 1;
+  const limit = 10;
+  const paginatedBooks = paginate(data, page, limit);
 
   res.render("admin-management.pug", {
     data,
+    books: paginatedBooks.data,
+    currentPage: paginatedBooks.currentPage,
+    totalPages: paginatedBooks.totalPages,
     orderData,
     tags,
     totalBooks,
