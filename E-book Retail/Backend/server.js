@@ -61,6 +61,7 @@ app.use(express.json());
 
 // access to static file in public
 app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "bookContent")));
 app.use(express.static("public", { "Content-Type": "application/javascript" }));
 // set view engine and views
 app.set("view engine", "pug");
@@ -557,7 +558,7 @@ app.get("/admin/add-book", async (req, res) => {
   const response = await axios.get("http://localhost:3500/management");
   const data = response.data;
   const order = await axios.get("http://localhost:3500/order");
-  const orderData = order.data;
+   const orderData = order.data;
   let totalBooks = 0;
   let totalProfits = 0;
   for (let i = 0; i < orderData.length; i++) {
