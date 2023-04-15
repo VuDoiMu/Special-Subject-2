@@ -16,13 +16,12 @@ const paginate = require("paginate-array");
 const session = require("express-session");
 const _ = require("lodash");
 
+var Publishable_Key =
+  "pk_test_51MwJlsK54HlkliE6zSFSgYLmzilMR8F8z4k9Uni8OvLAcvGv5kxi2LBjWfDMricBAPeDZEwVwHiwEWG3dgEbkX9Q00ljMiDta4";
+var Secret_Key =
+  "sk_test_51MwJlsK54HlkliE64ML0faNNckw90JTohQ7zN32WoD4sFA6MN9LHOKU7YTuUBrztB78SaVUveOGDHy5HGNLR2dJx00kpzqu040";
 
-var Publishable_Key = 'pk_test_51MwJlsK54HlkliE6zSFSgYLmzilMR8F8z4k9Uni8OvLAcvGv5kxi2LBjWfDMricBAPeDZEwVwHiwEWG3dgEbkX9Q00ljMiDta4'
-var Secret_Key = 'sk_test_51MwJlsK54HlkliE64ML0faNNckw90JTohQ7zN32WoD4sFA6MN9LHOKU7YTuUBrztB78SaVUveOGDHy5HGNLR2dJx00kpzqu040'
-
-
-const stripe = require('stripe')(Secret_Key) 
-
+const stripe = require("stripe")(Secret_Key);
 
 app.use(
   session({
@@ -34,13 +33,13 @@ app.use(
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/')
+    cb(null, "uploads/");
   },
   filename: function (req, file, cb) {
-    cb(null, file.originalname)
-  }
-})
-const upload = multer({storage: storage})
+    cb(null, file.originalname);
+  },
+});
+const upload = multer({ storage: storage });
 
 app.use(cookieParser());
 
@@ -54,52 +53,60 @@ app.use(express.json());
 
 // access to static file in public
 app.use(express.static(path.join(__dirname, "public")));
-app.use(express.static('public', { 'Content-Type': 'application/javascript' }));
+app.use(express.static("public", { "Content-Type": "application/javascript" }));
 // set view engine and views
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
 
-
-app.post('/payment', function(req, res){ 
-	console.log(req.body)
-	// Moreover you can take more details from user 
-	// like Address, Name, etc from form 
-	stripe.customers.create({ 
-		email: req.body.stripeEmail, 
-		source: req.body.stripeToken, 
-		name: 'Gautam Sharma', 
-		address: { 
-			line1: 'TC 9/4 Old MES colony', 
-			postal_code: '110092', 
-			city: 'New Delhi', 
-			state: 'Delhi', 
-			country: 'India', 
-		} 
-	}) 
-	.then((customer) => { 
-
-		return stripe.charges.create({ 
-			amount: 7000,	 // Charing Rs 25 
-			description: 'Web Development Product', 
-			currency: 'USD', 
-			customer: customer.id 
-		}); 
-	}) 
-	.then((charge) => { 
-		res.send("Success") // If no error occurs 
-	}) 
-	.catch((err) => { 
-		res.send(err)	 // If some error occurs 
-	}); 
-})
+app.post("/payment", function (req, res) {
+  console.log(req.body);
+  // Moreover you can take more details from user
+  // like Address, Name, etc from form
+  stripe.customers
+    .create({
+      email: req.body.stripeEmail,
+      source: req.body.stripeToken,
+      name: "Gautam Sharma",
+      address: {
+        line1: "TC 9/4 Old MES colony",
+        postal_code: "110092",
+        city: "New Delhi",
+        state: "Delhi",
+        country: "India",
+      },
+    })
+    .then((customer) => {
+      return stripe.charges.create({
+        amount: 7000, // Charing Rs 25
+        description: "Web Development Product",
+        currency: "USD",
+        customer: customer.id,
+      });
+    })
+    .then((charge) => {
+      res.send("Success"); // If no error occurs
+    })
+    .catch((err) => {
+      res.send(err); // If some error occurs
+    });
+});
 app.get("/", async (req, res) => {
   const token = req.cookies.token;
   let decoded = "";
-  if(token) {
+  if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
     const updateUser = await User.findById({ _id: decoded.userId });
-    const newtoken = jwt.sign({userId: updateUser._id, role: updateUser.role, username: updateUser.username, favorbooks: updateUser.favorbooks},"thisisourwebsite!");
-    res.cookie('token', newtoken);
+    const newtoken = jwt.sign(
+      {
+        userId: updateUser._id,
+        role: updateUser.role,
+        username: updateUser.username,
+        favorbooks: updateUser.favorbooks,
+        inventory: updateUser.inventory,
+      },
+      "thisisourwebsite!"
+    );
+    res.cookie("token", newtoken);
   }
   const response = await axios.get("http://localhost:3500/management");
   const toplike = await axios.get("http://localhost:3500/catalog/toplike");
@@ -129,7 +136,7 @@ app.get("/", async (req, res) => {
     topsellBook,
     token,
     decoded,
-    user
+    user,
   });
 });
 
@@ -139,7 +146,7 @@ app.get("/gio-hang", async (req, res) => {
   const tag = await axios
     .get("http://localhost:3500/tag")
     .then((res) => (tagData = res.data.tags));
-  const decoded = token
+  const decoded = token;
   const id = decoded.userId;
   const response = await axios.get("http://localhost:3500/cart/" + id);
   const data = response.data;
@@ -149,14 +156,14 @@ app.get("/gio-hang", async (req, res) => {
   if (cart == "cart=[]") {
     empty = true;
   }
-  const user = await User.findById(decoded.userId)
+  const user = await User.findById(decoded.userId);
   res.render("gio-hang.pug", {
     data,
     empty,
     tags: tagData.slice(0, 11),
     decoded,
     token,
-    user
+    user,
   });
 });
 
@@ -203,10 +210,20 @@ app.get("/product/:id", async (req, res) => {
   if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
     const updateUser = await User.findById({ _id: decoded.userId });
-    const newtoken = jwt.sign({ userId: updateUser._id, role: updateUser.role, username: updateUser.username, favorbooks: updateUser.favorbooks }, "thisisourwebsite!");
-    res.cookie('token', newtoken);
+    const newtoken = jwt.sign(
+      {
+        userId: updateUser._id,
+        role: updateUser.role,
+        username: updateUser.username,
+        favorbooks: updateUser.favorbooks,
+        inventory: updateUser.inventory,
+      },
+      "thisisourwebsite!"
+    );
+    res.cookie("token", newtoken);
   }
-  const user = await User.findById(decoded.userId)
+  const user = await User.findById(decoded.userId);
+  console.log(decoded);
   res.render("product.pug", {
     book,
     comments,
@@ -216,7 +233,7 @@ app.get("/product/:id", async (req, res) => {
     decoded,
     itemCount,
     moment,
-    user
+    user,
   });
 });
 
@@ -226,8 +243,17 @@ app.get("/tai-khoan", async (req, res) => {
   if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
     const updateUser = await User.findById({ _id: decoded.userId });
-    const newtoken = jwt.sign({ userId: updateUser._id, role: updateUser.role, username: updateUser.username, favorbooks: updateUser.favorbooks }, "thisisourwebsite!");
-    res.cookie('token', newtoken);
+    const newtoken = jwt.sign(
+      {
+        userId: updateUser._id,
+        role: updateUser.role,
+        username: updateUser.username,
+        favorbooks: updateUser.favorbooks,
+        inventory: updateUser.inventory,
+      },
+      "thisisourwebsite!"
+    );
+    res.cookie("token", newtoken);
   }
   const tag = await axios
     .get("http://localhost:3500/tag")
@@ -237,7 +263,9 @@ app.get("/tai-khoan", async (req, res) => {
   console.log("User o day ne");
   let orders = "";
   try {
-    const response = await axios.get('http://localhost:3500/order/' + decoded.userId);
+    const response = await axios.get(
+      "http://localhost:3500/order/" + decoded.userId
+    );
     orders = response.data;
   } catch (error) {
     console.log(error);
@@ -248,7 +276,7 @@ app.get("/tai-khoan", async (req, res) => {
     decoded,
     user,
     orders,
-    moment
+    moment,
   });
 });
 
@@ -281,13 +309,22 @@ app.get("/tag/:name", async (req, res) => {
   if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
     const updateUser = await User.findById({ _id: decoded.userId });
-    const newtoken = jwt.sign({ userId: updateUser._id, role: updateUser.role, username: updateUser.username, favorbooks: updateUser.favorbooks }, "thisisourwebsite!");
-    res.cookie('token', newtoken);
+    const newtoken = jwt.sign(
+      {
+        userId: updateUser._id,
+        role: updateUser.role,
+        username: updateUser.username,
+        favorbooks: updateUser.favorbooks,
+        inventory: updateUser.inventory,
+      },
+      "thisisourwebsite!"
+    );
+    res.cookie("token", newtoken);
   }
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
   const paginatedBooks = paginate(booksTag, page, limit);
-  const user = await User.findById(decoded.userId)
+  const user = await User.findById(decoded.userId);
   res.render("product-list.pug", {
     decoded,
     booksTag: paginatedBooks.data,
@@ -299,7 +336,7 @@ app.get("/tag/:name", async (req, res) => {
     sortType,
     limit,
     isTag,
-    user
+    user,
   });
 });
 
@@ -317,8 +354,16 @@ app.get("/search/:searchPara?/:page?", async (req, res) => {
   if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
     const updateUser = await User.findById({ _id: decoded.userId });
-    const newtoken = jwt.sign({ userId: updateUser._id, role: updateUser.role, username: updateUser.username, favorbooks: updateUser.favorbooks }, "thisisourwebsite!");
-    res.cookie('token', newtoken);
+    const newtoken = jwt.sign(
+      {
+        userId: updateUser._id,
+        role: updateUser.role,
+        username: updateUser.username,
+        favorbooks: updateUser.favorbooks,
+      },
+      "thisisourwebsite!"
+    );
+    res.cookie("token", newtoken);
   }
   let booksTag = response.data;
   const sortType = req.query.sortType;
@@ -341,7 +386,7 @@ app.get("/search/:searchPara?/:page?", async (req, res) => {
   const page = parseInt(req.params.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
   const paginatedBooks = paginate(booksTag, page, limit);
-  const user = await User.findById(decoded.userId)
+  const user = await User.findById(decoded.userId);
   res.render("product-list.pug", {
     tags: tagData.slice(0, 11),
     booksTag: paginatedBooks.data,
@@ -352,7 +397,7 @@ app.get("/search/:searchPara?/:page?", async (req, res) => {
     token,
     decoded,
     sortType,
-    user
+    user,
   });
 });
 
@@ -393,13 +438,21 @@ app.get("/product-list/:name?/:page?", async (req, res) => {
   if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
     const updateUser = await User.findById({ _id: decoded.userId });
-    const newtoken = jwt.sign({ userId: updateUser._id, role: updateUser.role, username: updateUser.username, favorbooks: updateUser.favorbooks }, "thisisourwebsite!");
-    res.cookie('token', newtoken);
+    const newtoken = jwt.sign(
+      {
+        userId: updateUser._id,
+        role: updateUser.role,
+        username: updateUser.username,
+        favorbooks: updateUser.favorbooks,
+      },
+      "thisisourwebsite!"
+    );
+    res.cookie("token", newtoken);
   }
   const tag = await axios
     .get("http://localhost:3500/tag")
     .then((res) => (tagData = res.data.tags));
-  const user = await User.findById(decoded.userId)
+  const user = await User.findById(decoded.userId);
   res.render("product-list.pug", {
     booksTag: paginatedBooks.data,
     currentPage: paginatedBooks.currentPage,
@@ -410,11 +463,9 @@ app.get("/product-list/:name?/:page?", async (req, res) => {
     decoded,
     sortType,
     limit,
-    user
+    user,
   });
 });
-
-
 
 app.get("/admin/dashboard", async (req, res) => {
   const response = await axios.get("http://localhost:3500/management");
@@ -542,26 +593,72 @@ app.get("/admin/sale", async (req, res) => {
   res.render("admin-sale.pug", { orderData, totalBooks, totalProfits });
 });
 
-// Get all author data
-app.get("/admin/author-list", async (req, res) => {
-  const response = await axios.get("http://localhost:3500/management");
-  const data = response.data;
-
-  res.render("author-management.pug", {
-    data,
-  });
-});
-
 app.post("/create-order", async (req, res) => {
   const cartItems = JSON.parse(req.cookies["cart"]);
   console.log(cartItems[0]);
 });
 
 // THong tin tac gia + sach cua tac gia day
-app.get("/all-book-by/:author", (req, res) => {
-  const author = req.params.author;
-  console.log(author);
-  res.render("author.pug", {});
+app.get("/author/:searchPara", async (req, res) => {
+  const searchPara = req.params.searchPara;
+
+  await axios
+    .get("http://localhost:3500/tag")
+    .then((res) => (tagData = res.data.tags));
+  const response = await axios.get(
+    "http://localhost:3500/catalog/search/author/" + searchPara
+  );
+
+  const token = req.cookies.token;
+  let decoded = "";
+  if (token) {
+    decoded = jwt.verify(token, "thisisourwebsite!");
+    const updateUser = await User.findById({ _id: decoded.userId });
+    const newtoken = jwt.sign(
+      {
+        userId: updateUser._id,
+        role: updateUser.role,
+        username: updateUser.username,
+        favorbooks: updateUser.favorbooks,
+      },
+      "thisisourwebsite!"
+    );
+    res.cookie("token", newtoken);
+  }
+  let booksTag = response.data;
+  const sortType = req.query.sortType;
+  if (sortType == "priceAsc") {
+    booksTag = _.orderBy(booksTag, ["price"], ["asc"]);
+  }
+  if (sortType == "priceDesc") {
+    booksTag = _.orderBy(booksTag, ["price"], ["desc"]);
+  }
+  if (sortType == "dateDesc") {
+    booksTag = _.orderBy(booksTag, ["createdDate"], ["asc"]);
+  }
+  if (sortType == "nameAsc") {
+    booksTag = _.orderBy(booksTag, ["name"], ["asc"]);
+  }
+  if (sortType == "nameDesc") {
+    booksTag = _.orderBy(booksTag, ["name"], ["desc"]);
+  }
+
+  const page = parseInt(req.params.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+  const paginatedBooks = paginate(booksTag, page, limit);
+  const user = await User.findById(decoded.userId);
+  res.render("product-list.pug", {
+    tags: tagData.slice(0, 11),
+    booksTag: paginatedBooks.data,
+    currentPage: paginatedBooks.currentPage,
+    totalPages: paginatedBooks.totalPages,
+    limit,
+    searchPara,
+    token,
+    decoded,
+    sortType,
+    user,
+  });
 });
 
 app.get("/read-book/:id", async (req, res) => {
@@ -607,6 +704,7 @@ app.get("/read-book/:id", async (req, res) => {
   if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
   }
+  console.log(book.content);
   res.render("read-book.pug", {
     book,
     comments,
@@ -620,12 +718,12 @@ app.get("/read-book/:id", async (req, res) => {
 });
 
 // Handle files
-const bookThings = require("./controllers/bookController")
+const bookThings = require("./controllers/bookController");
 
 app.post(
   "/upload",
   upload.fields([{ name: "images" }, { name: "content-images" }]),
- bookThings.addBook
+  bookThings.addBook
 );
 
 //routes
