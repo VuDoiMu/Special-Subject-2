@@ -210,8 +210,16 @@ const addBook = async (req, res) => {
 
     const content = {};
     for (let i = 0; i < uploadedImages.length-1; i++) {
-      content[i + 1] = `/bookContent/${bookID}/${i + 1}`;
+      content[i + 1] = `/bookContent/${bookID}/${i + 1}.png`;
     }
+
+    const resResult = await Book.findOneAndUpdate(
+      { _id: bookID },
+      {
+        content: content,
+        image: `./bookContent/${bookID}/cover.png`
+      }
+    );
 
     // callbackFileUpload(bookID, images, 0, [], async function (savedPaths) {
     //   await Book.findOneAndUpdate(
@@ -229,7 +237,7 @@ const addBook = async (req, res) => {
     // console.log("----");
 
     // console.log("content of images: " +images);
-    res.status(201).json(result);
+    res.status(201).json(resResult);
   } catch (err) {
     console.error(err);
   }
