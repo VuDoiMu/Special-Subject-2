@@ -404,7 +404,7 @@ $(function () {
     let cartContent = document.querySelector(".cart-content");
     let cartCost = totalProfits;
 
-    let productNumbers = cartItems.lenght;
+    let productNumbers = cartItems.length;
 
     if (cartItems == null) {
       $(".cart-empty").removeClass("d-none");
@@ -522,34 +522,35 @@ $(function () {
       cart
     )}; expires=${expires}; path=/`;
   }
-  $(".btn-checkout").click(async (e) => {
-    let cart = []; // Create an empty cart
+  // $(".btn-checkout").click(async (e) => {
+  //   console.log("checkout")
+  //   let cart = []; // Create an empty cart
 
-    // Update the cart on the client-side to reflect the cleared cart
-    // ...
-    function getCookie(name) {
-      const match = document.cookie.match(new RegExp(`(^| )${name}=([^;]+)`));
-      if (match) {
-        return match[2];
-      }
-      return null;
-    }
+  //   // Update the cart on the client-side to reflect the cleared cart
+  //   // // ...
+  //   // function getCookie(name) {
+  //   //   const match = document.cookie.match(new RegExp(`(^| )${name}=([^;]+)`));
+  //   //   if (match) {
+  //   //     return match[2];
+  //   //   }
+  //   //   return null;
+  //   // }
 
-    let cartItems = await JSON.parse(getCookie("cart"));
-    await fetch("http://localhost:3500/create-order", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ cartItems }),
-    });
-    setCartCookie(cart);
-    location.reload(true);
-    alert("cảm ơn đã mua hàng");
+  //   let cartItems = await JSON.parse(getCookie("cart"));
+  //   await fetch("http://localhost:3500/create-order", {
+  //     method: "POST",
+  //     headers: {
+  //       Accept: "application/json",
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({ cartItems }),
+  //   });
+  //   setCartCookie(cart);
+  //   location.reload(true);
+  //   alert("cảm ơn đã mua hàng");
 
-    // Save the cleared cart to the cookie
-  });
+  //   // Save the cleared cart to the cookie
+  // });
 
   //START
   // const addFunctionToRemoveButton = () => {

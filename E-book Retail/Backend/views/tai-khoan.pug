@@ -440,7 +440,7 @@ html(lang="vi")
                                   img.img-product(src=item.product.image, alt=item.product.name)
                                   span.price= '$' + item.product.price.toFixed(2)
                                 div
-                                  p.product-name= item.product.name
+                                  a(href="/read-book/"+item.product._id).product-name= item.product.name
                           td
                             p.finalTotal= '$' + order.finalTotal.toFixed(2)
     // thanh cac dich vu :mien phi giao hang, qua tang mien phi ........

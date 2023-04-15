@@ -142,11 +142,22 @@ const topLike = async (req, res) => {
       res.json({success : false, message:"false"})
     }
   }
+  const searchBookByAuthor = async (req, res) => {
+    const name = req.params.name
+    const regex = new RegExp(name, "i");
+    try{
+      const results = await Book.find({ author: { $regex: regex } });
+      res.json(results)
+    }catch(error){
+      res.json({success : false, message:"false"})
+    }    
+  }
 module.exports = {
     topSell,
     topLike,
     topSale,
     searchByName,
+    searchBookByAuthor,
     priceAsc,
     priceDesc, nameSort, dateSort
 };

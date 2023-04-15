@@ -29,6 +29,9 @@ router.route('/toplike')
 router.route('/search/:name')
     .get(cataController.searchByName);
 
+router.route('/search/author/:name')
+    .get(cataController.searchBookByAuthor);
+
 router.route('/review')
     .get(reviewController.getReview)
 module.exports = router;
