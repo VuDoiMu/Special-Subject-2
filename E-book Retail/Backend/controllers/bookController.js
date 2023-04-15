@@ -197,12 +197,12 @@ const addBook = async (req, res) => {
       console.error(err);
     }
     
-    moveFile(`./uploads/cover.bmp`, folderName)
+    moveFile(`./uploads/cover.png`, folderName)
 
     for (let i = 0; i< uploadedImages.length-1; i++) {
        // const temp = uploadedImages[i+1];
        // console.log(temp);
-        const uploadedPath = `./uploads/${i+1}.bmp`;
+        const uploadedPath = `./uploads/${i+1}.png`;
         // console.log(uploadedPath);
         // console.log(folderName);
         moveFile(uploadedPath, folderName);
