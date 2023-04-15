@@ -9,7 +9,7 @@ const User = require("./models/User");
 const data = require("./data/book.json");
 const cookieParser = require("cookie-parser");
 const axios = require("axios");
-const bodyparser = require('body-parser') 
+const bodyparser = require("body-parser");
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
 const paginate = require("paginate-array");
@@ -21,15 +21,15 @@ var Publishable_Key =
 var Secret_Key =
   "sk_test_51MwJlsK54HlkliE64ML0faNNckw90JTohQ7zN32WoD4sFA6MN9LHOKU7YTuUBrztB78SaVUveOGDHy5HGNLR2dJx00kpzqu040";
 
-var Publishable_Key = 'pk_test_51MwJlsK54HlkliE6zSFSgYLmzilMR8F8z4k9Uni8OvLAcvGv5kxi2LBjWfDMricBAPeDZEwVwHiwEWG3dgEbkX9Q00ljMiDta4'
-var Secret_Key = 'sk_test_51MwJlsK54HlkliE64ML0faNNckw90JTohQ7zN32WoD4sFA6MN9LHOKU7YTuUBrztB78SaVUveOGDHy5HGNLR2dJx00kpzqu040'
+var Publishable_Key =
+  "pk_test_51MwJlsK54HlkliE6zSFSgYLmzilMR8F8z4k9Uni8OvLAcvGv5kxi2LBjWfDMricBAPeDZEwVwHiwEWG3dgEbkX9Q00ljMiDta4";
+var Secret_Key =
+  "sk_test_51MwJlsK54HlkliE64ML0faNNckw90JTohQ7zN32WoD4sFA6MN9LHOKU7YTuUBrztB78SaVUveOGDHy5HGNLR2dJx00kpzqu040";
 
+const stripe = require("stripe")(Secret_Key);
 
-const stripe = require('stripe')(Secret_Key) 
-
-
-app.use(bodyparser.urlencoded({extended:false}))
-app.use(bodyparser.json())
+app.use(bodyparser.urlencoded({ extended: false }));
+app.use(bodyparser.json());
 
 app.use(
   session({
@@ -61,6 +61,7 @@ app.use(express.json());
 
 // access to static file in public
 app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "bookContent")));
 app.use(express.static("public", { "Content-Type": "application/javascript" }));
 // set view engine and views
 app.set("view engine", "pug");
@@ -167,14 +168,14 @@ app.get("/gio-hang", async (req, res) => {
   const tag = await axios
     .get("http://localhost:3500/tag")
     .then((res) => (tagData = res.data.tags));
-  const decoded = jwt.verify(token, "thisisourwebsite!")
+  const decoded = jwt.verify(token, "thisisourwebsite!");
   const id = decoded.userId;
   const response = await axios.get("http://localhost:3500/cart/" + id);
   const data = response.data;
   const cookies = req.headers.cookie ? req.headers.cookie.split("; ") : [];
   let empty = false;
   const cart = cookies[1] + "";
-  if (cart == undefined ) {
+  if (cart == undefined) {
     empty = true;
   }
   const user = await User.findById(decoded.userId);
