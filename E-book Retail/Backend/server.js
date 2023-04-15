@@ -54,12 +54,12 @@ app.set("views", path.join(__dirname, "views"));
 app.get("/", async (req, res) => {
   const token = req.cookies.token;
   let decoded = "";
-  // if(token) {
-  //   decoded = jwt.verify(token, "thisisourwebsite!");
-  //   const updateUser = await User.findById({ _id: decoded.userId });
-  //   const newtoken = jwt.sign({userId: updateUser._id, role: updateUser.role, username: updateUser.username, favorbooks: updateUser.favorbooks},"thisisourwebsite!");
-  //   res.cookie('token', newtoken);
-  // }
+  if(token) {
+    decoded = jwt.verify(token, "thisisourwebsite!");
+    const updateUser = await User.findById({ _id: decoded.userId });
+    const newtoken = jwt.sign({userId: updateUser._id, role: updateUser.role, username: updateUser.username, favorbooks: updateUser.favorbooks},"thisisourwebsite!");
+    res.cookie('token', newtoken);
+  }
   const response = await axios.get("http://localhost:3500/management");
   const toplike = await axios.get("http://localhost:3500/catalog/toplike");
   const topSell = await axios.get("http://localhost:3500/catalog/topsell");
@@ -75,9 +75,9 @@ app.get("/", async (req, res) => {
 
   const data = response.data;
 
-  if (token) {
-    decoded = token;
-  }
+  // if (token) {
+  //   decoded = jwt.verify(token, "thisisourwebsite!");;
+  // }
   console.log(decoded);
   const user = await User.findById(decoded.userId);
   res.render("home.pug", {
@@ -160,7 +160,10 @@ app.get("/product/:id", async (req, res) => {
   const token = req.cookies.token;
   let decoded = "";
   if (token) {
-    decoded = token
+    decoded = jwt.verify(token, "thisisourwebsite!");
+    const updateUser = await User.findById({ _id: decoded.userId });
+    const newtoken = jwt.sign({ userId: updateUser._id, role: updateUser.role, username: updateUser.username, favorbooks: updateUser.favorbooks }, "thisisourwebsite!");
+    res.cookie('token', newtoken);
   }
   const user = await User.findById(decoded.userId)
   res.render("product.pug", {
@@ -180,20 +183,31 @@ app.get("/tai-khoan", async (req, res) => {
   const token = req.cookies.token;
   let decoded = "";
   if (token) {
-    decoded = token
+    decoded = jwt.verify(token, "thisisourwebsite!");
+    const updateUser = await User.findById({ _id: decoded.userId });
+    const newtoken = jwt.sign({ userId: updateUser._id, role: updateUser.role, username: updateUser.username, favorbooks: updateUser.favorbooks }, "thisisourwebsite!");
+    res.cookie('token', newtoken);
   }
   const tag = await axios
     .get("http://localhost:3500/tag")
     .then((res) => (tagData = res.data.tags));
-  const user = await User.findById(decoded.userId)
+  const user = await User.findById(decoded.userId);
+  console.log(decoded.userId);
   console.log("User o day ne");
-  console.log(user);
-  console.log("User o day ne");
+  let orders = "";
+  try {
+    const response = await axios.get('http://localhost:3500/order/' + decoded.userId);
+    orders = response.data;
+  } catch (error) {
+    console.log(error);
+  }
   res.render("tai-khoan.pug", {
     token,
     tags: tagData.slice(0, 11),
     decoded,
-    user
+    user,
+    orders,
+    moment
   });
 });
 
@@ -224,9 +238,11 @@ app.get("/tag/:name", async (req, res) => {
   const token = req.cookies.token;
   let decoded = "";
   if (token) {
-    decoded = token
+    decoded = jwt.verify(token, "thisisourwebsite!");
+    const updateUser = await User.findById({ _id: decoded.userId });
+    const newtoken = jwt.sign({ userId: updateUser._id, role: updateUser.role, username: updateUser.username, favorbooks: updateUser.favorbooks }, "thisisourwebsite!");
+    res.cookie('token', newtoken);
   }
-
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
   const paginatedBooks = paginate(booksTag, page, limit);
@@ -258,7 +274,10 @@ app.get("/search/:searchPara?/:page?", async (req, res) => {
   const token = req.cookies.token;
   let decoded = "";
   if (token) {
-    decoded = token
+    decoded = jwt.verify(token, "thisisourwebsite!");
+    const updateUser = await User.findById({ _id: decoded.userId });
+    const newtoken = jwt.sign({ userId: updateUser._id, role: updateUser.role, username: updateUser.username, favorbooks: updateUser.favorbooks }, "thisisourwebsite!");
+    res.cookie('token', newtoken);
   }
   let booksTag = response.data;
   const sortType = req.query.sortType;
@@ -331,7 +350,10 @@ app.get("/product-list/:name?/:page?", async (req, res) => {
   const token = req.cookies.token;
   let decoded = "";
   if (token) {
-    decoded = token
+    decoded = jwt.verify(token, "thisisourwebsite!");
+    const updateUser = await User.findById({ _id: decoded.userId });
+    const newtoken = jwt.sign({ userId: updateUser._id, role: updateUser.role, username: updateUser.username, favorbooks: updateUser.favorbooks }, "thisisourwebsite!");
+    res.cookie('token', newtoken);
   }
   const tag = await axios
     .get("http://localhost:3500/tag")

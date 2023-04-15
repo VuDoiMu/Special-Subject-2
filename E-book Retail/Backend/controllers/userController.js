@@ -59,7 +59,7 @@ const login = async (req, res) => {
         bcrypt.compare(password, storedHashedPassword, (err, result) => {
             if (result === true) {
                 // đăng nhập thành công
-                const accesstoken = {userId: user._id, role: user.role,username: user.username, favorbooks: user.favorbooks, image: user.image}
+              const accesstoken = jwt.sign({ userId: user._id, role: user.role, username: user.username, favorbooks: user.favorbooks, image: user.image }, "thisisourwebsite!")
         res.cookie('token', accesstoken);
               res.json( user)
             } else {
@@ -82,7 +82,7 @@ const login = async (req, res) => {
 const updateInfo = async (req, res) => {
   const { username, dateOfBirth, userPhone, address , password} = req.body;
   const token = req.cookies.token;
-  const decoded = token;
+  const decoded = jwt.verify(token, "thisisourwebsite!");
   const userId = decoded.userId;
   console.log(token);
   console.log("Decoded owd ");

@@ -94,7 +94,7 @@ const getByID = async (req, res) => {
     return res.status(400).json({ message: "Book ID required!" });
   }
 
-  const book = await Book.findOne({ _id: req.params.id }).exec();
+  const book = await Book.findById({ _id: req.params.id }).exec();
 
   if (!book) {
     return res
