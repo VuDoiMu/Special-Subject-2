@@ -9,7 +9,7 @@ const User = require("./models/User");
 const data = require("./data/book.json");
 const cookieParser = require("cookie-parser");
 const axios = require("axios");
-
+const bodyparser = require('body-parser') 
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
 const paginate = require("paginate-array");
@@ -23,6 +23,9 @@ var Secret_Key = 'sk_test_51MwJlsK54HlkliE64ML0faNNckw90JTohQ7zN32WoD4sFA6MN9LHO
 
 const stripe = require('stripe')(Secret_Key) 
 
+
+app.use(bodyparser.urlencoded({extended:false}))
+app.use(bodyparser.json())
 
 app.use(
   session({
@@ -61,7 +64,7 @@ app.set("views", path.join(__dirname, "views"));
 
 
 app.post('/payment', function(req, res){ 
-	console.log(req.body)
+	// console.log(req.body)
 	// Moreover you can take more details from user 
 	// like Address, Name, etc from form 
 	stripe.customers.create({ 
@@ -86,7 +89,8 @@ app.post('/payment', function(req, res){
 		}); 
 	}) 
 	.then((charge) => { 
-		res.send("Success") // If no error occurs 
+    res.clearCookie("cart");
+		res.redirect("/") // If no error occurs 
 	}) 
 	.catch((err) => { 
 		res.send(err)	 // If some error occurs 
@@ -139,16 +143,17 @@ app.get("/gio-hang", async (req, res) => {
   const tag = await axios
     .get("http://localhost:3500/tag")
     .then((res) => (tagData = res.data.tags));
-  const decoded = token
+  const decoded = jwt.verify(token, "thisisourwebsite!")
   const id = decoded.userId;
   const response = await axios.get("http://localhost:3500/cart/" + id);
   const data = response.data;
   const cookies = req.headers.cookie ? req.headers.cookie.split("; ") : [];
   let empty = false;
   const cart = cookies[1] + "";
-  if (cart == "cart=[]") {
+  if (cart == undefined ) {
     empty = true;
   }
+  console.log(cart)
   const user = await User.findById(decoded.userId)
   res.render("gio-hang.pug", {
     data,
