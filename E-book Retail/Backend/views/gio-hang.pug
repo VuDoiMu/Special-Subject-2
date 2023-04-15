@@ -19,8 +19,6 @@ html(lang="vi")
       href="css/gio-hang.css" 
       rel="stylesheet"
       )
-
-
     script(
       src="js/main.js" 
       type="text/javascript"
@@ -404,28 +402,21 @@ html(lang="vi")
                                 | - Quý khách chỉ chuyển khoản khi được xác nhận có đủ
                                 |   sách qua điện thoại từ Emanga
 
-                              p
-                                | - Nội dung chuyển khoản cần ghi:
-                                a(href="#") [Mã đơn hàng]
-                                | ;
-                                |   hoặc
-                                a(href="#") [số điện thoại dùng đặt hàng]
-                              p
-                                | - Xem thông tin chuyển khoản của EManga
-                                a(href="phuong-thuc-thanh-toan.html") tại đây
                           hr
+                          if
                           form(action="payment" method="POST")
                             button.btn.btn-lg.btn-block.btn-checkout.text-uppercase.text-white(style="background: #F5A623") Đặt mua
-                            script(
-                              src="https://checkout.stripe.com/v2/checkout.js"
-                              class="stripe-button"
-                              data-key="pk_test_51MwJlsK54HlkliE6zSFSgYLmzilMR8F8z4k9Uni8OvLAcvGv5kxi2LBjWfDMricBAPeDZEwVwHiwEWG3dgEbkX9Q00ljMiDta4"
-                              data-amount="1000"
-                              data-currency="usd"
-                              data-name="Stripe"
-                              data-description="Buy Manga"
-                              data-locale="auto"
-                              )
+                              script(
+                                src="https://checkout.stripe.com/v2/checkout.js"
+                                class="stripe-button"
+                                data-key="pk_test_51MwJlsK54HlkliE6zSFSgYLmzilMR8F8z4k9Uni8OvLAcvGv5kxi2LBjWfDMricBAPeDZEwVwHiwEWG3dgEbkX9Q00ljMiDta4"
+                                data-amount="1000"
+                                data-currency="usd"
+                                data-name="Stripe"
+                                data-description="Buy Manga"
+                                data-locale="auto"
+                            )
+
                           p.text-center.note-before-checkout
                             | (Vui lòng kiểm tra lại đơn hàng
                             |   trước khi Đặt Mua)
