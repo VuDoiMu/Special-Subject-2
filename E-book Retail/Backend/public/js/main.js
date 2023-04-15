@@ -621,6 +621,15 @@ $(function () {
     $(".thay-doi-mk").toggle(200);
   });
 });
+
+function getCookie(name) {
+  const match = document.cookie.match(new RegExp(`(^| )${name}=([^;]+)`));
+  if (match) {
+    return match[2];
+  }
+  return null;
+}
+
 let formdangnhap = document.querySelector("#formdangnhap");
 if (formdangnhap) {
   formdangnhap.addEventListener("submit", async (e) => {
@@ -679,12 +688,16 @@ if (formdangnhap) {
     // }
     window.setTimeout(() => {
       if (content.role == 0) {
+        console.log("Contetn")
+        console.log(content)
         showToast("Login successfully!");
         location.assign(currentUrl);
       } else {
+        console.log("Contetn")
+        console.log(content)
         location.assign("/admin/dashboard");
       }
-    }, 200);
+    }, 2);
   });
 }
 
@@ -700,10 +713,12 @@ if (logoutVar) {
     });
     const content = await sendData.json();
     let currentUrl = window.location.href;
-    window.setTimeout(() => {
+    if (currentUrl.indexOf("/tai-khoan") !== -1) {
+      window.location.href = "/";
+    } else {
       location.reload();
       location.assign(currentUrl);
-    }, 200);
+    }
   });
 }
 
@@ -934,7 +949,6 @@ if (sortSelect) {
     const urlWithoutParams = currentUrl.split("?")[0]; // remove any existing query parameters
     const urlParams = new URLSearchParams(window.location.search);
     const pageParam = urlParams.get("page"); // get the value of the 'page' parameter
-    console.log("pageParam:", pageParam); // add this line to log the value of pageParam
 
     if (hienthiSelect.classList.contains("isTag")) {
       const newUrl = `${urlWithoutParams}?page=${pageParam}&limit=${selectedValue}&sortType=${selectedSort}`;
@@ -966,14 +980,12 @@ function addEventListenerComment() {
       const commentContent = document
         .querySelector(`#comment-${commentId}`)
         .textContent.trim();
-      console.log(commentContent);
-      console.log(commentId);
+
       const editFormId = "#edit-form-" + commentId;
-      console.log(editFormId);
+
       const editForm = document.querySelector(editFormId);
       const editFormByClass = document.querySelector(".form-edit");
-      console.log(editFormByClass);
-      console.log(editForm);
+
       const editFormInput = editForm.querySelector('input[name="content"]');
       editFormInput.value = commentContent;
       editForm.classList.remove("d-none");
@@ -1045,8 +1057,7 @@ function addEventListenerComment() {
       const closeBtn = confirmModal.querySelector(".close-btn");
 
       confirmModal.addEventListener("click", function (event) {
-        console.log(event.target);
-        console.log(this);
+
         if (event.target === this) {
           confirmModal.style.display = "none";
         }
@@ -1102,3 +1113,79 @@ function addEventListenerComment() {
 }
 
 addEventListenerComment();
+
+
+const toggleCheckbox = document.querySelector('#toggle-password-change');
+const thayDoiMk = document.querySelector('.thay-doi-mk');
+
+toggleCheckbox.addEventListener('change', function () {
+  if (this.checked) {
+    thayDoiMk.style.display = 'block';
+  } else {
+    thayDoiMk.style.display = 'none';
+  }
+});
+
+const updateButton = document.querySelector('.button-capnhat');
+if (updateButton) {
+  updateButton.addEventListener('click', () => {
+    const fullNameInput = document.querySelector('input[name="account-hoten"]');
+    const phoneInput = document.querySelector('input[name="account-phone"]');
+    const dobInput = document.querySelector('input[name="account-dob"]');
+    const mkmoiInput = document.querySelector('input[name="account-mkmoi"]');
+    const xacnhanmkmoiInput = document.querySelector('input[name="account-xacnhan-mkmoi"]');
+    const username = document.querySelector("#username")
+
+    // check if new password and confirm password match
+    if (mkmoiInput.value !== xacnhanmkmoiInput.value) {
+      alert('New password and confirm password do not match');
+      return;
+    }
+
+    const updateData = {
+      username: fullNameInput.value,
+      userPhone: phoneInput.value,
+      dateOfBirth: dobInput.value,
+      password: mkmoiInput.value,
+    };
+    console.log(updateData);
+
+    fetch('http://localhost:3500/auth/updateInfo', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updateData),
+    })
+      .then(response => {
+        if (response.ok) {
+          console.log("Get cookie");
+          // const token = getCookie("token");
+          // console.log(token)
+          // const updatedDecoded = {
+          //   ...token,
+          //   username: fullNameInput.value 
+          // };
+          // const newtoken =updatedDecoded
+          // console.log(newtoken);
+          // const expires = new Date(Date.now() + 86400000).toUTCString();
+          // document.cookie = `token=${JSON.stringify(newtoken)}; expires=${expires}; path=/`;
+          console.log(username);
+          console.log(fullNameInput.value)
+          alert('Update successful');
+          mkmoiInput.value = '';
+          xacnhanmkmoiInput.value = '';
+          username.innerText = fullNameInput.value;
+        } else {
+          alert('Update failed');
+        }
+      })
+      .catch(error => {
+        alert('Update failed');
+        console.error('Error updating user info:', error);
+      });
+  });
+}
+
+
+

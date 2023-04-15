@@ -405,6 +405,7 @@ label.error {
 .categorycontent ul li a{
     text-decoration: none;
     color: black;
+    display: block;
 }
 
 .categorycontent ul li:hover ul{
@@ -443,11 +444,9 @@ ul li a.header{
     height: 265px;
 }
 
-
 .categorycontent ul li ul .content.phai{
-    margin-left: 100px;
+    margin-left: 120px;
 }
-
 
 .categorycontent ul li ul .content li a:hover{
     color: #F5A623;
@@ -1103,4 +1102,60 @@ h3.account-header {
     font-size: 18px;
 }
 
+.thay-doi-mk {
+    display: none;
+}
 
+.checkPassword .row{
+    align-items: center;
+}
+
+.checkPassword input {
+    margin-left: calc(16.666667% + 15px);
+}
+
+.checkPassword label {
+    margin-left: 6px;
+    margin-bottom: 0px;
+}
+
+.giohang {
+    margin-top: 4px;
+}
+
+.donhang-table table {
+    border: 2px solid #777777;
+}
+
+.donhang-table table th,td{
+    border: 2px solid #777777;
+}
+
+.donhang-table .img-product {
+    width: 100px;
+    margin-bottom: 6px;
+}
+
+.donhang-table .product-head {
+    display: flex;
+    align-items: center;
+}
+
+.donhang-table .product-head .price {
+    color: #cf111a;
+    margin-left: 10px;
+}
+
+.donhang-table .finalTotal {
+    color: #cf111a;
+}
+
+.donhang-table .product:not(:first-child) {
+    margin-top: 40px;
+}
+
+.donhang-table .product-name {
+    margin: 0;
+    font-weight: 500;
+    color: #2e2e2e;
+}

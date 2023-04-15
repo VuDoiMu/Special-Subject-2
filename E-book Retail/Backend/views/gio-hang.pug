@@ -109,17 +109,18 @@ html(lang="vi")
           span.navbar-toggler-icon
         #collapsibleNavId.collapse.navbar-collapse
           // form tìm kiếm
-          form.form-inline.ml-auto.my-2.my-lg-0.mr-3
+          form#form-search.form-inline.ml-auto.my-2.my-lg-0.mr-3
             .input-group(style="width: 520px;")
               input.form-control(
-                placeholder="Nhập sách cần tìm kiếm..." 
+                placeholder="Enter the book you want to search..." 
                 aria-label="Small" 
                 type="text"
+                id="search"
                 )
               .input-group-append
                 button.btn(
                   style="background-color: #CF111A; color: white;" 
-                  type="button"
+                  type="submit"
                   )
                   i.fa.fa-search
           // ô đăng nhập đăng ký giỏ hàng trên header
@@ -136,32 +137,43 @@ html(lang="vi")
                     i.fa.fa-user
                 a.nav-link.text-dark.text-uppercase(
                   style="display:inline-block" 
-                  href="#"
+                  href="/tai-khoan"
                   )
-                  | Tài
-                  |   khoản
+                  if token 
+                    p#username
+                      |#{user && user.username}
+                  else 
+                    | Account
               .dropdown-menu(aria-labelledby="dropdownMenuButton")
-                a.dropdown-item.nutdangky.text-center.mb-2(
-                  data-target="#formdangky" 
-                  data-toggle="modal" 
-                  href="#"
-                  ) Đăng ký
-                a.dropdown-item.nutdangnhap.text-center(
-                  data-target="#formdangnhap" 
-                  data-toggle="modal" 
-                  href="#"
-                  ) Đăng nhập
+                if token
+                  a.dropdown-item.nutdangky.text-center.mb-2( 
+                  href="/tai-khoan"
+                  style="cursor: pointer"
+                  ) Account detail
+                  a.dropdown-item.nutdangky.text-center.mb-2( 
+                  id="logout"
+                  style="cursor: pointer"
+                  ) Logout
+                else 
+                  a.dropdown-item.nutdangky.text-center.mb-2(
+                    data-target="#formdangky" 
+                    data-toggle="modal" 
+                    href="#"
+                    ) Signup
+                  a.dropdown-item.nutdangnhap.text-center(
+                    data-target="#formdangnhap" 
+                    data-toggle="modal" 
+                    href="#"
+                    ) Signin
             li.nav-item.giohang
-              a.btn.btn-secondary.rounded-circle(href="gio-hang.html")
+              a.btn.btn-secondary.rounded-circle(href="gio-hang")
                 i.fa.fa-shopping-cart
                 .cart-amount 0
               a.nav-link.text-dark.giohang.text-uppercase(
-                style="display:inline-block" 
-                href="/gio-hang"
-                )
-                | Giỏ
-                |   Hàng
-  
+                  style="display:inline-block" 
+                  href="gio-hang"
+                  )
+                  | My cart
     // form dang ky khi click vao button tren header
     #formdangky.modal.fade.mt-5(
       aria-hidden="true" 

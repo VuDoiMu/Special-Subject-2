@@ -70,7 +70,7 @@ html(lang='en', dir='ltr')
 
 
                         tbody#tbody
-                            each book in data 
+                            each book in books 
                                 tr
                                 th( scope="row") #{book.name}
                                 th( scope="row") #{book.author}
@@ -84,4 +84,22 @@ html(lang='en', dir='ltr')
                                         </svg>
 
                                     button(id=`btn-delete` name=`${book._id}`  class='btn btn-danger deleteButton') X
+                        ul.pagination.justify-content-center
+                            - const maxPagesToShow = totalPages; 
+                            - const middlePage = Math.ceil(maxPagesToShow/2);
+                            - let startPage = Math.max(currentPage - middlePage, 1);
+                            - let endPage = Math.min(startPage + maxPagesToShow - 1, totalPages);
+                            - if (endPage - startPage < maxPagesToShow) {
+                            -   startPage = Math.max(endPage - maxPagesToShow + 1, 1);
+                            - }    
+                            if currentPage > 1
+                                li.page-item
+                                    a.page-link(href=`/admin/management/${currentPage-1}`) Previous
+                            - for (var i = startPage; i <= endPage; i++) {
+                                li.page-item(class=i===currentPage ? 'active' : '')
+                                    a.page-link(href=`/admin/management/${i}`)= i
+                            - }
+                            if (currentPage < totalPages)
+                                li.page-item
+                                    a.page-link(href=`/admin/management/${currentPage+1}`) Next
     script(src='/js/admin.js' )
