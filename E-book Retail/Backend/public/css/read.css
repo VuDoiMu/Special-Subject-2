@@ -1,0 +1,12 @@
+.read-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.read {
+}
+
+h1 {
+  margin-bottom: 6rem;
+}

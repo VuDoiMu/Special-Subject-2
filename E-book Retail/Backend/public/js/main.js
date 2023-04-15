@@ -522,53 +522,19 @@ $(function () {
       cart
     )}; expires=${expires}; path=/`;
   }
-
-//   let customButton = document.querySelector('.btn-checkout');
-// customButton.addEventListener('click', function() {
-//   var handler = StripeCheckout.configure({
-//     key: 'pk_test_51MwJlsK54HlkliE6zSFSgYLmzilMR8F8z4k9Uni8OvLAcvGv5kxi2LBjWfDMricBAPeDZEwVwHiwEWG3dgEbkX9Q00ljMiDta4',
-//     amount: 100,
-//     currency: 'usd',
-//     name: 'EManga',
-//     description: 'Buy ',
-//     locale: 'auto',
-//     token: function(token) {
-//       // Submit the form with the token ID
-//       var form = document.getElementById('payment-form');
-//       if (form) {
-//         var hiddenInput = document.createElement('input');
-//         hiddenInput.setAttribute('type', 'hidden');
-//         hiddenInput.setAttribute('name', 'stripeToken');
-//         hiddenInput.setAttribute('value', token.id);
-//         form.appendChild(hiddenInput);
-//         form.submit();
-//       } else {
-//         console.log("Payment form not found.");
-//       }
-//     }
-    
-//   });
-  
-//   handler.open({
-//     name: 'Stripe',
-//     description: 'Buy EManga',
-//     amount: 100
-//   });
-  
-// });
-
   // $(".btn-checkout").click(async (e) => {
+  //   console.log("checkout")
   //   let cart = []; // Create an empty cart
 
   //   // Update the cart on the client-side to reflect the cleared cart
-  //   // ...
-  //   function getCookie(name) {
-  //     const match = document.cookie.match(new RegExp(`(^| )${name}=([^;]+)`));
-  //     if (match) {
-  //       return match[2];
-  //     }
-  //     return null;
-  //   }
+  //   // // ...
+  //   // function getCookie(name) {
+  //   //   const match = document.cookie.match(new RegExp(`(^| )${name}=([^;]+)`));
+  //   //   if (match) {
+  //   //     return match[2];
+  //   //   }
+  //   //   return null;
+  //   // }
 
   //   let cartItems = await JSON.parse(getCookie("cart"));
   //   await fetch("http://localhost:3500/create-order", {

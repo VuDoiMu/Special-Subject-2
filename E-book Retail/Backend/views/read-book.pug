@@ -27,6 +27,10 @@ html(lang="li")
       href="/css/product-item.css" 
       rel="stylesheet"
       )
+    link(
+      href="/css/read.css" 
+      rel="stylesheet"
+      ) 
     script(
       src="/js/main.js" 
       type="text/javascript"
@@ -354,10 +358,10 @@ html(lang="li")
                     href=('/tag/' + tag.name +  "?page=1&limit=10"))=tag.name 
                         i.fa.fa-chevron-right.float-right
     // nội dung của trang
-    section.product-page.mb-4
-      .container
+    section.read-container
+      div.read
         h1 #{book.name}
-        img(src="/bank-4.0.jpg")
+        img(src="/643a637c8770514ee391ee11/cover.png" style="object-fit: cover;" )
         //- #{book.content}
     //-     // chi tiết 1 sản phẩm
     //-     .product-detail.bg-white.p-4
