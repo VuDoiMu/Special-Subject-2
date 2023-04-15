@@ -522,35 +522,68 @@ $(function () {
       cart
     )}; expires=${expires}; path=/`;
   }
-  // $(".btn-checkout").click(async (e) => {
-  //   console.log("checkout")
-  //   let cart = []; // Create an empty cart
+//   let customButton = document.querySelector('.btn-checkout');
 
-  //   // Update the cart on the client-side to reflect the cleared cart
-  //   // // ...
-  //   // function getCookie(name) {
-  //   //   const match = document.cookie.match(new RegExp(`(^| )${name}=([^;]+)`));
-  //   //   if (match) {
-  //   //     return match[2];
-  //   //   }
-  //   //   return null;
-  //   // }
+// customButton.addEventListener('click', function() {
+//   var handler = StripeCheckout.configure({
+//     key: 'pk_test_51MwJlsK54HlkliE6zSFSgYLmzilMR8F8z4k9Uni8OvLAcvGv5kxi2LBjWfDMricBAPeDZEwVwHiwEWG3dgEbkX9Q00ljMiDta4',
+//     locale: 'auto',
+//     token: function(token) {
+//       fetch('/payment', {
+//         method: 'POST',
+//         headers: {
+//           'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify({token: token.id})
+//       })
+//       .then(response => response.json())
+//       .then(data => {
+//         console.log(data);
+//       })
+//       .catch(error => {
+//         console.error(error);
+//       });
+//     }
+//   });
 
-  //   let cartItems = await JSON.parse(getCookie("cart"));
-  //   await fetch("http://localhost:3500/create-order", {
-  //     method: "POST",
-  //     headers: {
-  //       Accept: "application/json",
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({ cartItems }),
-  //   });
-  //   setCartCookie(cart);
-  //   location.reload(true);
-  //   alert("cảm ơn đã mua hàng");
+//   handler.open({
+//     name: 'Stripe',
+//     description: 'Buy EManga',
+//     amount: 7000,
+//     currency: 'USD',
+//     locale: "auto"
+//   });
+// });
 
-  //   // Save the cleared cart to the cookie
-  // });
+  $(".btn-checkout").click(async (e) => {
+    console.log("checkout")
+    let cart = []; // Create an empty cart
+
+    // Update the cart on the client-side to reflect the cleared cart
+    // // ...
+    // function getCookie(name) {
+    //   const match = document.cookie.match(new RegExp(`(^| )${name}=([^;]+)`));
+    //   if (match) {
+    //     return match[2];
+    //   }
+    //   return null;
+    // }
+
+    let cartItems = await JSON.parse(getCookie("cart"));
+    await fetch("http://localhost:3500/create-order", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ cartItems }),
+    });
+    setCartCookie(cart);
+    location.reload(true);
+    alert("cảm ơn đã mua hàng");
+
+    // Save the cleared cart to the cookie
+  });
 
   //START
   // const addFunctionToRemoveButton = () => {

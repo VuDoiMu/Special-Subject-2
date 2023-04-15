@@ -66,9 +66,12 @@ app.use(express.static("public", { "Content-Type": "application/javascript" }));
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
 
-
 app.post('/payment', function(req, res){ 
-	// console.log(req.body)
+	console.log(req.body)
+  const cartcookie = JSON.parse(req.cookies.cart)
+  console.log(cartcookie)
+  const totalPrice = cartcookie.reduce((acc, item) => acc + parseFloat(item.newPrice), 0);
+  console.log(totalPrice);
 	// Moreover you can take more details from user 
 	// like Address, Name, etc from form 
 	stripe.customers.create({ 
@@ -86,15 +89,16 @@ app.post('/payment', function(req, res){
 	.then((customer) => { 
 
 		return stripe.charges.create({ 
-			amount: 7000,	 // Charing Rs 25 
-			description: 'Web Development Product', 
+			amount: (totalPrice*100),	 // Charing Rs 25 
+			description: 'Emanga', 
 			currency: 'USD', 
 			customer: customer.id 
 		}); 
 	}) 
 	.then((charge) => { 
     res.clearCookie("cart");
-		res.redirect("/") // If no error occurs 
+		res.redirect("/?alert=Checkout+successfully");
+    
 	}) 
 	.catch((err) => { 
 		res.send(err)	 // If some error occurs 
@@ -102,6 +106,7 @@ app.post('/payment', function(req, res){
 })
 app.get("/", async (req, res) => {
   const token = req.cookies.token;
+  const alert = req.query.alert;
   let decoded = "";
   if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
@@ -137,6 +142,7 @@ app.get("/", async (req, res) => {
   //   decoded = jwt.verify(token, "thisisourwebsite!");;
   // }
   console.log(decoded);
+  console.log(alert);
   const user = await User.findById(decoded.userId);
   res.render("home.pug", {
     data,
@@ -147,11 +153,16 @@ app.get("/", async (req, res) => {
     token,
     decoded,
     user,
+    alert
   });
 });
 
 app.get("/gio-hang", async (req, res) => {
   const token = req.cookies.token;
+  const cartcookie = JSON.parse(req.cookies.cart)
+  console.log(cartcookie)
+  const totalPrice = cartcookie.reduce((acc, item) => acc + parseFloat(item.newPrice), 0);
+  console.log(totalPrice);
   let tagData;
   const tag = await axios
     .get("http://localhost:3500/tag")
@@ -174,6 +185,7 @@ app.get("/gio-hang", async (req, res) => {
     decoded,
     token,
     user,
+    totalPrice
   });
 });
 

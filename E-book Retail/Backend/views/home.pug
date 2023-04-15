@@ -110,6 +110,7 @@ html(lang="vi")
       defer="" 
       async=""
       )
+
     #toast-container
       #toast-message
     // header
@@ -949,9 +950,31 @@ html(lang="vi")
                 src="images/payoo-payment.jpg"
                 )
     // nut cuon len dau trang
-    .fixed-bottom
+    .fixed-bottom(data-alert = alert)
       #backtotop.btn.btn-warning.float-right.rounded-circle.nutcuonlen(
         style="background:#CF111A;" 
         href="#"
         )
         i.fa.fa-chevron-up.text-white
+    script.
+      function showToast(message) {
+        var toastContainer = document.getElementById("toast-container");
+        var toastMessage = document.getElementById("toast-message");
+        if (toastMessage) {
+          toastMessage.innerHTML = message;
+        }
+        toastContainer.style.display = "block";
+        toastMessage.style.opacity = "1";
+
+        setTimeout(function () {
+          toastMessage.style.opacity = "0";
+          setTimeout(function () {
+            toastContainer.style.display = "none";
+          }, 500);
+        }, 5000);
+      }
+      const fixedBottom = document.querySelector(".fixed-bottom");
+      const fixedBottomAlert = fixedBottom.dataset.alert;
+      if(fixedBottomAlert) {
+        showToast(fixedBottomAlert);
+      }
