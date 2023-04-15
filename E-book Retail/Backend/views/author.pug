@@ -331,8 +331,9 @@ html(lang="vi")
     -if(searchPara)
       div#search-result
         .container
-          span(class="result-text") Search result: 
+          span(class="result-text") All book by: 
           span(class="result")= searchPara
+          span (#{book.length} books) 
     -else 
       section.breadcrumbbar
         .container
