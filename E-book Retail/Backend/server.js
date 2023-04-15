@@ -98,7 +98,7 @@ app.get("/", async (req, res) => {
   if(token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
     const updateUser = await User.findById({ _id: decoded.userId });
-    const newtoken = jwt.sign({userId: updateUser._id, role: updateUser.role, username: updateUser.username, favorbooks: updateUser.favorbooks},"thisisourwebsite!");
+    const newtoken = jwt.sign({ userId: updateUser._id, role: updateUser.role, username: updateUser.username, favorbooks: updateUser.favorbooks, inventory: updateUser.inventory }, "thisisourwebsite!");
     res.cookie('token', newtoken);
   }
   const response = await axios.get("http://localhost:3500/management");
@@ -203,9 +203,10 @@ app.get("/product/:id", async (req, res) => {
   if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
     const updateUser = await User.findById({ _id: decoded.userId });
-    const newtoken = jwt.sign({ userId: updateUser._id, role: updateUser.role, username: updateUser.username, favorbooks: updateUser.favorbooks }, "thisisourwebsite!");
+    const newtoken = jwt.sign({ userId: updateUser._id, role: updateUser.role, username: updateUser.username, favorbooks: updateUser.favorbooks, inventory: updateUser.inventory }, "thisisourwebsite!");
     res.cookie('token', newtoken);
   }
+  console.log(decoded)
   const user = await User.findById(decoded.userId)
   res.render("product.pug", {
     book,
@@ -226,7 +227,7 @@ app.get("/tai-khoan", async (req, res) => {
   if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
     const updateUser = await User.findById({ _id: decoded.userId });
-    const newtoken = jwt.sign({ userId: updateUser._id, role: updateUser.role, username: updateUser.username, favorbooks: updateUser.favorbooks }, "thisisourwebsite!");
+    const newtoken = jwt.sign({ userId: updateUser._id, role: updateUser.role, username: updateUser.username, favorbooks: updateUser.favorbooks, inventory: updateUser.inventory }, "thisisourwebsite!");
     res.cookie('token', newtoken);
   }
   const tag = await axios
@@ -281,7 +282,7 @@ app.get("/tag/:name", async (req, res) => {
   if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
     const updateUser = await User.findById({ _id: decoded.userId });
-    const newtoken = jwt.sign({ userId: updateUser._id, role: updateUser.role, username: updateUser.username, favorbooks: updateUser.favorbooks }, "thisisourwebsite!");
+    const newtoken = jwt.sign({ userId: updateUser._id, role: updateUser.role, username: updateUser.username, favorbooks: updateUser.favorbooks, inventory: updateUser.inventory }, "thisisourwebsite!");
     res.cookie('token', newtoken);
   }
   const page = parseInt(req.query.page) || 1;
@@ -317,7 +318,7 @@ app.get("/search/:searchPara?/:page?", async (req, res) => {
   if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
     const updateUser = await User.findById({ _id: decoded.userId });
-    const newtoken = jwt.sign({ userId: updateUser._id, role: updateUser.role, username: updateUser.username, favorbooks: updateUser.favorbooks }, "thisisourwebsite!");
+    const newtoken = jwt.sign({ userId: updateUser._id, role: updateUser.role, username: updateUser.username, favorbooks: updateUser.favorbooks, inventory: updateUser.inventory }, "thisisourwebsite!");
     res.cookie('token', newtoken);
   }
   let booksTag = response.data;
@@ -393,7 +394,7 @@ app.get("/product-list/:name?/:page?", async (req, res) => {
   if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
     const updateUser = await User.findById({ _id: decoded.userId });
-    const newtoken = jwt.sign({ userId: updateUser._id, role: updateUser.role, username: updateUser.username, favorbooks: updateUser.favorbooks }, "thisisourwebsite!");
+    const newtoken = jwt.sign({ userId: updateUser._id, role: updateUser.role, username: updateUser.username, favorbooks: updateUser.favorbooks, inventory: updateUser.inventory }, "thisisourwebsite!");
     res.cookie('token', newtoken);
   }
   const tag = await axios
