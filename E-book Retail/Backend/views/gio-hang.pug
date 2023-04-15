@@ -10,6 +10,8 @@ html(lang="vi")
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
       rel="stylesheet"
       )
+    
+    script(var stripePublicKey = 'pk_test_51MwJlsK54HlkliE6zSFSgYLmzilMR8F8z4k9Uni8OvLAcvGv5kxi2LBjWfDMricBAPeDZEwVwHiwEWG3dgEbkX9Q00ljMiDta4')
     script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
     script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js")
     script(src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js")
@@ -159,6 +161,7 @@ html(lang="vi")
                 )
                 | Giỏ
                 |   Hàng
+  
     // form dang ky khi click vao button tren header
     #formdangky.modal.fade.mt-5(
       aria-hidden="true" 
@@ -399,7 +402,18 @@ html(lang="vi")
                                 | - Xem thông tin chuyển khoản của EManga
                                 a(href="phuong-thuc-thanh-toan.html") tại đây
                           hr
-                          button.btn.btn-lg.btn-block.btn-checkout.text-uppercase.text-white(style="background: #F5A623") Đặt mua
+                          form(action="payment" method="POST")
+                            button.btn.btn-lg.btn-block.btn-checkout.text-uppercase.text-white(style="background: #F5A623") Đặt mua
+                            script(
+                              src="https://checkout.stripe.com/v2/checkout.js"
+                              class="stripe-button"
+                              data-key="pk_test_51MwJlsK54HlkliE6zSFSgYLmzilMR8F8z4k9Uni8OvLAcvGv5kxi2LBjWfDMricBAPeDZEwVwHiwEWG3dgEbkX9Q00ljMiDta4"
+                              data-amount="1000"
+                              data-currency="usd"
+                              data-name="Stripe"
+                              data-description="Buy Manga"
+                              data-locale="auto"
+                              )
                           p.text-center.note-before-checkout
                             | (Vui lòng kiểm tra lại đơn hàng
                             |   trước khi Đặt Mua)
@@ -466,6 +480,7 @@ html(lang="vi")
                         data-width="300px" 
                         data-href="https://www.facebook.com/DealBook-110745443947730/"
                         )
+                        
                   .col-md-3.col-xs-6
                     .hotrokh
                       h6.header.text-uppercase.font-weight-bold HỖ TRỢ KHÁCH HÀNG

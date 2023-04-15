@@ -16,6 +16,14 @@ const paginate = require("paginate-array");
 const session = require("express-session");
 const _ = require("lodash");
 
+
+var Publishable_Key = 'pk_test_51MwJlsK54HlkliE6zSFSgYLmzilMR8F8z4k9Uni8OvLAcvGv5kxi2LBjWfDMricBAPeDZEwVwHiwEWG3dgEbkX9Q00ljMiDta4'
+var Secret_Key = 'sk_test_51MwJlsK54HlkliE64ML0faNNckw90JTohQ7zN32WoD4sFA6MN9LHOKU7YTuUBrztB78SaVUveOGDHy5HGNLR2dJx00kpzqu040'
+
+
+const stripe = require('stripe')(Secret_Key) 
+
+
 app.use(
   session({
     secret: "secret-key",
@@ -51,6 +59,39 @@ app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
 
+
+app.post('/payment', function(req, res){ 
+	console.log(req.body)
+	// Moreover you can take more details from user 
+	// like Address, Name, etc from form 
+	stripe.customers.create({ 
+		email: req.body.stripeEmail, 
+		source: req.body.stripeToken, 
+		name: 'Gautam Sharma', 
+		address: { 
+			line1: 'TC 9/4 Old MES colony', 
+			postal_code: '110092', 
+			city: 'New Delhi', 
+			state: 'Delhi', 
+			country: 'India', 
+		} 
+	}) 
+	.then((customer) => { 
+
+		return stripe.charges.create({ 
+			amount: 7000,	 // Charing Rs 25 
+			description: 'Web Development Product', 
+			currency: 'USD', 
+			customer: customer.id 
+		}); 
+	}) 
+	.then((charge) => { 
+		res.send("Success") // If no error occurs 
+	}) 
+	.catch((err) => { 
+		res.send(err)	 // If some error occurs 
+	}); 
+})
 app.get("/", async (req, res) => {
   const token = req.cookies.token;
   let decoded = "";

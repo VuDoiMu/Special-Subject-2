@@ -37,9 +37,12 @@ const userSchema = new mongoose.Schema({
     required: false,
     length: 255,
   },
-  inventory: {
-    type: [String],
-  },
+  inventory: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Book",
+    },
+  ],
   role: {
     type: Number,
     default: 0, //0 = customer; 1 = admin
