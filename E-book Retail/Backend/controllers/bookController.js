@@ -210,14 +210,14 @@ const addBook = async (req, res) => {
 
     const content = {};
     for (let i = 0; i < uploadedImages.length-1; i++) {
-      content[i + 1] = `/bookContent/${bookID}/${i + 1}.png`;
+      content[i + 1] = `/${bookID}/${i + 1}.png`;
     }
 
     const resResult = await Book.findOneAndUpdate(
       { _id: bookID },
       {
         content: content,
-        image: `./bookContent/${bookID}/cover.png`
+        image: `/${bookID}/cover.png`
       }
     );
 
