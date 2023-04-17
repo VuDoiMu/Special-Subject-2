@@ -143,7 +143,7 @@ app.get("/", async (req, res) => {
   //   decoded = jwt.verify(token, "thisisourwebsite!");;
   // }
   console.log(decoded);
-  console.log(alert);
+  // console.log(alert);
   const user = await User.findById(decoded.userId);
   res.render("home.pug", {
     data,
@@ -160,10 +160,6 @@ app.get("/", async (req, res) => {
 
 app.get("/gio-hang", async (req, res) => {
   const token = req.cookies.token;
-  const cartcookie = JSON.parse(req.cookies.cart)
-  console.log(cartcookie)
-  const totalPrice = cartcookie.reduce((acc, item) => acc + parseFloat(item.newPrice), 0);
-  console.log(totalPrice);
   let tagData;
   const tag = await axios
     .get("http://localhost:3500/tag")
@@ -174,10 +170,18 @@ app.get("/gio-hang", async (req, res) => {
   const data = response.data;
   const cookies = req.headers.cookie ? req.headers.cookie.split("; ") : [];
   let empty = false;
+  let totalPrice = 0;
+  if(req.cookies.cart){
+  const cartcookie = JSON.parse(req.cookies.cart)
+  console.log(cartcookie)
+  totalPrice = cartcookie.reduce((acc, item) => acc + parseFloat(item.newPrice), 0);
+  console.log(totalPrice);
+  
   const cart = cookies[1] + "";
   if (cart == undefined) {
     empty = true;
   }
+}
   const user = await User.findById(decoded.userId);
   res.render("gio-hang.pug", {
     data,

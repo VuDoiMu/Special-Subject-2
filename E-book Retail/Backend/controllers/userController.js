@@ -61,6 +61,7 @@ const login = async (req, res) => {
                 // đăng nhập thành công
                 const accesstoken = jwt.sign({userId: user._id, role: user.role,username: user.username, favorbooks: user.favorbooks, image: user.image, inventory:  user.inventory },"thisisourwebsite!")
         res.cookie('token', accesstoken);
+        
               res.json( user)
             } else {
                 // đăng nhập thất bại

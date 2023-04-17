@@ -394,8 +394,15 @@ $(function () {
   }
 
   function displayCart() {
-    let cartItems = getCookie("cart");
+
+    let cartItems = getCookie('cart');
+    if(cartItems){
     cartItems = JSON.parse(cartItems);
+    }else{
+      cartItems = JSON.parse([])
+      
+    }
+    console.log(cartItems.length)
     let totalProfits = 0;
 
     for (let i = 0; i < cartItems.length; i++) {
@@ -406,12 +413,12 @@ $(function () {
 
     let productNumbers = cartItems.length;
 
-    if (cartItems == null) {
-      $(".cart-empty").removeClass("d-none");
-      $(".cart").addClass("d-none");
-      $(".cart-steps").addClass("d-none");
-    }
-    if (cartItems && cartContent) {
+    // if (cartItems == null) {
+    //   $(".cart-empty").removeClass("d-none");
+    //   $(".cart").addClass("d-none");
+    //   $(".cart-steps").addClass("d-none");
+    // }
+    // if (cartItems && cartContent) {
       $(".cart-empty").addClass("d-none");
       $(".cart").removeClass("d-none");
       $(".cart-steps").removeClass("d-none");
@@ -483,7 +490,7 @@ $(function () {
                 </div>
             </div>
             `;
-    }
+    
     function removeFromCart(id) {
       let cartItems = JSON.parse(getCookie("cart"));
 
@@ -516,12 +523,6 @@ $(function () {
     });
   }
 
-  function setCartCookie(cart) {
-    const expires = new Date(Date.now() + 86400000).toUTCString(); // Expire the cookie after 24 hours
-    document.cookie = `cart=${JSON.stringify(
-      cart
-    )}; expires=${expires}; path=/`;
-  }
 //   let customButton = document.querySelector('.btn-checkout');
 
 // customButton.addEventListener('click', function() {
@@ -554,6 +555,13 @@ $(function () {
 //     locale: "auto"
 //   });
 // });
+
+function setCartCookie(cart) {
+  const expires = new Date(Date.now() + 86400000).toUTCString(); // Expire the cookie after 24 hours
+  document.cookie = `cart=${JSON.stringify(
+    cart
+  )}; expires=${expires}; path=/`;
+}
 
   $(".btn-checkout").click(async (e) => {
     console.log("checkout")
