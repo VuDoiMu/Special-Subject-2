@@ -3,6 +3,7 @@ const app = express();
 const Cart =  require('../models/Cart');
 const Book = require('../models/Book')
 const Order = require('../models/Order')
+const User = require('../models/User')
 const jwt = require("jsonwebtoken")
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
@@ -30,6 +31,7 @@ const addToCart = async (req, res ) =>{
             finalTotal: finalTotal
         }
         const updateCart = await Cart.findOneAndUpdate({userId: userId}, newCart, {new:  true})
+        
         res.json({success : true,message:"new", updateCart})
     
     }catch(error){
@@ -51,44 +53,40 @@ const saveToOrder = async (req, res) => {
     const token = req.cookies.token;
     const decoded = jwt.verify(token, "thisisourwebsite!");
     const userId = decoded.userId;
-    try{
-    const cart = await Cart.findOne({userId: userId})
-    const order = new Order( {
-        userId:  cart.userId,
-        items: cart.items,
-        finalTotal: cart.finalTotal
-    })
-    await order.save();
-    
-    Cart.findById(cart._id)
-    .populate('items.product', 'id')
-    .then((cart) => {
-      const bookSells = cart.items.map((item) => ({
-        productId: item.product.id,
-        quantity: item.quantity,
-      }));
+    const cart = JSON.parse(req.cookies.cart)
+    const totalPrice = cart.reduce((acc, item) => acc + parseFloat(item.newPrice), 0);
   
-      bookSells.forEach((item) => {
-        Book.updateOne({ _id: item.productId }, { $inc: { countSale : item.quantity }  })
-          .then(() => {
-            console.log(`Updated quantity for product ${item.productId}`);
-          })
-          .catch((error) => console.log(error));
+    try {
+       let items =  [] 
+       let inventory = []
+      cart.forEach(element => {
+        items.push({
+          product: element.id,
+          quantity: 1,
+          price: parseFloat(element.newPrice),
+          total: parseFloat(element.newPrice)
+        })
+        inventory.push(element.id)
       });
-    })
-    .catch((error) => console.log(error));
-
-    
-    const deleteCart = await Cart.deleteOne({userId: userId})
-    const newcart = new Cart({userId : userId, finalTotal: 0})
-    await newcart.save();
-    res.json({success: true, message:'checkout', newcart})
+      const order = new Order({
+        userId: userId,
+        items: items,
+        finalTotal: totalPrice
+      })
+      await order.save();
+      const updateUser = await User.findByIdAndUpdate(
+        { _id: userId },
+        { $push: { inventory:inventory } },
+        { new: "true" }
+      );
+      res.json({ success: true, message: 'checkout', order })
       
-    }catch(error){
-        console.error(error);
-    }
 
-}
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  
 const deleteCart = async(req, res) => {
     const token = req.cookies.token;
     const decoded = jwt.verify(token, "thisisourwebsite!");

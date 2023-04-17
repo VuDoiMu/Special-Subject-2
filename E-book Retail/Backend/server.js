@@ -78,14 +78,7 @@ app.post('/payment', function(req, res){
 	stripe.customers.create({ 
 		email: req.body.stripeEmail, 
 		source: req.body.stripeToken, 
-		name: 'Gautam Sharma', 
-		address: { 
-			line1: 'TC 9/4 Old MES colony', 
-			postal_code: '110092', 
-			city: 'New Delhi', 
-			state: 'Delhi', 
-			country: 'India', 
-		} 
+
 	}) 
 	.then((customer) => { 
 
@@ -96,10 +89,11 @@ app.post('/payment', function(req, res){
 			customer: customer.id 
 		}); 
 	}) 
-	.then((charge) => { 
-    res.clearCookie("cart");
-		res.redirect("/?alert=Checkout+successfully");
+	.then(async (charge) => { 
     
+    const cookieValue = JSON.stringify([]);
+    res.setHeader('Set-Cookie', `cart=${cookieValue};`);
+		res.redirect("/?alert=Checkout+successfully");
 	}) 
 	.catch((err) => { 
 		res.send(err)	 // If some error occurs 
@@ -166,8 +160,7 @@ app.get("/gio-hang", async (req, res) => {
     .then((res) => (tagData = res.data.tags));
   const decoded = jwt.verify(token, "thisisourwebsite!");
   const id = decoded.userId;
-  const response = await axios.get("http://localhost:3500/cart/" + id);
-  const data = response.data;
+  
   const cookies = req.headers.cookie ? req.headers.cookie.split("; ") : [];
   let empty = false;
   let totalPrice = 0;
@@ -184,7 +177,6 @@ app.get("/gio-hang", async (req, res) => {
 }
   const user = await User.findById(decoded.userId);
   res.render("gio-hang.pug", {
-    data,
     empty,
     tags: tagData.slice(0, 11),
     decoded,

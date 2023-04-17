@@ -565,7 +565,6 @@ function setCartCookie(cart) {
 
   $(".btn-checkout").click(async (e) => {
     console.log("checkout")
-    let cart = []; // Create an empty cart
 
     // Update the cart on the client-side to reflect the cleared cart
     // // ...
@@ -578,7 +577,7 @@ function setCartCookie(cart) {
     // }
 
     let cartItems = await JSON.parse(getCookie("cart"));
-    await fetch("http://localhost:3500/create-order", {
+    await fetch("http://localhost:3500/cart", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -586,9 +585,8 @@ function setCartCookie(cart) {
       },
       body: JSON.stringify({ cartItems }),
     });
-    setCartCookie(cart);
-    location.reload(true);
-    alert("cảm ơn đã mua hàng");
+   
+   
 
     // Save the cleared cart to the cookie
   });
@@ -654,6 +652,10 @@ if (formdangnhap) {
       },
       body: JSON.stringify({ email: emailValue, password: passwordValue }),
     });
+  
+    const expires = new Date(Date.now() + 86400000).toUTCString(); // Expire the cookie after 24 hours
+    document.cookie = `cart=${JSON.stringify(JSON.parse("[]"))}; expires=${expires}; path=/`;
+
     const content = await sendData.json();
     if (content.message === "Wrong email ") {
       email.classList.remove("valid");
@@ -719,13 +721,13 @@ if (logoutVar) {
       },
     });
     const content = await sendData.json();
-    let currentUrl = window.location.href;
-    if (currentUrl.indexOf("/tai-khoan") !== -1) {
+    // let currentUrl = window.location.href;
+    // if (currentUrl.indexOf("/tai-khoan") !== -1) {
       window.location.href = "/";
-    } else {
-      location.reload();
-      location.assign(currentUrl);
-    }
+    // } else {
+    //   location.reload();
+    //   location.assign(currentUrl);
+    // }
   });
 }
 
