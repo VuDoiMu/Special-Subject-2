@@ -6,6 +6,10 @@ router.route('/')
     .post(tagController.newTag)
     .get(tagController.getTag)
 
+router.route('/:id')
+    .put(tagController.updateTag)
+    .delete(tagController.deleteTag)
+
 router.route('/books/:name')
     .get(tagController.getByTag);
 
