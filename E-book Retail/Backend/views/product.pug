@@ -440,7 +440,7 @@ html(lang="li")
                       li Free Bookmark for every order
                       li Free book cover (on request)
                 if(decoded)
-                  if(-ownedBook(decoded.inventory=[], book._id))
+                  if(-ownedBook(decoded.inventory || [], book._id))
                     btn(id='read-btn' class='btn w-100 text-uppercase' onclick=`window.location.href='/read-book/${ book._id}';`)  Read now!
                             .fb-like(
                               data-share="true" 
