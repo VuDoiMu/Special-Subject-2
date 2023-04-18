@@ -438,28 +438,28 @@ html(lang="vi")
                     if currentPage > 1
                       li.page-item
                         if searchPara
-                          a.page-link(href=`/search/${searchPara}/${currentPage-1}?limit=${limit}`) Previous
+                          a.page-link(href=`/search/${searchPara}/${currentPage-1}?limit=${limit}&sortType=${sortType || "dateDesc"}`) Previous
                         else if isTag 
-                          a.page-link(href=`/tag/${name}?page=&${currentPage-1}limit=${limit}`) Previous
+                          a.page-link(href=`/tag/${name}?page=&${currentPage-1}limit=${limit}&sortType=${sortType || "dateDesc"}`) Previous
                         else
-                          a.page-link(href=`/product-list/${name}/${currentPage-1}?limit=${limit}`) Previous
+                          a.page-link(href=`/product-list/${name}/${currentPage-1}?limit=${limit}&sortType=${sortType || "dateDesc"}`) Previous
                     - for (var i = startPage; i <= endPage; i++) {
                       li.page-item(class=i===currentPage ? 'active' : '')
                         if searchPara
-                          a.page-link(href=`/search/${searchPara}/${i}?limit=${limit}`)= i
+                          a.page-link(href=`/search/${searchPara}/${i}?limit=${limit}&sortType=${sortType || "dateDesc"}`)= i
                         else if isTag 
-                          a.page-link(href=`/tag/${name}?page=${i}&limit=${limit}`)= i
+                          a.page-link(href=`/tag/${name}?page=${i}&limit=${limit}&sortType=${sortType || "dateDesc"}`)= i
                         else
-                          a.page-link(href=`/product-list/${name}/${i}?limit=${limit}`)= i
+                          a.page-link(href=`/product-list/${name}/${i}?limit=${limit}&sortType=${sortType || "dateDesc"}`)= i
                     - }
                     if (currentPage < totalPages)
                       li.page-item
                         if searchPara
-                          a.page-link(href=`/search/${searchPara}/${currentPage+1}?limit=${limit}`) Next
+                          a.page-link(href=`/search/${searchPara}/${currentPage+1}?limit=${limit}&sortType=${sortType || "dateDesc"}`) Next
                         else if isTag 
-                          a.page-link(href=`/tag/${name}?page=${currentPage+1}&limit=${limit}`) Next
+                          a.page-link(href=`/tag/${name}?page=${currentPage+1}&limit=${limit}&sortType=${sortType || "dateDesc"}`) Next
                         else
-                          a.page-link(href=`/product-list/${name}/${currentPage+1}?limit=${limit}`) Next
+                          a.page-link(href=`/product-list/${name}/${currentPage+1}?limit=${limit}&sortType=${sortType || "dateDesc"}`) Next
     section.abovefooter.text-white(style="background-color: #CF111A;")
       .container
         .row

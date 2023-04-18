@@ -158,7 +158,8 @@ html(lang="vi")
               li.nav-item.giohang
                 a.btn.btn-secondary.rounded-circle(href="/gio-hang")
                   i.fa.fa-shopping-cart
-                  .cart-amount 0
+                  .cart-amount 
+                    |#{cartNumber}
                 a.nav-link.text-dark.giohang.text-uppercase(
                   style="display:inline-block" 
                   href="gio-hang"

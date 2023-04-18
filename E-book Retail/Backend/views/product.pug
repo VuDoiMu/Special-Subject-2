@@ -198,7 +198,8 @@ html(lang="li")
               li.nav-item.giohang
                 a.btn.btn-secondary.rounded-circle(href="/gio-hang")
                   i.fa.fa-shopping-cart
-                  .cart-amount #{itemCount}
+                  .cart-amount 
+                    |#{cartNumber}  
                 a.nav-link.text-dark.giohang.text-uppercase(
                   style="display:inline-block" 
                   href="/gio-hang"
@@ -439,7 +440,7 @@ html(lang="li")
                       li Free Bookmark for every order
                       li Free book cover (on request)
                 if(decoded)
-                  if(-ownedBook(decoded.inventory, book._id))
+                  if(-ownedBook(decoded.inventory=[], book._id))
                     btn(id='read-btn' class='btn w-100 text-uppercase' onclick=`window.location.href='/read-book/${ book._id}';`)  Read now!
                             .fb-like(
                               data-share="true" 
@@ -450,7 +451,7 @@ html(lang="li")
                               data-href="https://www.facebook.com/DealBook-110745443947730/"
                               )
                   else 
-                    btn(id='buy-btn' class='nutmua btn w-100 text-uppercase' onclick="window.location.href='/gio-hang';")  Add to cart
+                    btn(id='buy-btn' class='nutmua btn w-100 text-uppercase')  Add to cart
                         .fb-like(
                           data-share="true" 
                           data-size="small" 

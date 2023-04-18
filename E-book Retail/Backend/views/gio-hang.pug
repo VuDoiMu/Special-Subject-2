@@ -166,7 +166,8 @@ html(lang="vi")
             li.nav-item.giohang
               a.btn.btn-secondary.rounded-circle(href="gio-hang")
                 i.fa.fa-shopping-cart
-                .cart-amount 0
+                .cart-amount 
+                  |#{cartNumber}
               a.nav-link.text-dark.giohang.text-uppercase(
                   style="display:inline-block" 
                   href="gio-hang"
@@ -318,10 +319,14 @@ html(lang="vi")
               // CATEGORIES
               .categorycontent
                 ul  
-                  for tag in tags
+                  each tag in tags
                     li
-                      a(href="#") #{tag.name}
-                      i.fa.fa-chevron-right.float-right
+                      a(title=tag.name
+                    data-placement="" 
+                    data-toggle="" 
+                    style="" 
+                    href=('/tag/' + tag.name + "?limit=10"))=tag.name 
+                        i.fa.fa-chevron-right.float-right
 
 
           .col-md-5.ml-auto.contact.d-none.d-md-block
@@ -338,11 +343,10 @@ html(lang="vi")
       .container
         .cart-page.bg-white
           .row
-            // giao diện giỏ hàng khi không có item
             .col-12.cart-empty.d-none
               .py-3.pl-3
                 h6.header-gio-hang
-                  | GIỎ HÀNG CỦA BẠN
+                  | Đây là giỏ hàng của bạn
                   span (0 sản phẩm)
                 .cart-empty-content.w-100.text-center.justify-content-center
                   img(
@@ -350,8 +354,7 @@ html(lang="vi")
                     src="images/shopping-cart-not-product.png"
                     )
                   p Chưa có sản phẩm nào trong giở hàng của bạn
-                  a.btn.nutmuathem.mb-3(href="/") Mua thêm
-            // giao diện giỏ hàng khi có hàng (phần comment màu xanh bên dưới là phần 2 sản phẩm trong giỏ hàng nhưng giờ đã demo bằng jquery)
+                  a.btn.nutmuathem.mb-3(href="/gfa") Mua thêm
             .col-md-8.cart
               .cart-content.py-3.pl-3
 
@@ -363,9 +366,6 @@ html(lang="vi")
                   aria-multiselectable="true" 
                   role="tablist"
                   )
-
-
-
                     .card
                       #step1header.card-header(role="tab")
                         h5.mb-0

@@ -331,13 +331,13 @@ $(function () {
     let productNumbers = cartItems.length;
     productNumbers = parseInt(productNumbers);
 
-    if (productNumbers.length !== 0) {
+    if (productNumbers !== 0) {
       localStorage.setItem(
         "cartNumbers",
-        productNumbers + parseInt($(".soluongsp").val())
+        productNumbers 
       );
       document.querySelector(".giohang .cart-amount").textContent =
-        productNumbers + parseInt($(".soluongsp").val());
+        productNumbers ;
     } else {
       localStorage.setItem("cartNumbers", parseInt($(".soluongsp").val()));
       document.querySelector(".giohang .cart-amount").textContent = parseInt(
@@ -424,44 +424,50 @@ $(function () {
       $(".cart-steps").removeClass("d-none");
 
       cartContent.innerHTML = "";
-
-      cartContent.innerHTML += `
+      if(cartItems.length == 0) {
+        cartContent.innerHTML += `
+          <div class="empty-cart-container">
+            <img alt="Giỏ hàng trống" src="https://mngroup2801.abaha.vn/assets/images/no-cart.png"/>
+            <p> Your cart is empty</p>
+            <a href="/" class="btn nutmuathem mb-3">Buy something</a>
+          </div>
+        `
+      }
+      else {
+        cartContent.innerHTML += `
             <h6 class="header-gio-hang">GIỎ HÀNG CỦA BẠN <span>(${cartItems.length} sản phẩm)</span></h6>
             <div class="cart-list-items">
             `;
-      Object.values(cartItems).map((item) => {
-        cartContent.innerHTML += `
+        Object.values(cartItems).map((item) => {
+          cartContent.innerHTML += `
                     <div class="cart-item d-flex">
                         <a href="product/${item.id}" class="img">
-                            <img src="${
-                              item.image
-                            }.jpg" class="img-fluid" alt="${item.tag}">
+                            <img src="${item.image
+            }.jpg" class="img-fluid" alt="${item.tag}">
                         </a>
                         <div class="item-caption d-flex w-100">
                             <div class="item-info ml-3">
-                                <a href="product/${item.id}" class="ten">${
-          item.name
-        }</a>
+                                <a href="product/${item.id}" class="ten">${item.name
+            }</a>
                               
                             </div>
                             <div class="item-price ml-auto d-flex flex-column align-items-end">
                                 <div class="giamoi">${parseFloat(
-                                  item.newPrice
-                                )} $</div>
+              item.newPrice
+            )} $</div>
                                 <div class="giacu">${parseFloat(
-                                  item.oldPrice
-                                )} $</div>
-                                  <button class="trash-can" data-item-id=${
-                                    item.id
-                                  }>X </button>
+              item.oldPrice
+            )} $</div>
+                                  <button class="trash-can" data-item-id=${item.id
+            }>X </button>
                             </div>
                         </div>
                     </div>
                     <hr>
                 `;
-      });
+        });
 
-      cartContent.innerHTML += `
+        cartContent.innerHTML += `
             </div>
 
             <div class="row">
@@ -490,6 +496,12 @@ $(function () {
                 </div>
             </div>
             `;
+      }
+    const cartItem = document.querySelector(".cart-item");
+    if (!cartItem) {
+      const cart_steps = document.querySelector(".cart-steps")
+      cart_steps.remove();
+    }
     
     function removeFromCart(id) {
       let cartItems = JSON.parse(getCookie("cart"));
@@ -501,6 +513,7 @@ $(function () {
     cartContent.addEventListener("click", function (event) {
       // Check if the clicked element is a delete button
       if (event.target && event.target.matches(".trash-can")) {
+        console.log("Trash can");
         // Get the ID of the item to remove from the data attribute
         const itemId = event.target.dataset.itemId;
 
@@ -968,17 +981,6 @@ if (sortSelect) {
     }
   });
 }
-
-// const saxpepSelect = document.querySelector('.sapxep-select');
-// if (saxpepSelect) {
-//   saxpepSelect.addEventListener('change', () => {
-//     const selectedValue = saxpepSelect.value;
-//     const currentUrl = window.location.href;
-//     const urlWithoutLimit = currentUrl.split('?')[0];
-//     const newUrl = `${urlWithoutLimit}?sortType=${selectedValue}&limit=${selectedValue}`;
-//     location.assign(newUrl);
-//   });
-// }
 
 function addEventListenerComment() {
   const editCommentButtons = document.querySelectorAll(".edit-comment");

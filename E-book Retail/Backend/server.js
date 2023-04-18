@@ -68,11 +68,8 @@ app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
 
 app.post('/payment', function(req, res){ 
-	console.log(req.body)
   const cartcookie = JSON.parse(req.cookies.cart)
-  console.log(cartcookie)
   const totalPrice = cartcookie.reduce((acc, item) => acc + parseFloat(item.newPrice), 0);
-  console.log(totalPrice);
 	// Moreover you can take more details from user 
 	// like Address, Name, etc from form 
 	stripe.customers.create({ 
@@ -99,6 +96,38 @@ app.post('/payment', function(req, res){
 		res.send(err)	 // If some error occurs 
 	}); 
 })
+
+app.get("/gio-hang", async (req, res) => {
+  const token = req.cookies.token;
+  let tagData;
+  const tag = await axios
+    .get("http://localhost:3500/tag")
+    .then((res) => (tagData = res.data.tags));
+  const decoded = jwt.verify(token, "thisisourwebsite!");
+  const id = decoded.userId;
+
+  const cookies = req.headers.cookie ? req.headers.cookie.split("; ") : [];
+  let empty = true;
+  let totalPrice = 0;
+  if (JSON.parse(req.cookies.cart).length > 0) {
+    const cartcookie = JSON.parse(req.cookies.cart)
+    totalPrice = cartcookie.reduce((acc, item) => acc + parseFloat(item.newPrice), 0);
+    const cart = cookies[1] + "";
+    empty = false;
+  }
+  console.log(JSON.parse(req.cookies.cart))
+  const user = await User.findById(decoded.userId);
+  res.render("gio-hang.pug", {
+    empty,
+    tags: tagData.slice(0, 11),
+    decoded,
+    token,
+    user,
+    totalPrice,
+    cartNumber: JSON.parse(req.cookies.cart).length
+  });
+});
+
 app.get("/", async (req, res) => {
   const token = req.cookies.token;
   const alert = req.query.alert;
@@ -133,11 +162,7 @@ app.get("/", async (req, res) => {
 
   const data = response.data;
 
-  // if (token) {
-  //   decoded = jwt.verify(token, "thisisourwebsite!");;
-  // }
-  console.log(decoded);
-  // console.log(alert);
+
   const user = await User.findById(decoded.userId);
   res.render("home.pug", {
     data,
@@ -148,43 +173,12 @@ app.get("/", async (req, res) => {
     token,
     decoded,
     user,
-    alert
+    alert,
+    cartNumber: JSON.parse(req.cookies.cart).length
   });
 });
 
-app.get("/gio-hang", async (req, res) => {
-  const token = req.cookies.token;
-  let tagData;
-  const tag = await axios
-    .get("http://localhost:3500/tag")
-    .then((res) => (tagData = res.data.tags));
-  const decoded = jwt.verify(token, "thisisourwebsite!");
-  const id = decoded.userId;
-  
-  const cookies = req.headers.cookie ? req.headers.cookie.split("; ") : [];
-  let empty = false;
-  let totalPrice = 0;
-  if(req.cookies.cart){
-  const cartcookie = JSON.parse(req.cookies.cart)
-  console.log(cartcookie)
-  totalPrice = cartcookie.reduce((acc, item) => acc + parseFloat(item.newPrice), 0);
-  console.log(totalPrice);
-  
-  const cart = cookies[1] + "";
-  if (cart == undefined) {
-    empty = true;
-  }
-}
-  const user = await User.findById(decoded.userId);
-  res.render("gio-hang.pug", {
-    empty,
-    tags: tagData.slice(0, 11),
-    decoded,
-    token,
-    user,
-    totalPrice
-  });
-});
+
 
 app.get("/product/:id", async (req, res) => {
   const cartCookie = req.cookies.cart;
@@ -242,7 +236,6 @@ app.get("/product/:id", async (req, res) => {
     res.cookie("token", newtoken);
   }
   const user = await User.findById(decoded.userId);
-  console.log(decoded);
   res.render("product.pug", {
     book,
     comments,
@@ -253,6 +246,7 @@ app.get("/product/:id", async (req, res) => {
     itemCount,
     moment,
     user,
+    cartNumber: JSON.parse(req.cookies.cart).length
   });
 });
 
@@ -278,8 +272,6 @@ app.get("/tai-khoan", async (req, res) => {
     .get("http://localhost:3500/tag")
     .then((res) => (tagData = res.data.tags));
   const user = await User.findById(decoded.userId);
-  console.log(decoded.userId);
-  console.log("User o day ne");
   let orders = "";
   try {
     const response = await axios.get(
@@ -296,6 +288,7 @@ app.get("/tai-khoan", async (req, res) => {
     user,
     orders,
     moment,
+    cartNumber: JSON.parse(req.cookies.cart).length
   });
 });
 
@@ -356,6 +349,7 @@ app.get("/tag/:name", async (req, res) => {
     limit,
     isTag,
     user,
+    cartNumber: JSON.parse(req.cookies.cart).length
   });
 });
 
@@ -417,6 +411,7 @@ app.get("/search/:searchPara?/:page?", async (req, res) => {
     decoded,
     sortType,
     user,
+    cartNumber: JSON.parse(req.cookies.cart).length
   });
 });
 
@@ -483,6 +478,7 @@ app.get("/product-list/:name?/:page?", async (req, res) => {
     sortType,
     limit,
     user,
+    cartNumber: JSON.parse(req.cookies.cart).length
   });
 });
 
@@ -723,7 +719,6 @@ app.get("/read-book/:id", async (req, res) => {
   if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
   }
-  console.log(book.content);
   res.render("read-book.pug", {
     book,
     comments,

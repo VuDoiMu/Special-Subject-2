@@ -338,6 +338,7 @@ label.error {
 }
 
 .categorycontent ul li a {
+  display: block;
   line-height: 35px;
   padding-left: 16px;
   font-weight: 400;
@@ -804,4 +805,18 @@ label.chuyenkhoan {
   .cart-steps {
     margin-left: 15px;
   }
+}
+
+.empty-cart-container {
+  margin-left: 50%;
+}
+
+.empty-cart-container p {
+  color: #bc9e2f;
+  margin-top: 16px;
+  margin-left: 24%;
+}
+
+.empty-cart-container .nutmuathem {
+  margin-left: 24%;
 }
