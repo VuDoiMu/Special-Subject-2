@@ -307,6 +307,7 @@ $(function () {
   let carts = document.querySelector(".nutmua");
   if (carts) {
     carts.addEventListener("click", () => {
+      
       cartNumbers(product);
       totalCost(product);
     });
@@ -336,6 +337,10 @@ $(function () {
         "cartNumbers",
         productNumbers 
       );
+      const cartAmountValue = parseInt(document.querySelector(".giohang .cart-amount").textContent);
+      if (cartAmountValue != productNumbers) {
+        showToast("Add to cart successfully");
+      }
       document.querySelector(".giohang .cart-amount").textContent =
         productNumbers ;
     } else {
