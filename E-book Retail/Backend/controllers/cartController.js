@@ -59,7 +59,7 @@ const saveToOrder = async (req, res) => {
     try {
        let items =  [] 
        let inventory = []
-      cart.forEach(element => {
+      cart.forEach(async element => {
         items.push({
           product: element.id,
           quantity: 1,
@@ -67,7 +67,14 @@ const saveToOrder = async (req, res) => {
           total: parseFloat(element.newPrice)
         })
         inventory.push(element.id)
-      });
+
+        const updateBook = await Book.findByIdAndUpdate(
+          { _id: element.id },
+          { $inc: { countSale: 1 } }
+        );
+    
+      }
+      );
       const order = new Order({
         userId: userId,
         items: items,
@@ -79,6 +86,7 @@ const saveToOrder = async (req, res) => {
         { $push: { inventory:inventory } },
         { new: "true" }
       );
+      
       res.json({ success: true, message: 'checkout', order })
       
 
