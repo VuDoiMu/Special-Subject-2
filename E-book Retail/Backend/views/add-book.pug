@@ -25,9 +25,13 @@ html(lang='en', dir='ltr')
                         i.bx.bx-grid-alt
                         span.links_name Dashboard
                 li
-                    a(href='/admin/management')
+                    a(href='/admin/management/1')
                         i.bx.bx-box
                         span.links_name Book managment
+                li
+                    a(href='/admin/category/1')
+                        i.bx.bx-box
+                        span.links_name Tag management
                 li
                     a(href='/admin/sale')
                         i.bx.bx-list-ul
@@ -46,12 +50,6 @@ html(lang='en', dir='ltr')
                 //-   i.bx.bx-search
 
             .home-content
-    
-
-
-
-
-
                 .d-flex.justify-content-center
                     form(id="add-form" class="w-50" enctype="multipart/form-data")
                         h1 Add a new book
@@ -63,10 +61,7 @@ html(lang='en', dir='ltr')
                         label(for="name") Tags:
                         select#countries(name='countries', multiple='')
                             for t,index in tags
-                             
                                 option(value=index  )=t
-  
-
                         label(for="name") Description:
                         input#proname.form-control(type='text',name='description' ,autocomplete='off', placeholder='Description')
 

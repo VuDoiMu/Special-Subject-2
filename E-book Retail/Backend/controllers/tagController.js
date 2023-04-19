@@ -9,7 +9,6 @@ app.use(cookieParser());
 
 const newTag = async(req, res) => {
     try{
-
     const {name, description} = req.body
     const tagValid = await Tag.findOne({name});
     if( tagValid)

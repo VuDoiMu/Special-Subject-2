@@ -6,7 +6,6 @@ document.getElementById("add-form").onsubmit = function () {
 async function uploadImages(event) {
   // prevent the form from reloading the page
   event.preventDefault();
-
   // get form tag
   const form = event.target;
   console.log(form);

@@ -574,6 +574,42 @@ app.get("/admin/management/:page", async (req, res) => {
   });
 });
 
+app.get("/admin/category/:page", async (req, res) => {
+  const tag = await axios
+    .get("http://localhost:3500/tag")
+    .then((res) => (tagData = res.data.tags));
+  const tags = [];
+  for (let i = 0; i < tagData.length; i++) {
+    tags.push(tagData[i].name);
+  }
+  const response = await axios.get("http://localhost:3500/management");
+  const data = response.data;
+  const order = await axios.get("http://localhost:3500/order");
+  const orderData = order.data;
+  let totalBooks = 0;
+  let totalProfits = 0;
+  for (let i = 0; i < orderData.length; i++) {
+    totalBooks += orderData[i].items.length;
+    totalProfits += orderData[i].finalTotal;
+  }
+  const page = parseInt(req.params.page) || 1;
+  const limit = 10;
+  const paginatedBooks = paginate(data, page, limit);
+  console.log("Tag in here")
+  console.log(tag);
+  res.render("admin-category.pug", {
+    data,
+    books: paginatedBooks.data,
+    currentPage: paginatedBooks.currentPage,
+    totalPages: paginatedBooks.totalPages,
+    orderData,
+    tags,
+    tagData: tag,
+    totalBooks,
+    totalProfits,
+  });
+});
+
 app.get("/admin/add-book", async (req, res) => {
   const tag = await axios
     .get("http://localhost:3500/tag")

@@ -33,6 +33,32 @@ for (let i = 0; i < deleteButtons.length; i++) {
   });
 }
 
+let deleteTagButtons = document.getElementsByClassName("deleteTagButton");
+
+for (let i = 0; i < deleteTagButtons.length; i++) {
+  deleteTagButtons[i].addEventListener("click", async function (e) {
+    const id = e.target.getAttribute("data-tag-id");
+    console.log(id);
+    const deleteTag = await fetch(
+      `http://localhost:3500/tag/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((res) => (message = res));
+    if (message) {
+      window.setTimeout(() => {
+        location.assign("/admin/category/1");
+        alert(`You just deleted a book`);
+      }, 1000);
+    }
+  });
+}
+
 // CREATE BOOK
 
 // UPDATE BOOK
@@ -45,6 +71,7 @@ for (let i = 0; i < updateButtons.length; i++) {
       await `http://localhost:3500/admin/update/${this.name}`;
   });
 }
+
 
 // logoutVar.addEventListener("click", async (e) => {
 //   const sendData = await fetch("http://localhost:3500/auth/logout", {
