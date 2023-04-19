@@ -115,7 +115,10 @@ app.get("/gio-hang", async (req, res) => {
     const cart = cookies[1] + "";
     empty = false;
   }
-  console.log(JSON.parse(req.cookies.cart))
+  let cartNumber = 0;
+  if (req.cookies.cart)
+  cartNumber = JSON.parse(req.cookies.cart).length
+
   const user = await User.findById(decoded.userId);
   res.render("gio-hang.pug", {
     empty,
@@ -124,7 +127,7 @@ app.get("/gio-hang", async (req, res) => {
     token,
     user,
     totalPrice,
-    cartNumber: JSON.parse(req.cookies.cart).length
+    cartNumber: cartNumber
   });
 });
 
@@ -161,7 +164,9 @@ app.get("/", async (req, res) => {
     .then((res) => (tagData = res.data.tags));
 
   const data = response.data;
-
+  let cartNumber = 0;
+  if (req.cookies.cart)
+  cartNumber = JSON.parse(req.cookies.cart).length
 
   const user = await User.findById(decoded.userId);
   res.render("home.pug", {
@@ -174,7 +179,7 @@ app.get("/", async (req, res) => {
     decoded,
     user,
     alert,
-    cartNumber: JSON.parse(req.cookies.cart).length
+    cartNumber: cartNumber
   });
 });
 
@@ -235,6 +240,10 @@ app.get("/product/:id", async (req, res) => {
     );
     res.cookie("token", newtoken);
   }
+  let cartNumber = 0;
+  if (req.cookies.cart)
+  cartNumber = JSON.parse(req.cookies.cart).length
+
   const user = await User.findById(decoded.userId);
   res.render("product.pug", {
     book,
@@ -246,7 +255,7 @@ app.get("/product/:id", async (req, res) => {
     itemCount,
     moment,
     user,
-    cartNumber: JSON.parse(req.cookies.cart).length
+    cartNumber: cartNumber
   });
 });
 
@@ -268,6 +277,10 @@ app.get("/tai-khoan", async (req, res) => {
     );
     res.cookie("token", newtoken);
   }
+  let cartNumber = 0;
+  if (req.cookies.cart)
+  cartNumber = JSON.parse(req.cookies.cart).length
+
   const tag = await axios
     .get("http://localhost:3500/tag")
     .then((res) => (tagData = res.data.tags));
@@ -288,7 +301,7 @@ app.get("/tai-khoan", async (req, res) => {
     user,
     orders,
     moment,
-    cartNumber: JSON.parse(req.cookies.cart).length
+    cartNumber: cartNumber
   });
 });
 
@@ -333,6 +346,10 @@ app.get("/tag/:name", async (req, res) => {
     );
     res.cookie("token", newtoken);
   }
+  let cartNumber = 0;
+  if (req.cookies.cart)
+  cartNumber = JSON.parse(req.cookies.cart).length
+
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
   const paginatedBooks = paginate(booksTag, page, limit);
@@ -349,7 +366,7 @@ app.get("/tag/:name", async (req, res) => {
     limit,
     isTag,
     user,
-    cartNumber: JSON.parse(req.cookies.cart).length
+    cartNumber: cartNumber
   });
 });
 
@@ -395,6 +412,9 @@ app.get("/search/:searchPara?/:page?", async (req, res) => {
   if (sortType == "nameDesc") {
     booksTag = _.orderBy(booksTag, ["name"], ["desc"]);
   }
+  let cartNumber = 0;
+  if (req.cookies.cart)
+  cartNumber = JSON.parse(req.cookies.cart).length
 
   const page = parseInt(req.params.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
@@ -411,7 +431,7 @@ app.get("/search/:searchPara?/:page?", async (req, res) => {
     decoded,
     sortType,
     user,
-    cartNumber: JSON.parse(req.cookies.cart).length
+    cartNumber: cartNumber
   });
 });
 
@@ -463,6 +483,10 @@ app.get("/product-list/:name?/:page?", async (req, res) => {
     );
     res.cookie("token", newtoken);
   }
+  let cartNumber = 0;
+  if (req.cookies.cart)
+  cartNumber = JSON.parse(req.cookies.cart).length
+
   const tag = await axios
     .get("http://localhost:3500/tag")
     .then((res) => (tagData = res.data.tags));
@@ -478,7 +502,7 @@ app.get("/product-list/:name?/:page?", async (req, res) => {
     sortType,
     limit,
     user,
-    cartNumber: JSON.parse(req.cookies.cart).length
+    cartNumber: CartNumber
   });
 });
 
