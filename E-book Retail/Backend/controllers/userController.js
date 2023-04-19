@@ -6,10 +6,27 @@ const bcrypt = require("bcryptjs");
 const Order = require("../models/Order");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
+const path = require('path');
+const fileSystem = require("fs");
+
 
 const mailer = require("../utils/mailer");
 
+app.use("/bookContent", express.static(__dirname + "/userContent"));
 app.use(cookieParser());
+
+const moveFile = (file, dir2)=>{
+  
+  //gets file name and adds it to dir2
+  var f = path.basename(file);
+  var dest = path.resolve(dir2, f);
+
+  fileSystem.rename(file, dest, (err)=>{
+    if(err) throw err;
+    else console.log('Successfully moved');
+  });
+};
+
 
 const register = async (req, res) => {
   const { email, username, password } = req.body;
@@ -208,6 +225,49 @@ const userProfile = async (req, res) => {
     res.json(error);
   }
 }
+
+  const addImage = async (req, res) => {
+    try {
+        const token = req.cookies.token;
+        console.log(token)
+        const decoded = jwt.verify(token, "thisisourwebsite!");
+        const userId = decoded.userId;
+
+        const userContentFolder = "./userContent";
+        try {
+          if (!fileSystem.existsSync(userContentFolder)) {
+            fileSystem.mkdirSync(userContentFolder);
+            console.log("userContent folder added");
+          }
+        } catch (err) {
+          console.error(err);
+        }
+
+        const userFolder = `./userContent/${userId}/`;
+        try {
+          if (!fileSystem.existsSync(userFolder)) {
+            fileSystem.mkdirSync(userFolder);
+            console.log(`content folder for user ID: ${userId} added`);
+          }
+        } catch (err) {
+          console.error(err);
+        }
+
+        moveFile(`./uploads/avatar.png`, userFolder)
+
+        const resResult = await Book.findOneAndUpdate(
+          { _id: bookId },
+          {
+            image: `/${userId}/avatar.png`
+          }
+        );
+    
+        res.status(201).json(resResult);
+    } catch(err) {
+      res.json(err)
+    }
+  }
+
 module.exports = {
   register,
   login,
@@ -217,5 +277,6 @@ module.exports = {
   updateInfo,
   getAllUser,
   getUserInfor,
-  userProfile
+  userProfile,
+  addImage
 };

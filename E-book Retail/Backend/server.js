@@ -757,12 +757,19 @@ app.get("/read-book/:id", async (req, res) => {
 
 // Handle files
 const bookThings = require("./controllers/bookController");
-
+const userThings = require("./controllers/userController");
 app.post(
-  "/upload",
+  "/uploadBook",
   upload.fields([{ name: "images" }, { name: "content-images" }]),
   bookThings.addBook
 );
+
+app.post(
+  "/uploadAvatar",
+  upload.fields([{ name: "images" }, { name: "content-images" }]),
+  userThings.addImage
+);
+
 
 //routes
 app.use("/comment", require("./routes/comment"));
