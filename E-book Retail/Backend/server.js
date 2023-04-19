@@ -122,7 +122,7 @@ app.get("/gio-hang", async (req, res) => {
   const user = await User.findById(decoded.userId);
   res.render("gio-hang.pug", {
     empty,
-    tags: tagData.slice(0, 11),
+    tags: tagData,
     decoded,
     token,
     user,
@@ -173,7 +173,7 @@ app.get("/", async (req, res) => {
     data,
     toplikeBook,
     topsaleBook,
-    tags: tagData.slice(0, 11),
+    tags: tagData,
     topsellBook,
     token,
     decoded,
@@ -248,7 +248,7 @@ app.get("/product/:id", async (req, res) => {
   res.render("product.pug", {
     book,
     comments,
-    tags: tagData.slice(0, 11),
+    tags: tagData,
     booksTag,
     token,
     decoded,
@@ -296,7 +296,7 @@ app.get("/tai-khoan", async (req, res) => {
   }
   res.render("tai-khoan.pug", {
     token,
-    tags: tagData.slice(0, 11),
+    tags: tagData,
     decoded,
     user,
     orders,
@@ -359,7 +359,7 @@ app.get("/tag/:name", async (req, res) => {
     booksTag: paginatedBooks.data,
     currentPage: paginatedBooks.currentPage,
     totalPages: paginatedBooks.totalPages,
-    tags: tagData.slice(0, 11),
+    tags: tagData,
     name,
     token,
     sortType,
@@ -421,7 +421,7 @@ app.get("/search/:searchPara?/:page?", async (req, res) => {
   const paginatedBooks = paginate(booksTag, page, limit);
   const user = await User.findById(decoded.userId);
   res.render("product-list.pug", {
-    tags: tagData.slice(0, 11),
+    tags: tagData,
     booksTag: paginatedBooks.data,
     currentPage: paginatedBooks.currentPage,
     totalPages: paginatedBooks.totalPages,
@@ -495,7 +495,7 @@ app.get("/product-list/:name?/:page?", async (req, res) => {
     booksTag: paginatedBooks.data,
     currentPage: paginatedBooks.currentPage,
     totalPages: paginatedBooks.totalPages,
-    tags: tagData.slice(0, 11),
+    tags: tagData,
     name: req.params.name,
     token,
     decoded,
@@ -529,7 +529,7 @@ app.get("/admin/dashboard", async (req, res) => {
     userData,
     disData,
     orders: order.data,
-    topsellBook: topsellBook.slice(0, 11),
+    topsellBook: topsellBook,
     totalBooks,
     totalProfits,
   });
@@ -687,7 +687,7 @@ app.get("/author/:searchPara", async (req, res) => {
   const paginatedBooks = paginate(booksTag, page, limit);
   const user = await User.findById(decoded.userId);
   res.render("product-list.pug", {
-    tags: tagData.slice(0, 11),
+    tags: tagData,
     booksTag: paginatedBooks.data,
     currentPage: paginatedBooks.currentPage,
     totalPages: paginatedBooks.totalPages,
@@ -746,7 +746,7 @@ app.get("/read-book/:id", async (req, res) => {
   res.render("read-book.pug", {
     book,
     comments,
-    tags: tagData.slice(0, 11),
+    tags: tagData,
     booksTag,
     token,
     decoded,
