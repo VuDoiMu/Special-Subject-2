@@ -573,10 +573,6 @@ app.get("/admin/category/:page", async (req, res) => {
   const tag = await axios
     .get("http://localhost:3500/tag")
     .then((res) => (tagData = res.data.tags));
-  const tags = [];
-  for (let i = 0; i < tagData.length; i++) {
-    tags.push(tagData[i].name);
-  }
   const response = await axios.get("http://localhost:3500/management");
   const data = response.data;
   const order = await axios.get("http://localhost:3500/order");
@@ -590,15 +586,22 @@ app.get("/admin/category/:page", async (req, res) => {
   const page = parseInt(req.params.page) || 1;
   const limit = 10;
   const paginatedBooks = paginate(data, page, limit);
-  console.log("Tag in here");
-  console.log(tag);
+  // console.log("Tag in here");
+  // console.log(tag);
+  // for(let i = 0; i < tag.length; i++) {
+  //   const apiTagBooks = "http://localhost:3500/tag/books/" + tag[i].name;
+  //   try {
+  //   const response = await axios.get(apiTagBooks);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }
   res.render("admin-category.pug", {
     data,
     books: paginatedBooks.data,
     currentPage: paginatedBooks.currentPage,
     totalPages: paginatedBooks.totalPages,
     orderData,
-    tags,
     tagData: tag,
     totalBooks,
     totalProfits,

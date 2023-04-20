@@ -33,7 +33,8 @@ for (let i = 0; i < deleteButtons.length; i++) {
   });
 }
 
-let deleteTagButtons = document.getElementsByClassName("deleteTagButton");
+function addEventButton() {
+  let deleteTagButtons = document.getElementsByClassName("deleteTagButton");
 
 for (let i = 0; i < deleteTagButtons.length; i++) {
   deleteTagButtons[i].addEventListener("click", async function (e) {
@@ -58,7 +59,9 @@ for (let i = 0; i < deleteTagButtons.length; i++) {
     }
   });
 }
+}
 
+addEventButton();
 // CREATE BOOK
 
 // UPDATE BOOK
@@ -81,8 +84,79 @@ for (let i = 0; i < updateButtons.length; i++) {
 //       "Content-Type": "application/json",
 //     },
 //   });)
+const addBook = document.getElementById("add-book");
+if(addBook) {
+  addBook.addEventListener("click", () => {
+    console.log("click");
+    window.location.replace("http://localhost:3500/admin/add-book");
+  });
+}
 
-document.getElementById("add-book").addEventListener("click", () => {
-  console.log("click");
-  window.location.replace("http://localhost:3500/admin/add-book");
+
+const addTagBtn = document.getElementById('add-tag-btn');
+const addTagFormSubmit = document.getElementById('add-tag-form');
+
+if(addTagBtn) {
+  addTagBtn.addEventListener('click', function () {
+  addTagFormSubmit.classList.remove('hidden');
 });
+}
+
+if(addTagFormSubmit) {
+  addTagFormSubmit.addEventListener('submit', async function (e) {
+  e.preventDefault();
+
+  const tagNameInput = document.getElementById('tag-name');
+  const tagName = tagNameInput.value.trim();
+
+  const url = 'http://localhost:3500/tag';
+  
+  let data = "";
+  try {
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ name: tagName })
+  });
+  data = await response.json();
+} catch (error) {
+  console.error(error);
+}
+  const tag = data.tag;
+  // Get the table body element
+  const tableBody = document.querySelector('#tbody');
+
+  // Create a new table row element
+  const row = document.createElement('tr');
+
+  // Create the cells for the row
+  const nameCell = document.createElement('th');
+  nameCell.setAttribute('scope', 'row');
+  nameCell.textContent = tag.name;
+
+  const countCell = document.createElement('th');
+  countCell.setAttribute('scope', 'row');
+  countCell.textContent = tag.books.length;
+
+  const buttonCell = document.createElement('th');
+  const deleteButton = document.createElement('button');
+  deleteButton.setAttribute('id', 'btn-delete');
+  deleteButton.setAttribute('class', 'btn btn-danger deleteTagButton');
+  deleteButton.setAttribute('data-tag-id', tag._id);
+  deleteButton.textContent = 'X';
+  buttonCell.appendChild(deleteButton);
+
+  // Add the cells to the row
+  row.appendChild(nameCell);
+  row.appendChild(countCell);
+  row.appendChild(buttonCell);
+
+  // Add the row to the table body
+  tableBody.insertBefore(row, tableBody.childNodes[0]);
+  addEventButton();
+  addTagFormSubmit.reset();
+  addTagFormSubmit.classList.add('hidden');
+});
+}

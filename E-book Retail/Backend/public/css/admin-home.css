@@ -438,6 +438,20 @@ nav .profile-details i {
   }
 }
 
-#add-book {
+#add-book,
+#add-tag-btn{
   margin: 10px;
+}
+
+#add-tag-form input,
+#add-tag-form button {
+  margin: 10px;
+}
+
+#add-tag-form input {
+  width: 50%;
+}
+
+.hidden {
+  display: none;
 }
