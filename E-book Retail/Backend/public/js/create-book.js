@@ -12,7 +12,7 @@ async function uploadImages(event) {
   // create form data object from <form>
   const formData = new FormData(form);
   console.log(formData.get("images"));
-  fetch("http://localhost:3500/upload", {
+  fetch("http://localhost:3500/uploadAvatar", {
     method: "POST",
     body: formData,
   })

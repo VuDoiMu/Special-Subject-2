@@ -67,35 +67,36 @@ app.use(express.static("public", { "Content-Type": "application/javascript" }));
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
 
-app.post('/payment', function(req, res){ 
-  const cartcookie = JSON.parse(req.cookies.cart)
-  const totalPrice = cartcookie.reduce((acc, item) => acc + parseFloat(item.newPrice), 0);
-	// Moreover you can take more details from user 
-	// like Address, Name, etc from form 
-	stripe.customers.create({ 
-		email: req.body.stripeEmail, 
-		source: req.body.stripeToken, 
-
-	}) 
-	.then((customer) => { 
-
-		return stripe.charges.create({ 
-			amount: (totalPrice*100),	 // Charing Rs 25 
-			description: 'Emanga', 
-			currency: 'USD', 
-			customer: customer.id 
-		}); 
-	}) 
-	.then(async (charge) => { 
-    
-    const cookieValue = JSON.stringify([]);
-    res.setHeader('Set-Cookie', `cart=${cookieValue};`);
-		res.redirect("/?alert=Checkout+successfully");
-	}) 
-	.catch((err) => { 
-		res.send(err)	 // If some error occurs 
-	}); 
-})
+app.post("/payment", function (req, res) {
+  const cartcookie = JSON.parse(req.cookies.cart);
+  const totalPrice = cartcookie.reduce(
+    (acc, item) => acc + parseFloat(item.newPrice),
+    0
+  );
+  // Moreover you can take more details from user
+  // like Address, Name, etc from form
+  stripe.customers
+    .create({
+      email: req.body.stripeEmail,
+      source: req.body.stripeToken,
+    })
+    .then((customer) => {
+      return stripe.charges.create({
+        amount: totalPrice * 100, // Charing Rs 25
+        description: "Emanga",
+        currency: "USD",
+        customer: customer.id,
+      });
+    })
+    .then(async (charge) => {
+      const cookieValue = JSON.stringify([]);
+      res.setHeader("Set-Cookie", `cart=${cookieValue};`);
+      res.redirect("/?alert=Checkout+successfully");
+    })
+    .catch((err) => {
+      res.send(err); // If some error occurs
+    });
+});
 
 app.get("/gio-hang", async (req, res) => {
   const token = req.cookies.token;
@@ -110,14 +111,16 @@ app.get("/gio-hang", async (req, res) => {
   let empty = true;
   let totalPrice = 0;
   if (JSON.parse(req.cookies.cart).length > 0) {
-    const cartcookie = JSON.parse(req.cookies.cart)
-    totalPrice = cartcookie.reduce((acc, item) => acc + parseFloat(item.newPrice), 0);
+    const cartcookie = JSON.parse(req.cookies.cart);
+    totalPrice = cartcookie.reduce(
+      (acc, item) => acc + parseFloat(item.newPrice),
+      0
+    );
     const cart = cookies[1] + "";
     empty = false;
   }
   let cartNumber = 0;
-  if (req.cookies.cart)
-  cartNumber = JSON.parse(req.cookies.cart).length
+  if (req.cookies.cart) cartNumber = JSON.parse(req.cookies.cart).length;
 
   const user = await User.findById(decoded.userId);
   res.render("gio-hang.pug", {
@@ -127,7 +130,7 @@ app.get("/gio-hang", async (req, res) => {
     token,
     user,
     totalPrice,
-    cartNumber: cartNumber
+    cartNumber: cartNumber,
   });
 });
 
@@ -165,8 +168,7 @@ app.get("/", async (req, res) => {
 
   const data = response.data;
   let cartNumber = 0;
-  if (req.cookies.cart)
-  cartNumber = JSON.parse(req.cookies.cart).length
+  if (req.cookies.cart) cartNumber = JSON.parse(req.cookies.cart).length;
 
   const user = await User.findById(decoded.userId);
   res.render("home.pug", {
@@ -179,11 +181,9 @@ app.get("/", async (req, res) => {
     decoded,
     user,
     alert,
-    cartNumber: cartNumber
+    cartNumber: cartNumber,
   });
 });
-
-
 
 app.get("/product/:id", async (req, res) => {
   const cartCookie = req.cookies.cart;
@@ -241,8 +241,7 @@ app.get("/product/:id", async (req, res) => {
     res.cookie("token", newtoken);
   }
   let cartNumber = 0;
-  if (req.cookies.cart)
-  cartNumber = JSON.parse(req.cookies.cart).length
+  if (req.cookies.cart) cartNumber = JSON.parse(req.cookies.cart).length;
 
   const user = await User.findById(decoded.userId);
   res.render("product.pug", {
@@ -255,7 +254,7 @@ app.get("/product/:id", async (req, res) => {
     itemCount,
     moment,
     user,
-    cartNumber: cartNumber
+    cartNumber: cartNumber,
   });
 });
 
@@ -278,8 +277,7 @@ app.get("/tai-khoan", async (req, res) => {
     res.cookie("token", newtoken);
   }
   let cartNumber = 0;
-  if (req.cookies.cart)
-  cartNumber = JSON.parse(req.cookies.cart).length
+  if (req.cookies.cart) cartNumber = JSON.parse(req.cookies.cart).length;
 
   const tag = await axios
     .get("http://localhost:3500/tag")
@@ -301,7 +299,7 @@ app.get("/tai-khoan", async (req, res) => {
     user,
     orders,
     moment,
-    cartNumber: cartNumber
+    cartNumber: cartNumber,
   });
 });
 
@@ -347,8 +345,7 @@ app.get("/tag/:name", async (req, res) => {
     res.cookie("token", newtoken);
   }
   let cartNumber = 0;
-  if (req.cookies.cart)
-  cartNumber = JSON.parse(req.cookies.cart).length
+  if (req.cookies.cart) cartNumber = JSON.parse(req.cookies.cart).length;
 
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
@@ -366,7 +363,7 @@ app.get("/tag/:name", async (req, res) => {
     limit,
     isTag,
     user,
-    cartNumber: cartNumber
+    cartNumber: cartNumber,
   });
 });
 
@@ -413,8 +410,7 @@ app.get("/search/:searchPara?/:page?", async (req, res) => {
     booksTag = _.orderBy(booksTag, ["name"], ["desc"]);
   }
   let cartNumber = 0;
-  if (req.cookies.cart)
-  cartNumber = JSON.parse(req.cookies.cart).length
+  if (req.cookies.cart) cartNumber = JSON.parse(req.cookies.cart).length;
 
   const page = parseInt(req.params.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
@@ -431,7 +427,7 @@ app.get("/search/:searchPara?/:page?", async (req, res) => {
     decoded,
     sortType,
     user,
-    cartNumber: cartNumber
+    cartNumber: cartNumber,
   });
 });
 
@@ -484,8 +480,7 @@ app.get("/product-list/:name?/:page?", async (req, res) => {
     res.cookie("token", newtoken);
   }
   let cartNumber = 0;
-  if (req.cookies.cart)
-  cartNumber = JSON.parse(req.cookies.cart).length
+  if (req.cookies.cart) cartNumber = JSON.parse(req.cookies.cart).length;
 
   const tag = await axios
     .get("http://localhost:3500/tag")
@@ -502,7 +497,7 @@ app.get("/product-list/:name?/:page?", async (req, res) => {
     sortType,
     limit,
     user,
-    cartNumber: CartNumber
+    cartNumber: CartNumber,
   });
 });
 
@@ -595,7 +590,7 @@ app.get("/admin/category/:page", async (req, res) => {
   const page = parseInt(req.params.page) || 1;
   const limit = 10;
   const paginatedBooks = paginate(data, page, limit);
-  console.log("Tag in here")
+  console.log("Tag in here");
   console.log(tag);
   res.render("admin-category.pug", {
     data,
@@ -800,12 +795,20 @@ app.post(
   bookThings.addBook
 );
 
-app.post(
-  "/uploadAvatar",
-  upload.fields([{ name: "images" }, { name: "content-images" }]),
-  userThings.addImage
-);
-
+// app.post(
+//   "/uploadAvatar",
+//   upload.fields([{ name: "images" }, { name: "content-images" }]),
+//   userThings.addImage
+// );
+app.post("/uploadAvatar", upload.single("avatar"), function (req, res, next) {
+  // get the uploaded file from req.file
+  console.log("handle");
+  const uploadedFile = req.file;
+  console.log(uploadedFile);
+  // perform additional processing or validation on the uploaded file if needed
+  // send a response to the client
+  res.json({ message: "File uploaded successfully" });
+});
 
 //routes
 app.use("/comment", require("./routes/comment"));

@@ -307,7 +307,6 @@ $(function () {
   let carts = document.querySelector(".nutmua");
   if (carts) {
     carts.addEventListener("click", () => {
-      
       cartNumbers(product);
       totalCost(product);
     });
@@ -333,16 +332,15 @@ $(function () {
     productNumbers = parseInt(productNumbers);
 
     if (productNumbers !== 0) {
-      localStorage.setItem(
-        "cartNumbers",
-        productNumbers 
+      localStorage.setItem("cartNumbers", productNumbers);
+      const cartAmountValue = parseInt(
+        document.querySelector(".giohang .cart-amount").textContent
       );
-      const cartAmountValue = parseInt(document.querySelector(".giohang .cart-amount").textContent);
       if (cartAmountValue != productNumbers) {
         showToast("Add to cart successfully");
       }
       document.querySelector(".giohang .cart-amount").textContent =
-        productNumbers ;
+        productNumbers;
     } else {
       localStorage.setItem("cartNumbers", parseInt($(".soluongsp").val()));
       document.querySelector(".giohang .cart-amount").textContent = parseInt(
@@ -399,15 +397,13 @@ $(function () {
   }
 
   function displayCart() {
-
-    let cartItems = getCookie('cart');
-    if(cartItems){
-    cartItems = JSON.parse(cartItems);
-    }else{
-      cartItems = JSON.parse([])
-      
+    let cartItems = getCookie("cart");
+    if (cartItems) {
+      cartItems = JSON.parse(cartItems);
+    } else {
+      cartItems = JSON.parse([]);
     }
-    console.log(cartItems.length)
+    console.log(cartItems.length);
     let totalProfits = 0;
 
     for (let i = 0; i < cartItems.length; i++) {
@@ -424,55 +420,57 @@ $(function () {
     //   $(".cart-steps").addClass("d-none");
     // }
     // if (cartItems && cartContent) {
-      $(".cart-empty").addClass("d-none");
-      $(".cart").removeClass("d-none");
-      $(".cart-steps").removeClass("d-none");
+    $(".cart-empty").addClass("d-none");
+    $(".cart").removeClass("d-none");
+    $(".cart-steps").removeClass("d-none");
 
-      cartContent.innerHTML = "";
-      if(cartItems.length == 0) {
-        cartContent.innerHTML += `
+    cartContent.innerHTML = "";
+    if (cartItems.length == 0) {
+      cartContent.innerHTML += `
           <div class="empty-cart-container">
             <img alt="Giỏ hàng trống" src="https://mngroup2801.abaha.vn/assets/images/no-cart.png"/>
             <p> Your cart is empty</p>
             <a href="/" class="btn nutmuathem mb-3">Buy something</a>
           </div>
-        `
-      }
-      else {
-        cartContent.innerHTML += `
+        `;
+    } else {
+      cartContent.innerHTML += `
             <h6 class="header-gio-hang">GIỎ HÀNG CỦA BẠN <span>(${cartItems.length} sản phẩm)</span></h6>
             <div class="cart-list-items">
             `;
-        Object.values(cartItems).map((item) => {
-          cartContent.innerHTML += `
+      Object.values(cartItems).map((item) => {
+        cartContent.innerHTML += `
                     <div class="cart-item d-flex">
                         <a href="product/${item.id}" class="img">
-                            <img src="${item.image
-            }.jpg" class="img-fluid" alt="${item.tag}">
+                            <img src="${
+                              item.image
+                            }.jpg" class="img-fluid" alt="${item.tag}">
                         </a>
                         <div class="item-caption d-flex w-100">
                             <div class="item-info ml-3">
-                                <a href="product/${item.id}" class="ten">${item.name
-            }</a>
+                                <a href="product/${item.id}" class="ten">${
+          item.name
+        }</a>
                               
                             </div>
                             <div class="item-price ml-auto d-flex flex-column align-items-end">
                                 <div class="giamoi">${parseFloat(
-              item.newPrice
-            )} $</div>
+                                  item.newPrice
+                                )} $</div>
                                 <div class="giacu">${parseFloat(
-              item.oldPrice
-            )} $</div>
-                                  <button class="trash-can" data-item-id=${item.id
-            }>X </button>
+                                  item.oldPrice
+                                )} $</div>
+                                  <button class="trash-can" data-item-id=${
+                                    item.id
+                                  }>X </button>
                             </div>
                         </div>
                     </div>
                     <hr>
                 `;
-        });
+      });
 
-        cartContent.innerHTML += `
+      cartContent.innerHTML += `
             </div>
 
             <div class="row">
@@ -501,13 +499,13 @@ $(function () {
                 </div>
             </div>
             `;
-      }
+    }
     const cartItem = document.querySelector(".cart-item");
     if (!cartItem) {
-      const cart_steps = document.querySelector(".cart-steps")
+      const cart_steps = document.querySelector(".cart-steps");
       cart_steps.remove();
     }
-    
+
     function removeFromCart(id) {
       let cartItems = JSON.parse(getCookie("cart"));
 
@@ -541,48 +539,48 @@ $(function () {
     });
   }
 
-//   let customButton = document.querySelector('.btn-checkout');
+  //   let customButton = document.querySelector('.btn-checkout');
 
-// customButton.addEventListener('click', function() {
-//   var handler = StripeCheckout.configure({
-//     key: 'pk_test_51MwJlsK54HlkliE6zSFSgYLmzilMR8F8z4k9Uni8OvLAcvGv5kxi2LBjWfDMricBAPeDZEwVwHiwEWG3dgEbkX9Q00ljMiDta4',
-//     locale: 'auto',
-//     token: function(token) {
-//       fetch('/payment', {
-//         method: 'POST',
-//         headers: {
-//           'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify({token: token.id})
-//       })
-//       .then(response => response.json())
-//       .then(data => {
-//         console.log(data);
-//       })
-//       .catch(error => {
-//         console.error(error);
-//       });
-//     }
-//   });
+  // customButton.addEventListener('click', function() {
+  //   var handler = StripeCheckout.configure({
+  //     key: 'pk_test_51MwJlsK54HlkliE6zSFSgYLmzilMR8F8z4k9Uni8OvLAcvGv5kxi2LBjWfDMricBAPeDZEwVwHiwEWG3dgEbkX9Q00ljMiDta4',
+  //     locale: 'auto',
+  //     token: function(token) {
+  //       fetch('/payment', {
+  //         method: 'POST',
+  //         headers: {
+  //           'Content-Type': 'application/json'
+  //         },
+  //         body: JSON.stringify({token: token.id})
+  //       })
+  //       .then(response => response.json())
+  //       .then(data => {
+  //         console.log(data);
+  //       })
+  //       .catch(error => {
+  //         console.error(error);
+  //       });
+  //     }
+  //   });
 
-//   handler.open({
-//     name: 'Stripe',
-//     description: 'Buy EManga',
-//     amount: 7000,
-//     currency: 'USD',
-//     locale: "auto"
-//   });
-// });
+  //   handler.open({
+  //     name: 'Stripe',
+  //     description: 'Buy EManga',
+  //     amount: 7000,
+  //     currency: 'USD',
+  //     locale: "auto"
+  //   });
+  // });
 
-function setCartCookie(cart) {
-  const expires = new Date(Date.now() + 86400000).toUTCString(); // Expire the cookie after 24 hours
-  document.cookie = `cart=${JSON.stringify(
-    cart
-  )}; expires=${expires}; path=/`;
-}
+  function setCartCookie(cart) {
+    const expires = new Date(Date.now() + 86400000).toUTCString(); // Expire the cookie after 24 hours
+    document.cookie = `cart=${JSON.stringify(
+      cart
+    )}; expires=${expires}; path=/`;
+  }
 
   $(".btn-checkout").click(async (e) => {
-    console.log("checkout")
+    console.log("checkout");
 
     // Update the cart on the client-side to reflect the cleared cart
     // // ...
@@ -603,8 +601,6 @@ function setCartCookie(cart) {
       },
       body: JSON.stringify({ cartItems }),
     });
-   
-   
 
     // Save the cleared cart to the cookie
   });
@@ -670,9 +666,11 @@ if (formdangnhap) {
       },
       body: JSON.stringify({ email: emailValue, password: passwordValue }),
     });
-  
+
     const expires = new Date(Date.now() + 86400000).toUTCString(); // Expire the cookie after 24 hours
-    document.cookie = `cart=${JSON.stringify(JSON.parse("[]"))}; expires=${expires}; path=/`;
+    document.cookie = `cart=${JSON.stringify(
+      JSON.parse("[]")
+    )}; expires=${expires}; path=/`;
 
     const content = await sendData.json();
     if (content.message === "Wrong email ") {
@@ -715,13 +713,13 @@ if (formdangnhap) {
     // }
     window.setTimeout(() => {
       if (content.role == 0) {
-        console.log("Contetn")
-        console.log(content)
+        console.log("Contetn");
+        console.log(content);
         showToast("Login successfully!");
         location.assign(currentUrl);
       } else {
-        console.log("Contetn")
-        console.log(content)
+        console.log("Contetn");
+        console.log(content);
         location.assign("/admin/dashboard");
       }
     }, 2);
@@ -741,7 +739,7 @@ if (logoutVar) {
     const content = await sendData.json();
     // let currentUrl = window.location.href;
     // if (currentUrl.indexOf("/tai-khoan") !== -1) {
-      window.location.href = "/";
+    window.location.href = "/";
     // } else {
     //   location.reload();
     //   location.assign(currentUrl);
@@ -1073,7 +1071,6 @@ function addEventListenerComment() {
       const closeBtn = confirmModal.querySelector(".close-btn");
 
       confirmModal.addEventListener("click", function (event) {
-
         if (event.target === this) {
           confirmModal.style.display = "none";
         }
@@ -1130,31 +1127,50 @@ function addEventListenerComment() {
 
 addEventListenerComment();
 
+const toggleCheckbox = document.querySelector("#toggle-password-change");
+const thayDoiMk = document.querySelector(".thay-doi-mk");
 
-const toggleCheckbox = document.querySelector('#toggle-password-change');
-const thayDoiMk = document.querySelector('.thay-doi-mk');
-
-toggleCheckbox.addEventListener('change', function () {
+toggleCheckbox.addEventListener("change", function () {
   if (this.checked) {
-    thayDoiMk.style.display = 'block';
+    thayDoiMk.style.display = "block";
   } else {
-    thayDoiMk.style.display = 'none';
+    thayDoiMk.style.display = "none";
   }
 });
 
-const updateButton = document.querySelector('.button-capnhat');
+const updateButton = document.querySelector(".button-capnhat");
 if (updateButton) {
-  updateButton.addEventListener('click', () => {
+  updateButton.addEventListener("click", () => {
     const fullNameInput = document.querySelector('input[name="account-hoten"]');
     const phoneInput = document.querySelector('input[name="account-phone"]');
     const dobInput = document.querySelector('input[name="account-dob"]');
     const mkmoiInput = document.querySelector('input[name="account-mkmoi"]');
-    const xacnhanmkmoiInput = document.querySelector('input[name="account-xacnhan-mkmoi"]');
-    const username = document.querySelector("#username")
+    const xacnhanmkmoiInput = document.querySelector(
+      'input[name="account-xacnhan-mkmoi"]'
+    );
+    const username = document.querySelector("#username");
+
+    // HANDLE AVATAR
+
+    const fileAvatar = document.querySelector("#file-avatar");
+    const file = fileAvatar.files[0];
+    const formData = new FormData();
+    formData.append("avatar", file);
+    fetch(`http://localhost:3500/uploadAvatar`, {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
 
     // check if new password and confirm password match
     if (mkmoiInput.value !== xacnhanmkmoiInput.value) {
-      alert('New password and confirm password do not match');
+      alert("New password and confirm password do not match");
       return;
     }
 
@@ -1165,43 +1181,39 @@ if (updateButton) {
       password: mkmoiInput.value,
     };
     console.log(updateData);
-
-    fetch('http://localhost:3500/auth/updateInfo', {
-      method: 'PUT',
+    fetch("http://localhost:3500/auth/updateInfo", {
+      method: "PUT",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(updateData),
     })
-      .then(response => {
+      .then((response) => {
         if (response.ok) {
           console.log("Get cookie");
           // const token = getCookie("token");
           // console.log(token)
           // const updatedDecoded = {
           //   ...token,
-          //   username: fullNameInput.value 
+          //   username: fullNameInput.value
           // };
           // const newtoken =updatedDecoded
           // console.log(newtoken);
           // const expires = new Date(Date.now() + 86400000).toUTCString();
           // document.cookie = `token=${JSON.stringify(newtoken)}; expires=${expires}; path=/`;
           console.log(username);
-          console.log(fullNameInput.value)
-          alert('Update successful');
-          mkmoiInput.value = '';
-          xacnhanmkmoiInput.value = '';
+          console.log(fullNameInput.value);
+          alert("Update successful");
+          mkmoiInput.value = "";
+          xacnhanmkmoiInput.value = "";
           username.innerText = fullNameInput.value;
         } else {
-          alert('Update failed');
+          alert("Update failed");
         }
       })
-      .catch(error => {
-        alert('Update failed');
-        console.error('Error updating user info:', error);
+      .catch((error) => {
+        alert("Update failed");
+        console.error("Error updating user info:", error);
       });
   });
 }
-
-
-
