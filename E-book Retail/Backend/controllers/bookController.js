@@ -146,7 +146,7 @@ const addBook = async (req, res) => {
   console.log("body", req.body);
   console.log("images", req.files)
   const newBook = req.body;
-  const uploadedImages = req.files.images;
+  const uploadedImages = req.files;
   console.log(uploadedImages);
   const book = await Book.findOne({ name: newBook.name }).exec();
 
