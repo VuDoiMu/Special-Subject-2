@@ -5,8 +5,8 @@ const tagSchema = new mongoose.Schema({
         type: String,
         require: true,
     } ,
-    desctiption : {
-        type :  Number,
+    description : {
+        type :  String,
         require: true
     },
     books: [

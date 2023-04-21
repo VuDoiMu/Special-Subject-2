@@ -51,38 +51,23 @@ html(lang='en', dir='ltr')
                 button(id="add-tag-btn"  class='btn btn-success' type="submit") Add new tag   
                 form#add-tag-form.hidden
                     input#tag-name.form-control(type="text", name="name", required, placeholder="Tag name")
+                    input#tag-description.form-control(type="text", name="name", required, placeholder="Tag description")
                     button(type="submit" class="btn btn-primary") Add
                 // Table
                 .table-data
                     table.table
                         thead
                             tr
-                                th(scope='col') Book name
+                                th(scope='col') Tag name
                                 th(scope='col') Number of books
+                                th(scope='col') Description
                                 th(scope='col') Action
                         tbody#tbody
                             each tag in tagData.reverse() 
                                 tr
                                 th( scope="row") #{tag.name}
                                 th( scope="row") #{tag.books.length}
+                                th( scope="row") #{tag.description}
                                 th( scope="row")
                                     button(id=`btn-delete`  class='btn btn-danger deleteTagButton' data-tag-id=tag._id) X
-                        ul.pagination.justify-content-center
-                            - const maxPagesToShow = totalPages; 
-                            - const middlePage = Math.ceil(maxPagesToShow/2);
-                            - let startPage = Math.max(currentPage - middlePage, 1);
-                            - let endPage = Math.min(startPage + maxPagesToShow - 1, totalPages);
-                            - if (endPage - startPage < maxPagesToShow) {
-                            -   startPage = Math.max(endPage - maxPagesToShow + 1, 1);
-                            - }    
-                            if currentPage > 1
-                                li.page-item
-                                    a.page-link(href=`/admin/management/${currentPage-1}`) Previous
-                            - for (var i = startPage; i <= endPage; i++) {
-                                li.page-item(class=i===currentPage ? 'active' : '')
-                                    a.page-link(href=`/admin/management/${i}`)= i
-                            - }
-                            if (currentPage < totalPages)
-                                li.page-item
-                                    a.page-link(href=`/admin/management/${currentPage+1}`) Next
     script(src='/js/admin.js' )

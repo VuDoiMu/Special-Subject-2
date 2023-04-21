@@ -344,7 +344,12 @@ html(lang="vi")
               a(href="/") Trang chủ
             li.breadcrumb-item.active
               -if(name)
-                a(href="sach-kinh-te.html")=name.toUpperCase()
+                a(href="/tag/" + name + "?limit=10")=name.toUpperCase()
+          div 
+            span Description: 
+            span
+              |#{singleTag.description}
+
       // thể loại sách: kinh tế chính trị nhân vật bài học kinh doanh ( từng ô vuông)
       section.page-content.my-3
         .container
@@ -352,7 +357,7 @@ html(lang="vi")
     // khối sản phẩm
     section.content.my-4
       .container
-        .noidung.bg-white(style=" width: 100%;")
+        .noidung.bg-white.container-margin(style=" width: 100%;")
           // header của khối sản phẩm : tag(tác giả), bộ lọc và sắp xếp
           .header-khoi-sp.d-flex
 

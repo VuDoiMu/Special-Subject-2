@@ -107,8 +107,10 @@ if(addTagFormSubmit) {
   e.preventDefault();
 
   const tagNameInput = document.getElementById('tag-name');
+  const tagDescriptionInput = document.getElementById('tag-description');
   const tagName = tagNameInput.value.trim();
-
+  const tagDescription = tagDescriptionInput.value.trim();
+  console.log(tagDescription);
   const url = 'http://localhost:3500/tag';
   
   let data = "";
@@ -118,13 +120,14 @@ if(addTagFormSubmit) {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ name: tagName })
+    body: JSON.stringify({ name: tagName, description: tagDescription })
   });
   data = await response.json();
 } catch (error) {
   console.error(error);
 }
   const tag = data.tag;
+  console.log(tag);
   // Get the table body element
   const tableBody = document.querySelector('#tbody');
 
@@ -140,6 +143,10 @@ if(addTagFormSubmit) {
   countCell.setAttribute('scope', 'row');
   countCell.textContent = tag.books.length;
 
+  const descriptionCell = document.createElement('th');
+  descriptionCell.setAttribute('scope', 'row');
+  descriptionCell.textContent = tag.description;
+
   const buttonCell = document.createElement('th');
   const deleteButton = document.createElement('button');
   deleteButton.setAttribute('id', 'btn-delete');
@@ -151,6 +158,7 @@ if(addTagFormSubmit) {
   // Add the cells to the row
   row.appendChild(nameCell);
   row.appendChild(countCell);
+  row.appendChild(descriptionCell);
   row.appendChild(buttonCell);
 
   // Add the row to the table body

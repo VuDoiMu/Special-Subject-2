@@ -305,8 +305,12 @@ app.get("/tai-khoan", async (req, res) => {
 
 app.get("/tag/:name", async (req, res) => {
   const name = req.params.name;
+  let singleTag = await axios.get(`http://localhost:3500/tag/get/${name}`);
+  singleTag = singleTag.data.tag
+  console.log(singleTag);
   const response = await axios.get(`http://localhost:3500/tag/books/${name}`);
   let booksTag = response.data.books[0].books;
+  console.log(singleTag);
   const sortType = req.query.sortType;
   const isTag = true;
   if (sortType == "priceAsc") {
@@ -364,6 +368,7 @@ app.get("/tag/:name", async (req, res) => {
     isTag,
     user,
     cartNumber: cartNumber,
+    singleTag
   });
 });
 

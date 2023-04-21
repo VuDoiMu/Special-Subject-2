@@ -10,10 +10,14 @@ app.use(cookieParser());
 const newTag = async(req, res) => {
     try{
     const {name, description} = req.body
+    console.log("O trong controller");
+    console.log(name);
+    console.log(description);
     const tagValid = await Tag.findOne({name});
     if( tagValid)
     return res.json( { 'message': 'This Tag is already used!'});
     const tag = new Tag({name, description})
+    console.log(tag);
     await tag.save();
     res.json({success: true, message:'new tag', tag})
       
@@ -37,7 +41,7 @@ const updateTag = async(req, res) => {
     }
 }
 
-const getTag = async (req, res) => {
+const getAllTag = async (req, res) => {
     
     try{
         const tags = await Tag.find();
@@ -47,6 +51,20 @@ const getTag = async (req, res) => {
         console.log(error)
     }
 }
+
+const getTag = async (req, res) => {
+
+    try {
+        const name = req.params.name;
+        console.log(name);
+        const tag = await Tag.findOne({name});
+        res.json({ success: true, message: 'new tag', tag })
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 const getByTag = async (req, res)=> {
     const tag = req.params.name;
     try{
@@ -69,7 +87,6 @@ try {
 
     const tag = await Tag.findByIdAndDelete({_id: tagId})
     res.json({success: true, message:'deleted tag', tag})
-      
 }catch(error) {
     console.log(error)
 }
@@ -77,6 +94,7 @@ try {
 
 module.exports = {
 newTag,
+getAllTag,
 getTag,
 getByTag,
 updateTag,
