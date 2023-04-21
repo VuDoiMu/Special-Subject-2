@@ -41,7 +41,7 @@ const updateTag = async(req, res) => {
     }
 }
 
-const getAllTag = async (req, res) => {
+const getTag = async (req, res) => {
     
     try{
         const tags = await Tag.find();
@@ -52,7 +52,7 @@ const getAllTag = async (req, res) => {
     }
 }
 
-const getTag = async (req, res) => {
+const getEachTag = async (req, res) => {
 
     try {
         const name = req.params.name;
@@ -108,8 +108,8 @@ const deleteBooksArray = async(req, res) => {
 
 module.exports = {
 newTag,
-getAllTag,
 getTag,
+getEachTag,
 getByTag,
 updateTag,
 deleteTag,
