@@ -4,7 +4,12 @@ const tagController = require('../controllers/tagController');
 console.log(tagController);
 router.route('/')
     .post(tagController.newTag)
+<<<<<<< HEAD
     .get(tagController.getAllTag)
+=======
+    .get(tagController.getTag)
+    .delete(tagController.deleteBooksArray)
+>>>>>>> 8d26da40223865189e15be3e69890b3bfea5d76b
 
 router.route('/:id')
     .put(tagController.updateTag)
