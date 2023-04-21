@@ -803,15 +803,7 @@ app.post(
 //   upload.fields([{ name: "images" }, { name: "content-images" }]),
 //   userThings.addImage
 // );
-app.post("/uploadAvatar", upload.single("avatar"), function (req, res, next) {
-  // get the uploaded file from req.file
-  console.log("handle");
-  const uploadedFile = req.file;
-  console.log(uploadedFile);
-  // perform additional processing or validation on the uploaded file if needed
-  // send a response to the client
-  res.json({ message: "File uploaded successfully" });
-});
+app.post("/uploadAvatar", upload.single("avatar"), userThings.addImage);
 
 //routes
 app.use("/comment", require("./routes/comment"));

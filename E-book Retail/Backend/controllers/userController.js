@@ -233,6 +233,9 @@ const userProfile = async (req, res) => {
         const decoded = jwt.verify(token, "thisisourwebsite!");
         const userId = decoded.userId;
 
+        const img = req.file.originalname;
+        console.log(img);
+
         const userContentFolder = "./userContent";
         try {
           if (!fileSystem.existsSync(userContentFolder)) {
@@ -253,12 +256,12 @@ const userProfile = async (req, res) => {
           console.error(err);
         }
 
-        moveFile(`./uploads/avatar.png`, userFolder)
+        moveFile(`./uploads/${img}`, userFolder)
 
-        const resResult = await Book.findOneAndUpdate(
-          { _id: bookId },
+        const resResult = await User.findOneAndUpdate(
+          { _id: userId },
           {
-            image: `/${userId}/avatar.png`
+            image: `/${userId}/${img}`
           }
         );
     

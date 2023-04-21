@@ -21,7 +21,7 @@ const fileSystem = require("fs");
 app.use("/bookContent", express.static(__dirname + "/bookContent"));
 
 //moves the $file to $dir2
-var moveFile = (file, dir2)=>{
+const moveFile = (file, dir2)=>{
   
     //gets file name and adds it to dir2
     var f = path.basename(file);
@@ -335,5 +335,5 @@ module.exports = {
   addBook,
   // bookPage,
   addLike,
-  subLike,
+  subLike
 };
