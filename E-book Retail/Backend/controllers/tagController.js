@@ -74,11 +74,26 @@ try {
     console.log(error)
 }
 }
+const deleteBooksArray = async(req, res) => {
+    try {
+    const tag = await Tag.updateMany(
+        {}, 
+        { $set: { books: [] } } 
+      );
+      res.json({success: true, message:'deleted tag', tag})
+      
+    }catch(error) {
+        console.log(error)
+    }
+      
+}
+
 
 module.exports = {
 newTag,
 getTag,
 getByTag,
 updateTag,
-deleteTag
+deleteTag,
+deleteBooksArray
 }

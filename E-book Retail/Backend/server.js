@@ -12,6 +12,7 @@ const axios = require("axios");
 const bodyparser = require("body-parser");
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
+const nodemailer = require('nodemailer');
 const paginate = require("paginate-array");
 const session = require("express-session");
 const _ = require("lodash");
@@ -73,8 +74,7 @@ app.post("/payment", function (req, res) {
     (acc, item) => acc + parseFloat(item.newPrice),
     0
   );
-  // Moreover you can take more details from user
-  // like Address, Name, etc from form
+  
   stripe.customers
     .create({
       email: req.body.stripeEmail,
@@ -82,7 +82,7 @@ app.post("/payment", function (req, res) {
     })
     .then((customer) => {
       return stripe.charges.create({
-        amount: totalPrice * 100, // Charing Rs 25
+        amount: totalPrice * 100, // Charging in cents
         description: "Emanga",
         currency: "USD",
         customer: customer.id,
@@ -90,6 +90,31 @@ app.post("/payment", function (req, res) {
     })
     .then(async (charge) => {
       const cookieValue = JSON.stringify([]);
+      
+      // Send email using Nodemailer
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: '1901040026@s.hanu.edu.vn',
+          pass: '1901040026'
+        }
+      });
+
+      const mailOptions = {
+        from: '1901040026@s.hanu.edu.vn',
+        to: req.body.stripeEmail,
+        subject: 'Checkout Emanga',
+        text: 'Checkout successful'
+      };
+
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
+      
       res.setHeader("Set-Cookie", `cart=${cookieValue};`);
       res.redirect("/?alert=Checkout+successfully");
     })

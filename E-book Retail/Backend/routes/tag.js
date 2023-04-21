@@ -5,6 +5,7 @@ const tagController = require('../controllers/tagController');
 router.route('/')
     .post(tagController.newTag)
     .get(tagController.getTag)
+    .delete(tagController.deleteBooksArray)
 
 router.route('/:id')
     .put(tagController.updateTag)

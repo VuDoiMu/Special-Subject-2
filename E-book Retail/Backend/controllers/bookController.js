@@ -106,12 +106,21 @@ const getByID = async (req, res) => {
 };
 
 const deleteBook = async (req, res) => {
-  if (!req.params.id) {
+  const bookId = req.params.id
+  if (!bookId) {
     return res.status(400).json({ message: "Book ID required!" });
   }
 
-  const book = await Book.findOneAndDelete({ _id: req.params.id }).exec();
-
+  const book = await Book.findOneAndDelete({ _id: bookId }).exec();
+  const tag = await Tag.updateMany(
+    { books: { $elemMatch: { _id: bookId } } }, 
+    { $pull: { books:  bookId  } } 
+  );
+  console.log(tag)
+  const result = await User.updateMany(
+    { $or: [{ favorbooks: bookId }, { inventory: bookId }] },
+    { $pull: { favorbooks: bookId, inventory: bookId } }
+  );
   res.json({ success: true, message: "deleted" });
   // const delte = await Book.deleteMany()
 };
@@ -326,11 +335,14 @@ const subLike = async (req, res) => {
 //     }
 //   });
 // }
-
+const deleteAll = async (req, res) =>{
+  const book = await Book.deleteMany();
+}
 module.exports = {
   getAllBook,
   getByID,
   deleteBook,
+  deleteAll,
   updateBook,
   addBook,
   // bookPage,
