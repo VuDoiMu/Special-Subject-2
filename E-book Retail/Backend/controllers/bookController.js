@@ -124,28 +124,37 @@ const deleteBook = async (req, res) => {
 };
 
 const updateBook = async (req, res) => {
-  if (!req.body.id) {
+  if (!req.body._id) {
     return res.status(400).json({ message: "Book ID required!" });
   }
 
-  const book = await Book.findOne({ _id: req.body.id }).exec();
+  const book = await Book.findOne({ _id: req.body._id }).exec();
 
   if (!book) {
     return res
       .status(204)
-      .json({ message: `User does not exist with ${req.body.id}!` });
+      .json({ message: `User does not exist with ${req.body._id}!` });
   }
 
   const updateData = req.body;
+  
 
   const bookUpdated = await Book.findOneAndUpdate(
-    { _id: req.body.id },
+    { _id: req.body._id },
     updateData,
     {
       new: true,
     }
   );
+    const folderName = `./bookContent/${book._id}/`;
+    
+  const uploadedImages = req.files.images;
+  for (let i = 0; i<uploadedImages.length; i++ ) {
+   const thisImage = uploadImages[i];
+   const uploadPath = `./uploads/${thisImage[filename]}`;
 
+   moveFile(uploadPath, folderName);
+  }
   res.status(200).json(bookUpdated);
 };
 
@@ -156,6 +165,8 @@ const addBook = async (req, res) => {
   const uploadedImages = req.files.images;
   console.log(uploadedImages);
   const book = await Book.findOne({ name: newBook.name }).exec();
+
+  console.log(newBook.tag.split(','));
 
   if (book != null) {
     return res
