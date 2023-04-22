@@ -13,10 +13,6 @@ const nodemailer = require('nodemailer');
 const bodyparser = require("body-parser");
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
-<<<<<<< HEAD
-const nodemailer = require("nodemailer");
-=======
->>>>>>> 9d41476527777f3c380968cdbe6222088d509744
 const paginate = require("paginate-array");
 const session = require("express-session");
 const _ = require("lodash");
@@ -79,12 +75,6 @@ app.post("/payment", function (req, res) {
     (acc, item) => acc + parseFloat(item.newPrice),
     0
   );
-<<<<<<< HEAD
-
-=======
-  // Moreover you can take more details from user
-  // like Address, Name, etc from form
->>>>>>> 9d41476527777f3c380968cdbe6222088d509744
   stripe.customers
     .create({
       email: req.body.stripeEmail,
@@ -183,6 +173,7 @@ app.get("/", async (req, res) => {
         username: updateUser.username,
         favorbooks: updateUser.favorbooks,
         inventory: updateUser.inventory,
+        image: updateUser.image
       },
       "thisisourwebsite!"
     );
@@ -272,6 +263,7 @@ app.get("/product/:id", async (req, res) => {
         username: updateUser.username,
         favorbooks: updateUser.favorbooks,
         inventory: updateUser.inventory,
+        image: updateUser.image
       },
       "thisisourwebsite!"
     );
@@ -308,6 +300,7 @@ app.get("/tai-khoan", async (req, res) => {
         username: updateUser.username,
         favorbooks: updateUser.favorbooks,
         inventory: updateUser.inventory,
+        image: updateUser.image
       },
       "thisisourwebsite!"
     );
@@ -343,14 +336,9 @@ app.get("/tai-khoan", async (req, res) => {
 
 app.get("/tag/:name", async (req, res) => {
   const name = req.params.name;
-<<<<<<< HEAD
   let singleTag = await axios.get(`http://localhost:3500/tag/get/${name}`);
   singleTag = singleTag.data.tag;
 
-=======
-  const singleTag = await axios.get(`http://localhost:3500/tag/get/${name}`);
-  
->>>>>>> 9d41476527777f3c380968cdbe6222088d509744
   const response = await axios.get(`http://localhost:3500/tag/books/${name}`);
   let booksTag = response.data.books[0].books;
   const sortType = req.query.sortType;
@@ -385,6 +373,7 @@ app.get("/tag/:name", async (req, res) => {
         username: updateUser.username,
         favorbooks: updateUser.favorbooks,
         inventory: updateUser.inventory,
+        image: updateUser.image
       },
       "thisisourwebsite!"
     );
@@ -410,11 +399,7 @@ app.get("/tag/:name", async (req, res) => {
     isTag,
     user,
     cartNumber: cartNumber,
-<<<<<<< HEAD
     singleTag,
-=======
-    singleTag : singleTag.data.tag
->>>>>>> 9d41476527777f3c380968cdbe6222088d509744
   });
 });
 

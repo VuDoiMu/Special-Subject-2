@@ -130,7 +130,7 @@ html(lang="vi")
                 )
                 a.btn.btn-secondary.rounded-circle(href="#")
                   if decoded
-                    img#img-account(alt="account-image" src=`./${decoded.userId}/avatar.png`)
+                    img#img-account(alt="account-image" src=decoded.image)
                   else
                     i.fa.fa-user
                 a.nav-link.text-dark.text-uppercase(
