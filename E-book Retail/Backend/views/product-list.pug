@@ -345,10 +345,11 @@ html(lang="vi")
             li.breadcrumb-item.active
               -if(name)
                 a(href="/tag/" + name + "?limit=10")=name.toUpperCase()
-          div 
-            span Description: 
-            span
-              |#{singleTag.description}
+          if singleTag
+            div 
+              span Description: 
+              span
+                |#{singleTag.description}
 
       // thể loại sách: kinh tế chính trị nhân vật bài học kinh doanh ( từng ô vuông)
       section.page-content.my-3
