@@ -12,6 +12,14 @@ async function uploadImages(event) {
   // create form data object from <form>
   const formData = new FormData(form);
   console.log(formData.get("images"));
+  console.log(formData.get("countries"));
+  const tag = [];
+  const inputs = document.getElementsByClassName("item-label");
+  for (let i = 0; i < inputs.length; i++) {
+    tag.push(inputs[i].innerHTML);
+  }
+  formData.append("tag", tag);
+  console.log(formData.get("images"));
   fetch("http://localhost:3500/uploadBook", {
     method: "POST",
     body: formData,
@@ -19,9 +27,11 @@ async function uploadImages(event) {
     .then((response) => response.json())
     .then((data) => {
       console.log("Success:", data);
+      alert(`You just added a book`);
     })
     .catch((error) => {
       console.error("Error:", error);
+      alert(` ${error}`);
     });
 }
 

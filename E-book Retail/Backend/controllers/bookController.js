@@ -15,24 +15,22 @@ app.use(
   })
 );
 
-const path = require('path');
+const path = require("path");
 const fileSystem = require("fs");
 
 app.use("/bookContent", express.static(__dirname + "/bookContent"));
 
 //moves the $file to $dir2
-const moveFile = (file, dir2)=>{
-  
-    //gets file name and adds it to dir2
-    var f = path.basename(file);
-    var dest = path.resolve(dir2, f);
-  
-    fileSystem.rename(file, dest, (err)=>{
-      if(err) throw err;
-      else console.log('Successfully moved');
-    });
-  };
+const moveFile = (file, dir2) => {
+  //gets file name and adds it to dir2
+  var f = path.basename(file);
+  var dest = path.resolve(dir2, f);
 
+  fileSystem.rename(file, dest, (err) => {
+    if (err) throw err;
+    else console.log("Successfully moved");
+  });
+};
 
 //callback for upload book images
 // function callbackFileUpload(
@@ -106,17 +104,17 @@ const getByID = async (req, res) => {
 };
 
 const deleteBook = async (req, res) => {
-  const bookId = req.params.id
+  const bookId = req.params.id;
   if (!bookId) {
     return res.status(400).json({ message: "Book ID required!" });
   }
 
   const book = await Book.findOneAndDelete({ _id: bookId }).exec();
   const tag = await Tag.updateMany(
-    { books: { $elemMatch: { _id: bookId } } }, 
-    { $pull: { books:  bookId  } } 
+    { books: { $elemMatch: { _id: bookId } } },
+    { $pull: { books: bookId } }
   );
-  console.log(tag)
+  console.log(tag);
   const result = await User.updateMany(
     { $or: [{ favorbooks: bookId }, { inventory: bookId }] },
     { $pull: { favorbooks: bookId, inventory: bookId } }
@@ -153,7 +151,7 @@ const updateBook = async (req, res) => {
 
 const addBook = async (req, res) => {
   console.log("body", req.body);
-  console.log("images", req.files)
+  console.log("images", req.files);
   const newBook = req.body;
   const uploadedImages = req.files.images;
   console.log(uploadedImages);
@@ -171,12 +169,12 @@ const addBook = async (req, res) => {
       image: "",
       price: newBook.price,
       description: newBook.description,
-      tag: newBook.tag,
+      tag: newBook.tag.split(","),
       author: newBook.author,
       artist: newBook.artist,
       publisher: newBook.publisher,
       pageCount: newBook.pageCount,
-      saleRate: newBook.saleRate,
+      saleRate: newBook.discountRate,
       content: {},
     });
     const updateResult = await Tag.updateMany(
@@ -205,20 +203,20 @@ const addBook = async (req, res) => {
     } catch (err) {
       console.error(err);
     }
-    
-    moveFile(`./uploads/cover.png`, folderName)
 
-    for (let i = 0; i< uploadedImages.length-1; i++) {
-       // const temp = uploadedImages[i+1];
-       // console.log(temp);
-        const uploadedPath = `./uploads/${i+1}.png`;
-        // console.log(uploadedPath);
-        // console.log(folderName);
-        moveFile(uploadedPath, folderName);
+    moveFile(`./uploads/cover.png`, folderName);
+
+    for (let i = 0; i < uploadedImages.length - 1; i++) {
+      // const temp = uploadedImages[i+1];
+      // console.log(temp);
+      const uploadedPath = `./uploads/${i + 1}.png`;
+      // console.log(uploadedPath);
+      // console.log(folderName);
+      moveFile(uploadedPath, folderName);
     }
 
     const content = {};
-    for (let i = 0; i < uploadedImages.length-1; i++) {
+    for (let i = 0; i < uploadedImages.length - 1; i++) {
       content[i + 1] = `/${bookID}/${i + 1}.png`;
     }
 
@@ -226,7 +224,7 @@ const addBook = async (req, res) => {
       { _id: bookID },
       {
         content: content,
-        image: `/${bookID}/cover.png`
+        image: `/${bookID}/cover.png`,
       }
     );
 
@@ -335,9 +333,9 @@ const subLike = async (req, res) => {
 //     }
 //   });
 // }
-const deleteAll = async (req, res) =>{
+const deleteAll = async (req, res) => {
   const book = await Book.deleteMany();
-}
+};
 module.exports = {
   getAllBook,
   getByID,
@@ -347,5 +345,5 @@ module.exports = {
   addBook,
   // bookPage,
   addLike,
-  subLike
+  subLike,
 };
