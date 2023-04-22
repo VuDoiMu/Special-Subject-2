@@ -90,6 +90,31 @@ app.post("/payment", function (req, res) {
     })
     .then(async (charge) => {
       const cookieValue = JSON.stringify([]);
+      
+      // Send email using Nodemailer
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: '1901040026@s.hanu.edu.vn',
+          pass: '1901040026'
+        }
+      });
+
+      const mailOptions = {
+        from: '1901040026@s.hanu.edu.vn',
+        to: req.body.stripeEmail,
+        subject: 'Checkout Emanga',
+        text: 'Checkout successful'
+      };
+
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
+      
       res.setHeader("Set-Cookie", `cart=${cookieValue};`);
       res.redirect("/?alert=Checkout+successfully");
     })
@@ -160,8 +185,9 @@ app.get("/", async (req, res) => {
   const toplikeBook = toplike.data;
   const topsaleBook = topSale.data;
   const topsellBook = topSell.data;
-  let tagData;
   const userInfor = req.cookies.userInfor;
+  let tagData;
+  
   const tag = await axios
     .get("http://localhost:3500/tag")
     .then((res) => (tagData = res.data.tags));
@@ -210,19 +236,18 @@ app.get("/product/:id", async (req, res) => {
   const tagResponse = await axios.get("http://localhost:3500/tag");
   const tagData = tagResponse.data.tags;
 
-  const booksTag = [];
-
+  // const booksTag = [];
+let booksArray
   // Retrieve the books associated with each tag
   for (const tagItem of book.tag) {
     const response = await axios.get(
       `http://localhost:3500/tag/books/${tagItem}`
     );
     if (response.data.books[0]) {
-      const booksArray = response.data.books[0].books;
-      booksTag.push(booksArray);
+     booksArray = response.data.books[0].books;
+      // booksTag.push(booksArray);
     }
   }
-
   const token = req.cookies.token;
   let decoded = "";
   if (token) {
@@ -248,7 +273,7 @@ app.get("/product/:id", async (req, res) => {
     book,
     comments,
     tags: tagData,
-    booksTag,
+    bookTag: booksArray,
     token,
     decoded,
     itemCount,
@@ -305,6 +330,8 @@ app.get("/tai-khoan", async (req, res) => {
 
 app.get("/tag/:name", async (req, res) => {
   const name = req.params.name;
+  const singleTag = await axios.get(`http://localhost:3500/tag/get/${name}`);
+  
   const response = await axios.get(`http://localhost:3500/tag/books/${name}`);
   let booksTag = response.data.books[0].books;
   const sortType = req.query.sortType;
@@ -364,6 +391,7 @@ app.get("/tag/:name", async (req, res) => {
     isTag,
     user,
     cartNumber: cartNumber,
+    singleTag : singleTag.data.tag
   });
 });
 
@@ -497,7 +525,7 @@ app.get("/product-list/:name?/:page?", async (req, res) => {
     sortType,
     limit,
     user,
-    cartNumber: CartNumber,
+    cartNumber: cartNumber,
   });
 });
 
