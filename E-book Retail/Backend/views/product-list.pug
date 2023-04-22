@@ -135,8 +135,8 @@ html(lang="vi")
                 type="button"
                 )
                 a.btn.btn-secondary.rounded-circle(href="#")
-                  if decoded.image
-                    img#img-account(alt="account-image" src=decoded.image)
+                  if decoded
+                    img#img-account(alt="account-image" src=`./${decoded.userId}/avatar.png`)
                   else
                     i.fa.fa-user
                 a.nav-link.text-dark.text-uppercase(
@@ -345,10 +345,11 @@ html(lang="vi")
             li.breadcrumb-item.active
               -if(name)
                 a(href="/tag/" + name + "?limit=10")=name.toUpperCase()
-          div 
-            span Description: 
-            span
-              |#{singleTag.description}
+          if singleTag
+            div 
+              span Description: 
+              span
+                |#{singleTag.description}
 
       // thể loại sách: kinh tế chính trị nhân vật bài học kinh doanh ( từng ô vuông)
       section.page-content.my-3
@@ -367,9 +368,15 @@ html(lang="vi")
                   label.label-select(for="hienthi-select") Show
                 else 
                   label.label-select(for="hienthi-select") Show
-                select.hienthi-select
-                  each val in [10, 20, 30]
-                    option(value=val selected=limit==val)= val
+                if isTag
+                  select.hienthi-select.isTag
+                    each val in [10, 20, 30]
+                      option(value=val selected=limit==val)= val
+                else 
+                  select.hienthi-select
+                    each val in [10, 20, 30]
+                      option(value=val selected=limit==val)= val
+                
               .sap-xep
                 label.label-select(for="sapxep-select") Filter
                 select.sapxep-select

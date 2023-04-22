@@ -75,18 +75,17 @@ async function uploadImages(event) {
   formData.append("tag", tag);
   console.log(formData.get("tag"));
   const id = document.getElementById("bookId").innerHTML;
-  console.log(id, formData.get("updateAuthor"));
-  // fetch("http://localhost:3500/uploadBook", {
-  //   method: "POST",
-  //   body: { formData, id },
-  // })
-  //   .then((response) => response.json())
-  //   .then((data) => {
-  //     console.log("Success:", data);
-  //     alert(`You just update a book`);
-  //   })
-  //   .catch((error) => {
-  //     console.error("Error:", error);
-  //     alert(` ${error}`);
-  //   });
+  fetch(`http://localhost:3500/updateBook/${id}`, {
+    method: "POST",
+    body: formData,
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Success:", data);
+      alert(`You just update a book`);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      alert(` ${error}`);
+    });
 }

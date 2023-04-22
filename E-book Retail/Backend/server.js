@@ -9,10 +9,14 @@ const User = require("./models/User");
 const data = require("./data/book.json");
 const cookieParser = require("cookie-parser");
 const axios = require("axios");
+const nodemailer = require('nodemailer');
 const bodyparser = require("body-parser");
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
+<<<<<<< HEAD
 const nodemailer = require("nodemailer");
+=======
+>>>>>>> 9d41476527777f3c380968cdbe6222088d509744
 const paginate = require("paginate-array");
 const session = require("express-session");
 const _ = require("lodash");
@@ -75,7 +79,12 @@ app.post("/payment", function (req, res) {
     (acc, item) => acc + parseFloat(item.newPrice),
     0
   );
+<<<<<<< HEAD
 
+=======
+  // Moreover you can take more details from user
+  // like Address, Name, etc from form
+>>>>>>> 9d41476527777f3c380968cdbe6222088d509744
   stripe.customers
     .create({
       email: req.body.stripeEmail,
@@ -83,7 +92,7 @@ app.post("/payment", function (req, res) {
     })
     .then((customer) => {
       return stripe.charges.create({
-        amount: totalPrice * 100, // Charging in cents
+        amount: totalPrice * 100, // Charing Rs 25
         description: "Emanga",
         currency: "USD",
         customer: customer.id,
@@ -186,8 +195,9 @@ app.get("/", async (req, res) => {
   const toplikeBook = toplike.data;
   const topsaleBook = topSale.data;
   const topsellBook = topSell.data;
-  let tagData;
   const userInfor = req.cookies.userInfor;
+  let tagData;
+  
   const tag = await axios
     .get("http://localhost:3500/tag")
     .then((res) => (tagData = res.data.tags));
@@ -237,18 +247,19 @@ app.get("/product/:id", async (req, res) => {
   const tagData = tagResponse.data.tags;
 
   const booksTag = [];
-
   // Retrieve the books associated with each tag
   for (const tagItem of book.tag) {
     const response = await axios.get(
       `http://localhost:3500/tag/books/${tagItem}`
     );
     if (response.data.books[0]) {
-      const booksArray = response.data.books[0].books;
-      booksTag.push(booksArray);
+     const booksArray = response.data.books[0].books;
+     if(booksArray !=undefined) {
+       booksTag.push(booksArray);
+     }
     }
   }
-
+  console.log(booksTag);
   const token = req.cookies.token;
   let decoded = "";
   if (token) {
@@ -332,12 +343,16 @@ app.get("/tai-khoan", async (req, res) => {
 
 app.get("/tag/:name", async (req, res) => {
   const name = req.params.name;
+<<<<<<< HEAD
   let singleTag = await axios.get(`http://localhost:3500/tag/get/${name}`);
   singleTag = singleTag.data.tag;
 
+=======
+  const singleTag = await axios.get(`http://localhost:3500/tag/get/${name}`);
+  
+>>>>>>> 9d41476527777f3c380968cdbe6222088d509744
   const response = await axios.get(`http://localhost:3500/tag/books/${name}`);
   let booksTag = response.data.books[0].books;
-  console.log(singleTag);
   const sortType = req.query.sortType;
   const isTag = true;
   if (sortType == "priceAsc") {
@@ -395,7 +410,11 @@ app.get("/tag/:name", async (req, res) => {
     isTag,
     user,
     cartNumber: cartNumber,
+<<<<<<< HEAD
     singleTag,
+=======
+    singleTag : singleTag.data.tag
+>>>>>>> 9d41476527777f3c380968cdbe6222088d509744
   });
 });
 
@@ -829,6 +848,12 @@ app.post(
   upload.fields([{ name: "images" }, { name: "content-images" }]),
   bookThings.addBook
 );
+
+app.post(
+  "/updateBook/:id",
+  upload.fields([{ name: "images" }, { name: "content-images" }]),
+  bookThings.updateBook
+)
 
 // app.post(
 //   "/uploadAvatar",

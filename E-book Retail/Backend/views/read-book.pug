@@ -154,8 +154,8 @@ html(lang="li")
                 type="button"
                 )
                 a.btn.btn-secondary.rounded-circle(href="#")
-                  if decoded.image
-                    img#img-account(alt="account-image" src=decoded.image)
+                  if decoded
+                    img#img-account(alt="account-image" src=`./${decoded.userId}/avatar.png`)
                   else
                     i.fa.fa-user
                   
