@@ -63,6 +63,7 @@ app.use(express.json());
 // access to static file in public
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.static(path.join(__dirname, "bookContent")));
+app.use(express.static(path.join(__dirname, "userContent")));
 app.use(express.static("public", { "Content-Type": "application/javascript" }));
 // set view engine and views
 app.set("view engine", "pug");
