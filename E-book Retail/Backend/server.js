@@ -9,6 +9,7 @@ const User = require("./models/User");
 const data = require("./data/book.json");
 const cookieParser = require("cookie-parser");
 const axios = require("axios");
+const nodemailer = require('nodemailer');
 const bodyparser = require("body-parser");
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
