@@ -524,7 +524,7 @@ html(lang="li")
               h5.header.text-uppercase(style="font-weight: 400;") Similar product
               //- a.btn.btn-warning.btn-sm.text-white(href="sach-moi-tuyen-chon.html") Xem tất cả
           .khoisanpham(style="padding-bottom: 2rem;")
-              //- each bookTag in booksTag
+            each bookTag in booksTag
               each bookItem in bookTag
                 if book.name!= bookItem.name
                   .card(id="card-"+bookItem._id)
