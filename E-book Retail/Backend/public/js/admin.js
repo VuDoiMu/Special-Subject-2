@@ -26,7 +26,7 @@ for (let i = 0; i < deleteButtons.length; i++) {
       .then((res) => (message = res));
     if (message) {
       window.setTimeout(() => {
-        location.assign("/admin/management");
+        location.assign("/admin/management/1");
         alert(`You just deleted a book`);
       }, 1000);
     }
@@ -36,29 +36,26 @@ for (let i = 0; i < deleteButtons.length; i++) {
 function addEventButton() {
   let deleteTagButtons = document.getElementsByClassName("deleteTagButton");
 
-for (let i = 0; i < deleteTagButtons.length; i++) {
-  deleteTagButtons[i].addEventListener("click", async function (e) {
-    const id = e.target.getAttribute("data-tag-id");
-    console.log(id);
-    const deleteTag = await fetch(
-      `http://localhost:3500/tag/${id}`,
-      {
+  for (let i = 0; i < deleteTagButtons.length; i++) {
+    deleteTagButtons[i].addEventListener("click", async function (e) {
+      const id = e.target.getAttribute("data-tag-id");
+      console.log(id);
+      const deleteTag = await fetch(`http://localhost:3500/tag/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
+      })
+        .then((response) => response.json())
+        .then((res) => (message = res));
+      if (message) {
+        window.setTimeout(() => {
+          location.assign("/admin/category/1");
+          alert(`You just deleted a book`);
+        }, 1000);
       }
-    )
-      .then((response) => response.json())
-      .then((res) => (message = res));
-    if (message) {
-      window.setTimeout(() => {
-        location.assign("/admin/category/1");
-        alert(`You just deleted a book`);
-      }, 1000);
-    }
-  });
-}
+    });
+  }
 }
 
 addEventButton();
@@ -75,7 +72,6 @@ for (let i = 0; i < updateButtons.length; i++) {
   });
 }
 
-
 // logoutVar.addEventListener("click", async (e) => {
 //   const sendData = await fetch("http://localhost:3500/auth/logout", {
 //     method: "POST",
@@ -85,86 +81,85 @@ for (let i = 0; i < updateButtons.length; i++) {
 //     },
 //   });)
 const addBook = document.getElementById("add-book");
-if(addBook) {
+if (addBook) {
   addBook.addEventListener("click", () => {
     console.log("click");
     window.location.replace("http://localhost:3500/admin/add-book");
   });
 }
 
+const addTagBtn = document.getElementById("add-tag-btn");
+const addTagFormSubmit = document.getElementById("add-tag-form");
 
-const addTagBtn = document.getElementById('add-tag-btn');
-const addTagFormSubmit = document.getElementById('add-tag-form');
-
-if(addTagBtn) {
-  addTagBtn.addEventListener('click', function () {
-  addTagFormSubmit.classList.remove('hidden');
-});
-}
-
-if(addTagFormSubmit) {
-  addTagFormSubmit.addEventListener('submit', async function (e) {
-  e.preventDefault();
-
-  const tagNameInput = document.getElementById('tag-name');
-  const tagDescriptionInput = document.getElementById('tag-description');
-  const tagName = tagNameInput.value.trim();
-  const tagDescription = tagDescriptionInput.value.trim();
-  console.log(tagDescription);
-  const url = 'http://localhost:3500/tag';
-  
-  let data = "";
-  try {
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ name: tagName, description: tagDescription })
+if (addTagBtn) {
+  addTagBtn.addEventListener("click", function () {
+    addTagFormSubmit.classList.remove("hidden");
   });
-  data = await response.json();
-} catch (error) {
-  console.error(error);
 }
-  const tag = data.tag;
-  console.log(tag);
-  // Get the table body element
-  const tableBody = document.querySelector('#tbody');
 
-  // Create a new table row element
-  const row = document.createElement('tr');
+if (addTagFormSubmit) {
+  addTagFormSubmit.addEventListener("submit", async function (e) {
+    e.preventDefault();
 
-  // Create the cells for the row
-  const nameCell = document.createElement('th');
-  nameCell.setAttribute('scope', 'row');
-  nameCell.textContent = tag.name;
+    const tagNameInput = document.getElementById("tag-name");
+    const tagDescriptionInput = document.getElementById("tag-description");
+    const tagName = tagNameInput.value.trim();
+    const tagDescription = tagDescriptionInput.value.trim();
+    console.log(tagDescription);
+    const url = "http://localhost:3500/tag";
 
-  const countCell = document.createElement('th');
-  countCell.setAttribute('scope', 'row');
-  countCell.textContent = tag.books.length;
+    let data = "";
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name: tagName, description: tagDescription }),
+      });
+      data = await response.json();
+    } catch (error) {
+      console.error(error);
+    }
+    const tag = data.tag;
+    console.log(tag);
+    // Get the table body element
+    const tableBody = document.querySelector("#tbody");
 
-  const descriptionCell = document.createElement('th');
-  descriptionCell.setAttribute('scope', 'row');
-  descriptionCell.textContent = tag.description;
+    // Create a new table row element
+    const row = document.createElement("tr");
 
-  const buttonCell = document.createElement('th');
-  const deleteButton = document.createElement('button');
-  deleteButton.setAttribute('id', 'btn-delete');
-  deleteButton.setAttribute('class', 'btn btn-danger deleteTagButton');
-  deleteButton.setAttribute('data-tag-id', tag._id);
-  deleteButton.textContent = 'X';
-  buttonCell.appendChild(deleteButton);
+    // Create the cells for the row
+    const nameCell = document.createElement("th");
+    nameCell.setAttribute("scope", "row");
+    nameCell.textContent = tag.name;
 
-  // Add the cells to the row
-  row.appendChild(nameCell);
-  row.appendChild(countCell);
-  row.appendChild(descriptionCell);
-  row.appendChild(buttonCell);
+    const countCell = document.createElement("th");
+    countCell.setAttribute("scope", "row");
+    countCell.textContent = tag.books.length;
 
-  // Add the row to the table body
-  tableBody.insertBefore(row, tableBody.childNodes[0]);
-  addEventButton();
-  addTagFormSubmit.reset();
-  addTagFormSubmit.classList.add('hidden');
-});
+    const descriptionCell = document.createElement("th");
+    descriptionCell.setAttribute("scope", "row");
+    descriptionCell.textContent = tag.description;
+
+    const buttonCell = document.createElement("th");
+    const deleteButton = document.createElement("button");
+    deleteButton.setAttribute("id", "btn-delete");
+    deleteButton.setAttribute("class", "btn btn-danger deleteTagButton");
+    deleteButton.setAttribute("data-tag-id", tag._id);
+    deleteButton.textContent = "X";
+    buttonCell.appendChild(deleteButton);
+
+    // Add the cells to the row
+    row.appendChild(nameCell);
+    row.appendChild(countCell);
+    row.appendChild(descriptionCell);
+    row.appendChild(buttonCell);
+
+    // Add the row to the table body
+    tableBody.insertBefore(row, tableBody.childNodes[0]);
+    addEventButton();
+    addTagFormSubmit.reset();
+    addTagFormSubmit.classList.add("hidden");
+  });
 }

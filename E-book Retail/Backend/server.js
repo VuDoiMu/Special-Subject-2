@@ -12,7 +12,7 @@ const axios = require("axios");
 const bodyparser = require("body-parser");
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
-const nodemailer = require('nodemailer');
+const nodemailer = require("nodemailer");
 const paginate = require("paginate-array");
 const session = require("express-session");
 const _ = require("lodash");
@@ -63,6 +63,7 @@ app.use(express.json());
 // access to static file in public
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.static(path.join(__dirname, "bookContent")));
+app.use(express.static(path.join(__dirname, "userContent")));
 app.use(express.static("public", { "Content-Type": "application/javascript" }));
 // set view engine and views
 app.set("view engine", "pug");
@@ -74,7 +75,7 @@ app.post("/payment", function (req, res) {
     (acc, item) => acc + parseFloat(item.newPrice),
     0
   );
-  
+
   stripe.customers
     .create({
       email: req.body.stripeEmail,
@@ -90,31 +91,31 @@ app.post("/payment", function (req, res) {
     })
     .then(async (charge) => {
       const cookieValue = JSON.stringify([]);
-      
+
       // Send email using Nodemailer
       const transporter = nodemailer.createTransport({
-        service: 'gmail',
+        service: "gmail",
         auth: {
-          user: '1901040026@s.hanu.edu.vn',
-          pass: '1901040026'
-        }
+          user: "1901040026@s.hanu.edu.vn",
+          pass: "1901040026",
+        },
       });
 
       const mailOptions = {
-        from: '1901040026@s.hanu.edu.vn',
+        from: "1901040026@s.hanu.edu.vn",
         to: req.body.stripeEmail,
-        subject: 'Checkout Emanga',
-        text: 'Checkout successful'
+        subject: "Checkout Emanga",
+        text: "Checkout successful",
       };
 
       transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
           console.log(error);
         } else {
-          console.log('Email sent: ' + info.response);
+          console.log("Email sent: " + info.response);
         }
       });
-      
+
       res.setHeader("Set-Cookie", `cart=${cookieValue};`);
       res.redirect("/?alert=Checkout+successfully");
     })
@@ -317,6 +318,7 @@ app.get("/tai-khoan", async (req, res) => {
   } catch (error) {
     console.log(error);
   }
+
   res.render("tai-khoan.pug", {
     token,
     tags: tagData,
@@ -331,8 +333,8 @@ app.get("/tai-khoan", async (req, res) => {
 app.get("/tag/:name", async (req, res) => {
   const name = req.params.name;
   let singleTag = await axios.get(`http://localhost:3500/tag/get/${name}`);
-  singleTag = singleTag.data.tag
-  console.log(singleTag);
+  singleTag = singleTag.data.tag;
+
   const response = await axios.get(`http://localhost:3500/tag/books/${name}`);
   let booksTag = response.data.books[0].books;
   console.log(singleTag);
@@ -393,7 +395,7 @@ app.get("/tag/:name", async (req, res) => {
     isTag,
     user,
     cartNumber: cartNumber,
-    singleTag
+    singleTag,
   });
 });
 
@@ -527,7 +529,7 @@ app.get("/product-list/:name?/:page?", async (req, res) => {
     sortType,
     limit,
     user,
-    cartNumber: CartNumber,
+    cartNumber: cartNumber,
   });
 });
 

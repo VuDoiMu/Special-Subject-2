@@ -92,15 +92,17 @@ html(lang='en', dir='ltr')
                         //- input#proname.form-control(type='text',name='updateCover' ,autocomplete='off', placeholder='Image link' value=book.image)
 
                         label(for="name") Cover:
-                        <input type="file" id="file-cover" name="file"  style="display:block" multiple />
+                        <input type="file" id="file-cover" name="images"  style="display:block" multiple />
                         img(src=book.image style="display:block; margin-bottom:2rem")
                         label(for="name") Content:
-                        <input type="file" name="file"  id="file-content" style="display:block" multiple />
+                        <input type="file" name="file"  id="content-images" style="display:block" multiple />
 
                         button(id='btn-submit-update' class='btn btn-success' type="submit") Update
                             .container.text-center
 
-                
+
+    
+       
 
 
         //- .w-100.btn.btn-success.insertmsg Data Inserted Successfully...!
