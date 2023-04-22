@@ -63,7 +63,7 @@ html(lang='en', dir='ltr')
                                 th(scope='col') Description
                                 th(scope='col') Action
                         tbody#tbody
-                            each tag in tagData.reverse() 
+                            each tag in tagData
                                 tr
                                 th( scope="row") #{tag.name}
                                 th( scope="row") #{tag.books.length}

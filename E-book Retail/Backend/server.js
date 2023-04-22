@@ -290,9 +290,10 @@ app.get("/product/:id", async (req, res) => {
 app.get("/tai-khoan", async (req, res) => {
   const token = req.cookies.token;
   let decoded = "";
+  let updateUser
   if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
-    const updateUser = await User.findById({ _id: decoded.userId });
+    updateUser = await User.findById({ _id: decoded.userId });
     const newtoken = jwt.sign(
       {
         userId: updateUser._id,
@@ -322,7 +323,7 @@ app.get("/tai-khoan", async (req, res) => {
   } catch (error) {
     console.log(error);
   }
-
+console.log(updateUser)
   res.render("tai-khoan.pug", {
     token,
     tags: tagData,
@@ -331,6 +332,7 @@ app.get("/tai-khoan", async (req, res) => {
     orders,
     moment,
     cartNumber: cartNumber,
+    image: updateUser.image
   });
 });
 
@@ -423,6 +425,7 @@ app.get("/search/:searchPara?/:page?", async (req, res) => {
         role: updateUser.role,
         username: updateUser.username,
         favorbooks: updateUser.favorbooks,
+        image: updateUser.image
       },
       "thisisourwebsite!"
     );
@@ -510,6 +513,7 @@ app.get("/product-list/:name?/:page?", async (req, res) => {
         role: updateUser.role,
         username: updateUser.username,
         favorbooks: updateUser.favorbooks,
+        image: updateUser.image
       },
       "thisisourwebsite!"
     );
@@ -609,6 +613,10 @@ app.get("/admin/category/:page", async (req, res) => {
   const tag = await axios
     .get("http://localhost:3500/tag")
     .then((res) => (tagData = res.data.tags));
+    console.log(tag)
+    for (let i = 0; i < tag.length; i++) {
+      console.log(tag[i].books.length)
+    }
   const response = await axios.get("http://localhost:3500/management");
   const data = response.data;
   const order = await axios.get("http://localhost:3500/order");
@@ -729,6 +737,7 @@ app.get("/author/:searchPara", async (req, res) => {
         role: updateUser.role,
         username: updateUser.username,
         favorbooks: updateUser.favorbooks,
+        image: updateUser.image
       },
       "thisisourwebsite!"
     );
