@@ -236,18 +236,20 @@ app.get("/product/:id", async (req, res) => {
   const tagResponse = await axios.get("http://localhost:3500/tag");
   const tagData = tagResponse.data.tags;
 
-  // const booksTag = [];
-let booksArray
+  const booksTag = [];
   // Retrieve the books associated with each tag
   for (const tagItem of book.tag) {
     const response = await axios.get(
       `http://localhost:3500/tag/books/${tagItem}`
     );
     if (response.data.books[0]) {
-     booksArray = response.data.books[0].books;
-      // booksTag.push(booksArray);
+     const booksArray = response.data.books[0].books;
+     if(booksArray !=undefined) {
+       booksTag.push(booksArray);
+     }
     }
   }
+  console.log(booksTag);
   const token = req.cookies.token;
   let decoded = "";
   if (token) {
@@ -273,7 +275,7 @@ let booksArray
     book,
     comments,
     tags: tagData,
-    bookTag: booksArray,
+    booksTag,
     token,
     decoded,
     itemCount,

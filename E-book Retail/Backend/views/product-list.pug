@@ -367,9 +367,15 @@ html(lang="vi")
                   label.label-select(for="hienthi-select") Show
                 else 
                   label.label-select(for="hienthi-select") Show
-                select.hienthi-select
-                  each val in [10, 20, 30]
-                    option(value=val selected=limit==val)= val
+                if isTag
+                  select.hienthi-select.isTag
+                    each val in [10, 20, 30]
+                      option(value=val selected=limit==val)= val
+                else 
+                  select.hienthi-select
+                    each val in [10, 20, 30]
+                      option(value=val selected=limit==val)= val
+                
               .sap-xep
                 label.label-select(for="sapxep-select") Filter
                 select.sapxep-select
