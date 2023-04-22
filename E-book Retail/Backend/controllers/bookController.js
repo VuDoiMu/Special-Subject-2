@@ -124,34 +124,57 @@ const deleteBook = async (req, res) => {
 };
 
 const updateBook = async (req, res) => {
-  if (!req.body._id) {
+
+  if (!req.params.id) {
     return res.status(400).json({ message: "Book ID required!" });
   }
 
-  const book = await Book.findOne({ _id: req.body._id }).exec();
+  const book = await Book.findOne({ _id: req.params.id }).exec();
 
   if (!book) {
     return res
       .status(204)
-      .json({ message: `User does not exist with ${req.body._id}!` });
+      .json({ message: `User does not exist with ${req.params.id}!` });
   }
 
   const updateData = req.body;
-  
+  const bookID = req.params.id;
+
 
   const bookUpdated = await Book.findOneAndUpdate(
-    { _id: req.body._id },
+    { _id: bookID },
     updateData,
     {
       new: true,
     }
   );
-    const folderName = `./bookContent/${book._id}/`;
-    
+
+  const bookContentFolder = "./bookContent";
+  try {
+    if (!fileSystem.existsSync(bookContentFolder)) {
+      fileSystem.mkdirSync(bookContentFolder);
+      console.log("bookContent folder added");
+    }
+  } catch (err) {
+    console.error(err);
+  }
+
+  const folderName = `./bookContent/${bookID}/`;
+  try {
+    if (!fileSystem.existsSync(folderName)) {
+      fileSystem.mkdirSync(folderName);
+      console.log(`content folder for bood ID: ${bookID} added`);
+    }
+  } catch (err) {
+    console.error(err);
+  }
+
+  console.log(req.files.images);
+
   const uploadedImages = req.files.images;
   for (let i = 0; i<uploadedImages.length; i++ ) {
-   const thisImage = uploadImages[i];
-   const uploadPath = `./uploads/${thisImage[filename]}`;
+   const thisImage = uploadedImages[i];
+   const uploadPath = `./uploads/${thisImage["filename"]}`;
 
    moveFile(uploadPath, folderName);
   }
