@@ -74,9 +74,10 @@ async function uploadImages(event) {
   }
   formData.append("tag", tag);
   console.log(formData.get("tag"));
+  const id = document.getElementById("bookId").innerHTML;
   fetch("http://localhost:3500/uploadBook", {
     method: "POST",
-    body: formData,
+    body: { formData, id },
   })
     .then((response) => response.json())
     .then((data) => {
