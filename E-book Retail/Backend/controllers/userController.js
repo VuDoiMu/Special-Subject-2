@@ -131,12 +131,15 @@ const updateInfo = async (req, res) => {
       new: true,
     });
 
-    if (!updatedUser)
+    if (!updatedUser) {
       return res
         .status(401)
         .json({ success: false, message: "not know what ưởng" });
-
-    res.json({ success: true, message: "new", updatedUser });
+    }
+    else {
+      res.json({ success: true, message: "new", updatedUser });
+      console.log("Ben trong controller");
+    }
   } catch (error) {
     console.log(error);
   }

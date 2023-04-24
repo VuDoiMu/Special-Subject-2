@@ -136,7 +136,7 @@ html(lang="vi")
                 )
                 a.btn.btn-secondary.rounded-circle(href="#")
                   if decoded
-                    img#img-account(alt="account-image" src=decoded.image)
+                    img#img-account(alt="account-image" src=image)
                   else
                     i.fa.fa-user
                 a.nav-link.text-dark.text-uppercase(
@@ -334,7 +334,10 @@ html(lang="vi")
     -if(searchPara)
       div#search-result
         .container
-          span(class="result-text") Search result: 
+          if authorPage
+            span(class="result-text") Author name:
+          else
+            span(class="result-text") Search result: 
           span(class="result")= searchPara
     -else 
       section.breadcrumbbar
@@ -344,7 +347,7 @@ html(lang="vi")
               a(href="/") Trang chủ
             li.breadcrumb-item.active
               -if(name)
-                a(href="/tag/" + name + "?limit=10")=name.toUpperCase()
+                a()=name.toUpperCase()
           if singleTag
             div 
               span Description: 
@@ -370,6 +373,10 @@ html(lang="vi")
                   label.label-select(for="hienthi-select") Show
                 if isTag
                   select.hienthi-select.isTag
+                    each val in [10, 20, 30]
+                      option(value=val selected=limit==val)= val
+                else if authorPage
+                  select.hienthi-select.isAuthor
                     each val in [10, 20, 30]
                       option(value=val selected=limit==val)= val
                 else 

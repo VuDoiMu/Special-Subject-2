@@ -155,7 +155,7 @@ html(lang="li")
                 )
                 a.btn.btn-secondary.rounded-circle(href="#")
                   if decoded
-                    img#img-account(alt="account-image" src=decoded.image)
+                    img#img-account(alt="account-image" src=image)
                   else
                     i.fa.fa-user
                   
@@ -169,6 +169,10 @@ html(lang="li")
                     | Account
               .dropdown-menu(aria-labelledby="dropdownMenuButton")
                 if token
+                  a.dropdown-item.nutdangky.text-center.mb-2( 
+                  href="/tai-khoan"
+                  style="cursor: pointer"
+                  ) Account detail
                   a.dropdown-item.nutdangky.text-center.mb-2( 
                   id="logout"
                   style="cursor: pointer"
@@ -361,13 +365,15 @@ html(lang="li")
     // nội dung của trang
     section.read-container
       div.read
-        h1 #{book.name}
-        img(src=`/${book._id}/cover.png` style="object-fit: cover;" )
+        h1.name-book #{book.name}
+        img.cover-img(src=`/${book._id}/cover.png` style="object-fit: cover;" )
      
         each value, key in book.content
-          
-
-          img(src=`${book.content[key]}` style="object-fit: cover;" )
+          img.book-img(src=`${book.content[key]}` style="object-fit: cover;" )
+      div.message
+        p.thank Thank you for reading 
+        p.invitation You can find and buy more book in 
+          a(href="/product-list/general-book/1") here
         //- #{book.content}
     //-     // chi tiết 1 sản phẩm
     //-     .product-detail.bg-white.p-4

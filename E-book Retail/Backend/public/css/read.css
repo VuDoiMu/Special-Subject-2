@@ -2,9 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.read {
+  flex-direction: column;
 }
 
 h1 {

@@ -934,6 +934,7 @@ li.active .fa-star {
 .giacu.text-muted {
   font-size: 13px;
   color: #919191 !important;
+  text-decoration: line-through;
 }
 
 .giamoi {
@@ -1186,6 +1187,7 @@ h3.account-header {
 
 #search-result .result-text {
   font-weight: 500;
+  margin-right: 10px;
 }
 
 #search-result .result {
@@ -1418,4 +1420,30 @@ h3.account-header {
 #read-btn {
   background-color: greenyellow;
   font-family: "Roboto", sans-serif;
+}
+
+.cover-img,
+.book-img {
+  width: 732px;
+}
+
+.name-book {
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.message {
+  text-align: center;
+}
+
+.message .thank {
+    margin-top: 15px;
+    margin-bottom: 0px;
+    color: #e81a1a;
+    font-size: 32px;
+}
+
+.message a {
+  color: #f5a623;
 }

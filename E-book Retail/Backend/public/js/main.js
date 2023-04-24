@@ -737,13 +737,13 @@ if (logoutVar) {
       },
     });
     const content = await sendData.json();
-    // let currentUrl = window.location.href;
-    // if (currentUrl.indexOf("/tai-khoan") !== -1) {
-    window.location.href = "/";
-    // } else {
-    //   location.reload();
-    //   location.assign(currentUrl);
-    // }
+    let currentUrl = window.location.href;
+    if (currentUrl.indexOf("/tai-khoan") !== -1 || currentUrl.indexOf("/read-book") !== -1 || currentUrl.indexOf("/gio-hang") !== -1) {
+      window.location.href = "/";
+    } else {
+      location.reload();
+      location.assign(currentUrl);
+    }
   });
 }
 
@@ -952,7 +952,7 @@ if (hienthiSelect) {
     const pageParam = urlParams.get("page"); // get the value of the 'page' parameter
     // console.log("pageParam:", pageParam); // add this line to log the value of pageParam
 
-    if (hienthiSelect.classList.contains("isTag")) {
+    if (hienthiSelect.classList.contains("isTag") || hienthiSelect.classList.contains("isAuthor")) {
       const newUrl = `${urlWithoutParams}?page=1&limit=${selectedValue}&sortType=${selectedSort}`;
       location.assign(newUrl);
     } else {
@@ -1129,22 +1129,24 @@ addEventListenerComment();
 
 const toggleCheckbox = document.querySelector("#toggle-password-change");
 const thayDoiMk = document.querySelector(".thay-doi-mk");
-
-toggleCheckbox.addEventListener("change", function () {
-  if (this.checked) {
-    thayDoiMk.style.display = "block";
-  } else {
-    thayDoiMk.style.display = "none";
-  }
-});
+if(toggleCheckbox) {
+  toggleCheckbox.addEventListener("change", function () {
+    if (this.checked) {
+      thayDoiMk.style.display = "block";
+    } else {
+      thayDoiMk.style.display = "none";
+    }
+  });
+}
 
 const updateButton = document.querySelector(".button-capnhat");
 if (updateButton) {
-  updateButton.addEventListener("click", () => {
+  updateButton.addEventListener("click", async () => {
     const fullNameInput = document.querySelector('input[name="account-hoten"]');
     const phoneInput = document.querySelector('input[name="account-phone"]');
     const dobInput = document.querySelector('input[name="account-dob"]');
     const mkmoiInput = document.querySelector('input[name="account-mkmoi"]');
+    const imageAvatar = document.querySelector('#img-account');
     const xacnhanmkmoiInput = document.querySelector(
       'input[name="account-xacnhan-mkmoi"]'
     );
@@ -1156,18 +1158,17 @@ if (updateButton) {
     const file = fileAvatar.files[0];
     const formData = new FormData();
     formData.append("avatar", file);
-    fetch(`http://localhost:3500/uploadAvatar`, {
+    let imageData = await fetch(`http://localhost:3500/uploadAvatar`, {
       method: "POST",
       body: formData,
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Success:", data);
+        return data;
       })
       .catch((error) => {
         console.error("Error:", error);
       });
-
     // check if new password and confirm password match
     if (mkmoiInput.value !== xacnhanmkmoiInput.value) {
       alert("New password and confirm password do not match");
@@ -1190,23 +1191,13 @@ if (updateButton) {
     })
       .then((response) => {
         if (response.ok) {
-          console.log("Get cookie");
-          // const token = getCookie("token");
-          // console.log(token)
-          // const updatedDecoded = {
-          //   ...token,
-          //   username: fullNameInput.value
-          // };
-          // const newtoken =updatedDecoded
-          // console.log(newtoken);
-          // const expires = new Date(Date.now() + 86400000).toUTCString();
-          // document.cookie = `token=${JSON.stringify(newtoken)}; expires=${expires}; path=/`;
-          console.log(username);
-          console.log(fullNameInput.value);
           alert("Update successful");
           mkmoiInput.value = "";
           xacnhanmkmoiInput.value = "";
           username.innerText = fullNameInput.value;
+          
+          let imageUrl = imageData._id + "/" + file.name;
+          imageAvatar.src = imageUrl;
         } else {
           alert("Update failed");
         }
@@ -1217,3 +1208,20 @@ if (updateButton) {
       });
   });
 }
+
+const imgs = document.querySelectorAll('.read img');
+console.log("Hi");
+console.log("Hi");
+console.log("Hi");
+console.log("Hi");
+console.log("Hi");
+console.log("Hi");
+console.log("Hi");
+console.log("Hi");
+console.log("Hi");
+
+imgs.forEach(img => {
+  img.addEventListener('contextmenu', event => {
+    event.preventDefault();
+  });
+});
