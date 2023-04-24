@@ -396,8 +396,14 @@ html(lang="vi")
                 .img-upload.my-3 
                   .row
                     label(for="name" class="col-md-2 offset-md-2") Avatar:
-                    <input class="col-md-4" type="file" id="file-avatar" name="avatar"  style="display:block"  />
-                    //- <img src="#" alt="Chosen file" id="image-preview">     
+                    input#file-avatar.col-md-4(type="file"
+                    name="avatar"
+                    style="display:block"  
+                    value=user && user.image)
+                  if user.image
+                    .row
+                      div.avatar-img
+                        img#avatar-preview(alt="avatar-image" src=user.image)
                 .checkPassword.my-3
                   .row
                     input#toggle-password-change(type="checkbox")
@@ -434,7 +440,7 @@ html(lang="vi")
                         th Ngày mua
                         th Sản phẩm
                         th Tổng tiền
-                      each order in orders
+                      each order in orders.reverse()
                         tr
                           td= order._id
                           -const formattedDate = moment(order.createdDate).format('DD/MM/YYYY');

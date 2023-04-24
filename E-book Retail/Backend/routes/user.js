@@ -8,6 +8,7 @@ router.route("/login").post(userController.login);
 router.route("/logout").post(userController.logout);
 router.route("/deleteAll").delete(userController.deleteUser);
 router.route("/getUser").get(userController.getUserInfor);
+router.route("/getUser/:id").get(userController.getUserInforById);
 router.route("/sendmail").post(userController.sendMail);
 router.route("/getAllUser").get(userController.getAllUser);
 router.route("/profile").get(userController.userProfile);

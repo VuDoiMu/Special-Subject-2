@@ -175,6 +175,17 @@ const getUserInfor = async (req, res) => {
     res.json(error);
   }
 }
+
+const getUserInforById = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const userInfor = await User.findById(userId);
+    res.json(userInfor)
+  } catch (error) {
+    res.json(error);
+  }
+}
+
 let sendMail = async (req, res) => {
   try {
     const token = req.cookies.token;
@@ -284,5 +295,6 @@ module.exports = {
   getAllUser,
   getUserInfor,
   userProfile,
-  addImage
+  addImage,
+  getUserInforById
 };

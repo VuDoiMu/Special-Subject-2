@@ -55,7 +55,7 @@ login.addEventListener("click", async (e) => {
       showToast("Login successfully!");
     }
     if (content.role == 1) {
-      location.assign("/admin/dashboard");
+      location.assign("/admin/dashboard/1");
     }
   }, 200);
 });

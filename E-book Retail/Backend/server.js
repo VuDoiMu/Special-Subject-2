@@ -570,7 +570,7 @@ app.get("/product-list/:name?/:page?", async (req, res) => {
   });
 });
 
-app.get("/admin/dashboard", async (req, res) => {
+app.get("/admin/dashboard/:page", async (req, res) => {
   const response = await axios.get("http://localhost:3500/management");
   const data = response.data;
   const user = await axios.get("http://localhost:3500/auth/getAllUser");
@@ -579,6 +579,39 @@ app.get("/admin/dashboard", async (req, res) => {
   const disData = discount.data;
   const topSell = await axios.get("http://localhost:3500/catalog/topsell");
   const topsellBook = topSell.data;
+  console.log(topsellBook);
+  const order = await axios.get("http://localhost:3500/order");
+  const orderData = order.data;
+  let totalBooks = 0;
+  let totalProfits = 0;
+  for (let i = 0; i < orderData.length; i++) {
+    totalBooks += orderData[i].items.length;
+    totalProfits += orderData[i].finalTotal;
+  }
+  
+  for (let i = 0; i < orderData.length; i++) {
+    let user = await axios.get("http://localhost:3500/auth/getUser/" + orderData[i].userId);
+    user = user.data
+    orderData[i] = { ...orderData[i], userId: user}
+  }
+  const page = parseInt(req.params.page) || 1;
+  const limit = 10;
+  const paginatedBooks = paginate(topsellBook, page, limit);
+  res.render("admin-home.pug", {
+    data,
+    userData,
+    disData,
+    orders: orderData.reverse().slice(0,10),
+    topsellBook: paginatedBooks.data,
+    currentPage: paginatedBooks.currentPage,
+    totalPages: paginatedBooks.totalPages,
+    totalBooks,
+    totalProfits,
+    moment
+  });
+});
+
+app.get("/admin/sale", async (req, res) => {
   const order = await axios.get("http://localhost:3500/order");
   const orderData = order.data;
   let totalBooks = 0;
@@ -588,15 +621,13 @@ app.get("/admin/dashboard", async (req, res) => {
     totalProfits += orderData[i].finalTotal;
   }
 
-  res.render("admin-home.pug", {
-    data,
-    userData,
-    disData,
-    orders: order.data,
-    topsellBook: topsellBook,
-    totalBooks,
-    totalProfits,
-  });
+  for (let i = 0; i < orderData.length; i++) {
+    let user = await axios.get("http://localhost:3500/auth/getUser/" + orderData[i].userId);
+    user = user.data
+    orderData[i] = { ...orderData[i], userId: user }
+  }
+
+  res.render("admin-sale.pug", { orderData: orderData.reverse(), totalBooks, totalProfits, moment});
 });
 
 app.get("/admin/login", (req, res) => {
@@ -726,18 +757,7 @@ app.get("/admin/update/:id", async (req, res) => {
   res.render("update.pug", { book: data, tags });
 });
 
-app.get("/admin/sale", async (req, res) => {
-  const order = await axios.get("http://localhost:3500/order");
-  const orderData = order.data;
-  let totalBooks = 0;
-  let totalProfits = 0;
-  for (let i = 0; i < orderData.length; i++) {
-    totalBooks += orderData[i].items.length;
-    totalProfits += orderData[i].finalTotal;
-  }
 
-  res.render("admin-sale.pug", { orderData, totalBooks, totalProfits });
-});
 
 app.post("/create-order", async (req, res) => {
   const cartItems = JSON.parse(req.cookies["cart"]);
@@ -876,7 +896,7 @@ app.get("/read-book/:id", async (req, res) => {
     decoded,
     itemCount,
     moment,
-    image: updateUser.image
+    image: updateUser && updateUser.image
   });
 });
 

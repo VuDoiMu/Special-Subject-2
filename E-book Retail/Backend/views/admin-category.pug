@@ -22,7 +22,7 @@ html(lang='en', dir='ltr')
                     span.logo_name EManga
             ul.nav-links
                 li
-                    a.active(href='/admin/dashboard')
+                    a.active(href='/admin/dashboard/1')
                         i.bx.bx-grid-alt
                         span.links_name Dashboard
                 li
@@ -37,6 +37,10 @@ html(lang='en', dir='ltr')
                     a(href='/admin/sale')
                         i.bx.bx-list-ul
                         span.links_name Order list
+                li.log_out
+                    a(href='/admin/login')
+                        i.bx.bx-log-out
+                        span.links_name Log out
          
                 //- li.log_out
                 //-     a(href='/admin/login')
@@ -63,7 +67,7 @@ html(lang='en', dir='ltr')
                                 th(scope='col') Description
                                 th(scope='col') Action
                         tbody#tbody
-                            each tag in tagData
+                            each tag in tagData.reverse()
                                 tr
                                 th( scope="row") #{tag.name}
                                 th( scope="row") #{tag.books.length}

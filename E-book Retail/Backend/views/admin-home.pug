@@ -7,7 +7,9 @@ html(lang='en', dir='ltr')
     link(rel='stylesheet', href='/css/admin-home.css')
     // Boxicons CDN Link
     link(href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css', rel='stylesheet')
+    link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T', crossorigin='anonymous')
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    link(rel='stylesheet', href='/css/admin-management.css')
   body
     .sidebar
       .logo-details
@@ -55,26 +57,22 @@ html(lang='en', dir='ltr')
             .right-side
               .box-topic Book sold
               .number #{totalBooks}
-
             i.bx.bx-cart-alt.cart
           .box
             .right-side
               .box-topic Books
               .number=data.length
-              
-            i.bx.bxs-cart-add.cart.two
+            i.bx.bx-book-open.cart.two
           .box
             .right-side
               .box-topic Total 
               .number  $ #{totalProfits.toFixed(2)}
-              
-            i.bx.bx-cart.cart.three
+            i.bx.bxs-bank.cart.three
           .box
             .right-side
               .box-topic Users
               .number=userData.length
-             
-            i.bx.fa-solid.fa-user.cart.four
+            i.bx.bxs-user.cart.four
         .sales-boxes
           .recent-sales.box
             .title Recent Sales
@@ -83,37 +81,54 @@ html(lang='en', dir='ltr')
                 li.topic Date
                 for order in orders
                     li
-                   
-                      a(href='#') #{order.createdDate}
-                
+                      -const formattedDate = moment(order.createdDate).format('DD/MM/YYYY');
+                      a() #{formattedDate}
               ul.details
                 li.topic User
                 for order in orders
                   li
-                    a(href='#') #{order.userId}
-              
+                    a() #{order.userId.username.charAt(0).toUpperCase() + order.userId.username.slice(1)}
               ul.details
                 li.topic Books
                 for order in orders
                   li
-                    a(href='#') #{order.items.length}
+                    a() #{order.items.length}
               
               ul.details
                 li.topic Total
                 for order in orders
                   li
-                    a(href='#') $ #{order.finalTotal}
+                    a() $ #{order.finalTotal}
                
             .button
               a(href='/admin/sale') See All
           .top-sales.box
+            ul.pagination.justify-content-center
+              - const maxPagesToShow = totalPages; 
+              - const middlePage = Math.ceil(maxPagesToShow/2);
+              - let startPage = Math.max(currentPage - middlePage, 1);
+              - let endPage = Math.min(startPage + maxPagesToShow - 1, totalPages);
+              - if (endPage - startPage < maxPagesToShow) {
+              -   startPage = Math.max(endPage - maxPagesToShow + 1, 1);
+              - }    
+              if currentPage > 1
+                li.page-item
+                  a.page-link(href=`/admin/dashboard/${currentPage-1}`) Previous
+              - for (var i = startPage; i <= endPage; i++) {
+                  li.page-item(class=i===currentPage ? 'active' : '')
+                    a.page-link(href=`/admin/dashboard/${i}`)= i
+              - }
+              if (currentPage < totalPages)
+                li.page-item
+                  a.page-link(href=`/admin/dashboard/${currentPage+1}`) Next
             .title Top Seling Product
             ul.top-sales-details
               for book in topsellBook
                 li
-                  a(href='#')
+                  a.purchase-link()
                     // <img src="images/sunglasses.jpg" alt="">
                     span.product #{book.name}
-                  span.price #{book.price}
+                  span.luotmua #{book.countSale} purchases
+                  span.price #{book.price}$
              
     script(src='/js/admin.js')

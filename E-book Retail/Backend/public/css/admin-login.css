@@ -126,9 +126,10 @@ body {
 }
 
 label {
-  font-size: 80%;
+  font-size: 120%;
 }
 
 input {
   font-size: 110%;
+  opacity: 0.8;
 }

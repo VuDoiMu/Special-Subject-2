@@ -381,28 +381,6 @@ html(lang="vi")
                             i.fa.fa-chevron-right.float-right
 
                           hr
-                          .pttt
-                            h6.header.text-uppercase Chọn phương thức thanh toán
-                            .option.mb-2
-                              input#cod(
-                                checked="" 
-                                name="pttt" 
-                                type="radio"
-                                )
-                              label(for="cod") Thanh toán bằng Momo
-                            .option.option2
-                              input#atm(
-                                name="pttt" 
-                                type="radio"
-                                )
-                              label.chuyenkhoan(for="atm")
-                                | Thanh toán chuyển khoản trước
-                                |   qua Thẻ ATM/Internet Banking
-                              p.mt-4
-                                | - Quý khách chỉ chuyển khoản khi được xác nhận có đủ
-                                |   sách qua điện thoại từ Emanga
-
-                          hr
                           form(action="payment" method="POST")
                             button.btn.btn-lg.btn-block.btn-checkout.text-uppercase.text-white(style="background: #F5A623") Đặt mua
                               script(

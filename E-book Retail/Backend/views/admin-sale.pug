@@ -18,7 +18,7 @@ html(lang='en', dir='ltr')
         span.logo_name EManga
       ul.nav-links
         li
-          a.active(href='/admin/dashboard')
+          a.active(href='/admin/dashboard/1')
             i.bx.bx-grid-alt
             span.links_name Dashboard
         li
@@ -32,7 +32,7 @@ html(lang='en', dir='ltr')
         li
           a(href='/admin/sale')
             i.bx.bx-list-ul
-            span.links_name Sale list
+            span.links_name Order list
         li.log_out
           a(href='/admin/login')
             i.bx.bx-log-out
@@ -67,18 +67,13 @@ html(lang='en', dir='ltr')
             .right-side
               .box-topic Total Books Sold
               .number #{totalBooks}
-
-            i.bx.bxs-cart-add.cart.two
+            i.bx.bx-book-open.cart.two
           .box
             .right-side
               .box-topic Total Profit
               .number $ #{totalProfits.toFixed(2)}
-            
-
-            
-            i.bx.bxs-cart-download.cart.four
+            i.bx.bxs-bank.cart.three
               main
-
 
         // Table
         .table-data
@@ -96,8 +91,9 @@ html(lang='en', dir='ltr')
             tbody#tbody
                 each order in orderData
                     tr
-                    th( scope="row") #{order.createdDate}
-                    th( scope="row") #{order.userId}
+                    - const formattedDate = moment(order.createdDate).format('DD/MM/YYYY');
+                    th( scope="row") #{formattedDate}
+                    th( scope="row") #{order.userId.username.charAt(0).toUpperCase() + order.userId.username.slice(1)}
                     th( scope="row") #{order.items.length}
                     th( scope="row") $ #{order.finalTotal}
                     //- th( scope="row")

@@ -261,7 +261,7 @@ nav .profile-details i {
 
 /* left box */
 .home-content .sales-boxes .recent-sales {
-  width: 65%;
+  width: 50%;
   background: #fff;
   padding: 20px 30px;
   margin: 0 20px;
@@ -313,7 +313,7 @@ nav .profile-details i {
 
 /* Right box */
 .home-content .sales-boxes .top-sales {
-  width: 35%;
+  width: 50%;
   background: #fff;
   padding: 20px 30px;
   margin: 0 20px 0 0;
@@ -323,7 +323,6 @@ nav .profile-details i {
 .sales-boxes .top-sales li {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   margin: 10px 0;
 }
 .sales-boxes .top-sales li a img {
@@ -334,11 +333,32 @@ nav .profile-details i {
   margin-right: 10px;
   background: #333;
 }
-.sales-boxes .top-sales li a {
+.sales-boxes .top-sales li a.purchase-link {
+  min-width: 55%;
+  max-width: 55%;
   display: flex;
   align-items: center;
   text-decoration: none;
 }
+
+.luotmua {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.table td,
+.table th {
+  vertical-align: middle !important;
+}
+
+.details.user {
+  margin-bottom: 25px;
+}
+
+.details.user li {
+  height: 25.6px;
+}
+
 .sales-boxes .top-sales li .product,
 .price {
   font-size: 17px;

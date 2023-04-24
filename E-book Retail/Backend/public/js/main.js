@@ -444,7 +444,7 @@ $(function () {
                         <a href="product/${item.id}" class="img">
                             <img src="${
                               item.image
-                            }.jpg" class="img-fluid" alt="${item.tag}">
+                            }" class="img-fluid" alt="${item.tag}">
                         </a>
                         <div class="item-caption d-flex w-100">
                             <div class="item-info ml-3">
@@ -486,7 +486,7 @@ $(function () {
                       
                         <div class="group d-flex justify-content-between">
                             <p class="label">Phí dịch vụ:</p>
-                            <p class="phidicvu">0 ₫</p>
+                            <p class="phidicvu">0 $</p>
                         </div>
                         <div class="group d-flex justify-content-between align-items-center">
                             <strong class="text-uppercase">Tổng cộng:</strong>
@@ -713,14 +713,10 @@ if (formdangnhap) {
     // }
     window.setTimeout(() => {
       if (content.role == 0) {
-        console.log("Contetn");
-        console.log(content);
         showToast("Login successfully!");
         location.assign(currentUrl);
       } else {
-        console.log("Contetn");
-        console.log(content);
-        location.assign("/admin/dashboard");
+        location.assign("/admin/dashboard/1");
       }
     }, 2);
   });
@@ -936,7 +932,7 @@ function showToast(message) {
     setTimeout(function () {
       toastContainer.style.display = "none";
     }, 500);
-  }, 5000);
+  }, 2000);
 }
 
 // Select limit page
@@ -1147,6 +1143,9 @@ if (updateButton) {
     const dobInput = document.querySelector('input[name="account-dob"]');
     const mkmoiInput = document.querySelector('input[name="account-mkmoi"]');
     const imageAvatar = document.querySelector('#img-account');
+    const avatarInput = document.querySelector(".avatar-img img");
+    console.log(avatarInput);
+    console.log("Avatar input");
     const xacnhanmkmoiInput = document.querySelector(
       'input[name="account-xacnhan-mkmoi"]'
     );
@@ -1198,6 +1197,7 @@ if (updateButton) {
           
           let imageUrl = imageData._id + "/" + file.name;
           imageAvatar.src = imageUrl;
+          avatarInput.src = imageUrl;
         } else {
           alert("Update failed");
         }
@@ -1224,4 +1224,12 @@ imgs.forEach(img => {
   img.addEventListener('contextmenu', event => {
     event.preventDefault();
   });
+});
+
+const fileInput = document.querySelector('#file-avatar');
+const previewImage = document.querySelector('#avatar-preview');
+fileInput.addEventListener('change', (event) => {
+  const file = event.target.files[0];
+  const url = URL.createObjectURL(file);
+  previewImage.src = url;
 });

@@ -1176,3 +1176,12 @@ h3.account-header {
     font-weight: 500;
     color: #2e2e2e;
 }
+
+.avatar-img {
+    margin-left: 163px;
+}
+
+.avatar-img img{
+    width: 430px;
+    margin-top: 16px;
+}
