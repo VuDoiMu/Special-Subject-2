@@ -89,11 +89,19 @@ if (addBook) {
 }
 
 const addTagBtn = document.getElementById("add-tag-btn");
+const addDisBtn = document.getElementById("add-discount-btn");
 const addTagFormSubmit = document.getElementById("add-tag-form");
+const addDisFormSubmit = document.getElementById("add-discount-form");
 
 if (addTagBtn) {
   addTagBtn.addEventListener("click", function () {
     addTagFormSubmit.classList.remove("hidden");
+  });
+}
+
+if (addDisBtn) {
+  addDisBtn.addEventListener("click", function () {
+    addDisFormSubmit.classList.remove("hidden");
   });
 }
 

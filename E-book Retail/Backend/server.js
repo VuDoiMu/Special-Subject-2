@@ -365,6 +365,7 @@ app.get("/tag/:name", async (req, res) => {
   singleTag = singleTag.data.tag;
 
   const response = await axios.get(`http://localhost:3500/tag/books/${name}`);
+  // console.log(response.data)
   let booksTag = response.data.books[0].books;
   const sortType = req.query.sortType;
   const isTag = true;
@@ -668,6 +669,14 @@ app.get("/admin/management/:page", async (req, res) => {
     totalProfits,
   });
 });
+app.get("/admin/discount/:page", async (req, res) => {
+  const discountData = await axios.get("http://localhost:3500/discount")
+  const discounts = discountData.data.discounts
+
+  res.render("discount.pug", {
+   discounts
+  });
+});
 
 app.get("/admin/category/:page", async (req, res) => {
   const tag = await axios
@@ -720,7 +729,12 @@ app.get("/admin/add-book", async (req, res) => {
   for (let i = 0; i < tagData.length; i++) {
     tags.push(tagData[i].name);
   }
-
+  const discountData = await axios.get("http://localhost:3500/discount")
+  const discounts = discountData.data.discounts
+  const discountNames = [];
+  for (let i = 0; i < discounts.length; i++) {
+    discountNames.push(discounts[i].name);
+  }
   const response = await axios.get("http://localhost:3500/management");
   const data = response.data;
   const order = await axios.get("http://localhost:3500/order");
@@ -733,6 +747,7 @@ app.get("/admin/add-book", async (req, res) => {
   }
 
   res.render("add-book.pug", {
+    discountNames,
     data,
     orderData,
     tags,

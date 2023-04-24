@@ -36,7 +36,7 @@ html(lang='en', dir='ltr')
                 li
                     a(href='/admin/discount/1')
                         i.bx.bx-list-ul
-                        span.links_name Discount Management 
+                        span.links_name Discount mângement
                 li
                     a(href='/admin/sale')
                         i.bx.bx-list-ul
@@ -57,45 +57,32 @@ html(lang='en', dir='ltr')
                     span.dashboard Dashboard
         
             .home-content
-               
-    
-
-   
-
-
-
-
-          
-  
-                button(id="add-book"  class='btn btn-success' type="submit") Add new Book    
+                button(id="add-discount-btn"  class='btn btn-success' type="submit") Add new Discount 
+                form#add-discount-form.hidden
+                    input#tag-name.form-control(type="text", name="name", required, placeholder="Discount name")
+                    input#tag-description.form-control(type="text", name="name", required, placeholder="Discount Rate")
+                    button(type="submit" class="btn btn-primary") Add
                 // Table
                 .table-data
                     table.table
                         thead
                             tr
-                                th(scope='col') Book name
-                                th(scope='col') Author
-                                th(scope='col') Price
-                                th(scope='col') Sold
+                                th(scope='col') Discount name
+                                th(scope='col') Discount Rate
+                                th(scope='col') Discount Number
                                 th(scope='col') Action
 
 
 
                         tbody#tbody
-                            each book in books 
+                            each discount in discounts.reverse()
                                 tr
-                                th( scope="row") #{book.name}
-                                th( scope="row") #{book.author}
-                                th( scope="row") #{book.price}
-                                th( scope="row") #{book.countSale}
+                                th( scope="row") #{discount.name}
+                                th( scope="row") #{discount.discountRate}
+                                th( scope="row") #{discount.discountItem.length}
                                 th( scope="row")
 
-                                    button(id='btn-update' class='btn btn-warning updateButton' name=`${book._id}`) 
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-                                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
-                                        </svg>
-
-                                    button(id=`btn-delete` name=`${book._id}`  class='btn btn-danger deleteButton') X
+                                    button(id=`btn-delete` name=`${discount._id}`  class='btn btn-danger deleteButton') X
                         ul.pagination.justify-content-center
                             - const maxPagesToShow = totalPages; 
                             - const middlePage = Math.ceil(maxPagesToShow/2);
@@ -106,12 +93,12 @@ html(lang='en', dir='ltr')
                             - }    
                             if currentPage > 1
                                 li.page-item
-                                    a.page-link(href=`/admin/management/${currentPage-1}`) Previous
+                                    a.page-link(href=`/admin/discount/${currentPage-1}`) Previous
                             - for (var i = startPage; i <= endPage; i++) {
                                 li.page-item(class=i===currentPage ? 'active' : '')
-                                    a.page-link(href=`/admin/management/${i}`)= i
+                                    a.page-link(href=`/admin/discount/${i}`)= i
                             - }
                             if (currentPage < totalPages)
                                 li.page-item
-                                    a.page-link(href=`/admin/management/${currentPage+1}`) Next
+                                    a.page-link(href=`/admin/discount/${currentPage+1}`) Next
     script(src='/js/admin.js' )

@@ -472,6 +472,15 @@ nav .profile-details i {
   width: 50%;
 }
 
+#add-discount-form input,
+#add-discount-form button {
+  margin: 10px;
+}
+
+#add-discount-form input {
+  width: 50%;
+}
+
 .hidden {
   display: none;
 }
