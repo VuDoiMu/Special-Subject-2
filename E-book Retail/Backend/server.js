@@ -22,11 +22,6 @@ var Publishable_Key =
 var Secret_Key =
   "sk_test_51MwJlsK54HlkliE64ML0faNNckw90JTohQ7zN32WoD4sFA6MN9LHOKU7YTuUBrztB78SaVUveOGDHy5HGNLR2dJx00kpzqu040";
 
-var Publishable_Key =
-  "pk_test_51MwJlsK54HlkliE6zSFSgYLmzilMR8F8z4k9Uni8OvLAcvGv5kxi2LBjWfDMricBAPeDZEwVwHiwEWG3dgEbkX9Q00ljMiDta4";
-var Secret_Key =
-  "sk_test_51MwJlsK54HlkliE64ML0faNNckw90JTohQ7zN32WoD4sFA6MN9LHOKU7YTuUBrztB78SaVUveOGDHy5HGNLR2dJx00kpzqu040";
-
 const stripe = require("stripe")(Secret_Key);
 
 app.use(bodyparser.urlencoded({ extended: false }));
@@ -70,6 +65,7 @@ app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
 
 app.post("/payment", function (req, res) {
+  const token = req.cookies.token;
   const cartcookie = JSON.parse(req.cookies.cart);
   const totalPrice = cartcookie.reduce(
     (acc, item) => acc + parseFloat(item.newPrice),
@@ -116,6 +112,21 @@ app.post("/payment", function (req, res) {
       });
 
       res.setHeader("Set-Cookie", `cart=${cookieValue};`);
+      
+      const decoded = jwt.verify(token, "thisisourwebsite!");
+      const updateUser = await User.findById({ _id: decoded.userId });
+      const newtoken = jwt.sign(
+        {
+          userId: updateUser._id,
+          role: updateUser.role,
+          username: updateUser.username,
+          favorbooks: updateUser.favorbooks,
+          inventory: updateUser.inventory,
+          image: updateUser && updateUser.image
+        },
+        "thisisourwebsite!"
+      );
+      res.cookie("token", newtoken);
       res.redirect("/?alert=Checkout+successfully");
     })
     .catch((err) => {
@@ -132,19 +143,19 @@ app.get("/gio-hang", async (req, res) => {
   let updateUser;
   if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
-    updateUser = await User.findById({ _id: decoded.userId });
-    const newtoken = jwt.sign(
-      {
-        userId: updateUser._id,
-        role: updateUser.role,
-        username: updateUser.username,
-        favorbooks: updateUser.favorbooks,
-        inventory: updateUser.inventory,
-        image: updateUser && updateUser.image
-      },
-      "thisisourwebsite!"
-    );
-    res.cookie("token", newtoken);
+    // updateUser = await User.findById({ _id: decoded.userId });
+    // const newtoken = jwt.sign(
+    //   {
+    //     userId: updateUser._id,
+    //     role: updateUser.role,
+    //     username: updateUser.username,
+    //     favorbooks: updateUser.favorbooks,
+    //     inventory: updateUser.inventory,
+    //     image: updateUser && updateUser.image
+    //   },
+    //   "thisisourwebsite!"
+    // );
+    // res.cookie("token", newtoken);
   }
   const id = decoded.userId;
 
@@ -183,19 +194,20 @@ app.get("/", async (req, res) => {
   let updateUser
   if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
-    updateUser = await User.findById({ _id: decoded.userId });
-    const newtoken = jwt.sign(
-      {
-        userId: updateUser._id,
-        role: updateUser.role,
-        username: updateUser.username,
-        favorbooks: updateUser.favorbooks,
-        inventory: updateUser.inventory,
-        image: updateUser && updateUser.image
-      },
-      "thisisourwebsite!"
-    );
-    res.cookie("token", newtoken);
+    // updateUser = await User.findById({ _id: decoded.userId });
+
+    // const newtoken = jwt.sign(
+    //   {
+    //     userId: updateUser._id,
+    //     role: updateUser.role,
+    //     username: updateUser.username,
+    //     favorbooks: updateUser.favorbooks,
+    //     inventory: updateUser.inventory,
+    //     image: updateUser && updateUser.image
+    //   },
+    //   "thisisourwebsite!"
+    // );
+    // res.cookie("token", newtoken);
   }
   const response = await axios.get("http://localhost:3500/management");
   const toplike = await axios.get("http://localhost:3500/catalog/toplike");
@@ -237,19 +249,19 @@ app.get("/tai-khoan", async (req, res) => {
   let updateUser
   if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
-    updateUser = await User.findById({ _id: decoded.userId });
-    const newtoken = jwt.sign(
-      {
-        userId: updateUser._id,
-        role: updateUser.role,
-        username: updateUser.username,
-        favorbooks: updateUser.favorbooks,
-        inventory: updateUser.inventory,
-        image: updateUser && updateUser.image
-      },
-      "thisisourwebsite!"
-    );
-    res.cookie("token", newtoken);
+    // updateUser = await User.findById({ _id: decoded.userId });
+    // const newtoken = jwt.sign(
+    //   {
+    //     userId: updateUser._id,
+    //     role: updateUser.role,
+    //     username: updateUser.username,
+    //     favorbooks: updateUser.favorbooks,
+    //     inventory: updateUser.inventory,
+    //     image: updateUser && updateUser.image
+    //   },
+    //   "thisisourwebsite!"
+    // );
+    // res.cookie("token", newtoken);
   }
   let cartNumber = 0;
   if (req.cookies.cart) cartNumber = JSON.parse(req.cookies.cart).length;
@@ -267,7 +279,8 @@ app.get("/tai-khoan", async (req, res) => {
   } catch (error) {
     console.log(error);
   }
-  console.log(updateUser)
+
+
   res.render("tai-khoan.pug", {
     token,
     tags: tagData,
@@ -318,25 +331,24 @@ app.get("/product/:id", async (req, res) => {
      }
     }
   }
-  console.log(booksTag);
   const token = req.cookies.token;
   let decoded = "";
   let updateUser;
   if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
-    updateUser = await User.findById({ _id: decoded.userId });
-    const newtoken = jwt.sign(
-      {
-        userId: updateUser._id,
-        role: updateUser.role,
-        username: updateUser.username,
-        favorbooks: updateUser.favorbooks,
-        inventory: updateUser.inventory,
-        image: updateUser && updateUser.image
-      },
-      "thisisourwebsite!"
-    );
-    res.cookie("token", newtoken);
+    // updateUser = await User.findById({ _id: decoded.userId });
+    // const newtoken = jwt.sign(
+    //   {
+    //     userId: updateUser._id,
+    //     role: updateUser.role,
+    //     username: updateUser.username,
+    //     favorbooks: updateUser.favorbooks,
+    //     inventory: updateUser.inventory,
+    //     image: updateUser && updateUser.image
+    //   },
+    //   "thisisourwebsite!"
+    // );
+    // res.cookie("token", newtoken);
   }
   let cartNumber = 0;
   if (req.cookies.cart) cartNumber = JSON.parse(req.cookies.cart).length;
@@ -392,19 +404,19 @@ app.get("/tag/:name", async (req, res) => {
   let updateUser;
   if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
-    updateUser = await User.findById({ _id: decoded.userId });
-    const newtoken = jwt.sign(
-      {
-        userId: updateUser._id,
-        role: updateUser.role,
-        username: updateUser.username,
-        favorbooks: updateUser.favorbooks,
-        inventory: updateUser.inventory,
-        image: updateUser && updateUser.image
-      },
-      "thisisourwebsite!"
-    );
-    res.cookie("token", newtoken);
+    // updateUser = await User.findById({ _id: decoded.userId });
+    // const newtoken = jwt.sign(
+    //   {
+    //     userId: updateUser._id,
+    //     role: updateUser.role,
+    //     username: updateUser.username,
+    //     favorbooks: updateUser.favorbooks,
+    //     inventory: updateUser.inventory,
+    //     image: updateUser && updateUser.image
+    //   },
+    //   "thisisourwebsite!"
+    // );
+    // res.cookie("token", newtoken);
   }
   let cartNumber = 0;
   if (req.cookies.cart) cartNumber = JSON.parse(req.cookies.cart).length;
@@ -445,18 +457,18 @@ app.get("/search/:searchPara?/:page?", async (req, res) => {
   let updateUser
   if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
-    updateUser = await User.findById({ _id: decoded.userId });
-    const newtoken = jwt.sign(
-      {
-        userId: updateUser._id,
-        role: updateUser.role,
-        username: updateUser.username,
-        favorbooks: updateUser.favorbooks,
-        image: updateUser && updateUser.image
-      },
-      "thisisourwebsite!"
-    );
-    res.cookie("token", newtoken);
+    // updateUser = await User.findById({ _id: decoded.userId });
+    // const newtoken = jwt.sign(
+    //   {
+    //     userId: updateUser._id,
+    //     role: updateUser.role,
+    //     username: updateUser.username,
+    //     favorbooks: updateUser.favorbooks,
+    //     image: updateUser && updateUser.image
+    //   },
+    //   "thisisourwebsite!"
+    // );
+    // res.cookie("token", newtoken);
   }
   let booksTag = response.data;
   const sortType = req.query.sortType;
@@ -535,18 +547,18 @@ app.get("/product-list/:name?/:page?", async (req, res) => {
   let updateUser;
   if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
-    updateUser = await User.findById({ _id: decoded.userId });
-    const newtoken = jwt.sign(
-      {
-        userId: updateUser._id,
-        role: updateUser.role,
-        username: updateUser.username,
-        favorbooks: updateUser.favorbooks,
-        image: updateUser && updateUser.image
-      },
-      "thisisourwebsite!"
-    );
-    res.cookie("token", newtoken);
+    // updateUser = await User.findById({ _id: decoded.userId });
+    // const newtoken = jwt.sign(
+    //   {
+    //     userId: updateUser._id,
+    //     role: updateUser.role,
+    //     username: updateUser.username,
+    //     favorbooks: updateUser.favorbooks,
+    //     image: updateUser && updateUser.image
+    //   },
+    //   "thisisourwebsite!"
+    // );
+    // res.cookie("token", newtoken);
   }
   let cartNumber = 0;
   if (req.cookies.cart) cartNumber = JSON.parse(req.cookies.cart).length;
@@ -580,7 +592,6 @@ app.get("/admin/dashboard/:page", async (req, res) => {
   const disData = discount.data;
   const topSell = await axios.get("http://localhost:3500/catalog/topsell");
   const topsellBook = topSell.data;
-  console.log(topsellBook);
   const order = await axios.get("http://localhost:3500/order");
   const orderData = order.data;
   let totalBooks = 0;
@@ -682,10 +693,7 @@ app.get("/admin/category/:page", async (req, res) => {
   const tag = await axios
     .get("http://localhost:3500/tag")
     .then((res) => (tagData = res.data.tags));
-    console.log(tag)
-    for (let i = 0; i < tag.length; i++) {
-      console.log(tag[i].books.length)
-    }
+   
   const response = await axios.get("http://localhost:3500/management");
   const data = response.data;
   const order = await axios.get("http://localhost:3500/order");
@@ -774,10 +782,8 @@ app.get("/admin/update/:id", async (req, res) => {
 
 
 
-app.post("/create-order", async (req, res) => {
-  const cartItems = JSON.parse(req.cookies["cart"]);
-  console.log(cartItems[0]);
-});
+
+
 
 // THong tin tac gia + sach cua tac gia day
 app.get("/author/:searchPara", async (req, res) => {
@@ -795,18 +801,18 @@ app.get("/author/:searchPara", async (req, res) => {
   let updateUser;
   if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
-    updateUser = await User.findById({ _id: decoded.userId });
-    const newtoken = jwt.sign(
-      {
-        userId: updateUser._id,
-        role: updateUser.role,
-        username: updateUser.username,
-        favorbooks: updateUser.favorbooks,
-        image: updateUser && updateUser.image
-      },
-      "thisisourwebsite!"
-    );
-    res.cookie("token", newtoken);
+    // updateUser = await User.findById({ _id: decoded.userId });
+    // const newtoken = jwt.sign(
+    //   {
+    //     userId: updateUser._id,
+    //     role: updateUser.role,
+    //     username: updateUser.username,
+    //     favorbooks: updateUser.favorbooks,
+    //     image: updateUser && updateUser.image
+    //   },
+    //   "thisisourwebsite!"
+    // );
+    // res.cookie("token", newtoken);
   }
   let booksTag = response.data;
   const sortType = req.query.sortType;
@@ -889,18 +895,18 @@ app.get("/read-book/:id", async (req, res) => {
   let decoded = "";
   if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
-    updateUser = await User.findById({ _id: decoded.userId });
-    const newtoken = jwt.sign(
-      {
-        userId: updateUser._id,
-        role: updateUser.role,
-        username: updateUser.username,
-        favorbooks: updateUser.favorbooks,
-        image: updateUser && updateUser.image
-      },
-      "thisisourwebsite!"
-    );
-    res.cookie("token", newtoken);
+    // updateUser = await User.findById({ _id: decoded.userId });
+    // const newtoken = jwt.sign(
+    //   {
+    //     userId: updateUser._id,
+    //     role: updateUser.role,
+    //     username: updateUser.username,
+    //     favorbooks: updateUser.favorbooks,
+    //     image: updateUser && updateUser.image
+    //   },
+    //   "thisisourwebsite!"
+    // );
+    // res.cookie("token", newtoken);
   }
   res.render("read-book.pug", {
     book,
@@ -935,6 +941,11 @@ app.post(
 //   upload.fields([{ name: "images" }, { name: "content-images" }]),
 //   userThings.addImage
 // );
+app.post("/create-order", async (req, res) => {
+  const cartItems = JSON.parse(req.cookies["cart"]);
+  // console.log(cartItems[0]);
+});
+
 app.post("/uploadAvatar", upload.single("avatar"), userThings.addImage);
 
 //routes

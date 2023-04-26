@@ -1191,6 +1191,7 @@ if (updateButton) {
       .then((response) => {
         if (response.ok) {
           alert("Update successful");
+          
           mkmoiInput.value = "";
           xacnhanmkmoiInput.value = "";
           username.innerText = fullNameInput.value;
