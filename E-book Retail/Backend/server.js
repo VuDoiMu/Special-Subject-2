@@ -194,7 +194,7 @@ app.get("/", async (req, res) => {
   let updateUser
   if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
-    // updateUser = await User.findById({ _id: decoded.userId });
+    updateUser = await User.findById({ _id: decoded.userId });
 
     // const newtoken = jwt.sign(
     //   {
@@ -249,7 +249,7 @@ app.get("/tai-khoan", async (req, res) => {
   let updateUser
   if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
-    // updateUser = await User.findById({ _id: decoded.userId });
+    updateUser = await User.findById({ _id: decoded.userId });
     // const newtoken = jwt.sign(
     //   {
     //     userId: updateUser._id,
@@ -336,7 +336,7 @@ app.get("/product/:id", async (req, res) => {
   let updateUser;
   if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
-    // updateUser = await User.findById({ _id: decoded.userId });
+    updateUser = await User.findById({ _id: decoded.userId });
     // const newtoken = jwt.sign(
     //   {
     //     userId: updateUser._id,
@@ -407,7 +407,7 @@ app.get("/tag/:name", async (req, res) => {
   let updateUser;
   if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
-    // updateUser = await User.findById({ _id: decoded.userId });
+    updateUser = await User.findById({ _id: decoded.userId });
     // const newtoken = jwt.sign(
     //   {
     //     userId: updateUser._id,
@@ -460,7 +460,7 @@ app.get("/search/:searchPara?/:page?", async (req, res) => {
   let updateUser
   if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
-    // updateUser = await User.findById({ _id: decoded.userId });
+    updateUser = await User.findById({ _id: decoded.userId });
     // const newtoken = jwt.sign(
     //   {
     //     userId: updateUser._id,
@@ -550,7 +550,7 @@ app.get("/product-list/:name?/:page?", async (req, res) => {
   let updateUser;
   if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
-    // updateUser = await User.findById({ _id: decoded.userId });
+    updateUser = await User.findById({ _id: decoded.userId });
     // const newtoken = jwt.sign(
     //   {
     //     userId: updateUser._id,
@@ -804,7 +804,7 @@ app.get("/author/:searchPara", async (req, res) => {
   let updateUser;
   if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
-    // updateUser = await User.findById({ _id: decoded.userId });
+    updateUser = await User.findById({ _id: decoded.userId });
     // const newtoken = jwt.sign(
     //   {
     //     userId: updateUser._id,
@@ -898,7 +898,7 @@ app.get("/read-book/:id", async (req, res) => {
   let decoded = "";
   if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
-    // updateUser = await User.findById({ _id: decoded.userId });
+    updateUser = await User.findById({ _id: decoded.userId });
     // const newtoken = jwt.sign(
     //   {
     //     userId: updateUser._id,
@@ -949,7 +949,24 @@ app.post("/create-order", async (req, res) => {
   // console.log(cartItems[0]);
 });
 
-app.post("/uploadAvatar", upload.single("avatar"), userThings.addImage);
+app.post("/uploadAvatar", upload.single("avatar"), userThings.addImage,   async (req, res)=> {
+
+    const decoded = jwt.verify(token, "thisisourwebsite!");
+      const updateUser = await User.findById({ _id: decoded.userId });
+      const newtoken = jwt.sign(
+        {
+          userId: updateUser._id,
+          role: updateUser.role,
+          username: updateUser.username,
+          favorbooks: updateUser.favorbooks,
+          inventory: updateUser.inventory,
+          image: updateUser && updateUser.image
+        },
+        "thisisourwebsite!"
+      );
+      res.cookie("token", newtoken);
+      }
+      );
 
 //routes
 app.use("/comment", require("./routes/comment"));
