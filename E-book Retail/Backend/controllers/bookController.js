@@ -111,7 +111,7 @@ const deleteBook = async (req, res) => {
 
   const book = await Book.findOneAndDelete({ _id: bookId }).exec();
   const tag = await Tag.updateMany(
-    { books: { $elemMatch: { _id: bookId } } },
+    { books: bookId },
     { $pull: { books: bookId } }
   );
   console.log(tag);
