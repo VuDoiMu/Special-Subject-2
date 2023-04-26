@@ -324,7 +324,7 @@ app.get("/product/:id", async (req, res) => {
     const response = await axios.get(
       `http://localhost:3500/tag/books/${tagItem}`
     );
-    if (response.data.books[0]) {
+    if (response.data && response.data.books && response.data.books[0]) {
      const booksArray = response.data.books[0].books;
      if(booksArray !=undefined) {
        booksTag.push(booksArray);
@@ -378,7 +378,10 @@ app.get("/tag/:name", async (req, res) => {
 
   const response = await axios.get(`http://localhost:3500/tag/books/${name}`);
   // console.log(response.data)
-  let booksTag = response.data.books[0].books;
+  let booksTag = [];
+  if (response.data && response.data.books[0]) {
+    booksTag = response.data.books[0].books;
+  }
   const sortType = req.query.sortType;
   const isTag = true;
   if (sortType == "priceAsc") {
