@@ -459,7 +459,7 @@ nav .profile-details i {
 }
 
 #add-book,
-#add-tag-btn{
+#add-tag-btn {
   margin: 10px;
 }
 
@@ -483,4 +483,19 @@ nav .profile-details i {
 
 .hidden {
   display: none;
+}
+
+.img-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+#clear-image-button {
+  color: red;
+}
+/* CSS code */
+.arrow {
+  font-size: 24px; /* Increase font size to make arrow bigger */
+  line-height: 32px; /* Increase line height to make arrow longer */
 }
