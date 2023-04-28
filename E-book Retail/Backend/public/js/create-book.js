@@ -27,8 +27,12 @@ async function uploadImages(event) {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log("Success:", data);
+      if(data.message == "A book with this name is already exist!" ){
+      alert(`A book with this name is already exist!`);
+      }
+      else{
       alert(`You just added a book`);
+      }
     })
     .catch((error) => {
       console.error("Error:", error);

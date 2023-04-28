@@ -2,7 +2,7 @@ const { ObjectId } = require("mongodb");
 const mongoose = require("mongoose");
 
 const discountSchema = new mongoose.Schema({
-    name: {
+    discountName: {
         type: String,
         required: true,
         lowercase: true,
@@ -16,8 +16,7 @@ const discountSchema = new mongoose.Schema({
         required: true
     },
     discountItem: {
-        type: [ObjectId],
-        required: true,
+        type: [ObjectId]
     },
     createdDate: {
         type: Date,
@@ -27,14 +26,6 @@ const discountSchema = new mongoose.Schema({
     updatedDate: {
         type: Date,
         default: () => Date.now(),
-    },
-    startingDate: {
-        type: Date,
-        required:true,
-    },
-    endingDate: {
-        type: Date,
-        required: true
     }
 })
 module.exports = mongoose.model("Discount", discountSchema);

@@ -6,6 +6,7 @@ const Tag = require("../models/Tag");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const multer = require("multer");
+const Discount = require("../models/Discount");
 app.use(cookieParser());
 
 const formidable = require("express-formidable");
@@ -138,14 +139,15 @@ const updateBook = async (req, res) => {
   }
 
   const updateData = req.body;
+  console.log(updateData)
   const bookID = req.params.id;
 
 
-  const bookUpdated = await Book.findOneAndUpdate(
+  const bookUpdated = await Book.findByIdAndUpdate(
     { _id: bookID },
     updateData,
     {
-      new: true,
+      new: "true",
     }
   );
 
@@ -182,19 +184,13 @@ const updateBook = async (req, res) => {
 };
 
 const addBook = async (req, res) => {
-  console.log("body", req.body);
-  console.log("images", req.files);
   const newBook = req.body;
+  console.log(newBook)
   const uploadedImages = req.files.images;
-  console.log(uploadedImages);
-  const book = await Book.findOne({ name: newBook.name }).exec();
-
-  console.log(newBook.tag.split(','));
-
+  const book = await Book.findOne({ name: newBook.name });
+  const d = await Discount.findOne({discountName : newBook.discount})
   if (book != null) {
-    return res
-      .status(409)
-      .json({ message: "A book with this name is already exist!" });
+    return res.json({ message: "A book with this name is already exist!" });
   }
 
   try {
@@ -208,12 +204,19 @@ const addBook = async (req, res) => {
       artist: newBook.artist,
       publisher: newBook.publisher,
       pageCount: newBook.pageCount,
-      saleRate: newBook.discountRate,
+      saleRate: d.discountRate,
+
       content: {},
     });
     const updateResult = await Tag.updateMany(
       { name: { $in: newBook.tag } },
       { $push: { books: result._id } }
+    );
+    
+    const updateDiscount = await Discount.updateMany(
+      {name: newBook.discount},
+      { $push: { books: result._id } },
+      { new: "true" }
     );
 
     const bookID = result._id;
