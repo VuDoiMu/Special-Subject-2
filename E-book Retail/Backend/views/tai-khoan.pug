@@ -449,10 +449,10 @@ html(lang="vi")
                             each item in order.items
                               div.product
                                 div.product-head
-                                  img.img-product(src=item.product.image, alt=item.product.name)
-                                  span.price= '$' + item.product.price.toFixed(2)
+                                  img.img-product(src=item.product && item.product.image, alt=item.product && item.product.name)
+                                  span.price= '$' + (item.product && item.product.price.toFixed(2))
                                 div
-                                  a(href="/read-book/"+item.product._id).product-name= item.product.name
+                                  a(href="/read-book/"+(item.product && item.product._id)).product-name= item.product && item.product.name
                           td
                             p.finalTotal= '$' + order.finalTotal.toFixed(2)
     // thanh cac dich vu :mien phi giao hang, qua tang mien phi ........
