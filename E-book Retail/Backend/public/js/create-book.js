@@ -19,7 +19,8 @@ async function uploadImages(event) {
     tag.push(inputs[i].innerHTML);
   }
   formData.append("tag", tag);
-  console.log(formData.get("images"));
+  console.log(formData.get("discount"));
+
   fetch("http://localhost:3500/uploadBook", {
     method: "POST",
     body: formData,

@@ -9,7 +9,7 @@ const User = require("./models/User");
 const data = require("./data/book.json");
 const cookieParser = require("cookie-parser");
 const axios = require("axios");
-const nodemailer = require('nodemailer');
+const nodemailer = require("nodemailer");
 const bodyparser = require("body-parser");
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
@@ -112,7 +112,7 @@ app.post("/payment", function (req, res) {
       });
 
       res.setHeader("Set-Cookie", `cart=${cookieValue};`);
-      
+
       const decoded = jwt.verify(token, "thisisourwebsite!");
       const updateUser = await User.findById({ _id: decoded.userId });
       const newtoken = jwt.sign(
@@ -122,7 +122,7 @@ app.post("/payment", function (req, res) {
           username: updateUser.username,
           favorbooks: updateUser.favorbooks,
           inventory: updateUser.inventory,
-          image: updateUser && updateUser.image
+          image: updateUser && updateUser.image,
         },
         "thisisourwebsite!"
       );
@@ -183,7 +183,7 @@ app.get("/gio-hang", async (req, res) => {
     user,
     totalPrice,
     cartNumber: cartNumber,
-    image: updateUser && updateUser.image
+    image: updateUser && updateUser.image,
   });
 });
 
@@ -191,7 +191,7 @@ app.get("/", async (req, res) => {
   const token = req.cookies.token;
   const alert = req.query.alert;
   let decoded = "";
-  let updateUser
+  let updateUser;
   if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
     updateUser = await User.findById({ _id: decoded.userId });
@@ -218,7 +218,7 @@ app.get("/", async (req, res) => {
   const topsellBook = topSell.data;
   const userInfor = req.cookies.userInfor;
   let tagData;
-  
+
   const tag = await axios
     .get("http://localhost:3500/tag")
     .then((res) => (tagData = res.data.tags));
@@ -239,14 +239,14 @@ app.get("/", async (req, res) => {
     user,
     alert,
     cartNumber: cartNumber,
-    image: updateUser && updateUser.image
+    image: updateUser && updateUser.image,
   });
 });
 
 app.get("/tai-khoan", async (req, res) => {
   const token = req.cookies.token;
   let decoded = "";
-  let updateUser
+  let updateUser;
   if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
     updateUser = await User.findById({ _id: decoded.userId });
@@ -280,7 +280,6 @@ app.get("/tai-khoan", async (req, res) => {
     console.log(error);
   }
 
-
   res.render("tai-khoan.pug", {
     token,
     tags: tagData,
@@ -289,7 +288,7 @@ app.get("/tai-khoan", async (req, res) => {
     orders,
     moment,
     cartNumber: cartNumber,
-    image: updateUser && updateUser.image
+    image: updateUser && updateUser.image,
   });
 });
 
@@ -325,10 +324,10 @@ app.get("/product/:id", async (req, res) => {
       `http://localhost:3500/tag/books/${tagItem}`
     );
     if (response.data && response.data.books && response.data.books[0]) {
-     const booksArray = response.data.books[0].books;
-     if(booksArray !=undefined) {
-       booksTag.push(booksArray);
-     }
+      const booksArray = response.data.books[0].books;
+      if (booksArray != undefined) {
+        booksTag.push(booksArray);
+      }
     }
   }
   const token = req.cookies.token;
@@ -365,11 +364,9 @@ app.get("/product/:id", async (req, res) => {
     moment,
     user,
     cartNumber: cartNumber,
-    image: updateUser && updateUser.image
+    image: updateUser && updateUser.image,
   });
 });
-
-
 
 app.get("/tag/:name", async (req, res) => {
   const name = req.params.name;
@@ -442,7 +439,7 @@ app.get("/tag/:name", async (req, res) => {
     user,
     cartNumber: cartNumber,
     singleTag,
-    image: updateUser && updateUser.image
+    image: updateUser && updateUser.image,
   });
 });
 
@@ -457,7 +454,7 @@ app.get("/search/:searchPara?/:page?", async (req, res) => {
   );
   const token = req.cookies.token;
   let decoded = "";
-  let updateUser
+  let updateUser;
   if (token) {
     decoded = jwt.verify(token, "thisisourwebsite!");
     updateUser = await User.findById({ _id: decoded.userId });
@@ -509,7 +506,7 @@ app.get("/search/:searchPara?/:page?", async (req, res) => {
     sortType,
     user,
     cartNumber: cartNumber,
-    image: updateUser && updateUser.image
+    image: updateUser && updateUser.image,
   });
 });
 
@@ -582,7 +579,7 @@ app.get("/product-list/:name?/:page?", async (req, res) => {
     limit,
     user,
     cartNumber: cartNumber,
-    image: updateUser && updateUser.image
+    image: updateUser && updateUser.image,
   });
 });
 
@@ -603,11 +600,13 @@ app.get("/admin/dashboard/:page", async (req, res) => {
     totalBooks += orderData[i].items.length;
     totalProfits += orderData[i].finalTotal;
   }
-  
+
   for (let i = 0; i < orderData.length; i++) {
-    let user = await axios.get("http://localhost:3500/auth/getUser/" + orderData[i].userId);
-    user = user.data
-    orderData[i] = { ...orderData[i], userId: user}
+    let user = await axios.get(
+      "http://localhost:3500/auth/getUser/" + orderData[i].userId
+    );
+    user = user.data;
+    orderData[i] = { ...orderData[i], userId: user };
   }
   const page = parseInt(req.params.page) || 1;
   const limit = 10;
@@ -616,13 +615,13 @@ app.get("/admin/dashboard/:page", async (req, res) => {
     data,
     userData,
     disData,
-    orders: orderData.reverse().slice(0,10),
+    orders: orderData.reverse().slice(0, 10),
     topsellBook: paginatedBooks.data,
     currentPage: paginatedBooks.currentPage,
     totalPages: paginatedBooks.totalPages,
     totalBooks,
     totalProfits,
-    moment
+    moment,
   });
 });
 
@@ -637,12 +636,19 @@ app.get("/admin/sale", async (req, res) => {
   }
 
   for (let i = 0; i < orderData.length; i++) {
-    let user = await axios.get("http://localhost:3500/auth/getUser/" + orderData[i].userId);
-    user = user.data
-    orderData[i] = { ...orderData[i], userId: user }
+    let user = await axios.get(
+      "http://localhost:3500/auth/getUser/" + orderData[i].userId
+    );
+    user = user.data;
+    orderData[i] = { ...orderData[i], userId: user };
   }
 
-  res.render("admin-sale.pug", { orderData: orderData.reverse(), totalBooks, totalProfits, moment});
+  res.render("admin-sale.pug", {
+    orderData: orderData.reverse(),
+    totalBooks,
+    totalProfits,
+    moment,
+  });
 });
 
 app.get("/admin/login", (req, res) => {
@@ -684,11 +690,11 @@ app.get("/admin/management/:page", async (req, res) => {
   });
 });
 app.get("/admin/discount/:page", async (req, res) => {
-  const discountData = await axios.get("http://localhost:3500/discount")
-  const discounts = discountData.data.discounts
+  const discountData = await axios.get("http://localhost:3500/discount");
+  const discounts = discountData.data.discounts;
 
   res.render("discount.pug", {
-   discounts
+    discounts,
   });
 });
 
@@ -696,7 +702,7 @@ app.get("/admin/category/:page", async (req, res) => {
   const tag = await axios
     .get("http://localhost:3500/tag")
     .then((res) => (tagData = res.data.tags));
-   
+
   const response = await axios.get("http://localhost:3500/management");
   const data = response.data;
   const order = await axios.get("http://localhost:3500/order");
@@ -740,8 +746,8 @@ app.get("/admin/add-book", async (req, res) => {
   for (let i = 0; i < tagData.length; i++) {
     tags.push(tagData[i].name);
   }
-  const discountData = await axios.get("http://localhost:3500/discount")
-  const discounts = discountData.data.discounts
+  const discountData = await axios.get("http://localhost:3500/discount");
+  const discounts = discountData.data.discounts;
   const discountNames = [];
   for (let i = 0; i < discounts.length; i++) {
     discountNames.push(discounts[i].name);
@@ -768,6 +774,12 @@ app.get("/admin/add-book", async (req, res) => {
 });
 
 app.get("/admin/update/:id", async (req, res) => {
+  const discountData = await axios.get("http://localhost:3500/discount");
+  const discounts = discountData.data.discounts;
+  const discountNames = [];
+  for (let i = 0; i < discounts.length; i++) {
+    discountNames.push(discounts[i].name);
+  }
   const id = req.params.id;
   const response = await axios.get(`http://localhost:3500/management/${id}`);
   const data = response.data;
@@ -780,13 +792,8 @@ app.get("/admin/update/:id", async (req, res) => {
     tags.push(tagData[i].name);
   }
 
-  res.render("update.pug", { book: data, tags });
+  res.render("update.pug", { book: data, tags, discountNames });
 });
-
-
-
-
-
 
 // THong tin tac gia + sach cua tac gia day
 app.get("/author/:searchPara", async (req, res) => {
@@ -851,7 +858,7 @@ app.get("/author/:searchPara", async (req, res) => {
     sortType,
     user,
     image: updateUser && updateUser.image,
-    authorPage: true
+    authorPage: true,
   });
 });
 
@@ -920,7 +927,7 @@ app.get("/read-book/:id", async (req, res) => {
     decoded,
     itemCount,
     moment,
-    image: updateUser && updateUser.image
+    image: updateUser && updateUser.image,
   });
 });
 
@@ -937,7 +944,7 @@ app.post(
   "/updateBook/:id",
   upload.fields([{ name: "images" }, { name: "content-images" }]),
   bookThings.updateBook
-)
+);
 
 // app.post(
 //   "/uploadAvatar",
@@ -949,24 +956,27 @@ app.post("/create-order", async (req, res) => {
   // console.log(cartItems[0]);
 });
 
-app.post("/uploadAvatar", upload.single("avatar"), userThings.addImage,   async (req, res)=> {
-
+app.post(
+  "/uploadAvatar",
+  upload.single("avatar"),
+  userThings.addImage,
+  async (req, res) => {
     const decoded = jwt.verify(token, "thisisourwebsite!");
-      const updateUser = await User.findById({ _id: decoded.userId });
-      const newtoken = jwt.sign(
-        {
-          userId: updateUser._id,
-          role: updateUser.role,
-          username: updateUser.username,
-          favorbooks: updateUser.favorbooks,
-          inventory: updateUser.inventory,
-          image: updateUser && updateUser.image
-        },
-        "thisisourwebsite!"
-      );
-      res.cookie("token", newtoken);
-      }
-      );
+    const updateUser = await User.findById({ _id: decoded.userId });
+    const newtoken = jwt.sign(
+      {
+        userId: updateUser._id,
+        role: updateUser.role,
+        username: updateUser.username,
+        favorbooks: updateUser.favorbooks,
+        inventory: updateUser.inventory,
+        image: updateUser && updateUser.image,
+      },
+      "thisisourwebsite!"
+    );
+    res.cookie("token", newtoken);
+  }
+);
 
 //routes
 app.use("/comment", require("./routes/comment"));

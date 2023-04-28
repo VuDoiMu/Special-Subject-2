@@ -85,12 +85,18 @@ html(lang='en', dir='ltr')
                         label(for="updateName") Price: 
                         input#proname.form-control(type='text',name='updatePrice', autocomplete='off', placeholder='Price' value=book.price)
                         label(for="updateName") Discount: 
-                        input#proname.form-control(type='text', name='updateDiscountRate',autocomplete='off', placeholder='DiscountRate' value=book.discountRate)
+                        select#discount-select(name='discount' style="display:block; margin-bottom: 1rem")
+                            if book.discountRate 
+                                option(value=book.discountRate)=book.discountRate 
+                            else 
+                                option(value='') --Please choose an option--
+                            for t,index in discountNames
+                                    option(value=t)=t     
                         label(for="updateName") Page Count: 
                         input#proname.form-control(type='text',name='updatePageCount', autocomplete='off', placeholder='PageCount' value=book.pageCount)
                        
                         //- input#proname.form-control(type='text',name='updateCover' ,autocomplete='off', placeholder='Image link' value=book.image)
-  
+                        
                         label(for="name") Cover:
                         <input type="file" id="file-cover" name="images"  style="display:block" multiple />
                         <img src="#" alt="Chosen file" id="image-preview">

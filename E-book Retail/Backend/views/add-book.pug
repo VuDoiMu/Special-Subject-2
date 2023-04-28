@@ -21,7 +21,7 @@ html(lang='en', dir='ltr')
                 span.logo_name EManga
             ul.nav-links
                 li
-                    a.active(href='/admin/dashboard')
+                    a.active(href='/admin/dashboard/1')
                         i.bx.bx-grid-alt
                         span.links_name Dashboard
                 li
@@ -55,34 +55,35 @@ html(lang='en', dir='ltr')
                         h1 Add a new book
                         label(for="name") Name:
                         input#proname.form-control(type='text',name='name', autocomplete='off', placeholder='Name')
-                        label(for="name") Author:
+                        label(for="author") Author:
                         input#proname.form-control(type='text',name='author' ,autocomplete='off', placeholder='Author')
 
-                        label(for="name") Tags:
+                        label(for="countries") Tags:
                         select#countries(name='countries', multiple='')
                             for t,index in tags
                                 option(value=index  )=t
-                        label(for="name") Description:
+                        label(for="description") Description:
                         input#proname.form-control(type='text',name='description' ,autocomplete='off', placeholder='Description')
 
-                        label(for="name") Artist:
+                        label(for="artist") Artist:
                         input#proname.form-control(type='text',name='artist', autocomplete='off', placeholder='Artist')
-                        label(for="name") Publisher:
+                        label(for="publisher") Publisher:
                         input#proname.form-control(type='text',name='publisher', autocomplete='off', placeholder='Publisher')
-                        label(for="name") Price:
+                        label(for="price") Price:
                         input#proname.form-control(type='text',name='price', autocomplete='off', placeholder='Price')
-                        label(for="name") Discount:
-                        select#discount(name='discount', multiple='')
+                        label(for="discount") Discount:
+                        select#discount-select(name='discount' style="display:block; margin-bottom: 1rem")
+                            option(value='') --Please choose an option--
                             for t,index in discountNames
-                                option(value=index  )=t
-                        label(for="name") Page Count:
+                                    option(value=t)=t                       
+                        label(for="pageCount") Page Count:
                         input#proname.form-control(type='text',name='pageCount', autocomplete='off', placeholder='PageCount')
                
-                        label(for="name") Cover:
+                        label(for="images") Cover:
                         <input type="file" id="file-cover" name="images"  style="display:block" multiple />
                         <img src="#" alt="Chosen file" id="image-preview">
 
-                        label(for="name") Content:
+                        label(for="images") Content:
                         <input type="file" name="images"  id="content-images" style="display:block" multiple />
        
 
