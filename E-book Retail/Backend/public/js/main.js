@@ -653,7 +653,6 @@ let formdangnhap = document.querySelector("#formdangnhap");
 if (formdangnhap) {
   formdangnhap.addEventListener("submit", async (e) => {
     e.preventDefault();
-
     const email = document.getElementById("email");
     const password = document.getElementById("password");
     const emailValue = document.getElementById("email").value;
@@ -667,7 +666,7 @@ if (formdangnhap) {
       body: JSON.stringify({ email: emailValue, password: passwordValue }),
     });
 
-    const expires = new Date(Date.now() + 86400000).toUTCString(); // Expire the cookie after 24 hours
+    const expires = new Date(Date.now() + 86400000).toUTCString(); 
     document.cookie = `cart=${JSON.stringify(
       JSON.parse("[]")
     )}; expires=${expires}; path=/`;
@@ -1211,15 +1210,6 @@ if (updateButton) {
 }
 
 const imgs = document.querySelectorAll('.read img');
-console.log("Hi");
-console.log("Hi");
-console.log("Hi");
-console.log("Hi");
-console.log("Hi");
-console.log("Hi");
-console.log("Hi");
-console.log("Hi");
-console.log("Hi");
 
 imgs.forEach(img => {
   img.addEventListener('contextmenu', event => {
