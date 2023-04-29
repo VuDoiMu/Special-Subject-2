@@ -40,6 +40,37 @@ async function uploadImages(event) {
     });
 }
 
+const fileInput = document.querySelector("#file-cover");
+const previewImage = document.querySelector("#preview-image");
+const clearImageButton = document.querySelector("#clear-image-button");
+
+previewImage.setAttribute("alt", "");
+fileInput.addEventListener("change", function (event) {
+  const file = event.target.files[0];
+  const reader = new FileReader();
+
+  reader.addEventListener("load", function () {
+    previewImage.setAttribute("src", reader.result);
+    clearImageButton.style.display = "block";
+    arrow.style.display = "inline";
+  });
+
+  reader.readAsDataURL(file);
+});
+
+clearImageButton.addEventListener("click", function (event) {
+  event.preventDefault();
+  previewImage.setAttribute("src", "#");
+  previewImage.setAttribute("alt", "");
+  clearImageButton.style.display = "none";
+  arrow.style.display = "none";
+  fileInput.value = null;
+});
+
+previewImage.addEventListener("click", function () {
+  clearImageButton.click();
+});
+
 // // create AJAX object
 // const ajax = new XMLHttpRequest();
 
