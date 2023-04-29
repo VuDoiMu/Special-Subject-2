@@ -439,6 +439,9 @@ html(lang="li")
                         b HOT book combo - 25% OFF
                       li Free Bookmark for every order
                       li Free book cover (on request)
+                  if !decoded
+                    p 
+                      |(Vui lòng đăng nhập để tiến hành mua sách)
                 if(decoded)
                   if(-ownedBook(decoded.inventory || [], book._id))
                     btn(id='read-btn' class='btn w-100 text-uppercase' onclick=`window.location.href='/read-book/${ book._id}';`)  Read now!

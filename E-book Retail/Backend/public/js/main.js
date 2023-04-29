@@ -327,6 +327,7 @@ $(function () {
 
   function cartNumbers(product) {
     let cartItems = getCookie("cart");
+
     cartItems = JSON.parse(cartItems);
     let productNumbers = cartItems.length;
     productNumbers = parseInt(productNumbers);
@@ -403,7 +404,6 @@ $(function () {
     } else {
       cartItems = JSON.parse([]);
     }
-    console.log(cartItems.length);
     let totalProfits = 0;
 
     for (let i = 0; i < cartItems.length; i++) {
@@ -438,6 +438,8 @@ $(function () {
             <h6 class="header-gio-hang">GIỎ HÀNG CỦA BẠN <span>(${cartItems.length} sản phẩm)</span></h6>
             <div class="cart-list-items">
             `;
+      console.log(cartItems)
+      console.log(Object.values(cartItems))
       Object.values(cartItems).map((item) => {
         cartContent.innerHTML += `
                     <div class="cart-item d-flex">
@@ -483,7 +485,6 @@ $(function () {
                            
                         </div>
                        
-                      
                         <div class="group d-flex justify-content-between">
                             <p class="label">Phí dịch vụ:</p>
                             <p class="phidicvu">0 $</p>
@@ -753,27 +754,6 @@ if (searchform) {
   });
 }
 
-// if (searchform) {
-//   searchform.addEventListener("submit", async (e) => {
-//     e.preventDefault();
-//     const searchname =  document.getElementById("search").value;
-
-//     console.log("grgfjhfktg56")
-// const sendData = await fetch("http://localhost:3500/catalog/search" + searchname, {
-//   method: "GET",
-//   headers: {
-//     Accept: "application/json",
-//     "Content-Type": "application/json",
-//   },
-//   body: JSON.stringify({ name: searchname }),
-// });
-// const content = await sendData.json();
-//     window.setTimeout(() => {
-//       location.assign("/search/"+searchname);
-//     }, 200);
-//   });
-// }
-
 const formSignUp = document.querySelector("#form-signup");
 if (formSignUp) {
 }
@@ -943,9 +923,6 @@ if (hienthiSelect) {
     const selectedSort = sortSelect.value;
     const currentUrl = window.location.href;
     let urlWithoutParams = currentUrl.split("?")[0]; // remove any existing query parameters
-    const urlParams = new URLSearchParams(window.location.search);
-    const pageParam = urlParams.get("page"); // get the value of the 'page' parameter
-    // console.log("pageParam:", pageParam); // add this line to log the value of pageParam
 
     if (hienthiSelect.classList.contains("isTag") || hienthiSelect.classList.contains("isAuthor")) {
       const newUrl = `${urlWithoutParams}?page=1&limit=${selectedValue}&sortType=${selectedSort}`;
@@ -1143,8 +1120,6 @@ if (updateButton) {
     const mkmoiInput = document.querySelector('input[name="account-mkmoi"]');
     const imageAvatar = document.querySelector('#img-account');
     const avatarInput = document.querySelector(".avatar-img img");
-    console.log(avatarInput);
-    console.log("Avatar input");
     const xacnhanmkmoiInput = document.querySelector(
       'input[name="account-xacnhan-mkmoi"]'
     );

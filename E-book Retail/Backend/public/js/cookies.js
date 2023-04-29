@@ -9,9 +9,8 @@ const addToCart = () => {
   const img = document.getElementById("book-img").src;
   const bookName = document.getElementById("book-name").innerHTML;
   const id = document.getElementById("book-id").innerHTML;
-
+  console.log(document.getElementById("book-id"));
   const item = { author, oldPrice, newPrice, image: img, name: bookName, id };
-
   // const itemId = // Get the item ID from the form or button
   // const itemName = // Get the item name from the form or button
   // const itemPrice = // Get the item price from the form or button
