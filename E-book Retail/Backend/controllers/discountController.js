@@ -10,11 +10,11 @@ app.use(cookieParser());
 
 const newDiscount = async(req, res) => {
     try{
-    const {name, discountRate} = req.body
-    const disValid = await Discount.findOne({name});
+    const {discountName, discountRate} = req.body
+    const disValid = await Discount.findOne({discountName});
     if( disValid)
     return res.json( { 'message': 'this discount is already used!'});
-    const discount = new Discount({name, discountRate})
+    const discount = new Discount({discountName, discountRate})
     await discount.save();
     res.json({success: true, message:'new discount', discount})
       
@@ -35,13 +35,13 @@ const getDiscount = async (req, res) => {
 }
 const updateDiscount = async(req, res) => {
     const tagId = req.params.id;
-        const {name, discountRate, discountItem} = req.body
+        const {discountName, discountRate, discountItem} = req.body
     try {
         const discountValid = await Discount.findById(tagId);
         if( !discountValid)
         return res.json( { 'message': 'This Discount is not exist!'});
         
-        const discount = await Discount.findByIdAndUpdate({_id: tagId},{ name, description, discountItem}, {new: 'true'} )
+        const discount = await Discount.findByIdAndUpdate({_id: tagId},{ discountName, discountRate, discountItem}, {new: 'true'} )
         res.json({success: true, message:'updated tag', discount})
           
     }catch(error) {

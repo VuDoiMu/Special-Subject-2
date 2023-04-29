@@ -750,7 +750,7 @@ app.get("/admin/add-book", async (req, res) => {
   const discounts = discountData.data.discounts;
   const discountNames = [];
   for (let i = 0; i < discounts.length; i++) {
-    discountNames.push(discounts[i].name);
+    discountNames.push(discounts[i].discountName);
   }
   const response = await axios.get("http://localhost:3500/management");
   const data = response.data;
@@ -778,7 +778,7 @@ app.get("/admin/update/:id", async (req, res) => {
   const discounts = discountData.data.discounts;
   const discountNames = [];
   for (let i = 0; i < discounts.length; i++) {
-    discountNames.push(discounts[i].name);
+    discountNames.push(discounts[i].discountName);
   }
   const id = req.params.id;
   const response = await axios.get(`http://localhost:3500/management/${id}`);
