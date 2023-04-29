@@ -100,9 +100,9 @@ html(lang='en', dir='ltr')
                         label(for="name") Cover:
                         <input type="file" id="file-cover" accept="image/*" name="images"  style="display:block"  />
                         div(class="img-container")
-                            img(src=`/${book._id}/cover.png` style="object-fit: cover; " )  
+                            img(src=`/${book._id}/cover.png` style="object-fit: cover; width:20rem; height:auto " )  
                             <span id="arrow" class="arrow" style="display:none;">&#8594;</span>                 
-                            img(id="preview-image" src="#" alt="Preview" )
+                            img(id="preview-image" src="#" alt="Preview" style="object-fit: cover; width:30rem; height:auto ")
                             button(id="clear-image-button"  style=" display:none; " class='btn') X
                         label(for="name") Content:
                         <input type="file" name="images"  id="content-images" style="display:block" multiple />
