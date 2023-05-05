@@ -22,7 +22,7 @@ html(lang='en', dir='ltr')
                     span.logo_name EManga
             ul.nav-links
                 li
-                    a.active(href='/admin/dashboard/1')
+                    a(href='/admin/dashboard/1')
                         i.bx.bx-grid-alt
                         span.links_name Dashboard
                 li
@@ -34,9 +34,9 @@ html(lang='en', dir='ltr')
                         i.bx.bx-box
                         span.links_name Tag management
                 li
-                    a(href='/admin/discount/1')
+                    a.active(href='/admin/discount/1')
                         i.bx.bx-list-ul
-                        span.links_name Discount mângement
+                        span.links_name Discount management
                 li
                     a(href='/admin/sale')
                         i.bx.bx-list-ul
@@ -54,13 +54,13 @@ html(lang='en', dir='ltr')
             nav
                 .sidebar-button
                     i.bx.bx-menu.sidebarBtn
-                    span.dashboard Dashboard
+                    span.dashboard Discount Management
         
             .home-content
                 button(id="add-discount-btn"  class='btn btn-success' type="submit") Add new Discount 
                 form#add-discount-form.hidden
-                    input#tag-name.form-control(type="text", name="name", required, placeholder="Discount name")
-                    input#tag-description.form-control(type="text", name="name", required, placeholder="Discount Rate")
+                    input#dis-name.form-control(type="text", name="name", required, placeholder="Discount name")
+                    input#dis-description.form-control(type="text", name="name", required, placeholder="Discount Rate")
                     button(type="submit" class="btn btn-primary") Add
                 // Table
                 .table-data
@@ -69,7 +69,6 @@ html(lang='en', dir='ltr')
                             tr
                                 th(scope='col') Discount name
                                 th(scope='col') Discount Rate
-                                th(scope='col') Discount Number
                                 th(scope='col') Action
 
 
@@ -77,12 +76,10 @@ html(lang='en', dir='ltr')
                         tbody#tbody
                             each discount in discounts.reverse()
                                 tr
-                                th( scope="row") #{discount.name}
+                                th( scope="row") #{discount.discountName}
                                 th( scope="row") #{discount.discountRate}
-                                th( scope="row") #{discount.discountItem.length}
                                 th( scope="row")
-
-                                    button(id=`btn-delete` name=`${discount._id}`  class='btn btn-danger deleteButton') X
+                                    button(id=`btn-delete`  class='btn btn-danger deleteDisButton' data-dis-id=discount._id) X
                         ul.pagination.justify-content-center
                             - const maxPagesToShow = totalPages; 
                             - const middlePage = Math.ceil(maxPagesToShow/2);

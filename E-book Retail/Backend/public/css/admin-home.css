@@ -184,6 +184,7 @@ nav .profile-details i {
   padding: 0 20px;
   margin-bottom: 26px;
 }
+
 .overview-boxes .box {
   display: flex;
   align-items: center;
@@ -306,6 +307,9 @@ nav .profile-details i {
   border-radius: 4px;
   text-decoration: none;
   transition: all 0.3s ease;
+}
+a.active {
+  background: red
 }
 .sales-boxes .box .button a:hover {
   background: #0d3073;

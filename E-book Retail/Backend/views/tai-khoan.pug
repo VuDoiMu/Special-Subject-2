@@ -132,7 +132,10 @@ html(lang="vi")
                 )
                 a.btn.btn-secondary.rounded-circle(href="#")
                   if decoded
-                    img#img-account(alt="account-image" src=image)
+                    if image
+                      img#img-account(alt="account-image" src=image)
+                    else 
+                      i.fa.fa-user
                   else
                     i.fa.fa-user
                 a.nav-link.text-dark.text-uppercase(
@@ -396,14 +399,20 @@ html(lang="vi")
                 .img-upload.my-3 
                   .row
                     label(for="name" class="col-md-2 offset-md-2") Avatar:
-                    input#file-avatar.col-md-4(type="file"
-                    name="avatar"
-                    style="display:block"  
-                    value=user && user.image)
-                  if user.image
-                    .row
-                      div.avatar-img
-                        img#avatar-preview(alt="avatar-image" src=user.image)
+                      <input type="file" id="file-cover" accept="image/*" name="images"  style="display:block"  />
+                      div(class="img-container")
+                        img(src=user.image  style="object-fit: cover; width:20rem; height:auto " )  
+                        <span id="arrow" class="arrow" style="display:none;">&#8594;</span>                 
+                        img(id="preview-image" src="#" alt="Preview" style="object-fit: cover; width:30rem; height:auto ")
+                        button(id="clear-image-button"  style=" display:none; " class='btn') X
+                  //-   input#file-avatar.col-md-4(type="file"
+                  //-   name="avatar"
+                  //-   style="display:block"  
+                  //-   value=user && user.image)
+                  //- if user.image
+                  //-   .row
+                  //-     div.avatar-img
+                  //-       img#avatar-preview(alt="avatar-image" src=user.image)
                 .checkPassword.my-3
                   .row
                     input#toggle-password-change(type="checkbox")

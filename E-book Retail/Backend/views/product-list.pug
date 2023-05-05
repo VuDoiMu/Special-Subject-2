@@ -136,7 +136,10 @@ html(lang="vi")
                 )
                 a.btn.btn-secondary.rounded-circle(href="#")
                   if decoded
-                    img#img-account(alt="account-image" src=image)
+                    if image
+                      img#img-account(alt="account-image" src=image)
+                    else 
+                      i.fa.fa-user
                   else
                     i.fa.fa-user
                 a.nav-link.text-dark.text-uppercase(
