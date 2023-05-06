@@ -353,10 +353,12 @@ app.get("/product/:id", async (req, res) => {
   if (req.cookies.cart) cartNumber = JSON.parse(req.cookies.cart).length;
 
   const user = await User.findById(decoded.userId);
+  const tags = book.tag[0];
+  console.log(tags.split(","));
   res.render("product.pug", {
     book,
     comments,
-    tags: tagData,
+    tags: tags.split(","),
     booksTag,
     token,
     decoded,
