@@ -33,5 +33,21 @@ router.route('/search/author/:name')
     .get(cataController.searchBookByAuthor);
 
 router.route('/review')
-    .get(reviewController.getReview)
+    .get(reviewController.getReview);
+
+router.route('/orderToday')
+    .get(cataController.today);
+
+router.route('/orderYesterday')
+    .get(cataController.getYesterday);
+    
+router.route('/orderWeek')
+    .get(cataController.getLastWeek);
+
+router.route('/orderMonth')
+    .get(cataController.getLastMonth);
+    
+router.route('/order')
+    .get(cataController.divideOrdersByTime);
+
 module.exports = router;
