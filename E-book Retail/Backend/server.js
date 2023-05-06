@@ -78,7 +78,7 @@ app.post("/payment", function (req, res) {
     })
     .then((customer) => {
       return stripe.charges.create({
-        amount: totalPrice * 100, // Charing Rs 25
+        amount: totalPrice * 100 , // Charing Rs 25
         description: "Emanga",
         currency: "USD",
         customer: customer.id,

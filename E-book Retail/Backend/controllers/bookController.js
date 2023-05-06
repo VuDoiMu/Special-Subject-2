@@ -147,7 +147,7 @@ const updateBook = async (req, res) => {
     { _id: bookID },
     updateData,
     {
-      new: "true",
+      new: true,
     }
   );
 
@@ -216,7 +216,7 @@ const addBook = async (req, res) => {
     const updateDiscount = await Discount.updateMany(
       {name: newBook.discount},
       { $push: { books: result._id } },
-      { new: "true" }
+      { new: true }
     );
 
     const bookID = result._id;
@@ -301,7 +301,7 @@ const addLike = async (req, res) => {
     const updateUser = await User.findByIdAndUpdate(
       { _id: userId },
       { $push: { favorbooks: bookId } },
-      { new: "true" }
+      { new: true }
     );
 
     const newtoken = jwt.sign(
@@ -335,7 +335,7 @@ const subLike = async (req, res) => {
     const updateUser = await User.findByIdAndUpdate(
       { _id: userId },
       { $pull: { favorbooks: bookId } },
-      { new: "true" }
+      { new: true }
     );
 
     const newtoken = jwt.sign(

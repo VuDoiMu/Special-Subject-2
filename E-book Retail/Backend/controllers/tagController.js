@@ -33,7 +33,7 @@ const updateTag = async(req, res) => {
         if( !tagValid)
         return res.json( { 'message': 'This Tag is not exist!'});
         
-        const tag = await Tag.findByIdAndUpdate({_id: tagId},{ name, description}, {new: 'true'} )
+        const tag = await Tag.findByIdAndUpdate({_id: tagId},{ name, description}, {new: true} )
         res.json({success: true, message:'updated tag', tag})
           
     }catch(error) {

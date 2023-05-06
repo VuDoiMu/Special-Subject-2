@@ -19,7 +19,7 @@ const updateReview = async (req, res) => {
     const reviewId = req.params.id
     const {reviewText, isRecommended} = req.body
     try{
-    const review = await Review.findOneAndUpdate({reviewId}, {isRecommended, reviewText}, {new: "true"})
+    const review = await Review.findOneAndUpdate({reviewId}, {isRecommended, reviewText}, {new: true})
       res.json(review);
     }catch(error){
         res.json({success : false, message:"false"})

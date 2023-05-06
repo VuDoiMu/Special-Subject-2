@@ -152,6 +152,117 @@ const topLike = async (req, res) => {
       res.json({success : false, message:"false"})
     }    
   }
+  
+const today = async(req,res) => {
+  console.log("today")
+  try {
+    var today = new Date();
+    today.setHours(0, 0, 0, 0); // Đặt giờ về 00:00:00
+
+    const orders = await Order.find({
+      createdDate: {
+        $gte: today,
+        $lt: new Date(today.getTime() + 24 * 60 * 60 * 1000), // Lấy đến 23:59:59
+      },
+    });
+    console.log("orders")
+    res.status(200).json(orders);
+  } catch (error) {
+    res.status(500).json({ error: 'Đã xảy ra lỗi khi lấy order của ngày hôm nay' });
+  }
+}
+
+const getYesterday = async (req, res) => {
+  try {
+    var yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    yesterday.setHours(0, 0, 0, 0);
+
+    var today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const orders = await Order.find({
+      createdDate: {
+        $gte: yesterday,
+        $lt: today,
+      },
+    });
+
+    res.status(200).json(orders);
+  } catch (error) {
+    res.status(500).json({ error: 'Đã xảy ra lỗi khi lấy order của hôm qua' });
+  }
+};
+
+const getLastWeek = async (req, res) => {
+  try {
+    var lastWeekStart = new Date();
+    lastWeekStart.setDate(lastWeekStart.getDate() - 7);
+    lastWeekStart.setHours(0, 0, 0, 0);
+
+    var today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const orders = await Order.find({
+      createdDate: {
+        $gte: lastWeekStart,
+        $lt: today,
+      },
+    });
+
+    res.status(200).json(orders);
+  } catch (error) {
+    res.status(500).json({ error: 'Đã xảy ra lỗi khi lấy order của tuần trước' });
+  }
+};
+
+const getLastMonth = async (req, res) => {
+  try {
+    var lastMonthStart = new Date();
+    lastMonthStart.setMonth(lastMonthStart.getMonth() - 1);
+    lastMonthStart.setDate(1);
+    lastMonthStart.setHours(0, 0, 0, 0);
+
+    var thisMonthStart = new Date();
+    thisMonthStart.setDate(1);
+    thisMonthStart.setHours(0, 0, 0, 0);
+
+    const orders = await Order.find({
+      createdDate: {
+        $gte: lastMonthStart,
+        $lt: thisMonthStart,
+      },
+    });
+
+    res.status(200).json(orders);
+  } catch (error) {
+    res.status(500).json({ error: 'Đã xảy ra lỗi khi lấy order của tháng trước' });
+  }
+};
+
+const divideOrdersByTime = async (req, res) => {
+  try {
+    const orders = await Order.aggregate([
+      {
+        $group: {
+          _id: {
+            $dateToString: { format: '%Y-%m-%d', date: '$createdDate' } // Phân chia theo ngày
+            // $dateToString: { format: '%Y-%U', date: '$createdDate' } // Phân chia theo tuần
+            // $dateToString: { format: '%Y-%m', date: '$createdDate' } // Phân chia theo tháng
+          },
+          count: { $sum: 1 },
+          orders: { $push: '$$ROOT' },
+        },
+      },
+    ]);
+
+    res.status(200).json(orders);
+  } catch (error) {
+    res.status(500).json({ error: 'Đã xảy ra lỗi khi phân chia các order' });
+  }
+};
+
+
 module.exports = {
     topSell,
     topLike,
@@ -159,5 +270,5 @@ module.exports = {
     searchByName,
     searchBookByAuthor,
     priceAsc,
-    priceDesc, nameSort, dateSort
+    priceDesc, nameSort, dateSort, today, getYesterday, getLastWeek, getLastMonth, divideOrdersByTime
 };

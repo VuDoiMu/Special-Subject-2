@@ -1,5 +1,7 @@
 const Order = require('../models/Order');
 
+
+
 const getAllOrder = async (req, res) => {
     const orders = await Order.find();
 
@@ -19,6 +21,7 @@ const getByID = async (req, res) => {
     res.json(order);
 }
 
+  
 const deleteOrder = async (req, res) => {
     const order = await Order.deleteMany();
     res.status(200).json(order);

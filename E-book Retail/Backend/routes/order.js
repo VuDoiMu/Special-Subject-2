@@ -8,6 +8,6 @@ router.route('/')
     .get(orderController.getAllOrder);
 
 router.route('/:id')
-    .get(orderController.getByID)
+    .get(orderController.getByID);
 
 module.exports = router;

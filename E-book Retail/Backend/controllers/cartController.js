@@ -84,7 +84,7 @@ const saveToOrder = async (req, res) => {
       const updateUser = await User.findByIdAndUpdate(
         { _id: userId },
         { $push: { inventory:inventory } },
-        { new: "true" }
+        { new: true }
       );
       
       res.json({ success: true, message: 'checkout', order })
