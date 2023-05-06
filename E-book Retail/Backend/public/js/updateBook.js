@@ -122,3 +122,33 @@ clearImageButton.addEventListener("click", function (event) {
 previewImage.addEventListener("click", function () {
   clearImageButton.click();
 });
+
+const priceInput = document.getElementById("price");
+const discountSelect = document.getElementById("discount-select");
+const newPriceDiv = document.getElementById("new-price");
+function calculatePrice() {
+  const price = parseFloat(priceInput.value);
+  const discount = parseFloat(discountSelect.value) / 100;
+
+  // Only display the new price when a valid option is selected
+  if (discountSelect.selectedIndex > 0) {
+    const discountedPrice = price - price * discount;
+
+    if (isNaN(discountedPrice)) {
+      newPriceDiv.innerHTML = "";
+    } else {
+      newPriceDiv.innerHTML =
+        "New price:  " +
+        price +
+        "$" +
+        "   -->   " +
+        discountedPrice.toFixed(2) +
+        "$";
+    }
+  } else {
+    newPriceDiv.innerHTML = "";
+  }
+}
+
+priceInput.addEventListener("input", calculatePrice);
+discountSelect.addEventListener("change", calculatePrice);

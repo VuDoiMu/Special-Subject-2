@@ -78,7 +78,7 @@ app.post("/payment", function (req, res) {
     })
     .then((customer) => {
       return stripe.charges.create({
-        amount: totalPrice * 100 , // Charing Rs 25
+        amount: totalPrice * 100, // Charing Rs 25
         description: "Emanga",
         currency: "USD",
         customer: customer.id,
@@ -330,7 +330,6 @@ app.get("/product/:id", async (req, res) => {
       }
     }
   }
-  console.log(booksTag)
   const token = req.cookies.token;
   let decoded = "";
   let updateUser;
@@ -355,7 +354,7 @@ app.get("/product/:id", async (req, res) => {
 
   const user = await User.findById(decoded.userId);
   const tags = book.tag[0];
-  console.log(tags.split(","));
+
   res.render("product.pug", {
     book,
     comments,
@@ -751,6 +750,7 @@ app.get("/admin/add-book", async (req, res) => {
   }
   const discountData = await axios.get("http://localhost:3500/discount");
   const discounts = discountData.data.discounts;
+
   const discountNames = [];
   for (let i = 0; i < discounts.length; i++) {
     discountNames.push(discounts[i].discountName);
@@ -768,6 +768,7 @@ app.get("/admin/add-book", async (req, res) => {
 
   res.render("add-book.pug", {
     discountNames,
+    discounts,
     data,
     orderData,
     tags,
@@ -795,7 +796,7 @@ app.get("/admin/update/:id", async (req, res) => {
     tags.push(tagData[i].name);
   }
 
-  res.render("update.pug", { book: data, tags, discountNames });
+  res.render("update.pug", { book: data, tags, discountNames, discounts });
 });
 
 // THong tin tac gia + sach cua tac gia day

@@ -74,12 +74,15 @@ html(lang='en', dir='ltr')
                         label(for="publisher") Publisher:
                         input#proname.form-control(type='text',name='publisher', autocomplete='off', placeholder='Publisher')
                         label(for="price") Price:
-                        input#proname.form-control(type='text',name='price', autocomplete='off', placeholder='Price')
+                        input#price.form-control(type='text',name='price', autocomplete='off', placeholder='Price')
                         label(for="discount") Discount:
                         select#discount-select(name='discount' style="display:block; margin-bottom: 1rem")
                             option(value='') --Please choose an option--
-                            for t,index in discountNames
-                                    option(value=t)=t                       
+                            for t,index in discounts
+                                    option(value=t.discountRate)=t.discountName
+                        div
+                            label(for="new-price") 
+                            span#new-price                                   
                         label(for="pageCount") Page Count:
                         input#proname.form-control(type='text',name='pageCount', autocomplete='off', placeholder='PageCount')
                
