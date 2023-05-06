@@ -131,8 +131,16 @@ html(lang="vi")
                 type="button"
                 )
                 a.btn.btn-secondary.rounded-circle(href="#")
+<<<<<<< HEAD
                   if image 
                     img#img-account(alt="account-image" src=image)
+=======
+                  if decoded
+                    if image
+                      img#img-account(alt="account-image" src=image)
+                    else 
+                      i.fa.fa-user
+>>>>>>> 379d7b3af2ddb91e52a1eb83a667a3a19fd92415
                   else
                     i.fa.fa-user
                 a.nav-link.text-dark.text-uppercase(
@@ -396,14 +404,20 @@ html(lang="vi")
                 .img-upload.my-3 
                   .row
                     label(for="name" class="col-md-2 offset-md-2") Avatar:
-                    input#file-avatar.col-md-4(type="file"
-                    name="avatar"
-                    style="display:block"  
-                    value=user && user.image)
-                  if user.image
-                    .row
-                      div.avatar-img
-                        img#avatar-preview(alt="avatar-image" src=user.image)
+                      <input type="file" id="file-cover" accept="image/*" name="images"  style="display:block"  />
+                      div(class="img-container")
+                        img(src=user.image  style="object-fit: cover; width:20rem; height:auto " )  
+                        <span id="arrow" class="arrow" style="display:none;">&#8594;</span>                 
+                        img(id="preview-image" src="#" alt="Preview" style="object-fit: cover; width:30rem; height:auto ")
+                        button(id="clear-image-button"  style=" display:none; " class='btn') X
+                  //-   input#file-avatar.col-md-4(type="file"
+                  //-   name="avatar"
+                  //-   style="display:block"  
+                  //-   value=user && user.image)
+                  //- if user.image
+                  //-   .row
+                  //-     div.avatar-img
+                  //-       img#avatar-preview(alt="avatar-image" src=user.image)
                 .checkPassword.my-3
                   .row
                     input#toggle-password-change(type="checkbox")

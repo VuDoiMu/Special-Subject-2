@@ -21,11 +21,11 @@ html(lang='en', dir='ltr')
                 span.logo_name EManga
             ul.nav-links
                 li
-                    a.active(href='/admin/dashboard/1')
+                    a(href='/admin/dashboard/1')
                         i.bx.bx-grid-alt
                         span.links_name Dashboard
                 li
-                    a(href='/admin/management/1')
+                    a.active(href='/admin/management/1')
                         i.bx.bx-box
                         span.links_name Book managment
                 li
@@ -33,9 +33,13 @@ html(lang='en', dir='ltr')
                         i.bx.bx-box
                         span.links_name Tag management
                 li
+                    a(href='/admin/discount/1')
+                        i.bx.bx-list-ul
+                        span.links_name Discount Management
+                li
                     a(href='/admin/sale')
                         i.bx.bx-list-ul
-                        span.links_name Sale list
+                        span.links_name Order list
                 li.log_out
                     a(href='#')
                         i.bx.bx-log-out
@@ -44,7 +48,7 @@ html(lang='en', dir='ltr')
             nav
                 .sidebar-button
                     i.bx.bx-menu.sidebarBtn
-                    span.dashboard Dashboard
+                    span.dashboard Update Book
                 //- .search-box
                 //-   input(type='text', placeholder='Search...')
                 //-   i.bx.bx-search

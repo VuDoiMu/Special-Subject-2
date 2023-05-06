@@ -51,7 +51,7 @@ function addEventButton() {
       if (message) {
         window.setTimeout(() => {
           location.assign("/admin/category/1");
-          alert(`You just deleted a book`);
+          alert(`You just deleted a category`);
         }, 1000);
       }
     });
@@ -89,19 +89,11 @@ if (addBook) {
 }
 
 const addTagBtn = document.getElementById("add-tag-btn");
-const addDisBtn = document.getElementById("add-discount-btn");
 const addTagFormSubmit = document.getElementById("add-tag-form");
-const addDisFormSubmit = document.getElementById("add-discount-form");
 
 if (addTagBtn) {
   addTagBtn.addEventListener("click", function () {
     addTagFormSubmit.classList.remove("hidden");
-  });
-}
-
-if (addDisBtn) {
-  addDisBtn.addEventListener("click", function () {
-    addDisFormSubmit.classList.remove("hidden");
   });
 }
 
@@ -171,3 +163,101 @@ if (addTagFormSubmit) {
     addTagFormSubmit.classList.add("hidden");
   });
 }
+
+
+const addDisBtn = document.getElementById("add-discount-btn");
+const addDisFormSubmit = document.getElementById("add-discount-form");
+if (addDisBtn) {
+  addDisBtn.addEventListener("click", function () {
+    addDisFormSubmit.classList.remove("hidden");
+  });
+}
+if (addDisFormSubmit) {
+  addDisFormSubmit.addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const disNameInput = document.getElementById("dis-name");
+    const disDescriptionInput = document.getElementById("dis-description");
+    const disName = disNameInput.value.trim();
+    const disDescription = disDescriptionInput.value.trim();
+    console.log(disDescription);
+    const url = "http://localhost:3500/discount";
+
+    let data = "";
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ discountName: disName, discountRate: disDescription }),
+      });
+      data = await response.json();
+    } catch (error) {
+      console.error(error);
+    }
+    console.log(data)
+    const discount = data.discount;
+    console.log(discount);
+    // Get the table body element
+    const tableBody = document.querySelector("#tbody");
+
+    // Create a new table row element
+    const row = document.createElement("tr");
+
+    // Create the cells for the row
+    const nameCell = document.createElement("th");
+    nameCell.setAttribute("scope", "row");
+    nameCell.textContent = discount.discountName;
+
+    const countCell = document.createElement("th");
+    countCell.setAttribute("scope", "row");
+    countCell.textContent = discount.discountRate;
+
+
+    const buttonCell = document.createElement("th");
+    const deleteButton = document.createElement("button");
+    deleteButton.setAttribute("id", "btn-delete");
+    deleteButton.setAttribute("class", "btn btn-danger deleteTagButton");
+    deleteButton.setAttribute("data-tag-id", discount._id);
+    deleteButton.textContent = "X";
+    buttonCell.appendChild(deleteButton);
+
+    // Add the cells to the row
+    row.appendChild(nameCell);
+    row.appendChild(countCell);
+    row.appendChild(buttonCell);
+
+    // Add the row to the table body
+    tableBody.insertBefore(row, tableBody.childNodes[0]);
+    addEventButton();
+    addDisFormSubmit.reset();
+    addDisFormSubmit.classList.add("hidden");
+  });
+}
+
+function deleteDiscount() {
+  let deleteDisButtons = document.getElementsByClassName("deleteDisButton");
+
+  for (let i = 0; i < deleteDisButtons.length; i++) {
+    deleteDisButtons[i].addEventListener("click", async function (e) {
+      const id = e.target.getAttribute("data-dis-id");
+      console.log(id);
+      const deleteDis = await fetch(`http://localhost:3500/discount/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((res) => (message = res));
+      if (message) {
+        window.setTimeout(() => {
+          location.assign("/admin/discount/1");
+          alert(`You just deleted a discount`);
+        }, 1000);
+      }
+    });
+  }
+}
+deleteDiscount();

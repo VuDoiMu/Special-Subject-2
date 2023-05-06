@@ -158,8 +158,16 @@ html(lang="li")
                 type="button"
                 )
                 a.btn.btn-secondary.rounded-circle(href="#")
+<<<<<<< HEAD
                   if image
                     img#img-account(alt="account-image" src=image)
+=======
+                   if decoded
+                    if image
+                      img#img-account(alt="account-image" src=image)
+                    else 
+                      i.fa.fa-user
+>>>>>>> 379d7b3af2ddb91e52a1eb83a667a3a19fd92415
                   else
                     i.fa.fa-user
                   
@@ -527,7 +535,7 @@ html(lang="li")
             // header
             .col-12.d-flex.justify-content-between.align-items-center.pb-2.bg-light.pt-4
               h5.header.text-uppercase(style="font-weight: 400;") Similar product
-              //- a.btn.btn-warning.btn-sm.text-white(href="sach-moi-tuyen-chon.html") Xem tất cả
+              a.btn.btn-warning.btn-sm.text-white(href="sach-moi-tuyen-chon.html") Xem tất cả
           .khoisanpham(style="padding-bottom: 2rem;")
             each bookTag in booksTag
               each bookItem in bookTag

@@ -484,11 +484,7 @@ $(function () {
                         <div class="group d-flex justify-content-between">
                            
                         </div>
-                       
-                        <div class="group d-flex justify-content-between">
-                            <p class="label">Phí dịch vụ:</p>
-                            <p class="phidicvu">0 $</p>
-                        </div>
+                      
                         <div class="group d-flex justify-content-between align-items-center">
                             <strong class="text-uppercase">Tổng cộng:</strong>
                             <p class="tongcong">${cartCost} $</p>
@@ -803,8 +799,23 @@ document.querySelector("#form-signup").addEventListener("submit", async (e) => {
       emailInput.parentNode.insertBefore(errorLabel, emailInput.nextSibling);
       return;
     }
+
     let currentUrl = window.location.href;
     showToast("Register successfully!");
+    const sendData2 = await fetch("http://localhost:3500/auth/login", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email: emailInputValue, password: passwordInputValue }),
+    });
+
+    const expires = new Date(Date.now() + 86400000).toUTCString(); 
+    document.cookie = `cart=${JSON.stringify(
+      JSON.parse("[]")
+    )}; expires=${expires}; path=/`;
+
     window.setTimeout(() => {
       location.assign(currentUrl);
     }, 200);

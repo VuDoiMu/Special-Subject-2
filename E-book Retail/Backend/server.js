@@ -330,6 +330,7 @@ app.get("/product/:id", async (req, res) => {
       }
     }
   }
+  console.log(booksTag)
   const token = req.cookies.token;
   let decoded = "";
   let updateUser;
