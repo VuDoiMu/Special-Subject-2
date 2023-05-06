@@ -438,15 +438,15 @@ $(function () {
             <h6 class="header-gio-hang">GIỎ HÀNG CỦA BẠN <span>(${cartItems.length} sản phẩm)</span></h6>
             <div class="cart-list-items">
             `;
-      console.log(cartItems)
-      console.log(Object.values(cartItems))
+      console.log(cartItems);
+      console.log(Object.values(cartItems));
       Object.values(cartItems).map((item) => {
         cartContent.innerHTML += `
                     <div class="cart-item d-flex">
                         <a href="product/${item.id}" class="img">
-                            <img src="${
-                              item.image
-                            }" class="img-fluid" alt="${item.tag}">
+                            <img src="${item.image}" class="img-fluid" alt="${
+          item.tag
+        }">
                         </a>
                         <div class="item-caption d-flex w-100">
                             <div class="item-info ml-3">
@@ -663,7 +663,7 @@ if (formdangnhap) {
       body: JSON.stringify({ email: emailValue, password: passwordValue }),
     });
 
-    const expires = new Date(Date.now() + 86400000).toUTCString(); 
+    const expires = new Date(Date.now() + 86400000).toUTCString();
     document.cookie = `cart=${JSON.stringify(
       JSON.parse("[]")
     )}; expires=${expires}; path=/`;
@@ -730,7 +730,11 @@ if (logoutVar) {
     });
     const content = await sendData.json();
     let currentUrl = window.location.href;
-    if (currentUrl.indexOf("/tai-khoan") !== -1 || currentUrl.indexOf("/read-book") !== -1 || currentUrl.indexOf("/gio-hang") !== -1) {
+    if (
+      currentUrl.indexOf("/tai-khoan") !== -1 ||
+      currentUrl.indexOf("/read-book") !== -1 ||
+      currentUrl.indexOf("/gio-hang") !== -1
+    ) {
       window.location.href = "/";
     } else {
       location.reload();
@@ -808,10 +812,13 @@ document.querySelector("#form-signup").addEventListener("submit", async (e) => {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email: emailInputValue, password: passwordInputValue }),
+      body: JSON.stringify({
+        email: emailInputValue,
+        password: passwordInputValue,
+      }),
     });
 
-    const expires = new Date(Date.now() + 86400000).toUTCString(); 
+    const expires = new Date(Date.now() + 86400000).toUTCString();
     document.cookie = `cart=${JSON.stringify(
       JSON.parse("[]")
     )}; expires=${expires}; path=/`;
@@ -935,7 +942,10 @@ if (hienthiSelect) {
     const currentUrl = window.location.href;
     let urlWithoutParams = currentUrl.split("?")[0]; // remove any existing query parameters
 
-    if (hienthiSelect.classList.contains("isTag") || hienthiSelect.classList.contains("isAuthor")) {
+    if (
+      hienthiSelect.classList.contains("isTag") ||
+      hienthiSelect.classList.contains("isAuthor")
+    ) {
       const newUrl = `${urlWithoutParams}?page=1&limit=${selectedValue}&sortType=${selectedSort}`;
       location.assign(newUrl);
     } else {
@@ -1112,7 +1122,7 @@ addEventListenerComment();
 
 const toggleCheckbox = document.querySelector("#toggle-password-change");
 const thayDoiMk = document.querySelector(".thay-doi-mk");
-if(toggleCheckbox) {
+if (toggleCheckbox) {
   toggleCheckbox.addEventListener("change", function () {
     if (this.checked) {
       thayDoiMk.style.display = "block";
@@ -1129,7 +1139,7 @@ if (updateButton) {
     const phoneInput = document.querySelector('input[name="account-phone"]');
     const dobInput = document.querySelector('input[name="account-dob"]');
     const mkmoiInput = document.querySelector('input[name="account-mkmoi"]');
-    const imageAvatar = document.querySelector('#img-account');
+    const imageAvatar = document.querySelector("#img-account");
     const avatarInput = document.querySelector(".avatar-img img");
     const xacnhanmkmoiInput = document.querySelector(
       'input[name="account-xacnhan-mkmoi"]'
@@ -1138,21 +1148,21 @@ if (updateButton) {
 
     // HANDLE AVATAR
 
-    const fileAvatar = document.querySelector("#file-avatar");
+    const fileAvatar = document.querySelector("#file-cover");
     const file = fileAvatar.files[0];
     const formData = new FormData();
     formData.append("avatar", file);
+
     let imageData = await fetch(`http://localhost:3500/uploadAvatar`, {
       method: "POST",
       body: formData,
     })
       .then((response) => response.json())
-      .then((data) => {
-        return data;
-      })
+      .then((data) => {})
       .catch((error) => {
         console.error("Error:", error);
       });
+
     // check if new password and confirm password match
     if (mkmoiInput.value !== xacnhanmkmoiInput.value) {
       alert("New password and confirm password do not match");
@@ -1165,7 +1175,6 @@ if (updateButton) {
       dateOfBirth: dobInput.value,
       password: mkmoiInput.value,
     };
-    console.log(updateData);
     fetch("http://localhost:3500/auth/updateInfo", {
       method: "PUT",
       headers: {
@@ -1176,14 +1185,16 @@ if (updateButton) {
       .then((response) => {
         if (response.ok) {
           alert("Update successful");
-          
+
+          console.log("asd");
           mkmoiInput.value = "";
           xacnhanmkmoiInput.value = "";
           username.innerText = fullNameInput.value;
-          
-          let imageUrl = imageData._id + "/" + file.name;
-          imageAvatar.src = imageUrl;
-          avatarInput.src = imageUrl;
+
+          // let imageUrl = imageData._id + "/" + file.name;
+          // imageAvatar.src = imageUrl;
+          // avatarInput.src = imageUrl;
+          location.reload();
         } else {
           alert("Update failed");
         }
@@ -1195,18 +1206,33 @@ if (updateButton) {
   });
 }
 
-const imgs = document.querySelectorAll('.read img');
+const imgs = document.querySelectorAll(".read img");
 
-imgs.forEach(img => {
-  img.addEventListener('contextmenu', event => {
+imgs.forEach((img) => {
+  img.addEventListener("contextmenu", (event) => {
     event.preventDefault();
   });
 });
 
-const fileInput = document.querySelector('#file-avatar');
-const previewImage = document.querySelector('#avatar-preview');
-fileInput.addEventListener('change', (event) => {
+// const fileInput = document.querySelector('#file-avatar');
+// const previewImage = document.querySelector('#avatar-preview');
+// fileInput.addEventListener('change', (event) => {
+//   const file = event.target.files[0];
+//   const url = URL.createObjectURL(file);
+//   previewImage.src = url;
+// });
+
+const fileInput = document.querySelector("#file-cover");
+const previewImage = document.querySelector("#preview-image");
+
+previewImage.setAttribute("alt", "");
+fileInput.addEventListener("change", function (event) {
   const file = event.target.files[0];
-  const url = URL.createObjectURL(file);
-  previewImage.src = url;
+  const reader = new FileReader();
+
+  reader.addEventListener("load", function () {
+    previewImage.setAttribute("src", reader.result);
+  });
+
+  reader.readAsDataURL(file);
 });

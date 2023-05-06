@@ -27,11 +27,10 @@ async function uploadImages(event) {
   })
     .then((response) => response.json())
     .then((data) => {
-      if(data.message == "A book with this name is already exist!" ){
-      alert(`A book with this name is already exist!`);
-      }
-      else{
-      alert(`You just added a book`);
+      if (data.message == "A book with this name is already exist!") {
+        alert(`A book with this name is already exist!`);
+      } else {
+        alert(`You just added a book`);
       }
     })
     .catch((error) => {
@@ -58,18 +57,40 @@ fileInput.addEventListener("change", function (event) {
   reader.readAsDataURL(file);
 });
 
-clearImageButton.addEventListener("click", function (event) {
-  event.preventDefault();
-  previewImage.setAttribute("src", "#");
-  previewImage.setAttribute("alt", "");
-  clearImageButton.style.display = "none";
-  arrow.style.display = "none";
-  fileInput.value = null;
-});
-
 previewImage.addEventListener("click", function () {
   clearImageButton.click();
 });
+
+const priceInput = document.getElementById("price");
+const discountSelect = document.getElementById("discount-select");
+const newPriceDiv = document.getElementById("new-price");
+console.log(priceInput, discountSelect, newPriceDiv);
+function calculatePrice() {
+  const price = parseFloat(priceInput.value);
+  const discount = parseFloat(discountSelect.value) / 100;
+
+  // Only display the new price when a valid option is selected
+  if (discountSelect.selectedIndex > 0) {
+    const discountedPrice = price - price * discount;
+
+    if (isNaN(discountedPrice)) {
+      newPriceDiv.innerHTML = "";
+    } else {
+      newPriceDiv.innerHTML =
+        "New price:  " +
+        price +
+        "$" +
+        "   -->   " +
+        discountedPrice.toFixed(2) +
+        "$";
+    }
+  } else {
+    newPriceDiv.innerHTML = "";
+  }
+}
+
+priceInput.addEventListener("input", calculatePrice);
+discountSelect.addEventListener("change", calculatePrice);
 
 // // create AJAX object
 // const ajax = new XMLHttpRequest();
