@@ -363,7 +363,7 @@ html(lang="li")
               // CATEGORIES
               .categorycontent
                 ul
-                  each tag in tags
+                  each tag in tagData
                     li
                       a(title=tag.name
                     data-placement="" 
@@ -443,30 +443,7 @@ html(lang="li")
                         b HOT book combo - 25% OFF
                       li Free Bookmark for every order
                       li Free book cover (on request)
-                  if !decoded
-                    p 
-                      |(Vui lòng đăng nhập để tiến hành mua sách)
-                if(decoded)
-                  if(-ownedBook(decoded.inventory || [], book._id))
-                    btn(id='read-btn' class='btn w-100 text-uppercase' onclick=`window.location.href='/read-book/${ book._id}';`)  Read now!
-                            .fb-like(
-                              data-share="true" 
-                              data-size="small" 
-                              data-action="like" 
-                              data-layout="button" 
-                              data-width="300px" 
-                              data-href="https://www.facebook.com/DealBook-110745443947730/"
-                              )
-                  else 
-                    btn(id='buy-btn' class='nutmua btn w-100 text-uppercase')  Add to cart
-                        .fb-like(
-                          data-share="true" 
-                          data-size="small" 
-                          data-action="like" 
-                          data-layout="button" 
-                          data-width="300px" 
-                          data-href="https://www.facebook.com/DealBook-110745443947730/"
-                          )
+                  
                 // thông tin khác của sản phẩm:  tác giả, ngày xuất bản, kích thước ....
                 .col-md-5
                   .thongtinsach
@@ -494,7 +471,30 @@ html(lang="li")
                         | Purchases:
                         b 
                           |#{book.countSale}
-                      
+              if !decoded
+                p 
+                  |(Vui lòng đăng nhập để tiến hành mua sách)
+              if(decoded)
+                if(-ownedBook(decoded.inventory || [], book._id))
+                  btn(id='read-btn' class='btn w-100 text-uppercase' onclick=`window.location.href='/read-book/${ book._id}';`)  Read now!
+                          .fb-like(
+                            data-share="true" 
+                            data-size="small" 
+                            data-action="like" 
+                            data-layout="button" 
+                            data-width="300px" 
+                            data-href="https://www.facebook.com/DealBook-110745443947730/"
+                            )
+                else 
+                  btn(id='buy-btn' class='nutmua btn w-100 text-uppercase')  Add to cart
+                      .fb-like(
+                        data-share="true" 
+                        data-size="small" 
+                        data-action="like" 
+                        data-layout="button" 
+                        data-width="300px" 
+                        data-href="https://www.facebook.com/DealBook-110745443947730/"
+                        )  
             // decripstion của 1 sản phẩm: giới thiệu , đánh giá độc giả
             .product-description.col-md-9
               // 2 tab ở trên

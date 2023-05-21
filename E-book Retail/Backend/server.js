@@ -319,7 +319,9 @@ app.get("/product/:id", async (req, res) => {
 
   const booksTag = [];
   // Retrieve the books associated with each tag
-  for (const tagItem of book.tag) {
+  for (let tagItem of book.tag) {
+    tagItem = tagItem.split(",")
+    tagItem = tagItem[0];
     const response = await axios.get(
       `http://localhost:3500/tag/books/${tagItem}`
     );
@@ -354,10 +356,12 @@ app.get("/product/:id", async (req, res) => {
 
   const user = await User.findById(decoded.userId);
   const tags = book.tag[0];
-
+  console.log("Test in here");
+  console.log(booksTag);
   res.render("product.pug", {
     book,
     comments,
+    tagData,
     tags: tags.split(","),
     booksTag,
     token,
