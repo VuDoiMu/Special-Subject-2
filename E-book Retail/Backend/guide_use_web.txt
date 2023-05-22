@@ -1,0 +1,15 @@
+1, -Tài khoản stripe để hỗ trợ thanh toán:
+email (bất kì)
+Card number: 4242 4242 4242 4242
+MM/YY: 424
+CVC: 4242
+-Sau khi thanh toán thàng công, nhấn vào ảnh đại diện vào Account detail sau đó nhấn vào danh sách đơn hàng. Cuối cùng nhấn vào tên truyện để tiến hành mua truyện.
+2,- Đăng nhập vào admin
+-Truy cập vào đường dẫn http://localhost:3500/admin/login 
+-Nhập username là longvu@gmail.com
+-Mật khẩu là 123456
+3, Hướng dẫn thêm truyện
+-Các thông tin khác nhập bình thường
+-Đối với upload cover, hãy đặt tên hình ảnh là cover và đặt định dạng cho hình ảnh là png
+-Đối với upload content, hãy đặt các hình ảnh với tên lần lượt theo số thứ tự 1, 2 và 3 với định dạng là png
+Lưu ý: Các hình ảnh đều phải ở dưới dạng  png với content tên phải được đặt theo thứ tự lần lượt(upload 1.png và 3.png sẽ bị lỗi )
