@@ -898,13 +898,17 @@ app.get("/read-book/:id", async (req, res) => {
   const booksTag = [];
 
   // Retrieve the books associated with each tag
-  for (const tagItem of book.tag) {
+  for (let tagItem of book.tag) {
+    tagItem = tagItem.split(",")
+    tagItem = tagItem[0];
     const response = await axios.get(
       `http://localhost:3500/tag/books/${tagItem}`
     );
-    if (response.data.books[0]) {
+    if (response.data && response.data.books && response.data.books[0]) {
       const booksArray = response.data.books[0].books;
-      booksTag.push(booksArray);
+      if (booksArray != undefined) {
+        booksTag.push(booksArray);
+      }
     }
   }
 
