@@ -806,17 +806,6 @@ document.querySelector("#form-signup").addEventListener("submit", async (e) => {
 
     let currentUrl = window.location.href;
     showToast("Register successfully!");
-    const sendData2 = await fetch("http://localhost:3500/auth/login", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: emailInputValue,
-        password: passwordInputValue,
-      }),
-    });
 
     const expires = new Date(Date.now() + 86400000).toUTCString();
     document.cookie = `cart=${JSON.stringify(
